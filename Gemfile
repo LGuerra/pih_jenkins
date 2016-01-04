@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '~> 4.2.4'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -43,5 +43,16 @@ group :development do
   gem 'spring'
 end
 
-# Use postgresql for storage
+# Devise
+gem 'devise'
+gem 'devise_security_extension'
+
+#For Translations
+gem 'devise-i18n'
+# gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'master' # For 4.x
+
+# Manage Users
+# gem 'activeadmin', github: 'activeadmin'
+
+# Postgres
 gem 'pg'
