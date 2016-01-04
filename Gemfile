@@ -56,3 +56,9 @@ gem 'devise-i18n'
 
 # Postgres
 gem 'pg'
+
+# Production server - puma
+gem 'puma'
+
+# Application start with foreman
+gem 'foreman'
