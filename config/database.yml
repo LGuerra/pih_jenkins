@@ -16,4 +16,9 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: <%= ENV['RDS_DATABASE'] || 'pih_banca_production' %>
+  pool: 10
+  username: <%= ENV['RDS_USERNAME'] || 'postgres' %>
+  password: <%= ENV['RDS_PASSWORD'] || '' %>
+  port: <%= ENV['RDS_PORT'] || 5432 %>
+  host: <%= ENV['RDS_HOSTNAME'] || 'db' %>
