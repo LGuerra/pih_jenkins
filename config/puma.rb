@@ -5,9 +5,9 @@ threads threads_count, threads_count
 preload_app!
 
 rackup DefaultRackup
-puts ENV['PORT']
-port ENV['PORT'] || 3000
-environment ENV['RACK_ENV'] || 'development'
+environment ENV['RACK_ENV'] || 'production'
+
+bind 'unix:///var/run/puma.sock'
 
 on_worker_boot do
   ActiveRecord::Base.establish_connection
