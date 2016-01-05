@@ -12,4 +12,12 @@ class User < ActiveRecord::Base
   validates :area,      presence: true
   validates :puesto,    presence: true
 
+  has_many :permissions
+  has_many :groups, through: :permissions
+
+
+  def in_group?(group_name)
+    name = group_name.to_s
+    groups.map(&:name).include? name
+  end
 end
