@@ -62,3 +62,6 @@ gem 'puma'
 
 # Application start with foreman
 gem 'foreman'
+
+# Table like visualization of data in rails console
+gem 'table_print'
