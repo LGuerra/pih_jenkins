@@ -11,3 +11,5 @@
 // about supported directives.
 //
 //= require turbolinks
+//= require ./build/libs.js
+//= require ./build/main.js
