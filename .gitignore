@@ -22,3 +22,11 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Ignore webpack build files
+client/build/
+client/dist/
+app/assets/javascripts/build/
+app/assets/stylesheets/build/
+# Ignore npm modules
+node_modules/
