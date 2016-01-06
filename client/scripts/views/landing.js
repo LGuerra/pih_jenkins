@@ -11,10 +11,11 @@ class Landing extends React.Component {
     var hatClass = 'hat ' + this.props.type;
     return (
       <div className={hatClass}>
+        <h1>{'pa k kieres saber jaja saludos'}</h1>
         <Component/>
       </div>
     );
   }
 }
 
-export default Landing;
+module.exports = Landing;

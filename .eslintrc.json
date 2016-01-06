@@ -1,4 +1,4 @@
-{    
+{
   "rules": {
     "no-unused-vars": 0,
     "no-console": 0
@@ -7,6 +7,9 @@
     "es6": true,
     "browser": true,
     "node": true
+  },
+  "globals": {
+    "$": true
   },
   "extends": "eslint:recommended",
   "ecmaFeatures": {

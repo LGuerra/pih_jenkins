@@ -1,9 +1,15 @@
 import React from 'react';
-import $ from 'jquery';
 import ReactDOM from 'react-dom';
 
 import Landing from './views/landing';
+import Routing from './routing'
 
 require('./../styles/main.scss');
 
-ReactDOM.render(<Landing/>, document.getElementById('index-react'));
+Routing.register('/', () => {
+  return (require('./views/landing'));
+});
+
+$(document).ready(() => {
+  Routing.dispatch();
+});
