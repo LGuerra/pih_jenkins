@@ -1,0 +1,89 @@
+.sticky {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  border-top: 0;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.mercado-table {
+  width: 100%;
+  th {
+    text-align: center;
+    padding: 10px 5px 0px 5px;
+  }
+  td {
+    text-align: center;
+    padding: 10px 5px 0px 5px;
+  }
+  thead {
+    border-bottom: 2px solid #1394BC;
+  }
+}
+
+.block-container {
+  margin-top: 40px;
+}
+
+.green-price {
+  text-align: center;
+  font-size: 22px;
+  color: #3eb775;
+  margin-bottom: 0px;
+}
+
+.primary-price {
+  text-align: center;
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 0px;
+}
+
+.secondary-price {
+  text-align: center;
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 0px;
+}
+
+
+.subtitle {
+  text-align: center;
+  font-size: 12px;
+  color: #828282;
+}
+
+.tooltip-container {
+  background-color: #FFF;
+  border: 1px solid #000;
+  border-radius: 2px;
+  padding: 5px;
+  p {
+    margin-bottom: 0px !important;
+  }
+  .tooltip-value {
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size: 10px;
+  }
+  .tooltip-unit {
+    font-size: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .tooltip-row {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}

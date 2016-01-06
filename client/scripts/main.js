@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 import Landing from './views/landing';
 import { registerRoute, dispatch } from './routing';
 
+require("bootstrap-webpack");
 
 require('./../styles/main.scss');
 
 registerRoute('', () => require('./views/landing'));
+registerRoute('reporte', () => require('./views/reporte'));
 
-$(document).ready(() => {
-  dispatch();
-});
+$(document).ready(() => { dispatch(); });
