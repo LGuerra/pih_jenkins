@@ -1,6 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 
+// Add gzip
+
 var extractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -10,7 +12,12 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js'),
-    new extractTextPlugin('styles.css')
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
+    new extractTextPlugin('../../stylesheets/build/main.css')
   ],
   output: {
     path: path.resolve('./app/assets/javascripts/build/'),
@@ -31,7 +38,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: 'es2015',
+          presets: 'es2015'
         }
       },
       {
