@@ -168,7 +168,7 @@ class Page extends React.Component{
           <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
             <h4>Comparables</h4>
             <Table
-              specificClass={'mercado-table table-striped table-hover'}
+              specificClass={'mercado-table  table-hover'}
               data={tableData}
               />
           </div>

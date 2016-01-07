@@ -51,7 +51,7 @@ class StackedBarChart extends React.Component {
       .domain(props.data.map(function(el) {
         return (el.label);
       }))
-      .rangeRoundBands([this.conf.height, props.margin.bottom], 0.7);
+      .rangeRoundBands([this.conf.height, props.margin.bottom], 0.62);
 
     this.conf.yScale = d3.scale.linear()
       .domain([0, 100])
@@ -223,7 +223,7 @@ class StackedBarChart extends React.Component {
       .append('text')
       .attr('class', 'value')
       .style('font-size', '11px')
-      .style('fill', '#828282')
+      .style('fill', '#353535')
       .style('cursor', 'pointer')
       .text(function(d, i) {
         return (((d.value * 100) / totals[d.group]).toFixed(0) + '%');
@@ -231,7 +231,7 @@ class StackedBarChart extends React.Component {
       .style('text-anchor', 'middle')
       .style('opacity', 0)
       .attr('y', function(d) {
-        return (_this.conf.xScale(d.group) + 10);
+        return (_this.conf.xScale(d.group) + 12);
       })
       .attr('x', function(d) {
         var xPos = acumValue[d.group] + (_this.conf.yScale((d.value * 100) / totals[d.group]) / 2);
