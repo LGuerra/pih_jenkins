@@ -1,5 +1,27 @@
 import React from 'react';
 import d3 from 'd3';
+import _ from 'lodash';
+
+function getDummyStackedData(numGroups, numBarsByGroup) {
+  var data = new Array();
+  var group = {};
+  for (var i = 0; i < numGroups; i++) {
+    group.label = 'group-' + i;
+    group.bars = [];
+    for (var j = 0; j < numBarsByGroup; j++) {
+      group.bars.push({
+        label: 'bar-' + j,
+        value: _.random(0, 100),
+        color: '#1394BC',
+        hoverColor: '#848484'
+      });
+    }
+    data.push(group);
+    group = {};
+  }
+
+  return (data);
+}
 
 class StackedBarChart extends React.Component {
   constructor(props) {

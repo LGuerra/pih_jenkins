@@ -10,7 +10,6 @@ class StickyNavbar extends React.Component{
     var stickyNav = function(){
       var scrollTop = $(window).scrollTop();
       if (scrollTop > (stickyNavTop * 2)) {
-        console.log($('#sticky-nav'));
         $('#sticky-nav').css({
           opacity: 1,
           WebkitTransition : 'opacity 0.5s ease-in-out',

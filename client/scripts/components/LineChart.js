@@ -1,6 +1,30 @@
 import React from 'react';
 import d3 from 'd3';
 
+function getDummyLineData(numLines, numRegisters) {
+  var data = [];
+  var line;
+  var date;
+  for (var i = 0; i < numLines; i++) {
+    line = [];
+    date = new Date();
+    for (var j = 0; j < numRegisters; j++) {
+      var newDate = new Date(date.setDate(date.getDate() + 1));
+      line.push({
+        value: j,
+        xVariable: newDate
+      });
+    }
+    data.push({
+      label: 'line-' + i,
+      data: line,
+      color: '#1394BC'
+    });
+  }
+
+  return (data);
+}
+
 class LineChart extends React.Component {
   constructor(props) {
     super(props);
