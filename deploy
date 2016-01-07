@@ -1,0 +1,176 @@
+#!/usr/bin/env ruby
+
+BASENAME = 'pih-banca'
+SUBCOMMANDS = %w(to swap clean status)
+TARGETS = %(staging production)
+PRODUCTION_NAME = 'pih-banca-production'
+STAGING_NAME = 'pih-banca-staging'
+PRODUCTION_CNAME = 'pih-banca-production.elasticbeanstalk.com'
+
+SUBCOMMANDS_ARITY = {
+  to: 1, swap: 0, clean: 0, status: 0
+}
+
+class EB
+  def self.evaluate &to_run
+    new.instance_eval &to_run
+  end
+
+  def use env
+    echo "Attempting to switch to #{env} environment"
+    run "use #{env_from_target env}"
+  end
+
+  def echo msg
+    STDERR.puts msg
+  end
+
+  def run cmd
+    system "eb #{cmd}"
+  end
+
+  def replace cmd
+    exec "eb #{cmd}"
+  end
+
+  def parse cmd
+    `eb #{cmd}`.lines.map(&:chomp)
+  end
+
+  def confirm!
+    STDERR.print 'Confirm: y/n (default): '
+    abort 'Operation aborted' if gets.chomp != 'y'
+  end
+
+  private
+
+  def current_env
+    %x(eb status).lines.first.split.last
+  end
+
+  def env_from_target target
+    err_str = "Invalid target environment '#{target}', use any of: #{TARGETS}'"
+    abort err_str unless TARGETS.include? target
+    "#{BASENAME}-#{target}"
+  end
+end
+
+def get_command!
+  ARGV.shift || (abort "Please provide a command: #{SUBCOMMANDS}")
+end
+
+def get_arguments! n
+  (1..n).reduce([]) do |acc, ith|
+    elem = ARGV.shift
+    abort "Argument #{ith} not found. #{n} are required" unless elem
+    acc.push(elem)
+  end
+end
+
+def deploy_to target_env
+  if target_env == 'production'
+    deploy_to_production!
+  else
+    deploy_to_staging!
+  end
+end
+
+def deploy_to_production!
+  EB.evaluate do
+    current_cname = prop('CNAME', parse("status #{PRODUCTION_NAME}"))
+    if current_cname == PRODUCTION_CNAME
+      echo "#{PRODUCTION_CNAME} is currently pointing to production."
+      abort "Deploy manually (with 'eb deploy') since you are eager to fuck up"
+    end
+    echo '***WARNING: pushing current branch to production. There WILL be downtime.***'
+    confirm!
+    use 'production'
+    echo 'Deploying...'
+    replace 'deploy --timeout 10'
+  end
+end
+
+def deploy_to_staging!
+  EB.evaluate do
+    if environs.include? STAGING_NAME
+      echo 'Staging environment already exists'
+    else
+      echo 'Staging environment does not exist. Cloning from production'
+      use 'production'
+      echo 'Cloning production environment'
+      run "clone -n #{STAGING_NAME} -c #{STAGING_NAME}"
+      sleep 10
+    end
+    use 'staging'
+    echo 'Deploying'
+    replace 'deploy --timeout 10'
+  end
+end
+
+def swap
+  EB.evaluate do
+    echo '***WARNING: Swapping environments***'
+    env = current_env
+    target_env = env == PRODUCTION_NAME ? STAGING_NAME : PRODUCTION_NAME
+    echo "Currently in environment #{env}. Swapping with #{target_env}"
+    confirm!
+    replace "swap #{target_env}"
+  end
+end
+
+def clean
+  EB.evaluate do
+    echo 'Removing staging environment'
+    use 'staging'
+    run 'terminate'
+    use 'production'
+  end
+end
+
+def status
+  EB.evaluate do
+    production = parse "status #{PRODUCTION_NAME}"
+    echo "Production environment is present"
+    echo "Using CNAME: #{prop('CNAME', production)}"
+    echo "with status #{prop('Status', production)} and health #{prop('Health', production)}"
+    echo '-' * 20
+    if environs.include? STAGING_NAME
+      staging = parse "status #{STAGING_NAME}"
+      echo "Staging environment is present"
+      echo "Using CNAME: #{prop('CNAME', staging)}"
+      echo "with status #{prop('Status', staging)} and health #{prop('Health', staging)}"
+    else
+      echo 'Staging environment not present'
+    end
+  end
+end
+
+def prop property, lines
+  lines.each do |line|
+    match = %r(#{property}: ([\w\.-]+)$).match(line)
+    return match[1] if match
+  end
+  return 'not available'
+end
+
+def environs
+  EB.new.parse('list').map do |line|
+    line.start_with?('*') ? line.split[1] : line
+  end
+end
+
+command = get_command!
+args = get_arguments! SUBCOMMANDS_ARITY[command.to_sym]
+
+case command.to_sym
+when :to
+  deploy_to args[0]
+when :status
+  status
+when :clean
+  clean
+when :swap
+  swap
+else
+  abort "Invalid command. Please use any of '#{SUBCOMMANDS}'"
+end
