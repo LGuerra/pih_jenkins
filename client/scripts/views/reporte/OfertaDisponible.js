@@ -1,7 +1,10 @@
 import React from 'react';
 
-var OfertaDisponible = React.createClass({
-  render: function() {
+class OfertaDisponible extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
     return (
       <div className={'oferta-disponible'}>
         <h4>Oferta Disponible</h4>
@@ -26,6 +29,6 @@ var OfertaDisponible = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default OfertaDisponible;

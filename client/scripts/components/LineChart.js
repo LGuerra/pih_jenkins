@@ -1,44 +1,11 @@
 import React from 'react';
 import d3 from 'd3';
 
-function getDummyLineData(numLines, numRegisters) {
-  var data = [];
-  var line;
-  var date;
-  for (var i = 0; i < numLines; i++) {
-    line = [];
-    date = new Date();
-    for (var j = 0; j < numRegisters; j++) {
-      var newDate = new Date(date.setDate(date.getDate() + 1));
-      line.push({
-        value: j,
-        xVariable: newDate
-      });
-    }
-    data.push({
-      label: 'line-' + i,
-      data: line,
-      color: '#1394BC'
-    });
+class LineChart extends React.Component {
+  constructor(props) {
+    super(props);
   }
-
-  return (data);
-}
-
-var LineChart = React.createClass({
-  getDefaultProps: function() {
-    return ({
-      data: getDummyLineData(1, 100),
-      height: '300',
-      margin: {
-        left: 30,
-        right: 10,
-        top: 25,
-        bottom: 25
-      }
-    });
-  },
-  _getMinMaxY: function() {
+  _getMinMaxY() {
     var data = this.conf.data;
     var upperLimit = 0;
     var lowerLimit = 0;
@@ -62,8 +29,8 @@ var LineChart = React.createClass({
     });
 
     return ([lowerLimit, upperLimit]);
-  },
-  _setupLineGen: function() {
+  }
+  _setupLineGen() {
     var _this = this;
     var lineGen = d3.svg.line()
       .x(function(d) {
@@ -75,13 +42,13 @@ var LineChart = React.createClass({
       .interpolate('monotone');
 
     return (lineGen);
-  },
-  _initChart: function() {
+  }
+  _initChart() {
     var props = this.props;
     this.conf = {
       data: props.data,
       height: props.height,
-      width: props.width || $('#' + props.idContainer).outerWidth(),
+      width: props.width || $('#' + props.idContainer).outerWidth()
     };
 
     this.conf.tooltip = d3.select('body')
@@ -96,8 +63,8 @@ var LineChart = React.createClass({
 
     this._appendAxis();
     this._appendLines();
-  },
-  _appendAxis: function() {
+  }
+  _appendAxis() {
     var props = this.props;
     var minMaxY = this._getMinMaxY();
 
@@ -156,8 +123,8 @@ var LineChart = React.createClass({
     this.conf.gContent.selectAll('.axis')
       .selectAll('text')
       .style('font', '10px sans-serif');
-  },
-  _appendLines: function() {
+  }
+  _appendLines() {
     var _this = this;
     this.conf.lineGen = this._setupLineGen();
     this.conf.lineContent = this.conf.gContent
@@ -174,7 +141,7 @@ var LineChart = React.createClass({
     var arrayRects = [];
     var rectData = {};
     for (var i = 0; i < this.conf.data[0].data.length; i++) {
-      this.conf.data.forEach(function(line, indexLine) {
+      this.conf.data.forEach((line, indexLine) => {
         rectData['data' + indexLine] = {
           color: line.color,
           label: line.label,
@@ -186,7 +153,7 @@ var LineChart = React.createClass({
 
     }
 
-    _this.conf.data.forEach(function(line, indexLine) {
+    _this.conf.data.forEach((line, indexLine) => {
       _this.conf.focus.append('circle')
         .attr('class', 'y' + indexLine + ' ball')
         .style('fill', '#FFF')
@@ -202,12 +169,12 @@ var LineChart = React.createClass({
       .append('rect')
       .attr('class', 'rect-mouseover')
       .attr('height', this.conf.height - 25)
-      .attr('width', function(d, i) {
+      .attr('width', (d, i) => {
         var width = _this.conf.width - _this.props.margin.left - _this.props.margin.right;
         width = width / totalPoints;
         return (width);
       })
-      .attr('x', function(d, i) {
+      .attr('x', (d, i) => {
         return (_this.conf.xScale(d.data0.value.xVariable));
       })
       .style('fill', 'none')
@@ -240,7 +207,7 @@ var LineChart = React.createClass({
         for (i = 0; i < _this.conf.data.length; i++) {
           _this.conf.focus.select('circle.y' + i)
             .style('display', 'inline')
-            .attr('transform', function() {
+            .attr('transform', () => {
               return ('translate(' + ((_this.conf.xScale(d['data' + i].value.xVariable))) + ',' + _this.conf.yScale(d['data' + i].value.value) + ')');
             });
         }
@@ -252,24 +219,25 @@ var LineChart = React.createClass({
         _this.conf.focus
           .style('display', 'none');
       });
+
     this.conf.lines = this.conf.lineContent
       .selectAll('path')
       .data(this.conf.data)
       .enter()
       .append('path')
       .attr('shape-rendering', 'geometricPrecision')
-      .attr('id', function(d, i) {
+      .attr('id', (d, i) => {
         var id = d.label.replace(/[%/,.+<>= ]+/g, '');
         return id;
       })
-      .attr('stroke', function(d, i) {
+      .attr('stroke', (d, i) => {
         return d.color;
       })
-      .attr('fill', function(d, i) {
+      .attr('fill', (d, i) => {
         return 'none';
       })
       .style('opacity', 0.7)
-      .attr('d', function(d, i) {
+      .attr('d', (d, i) => {
         return (_this.conf.lineGen(d.data));
       })
       .attr('clip-path', 'url(#clip)')
@@ -280,7 +248,7 @@ var LineChart = React.createClass({
 
     var totalLength = 0;
 
-    this.conf.lines[0].forEach(function(element, index) {
+    this.conf.lines[0].forEach((element, index) => {
       var length = d3.select(element).node().getTotalLength();
       if (length >= totalLength) {
         totalLength = length;
@@ -294,16 +262,26 @@ var LineChart = React.createClass({
       .duration(1000)
       .ease('linear')
       .attr('stroke-dashoffset', 0);
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     this._initChart();
-  },
-  render: function() {
+  }
+  render() {
     return (
       <div id={this.props.idContainer}>
       </div>
     );
   }
-});
+}
+
+LineChart.defaultProps = {
+  height: '300',
+  margin: {
+    left: 30,
+    right: 10,
+    top: 25,
+    bottom: 25
+  }
+};
 
 export default LineChart;

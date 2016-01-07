@@ -4,19 +4,24 @@ import d3 from 'd3';
 import _ from 'lodash';
 
 // Components
-import BarChart from        '../components/BarChart';
-import LineChart from       '../components/LineChart';
-import StackedBarChart from '../components/StackedBarChart';
-import Table from           '../components/Table';
+import Table from '../components/Table';
 
 // View's Components
-import OfertaDisponible from    './reporte/OfertaDisponible';
-import ViviendaInfo from        './reporte/ViviendaInfo';
-import ColoniaInfo from         './reporte/ColoniaInfo';
-import PrecioDistribucion from  './reporte/PrecioDistribucion';
+import OfertaDisponible from      './reporte/OfertaDisponible';
+import ViviendaInfo from          './reporte/ViviendaInfo';
+import ColoniaInfo from           './reporte/ColoniaInfo';
+import PrecioDistribucion from    './reporte/PrecioDistribucion';
+import FormatLineChart from       './reporte/FormatLineChart';
+import FormatBarChart from        './reporte/FormatBarChart';
+import FormatStackedBarChart from './reporte/FormatStackedBarChart';
+import StickyNavbar from          './reporte/StickyNavbar';
+import SecondaryNavbar from       './reporte/SecondaryNavbar';
 
-var MainNavbar = React.createClass({
-  render: function() {
+class MainNavbar extends React.Component{
+  constructor(props) {
+    super(props);
+  }
+  render() {
     return (
       <nav className={'navbar navbar-default'} style={{
         width: this.props.width,
@@ -26,61 +31,13 @@ var MainNavbar = React.createClass({
       </nav>
     );
   }
-});
+}
 
-var SecondaryNavbar = React.createClass({
-  render: function() {
-    return (
-      <nav className={'secondary-nav navbar navbar-default'} style={{
-        width: this.props.width,
-        backgroundColor: this.props.bgColor
-      }}>
-      {this.props.children}
-      </nav>
-    );
+class Page extends React.Component{
+  constructor(props) {
+    super(props);
   }
-});
-
-var Page = React.createClass({
-  componentDidMount: function() {
-    var stickyNavTop = $('.secondary-nav').offset().top;
-
-    var stickyNav = function(){
-      var scrollTop = $(window).scrollTop();
-      if (scrollTop > stickyNavTop) {
-        $('.secondary-nav').addClass('sticky');
-      } else {
-        $('.secondary-nav').removeClass('sticky');
-      }
-    };
-    stickyNav();
-    $(window).scroll(function() {
-      stickyNav();
-    });
-  },
-  _tooltipBarFormat: function(d, i) {
-    var html = '<div class="tooltip-container">';
-      html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + '120' + '</p>';
-        html += '<p class="tooltip-unit">' + 'Viviendas' + '</p>';
-      html += '</div>';
-      html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + '$1,000,000' + '</p>';
-        html += '<p class="tooltip-value">' + 'a' + '</p>';
-        html += '<p class="tooltip-value">' + ' $3,000,000' + '</p>';
-      html += '</div>';
-    html += '</div>';
-    return (html);
-  },
-  _tooltipLineFormat: function(d, i) {
-    var html = '<div class="tooltip-container">';
-      html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + 'Oct $2,267,000' + '</p>';
-      html += '</div>';
-    html += '</div>';
-    return (html);
-  },
-  render: function() {
+  render() {
     var tableData = [
       {
         'Valor de Avalúo': '$2,794,000',
@@ -168,9 +125,8 @@ var Page = React.createClass({
               <h3>Principal bar</h3>
           </MainNavbar>
           <SecondaryNavbar
-            width={'100%'}>
-              <h3>Secundario bar</h3>
-          </SecondaryNavbar>
+            width={'100%'} />
+          <StickyNavbar />
         </header>
         <div className={'row block-container'}>
           <div style={borderRight} className={'col-sm-6'}>
@@ -180,42 +136,32 @@ var Page = React.createClass({
             <ColoniaInfo />
           </div>
         </div>
-        <div className={'row block-container'}>
-          <div style={borderRight} className={'col-sm-6'}>
-            <div className={'row'}>
-              <div className={'col-sm-9'}>
-                <LineChart
-                  tooltipFormat={this._tooltipLineFormat}
-                  height={250}
-                  idContainer={'line-chart'}
-                />
-              </div>
-              <div style={{marginTop: '75px'}} className={'col-sm-3'}>
-                <p className={'primary-price'}>{'5.3%'}</p>
-                <p className={'subtitle'}>apreciación anual</p>
+        <div style={{backgroundColor: '#f2f5f9', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
+          <h3 style={{marginTop: '5px', color: '#1394BC'}}>{'Información de la colonia Anzures'}</h3>
+          <div className={'row block-container'}>
+            <div style={borderRight} className={'col-sm-6'}>
+              <div className={'row'}>
+                <div className={'col-sm-9'}>
+                  <FormatLineChart/>
+                </div>
+                <div style={{marginTop: '75px'}} className={'col-sm-3'}>
+                  <p className={'primary-price'}>{'5.3%'}</p>
+                  <p className={'subtitle'}>apreciación anual</p>
+                </div>
               </div>
             </div>
+            <div className={'col-sm-6'}>
+              <FormatBarChart />
+              <PrecioDistribucion />
+            </div>
           </div>
-          <div className={'col-sm-6'}>
-            <BarChart
-              tooltipFormat={this._tooltipBarFormat}
-              color={'#DDDDDD'}
-              hoverColor={'#1394BC'}
-              height={178}
-              idContainer={'bar-chart'} />
-            <PrecioDistribucion />
-          </div>
-        </div>
-        <div className={'row block-container'}>
-          <div style={borderRight} className={'col-sm-4'}>
-            <OfertaDisponible />
-          </div>
-          <div className={'col-sm-8'}>
-            <StackedBarChart
-              title={'Distribución de Tipología'}
-              height={230}
-              idContainer={'stacked-chart'}
-            />
+          <div className={'row block-container'}>
+            <div style={borderRight} className={'col-sm-4'}>
+              <OfertaDisponible />
+            </div>
+            <div className={'col-sm-8'}>
+              <FormatStackedBarChart />
+            </div>
           </div>
         </div>
         <div className={'row block-container'}>
@@ -230,6 +176,6 @@ var Page = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = Page;

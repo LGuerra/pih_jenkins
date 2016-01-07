@@ -1,7 +1,10 @@
 import React from 'react';
 
-var ViviendaInfo = React.createClass({
-  render: function() {
+class ViviendaInfo extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
     return (
       <div className={'oferta-disponible'}>
         <h4>Vivienda valuada</h4>
@@ -21,6 +24,6 @@ var ViviendaInfo = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default ViviendaInfo;

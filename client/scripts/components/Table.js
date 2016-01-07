@@ -2,8 +2,11 @@ import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash'
 
-var Table = React.createClass({
-  render: function() {
+class Table extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render () {
     var data = this.props.data;
     var keys = Object.keys(data[0]);
     var tdArray;
@@ -23,7 +26,7 @@ var Table = React.createClass({
 
     var rows = data.map(function(element, index) {
       tdArray = [];
-      for (var k in element) {
+      for (let k in element) {
         tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
       }
 
@@ -35,7 +38,9 @@ var Table = React.createClass({
     return (
     <table className={this.props.specificClass}>
       <thead>
-        {titles}
+        <tr>
+          {titles}
+        </tr>
       </thead>
       <tbody>
         {rows}
@@ -43,6 +48,6 @@ var Table = React.createClass({
     </table>
     );
   }
-});
+}
 
 export default Table;

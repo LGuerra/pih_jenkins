@@ -1,42 +1,11 @@
 import React from 'react';
 import d3 from 'd3';
-import _ from 'lodash';
 
-function getDummyStackedData(numGroups, numBarsByGroup) {
-  var data = new Array();
-  var group = {};
-  for (var i = 0; i < numGroups; i++) {
-    group.label = 'group-' + i;
-    group.bars = [];
-    for (var j = 0; j < numBarsByGroup; j++) {
-      group.bars.push({
-        label: 'bar-' + j,
-        value: _.random(0, 100),
-        color: '#1394BC',
-        hoverColor: '#848484'
-      });
-    }
-    data.push(group);
-    group = {};
+class StackedBarChart extends React.Component {
+  constructor(props) {
+    super(props);
   }
-
-  return (data);
-}
-
-var StackedBarChart = React.createClass({
-  getDefaultProps: function() {
-    return ({
-      data: getDummyStackedData(4, 4),
-      height: '300',
-      margin: {
-        left: 30,
-        right: 35,
-        top: 25,
-        bottom: 25
-      }
-    });
-  },
-  _initChart: function() {
+  _initChart() {
     var props = this.props;
     this.conf = {
       data: props.data,
@@ -51,8 +20,8 @@ var StackedBarChart = React.createClass({
 
     this._appendAxis();
     this._appendBars();
-  },
-  _appendAxis: function() {
+  }
+  _appendAxis() {
     var props = this.props;
 
     //Set scales
@@ -113,8 +82,8 @@ var StackedBarChart = React.createClass({
     this.conf.gContent.selectAll('.axis')
       .selectAll('text')
       .style('font', '10px sans-serif');
-  },
-  _appendBars: function() {
+  }
+  _appendBars() {
     var _this = this;
     var totals = {};
     var acumValue = {};
@@ -202,8 +171,8 @@ var StackedBarChart = React.createClass({
       });
 
     this._appendValues();
-  },
-  _appendValues: function() {
+  }
+  _appendValues() {
     var _this = this;
     var totals = {};
     var acumValue = {};
@@ -288,17 +257,27 @@ var StackedBarChart = React.createClass({
         acumValue[d.group] += _this.conf.yScale((d.value * 100) / totals[d.group]);
         return (xPos);
       });
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     this._initChart();
-  },
-  render: function() {
+  }
+  render() {
     return (
       <div id={this.props.idContainer}>
         <h4>{this.props.title}</h4>
       </div>
     );
   }
-});
+}
+
+StackedBarChart.defaultProps = {
+  height: '300',
+  margin: {
+    left: 30,
+    right: 35,
+    top: 25,
+    bottom: 25
+  }
+};
 
 export default StackedBarChart;

@@ -1,7 +1,10 @@
 import React from 'react';
 
-var PrecioDistribucion = React.createClass({
-  render: function() {
+class PrecioDistribucion extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
     return (
       <div>
         <div style={{marginTop: '20px'}} className={'row'}>
@@ -17,6 +20,6 @@ var PrecioDistribucion = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default PrecioDistribucion;

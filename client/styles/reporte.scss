@@ -1,3 +1,11 @@
+@mixin transition($transition-property, $transition-time, $method) {
+  -webkit-transition: $transition-property $transition-time $method;
+  -moz-transition:    $transition-property $transition-time $method;
+  -ms-transition:     $transition-property $transition-time $method;
+  -o-transition:      $transition-property $transition-time $method;
+  transition:         $transition-property $transition-time $method;
+}
+
 .sticky {
   position: fixed;
   width: 100%;
@@ -82,6 +90,23 @@
   }
 }
 
+.navbar-icons {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .navbar-icon {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin-right:
+    p {
+      margin-bottom: 0px !important;
+      margin-left: 10px;
+    }
+  }
+}
 
 .row {
   margin-right: 0px !important;

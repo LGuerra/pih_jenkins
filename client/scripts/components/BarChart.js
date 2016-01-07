@@ -1,34 +1,11 @@
 import d3 from 'd3';
 import React from 'react';
-import _ from 'lodash';
 
-function getDummyBarData(numBars) {
-  var data = new Array();
-
-  for (var i = 0; i < numBars; i++) {
-    data.push({
-      value: _.random(0, 100),
-      label: 'bar' + i
-    });
+class BarChart extends React.Component {
+  constructor(props) {
+    super(props);
   }
-
-  return (data);
-}
-
-var BarChart = React.createClass({
-  getDefaultProps: function() {
-    return ({
-      data: getDummyBarData(14),
-      height: '300',
-      margin: {
-        left: 30,
-        right: 35,
-        top: 25,
-        bottom: 25
-      }
-    });
-  },
-  _getMinMaxY: function() {
+  _getMinMaxY () {
     var data = this.conf.data;
     var upperLimit = d3.max(data, function(element) {
       return (element.value);
@@ -39,8 +16,8 @@ var BarChart = React.createClass({
     });
 
     return [lowerLimit, upperLimit];
-  },
-  _initChart: function() {
+  }
+  _initChart () {
     var props = this.props;
     this.conf = {
       data: props.data,
@@ -60,14 +37,14 @@ var BarChart = React.createClass({
 
     this._appendAxis();
     this._appendBars();
-  },
-  _appendAxis: function() {
+  }
+  _appendAxis () {
     var props = this.props;
     var minMaxY = this._getMinMaxY();
 
     //Set scales
     this.conf.xScale = d3.scale.ordinal()
-      .domain(props.data.map(function(el) {
+      .domain(props.data.map((el) => {
         return (el.label);
       }))
       .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
@@ -112,8 +89,8 @@ var BarChart = React.createClass({
     this.conf.gContent.selectAll('.axis')
       .selectAll('text')
       .style('font', '10px sans-serif');
-  },
-  _appendBars: function() {
+  }
+  _appendBars () {
     var _this = this;
 
     this.conf.bars = this.conf.gContent
@@ -122,17 +99,17 @@ var BarChart = React.createClass({
       .enter()
       .append('rect')
       .attr('class', 'barchart-bar')
-      .attr('id', function(d, index) {
+      .attr('id',(d, index) => {
         return 'bar-' + index;
       })
-      .attr('x', function(d) {
+      .attr('x',(d) => {
         return _this.conf.xScale(d.label);
       })
       .attr('width', _this.conf.xScale.rangeBand())
-      .attr('fill', function(d) {
+      .attr('fill',(d) => {
         return (_this.props.color);
       })
-      .attr('y', function(d) {
+      .attr('y',(d) => {
         return _this.conf.yScale(0);
       })
       .style('cursor', 'pointer')
@@ -143,14 +120,14 @@ var BarChart = React.createClass({
           .style('opacity', 0.9)
           .html(_this.props.tooltipFormat(d, i));
 
-        var tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
-        var tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
+        let tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
+        let tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        var posx = (d3.mouse(this)[0] > ((_this.conf.width) / 2))
+        let posx = (d3.mouse(this)[0] > ((_this.conf.width) / 2))
           ? d3.event.pageX - tooltipWidth - 10
           : d3.event.pageX + 10;
 
-        var posy = (d3.mouse(this)[1] > ((_this.conf.height) / 2))
+        let posy = (d3.mouse(this)[1] > ((_this.conf.height) / 2))
           ? d3.event.pageY - tooltipHeigth - 10
           : d3.event.pageY + 10;
 
@@ -176,22 +153,32 @@ var BarChart = React.createClass({
     this.conf.bars
       .transition()
       .duration(1000)
-      .attr('y', function(d) {
+      .attr('y',(d) => {
         return _this.conf.yScale(d.value);
       })
-      .attr('height', function(d) {
+      .attr('height',(d) => {
         return (_this.conf.height - _this.conf.yScale(d.value) - _this.props.margin.bottom);
       });
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount () {
     this._initChart();
-  },
-  render: function() {
+  }
+  render () {
     return (
       <div id={this.props.idContainer}>
       </div>
     );
   }
-});
+}
+
+BarChart.defaultProps = {
+  height: '300',
+  margin: {
+    left: 30,
+    right: 35,
+    top: 25,
+    bottom: 25
+  }
+}
 
 export default BarChart;

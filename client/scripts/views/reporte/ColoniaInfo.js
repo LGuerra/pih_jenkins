@@ -1,7 +1,10 @@
 import React from 'react';
 
-var ColoniaInfo = React.createClass({
-  render: function() {
+class ColoniaInfo extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
     return (
       <div className={'oferta-disponible'}>
         <h4>Colonia Anzures</h4>
@@ -22,6 +25,6 @@ var ColoniaInfo = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default ColoniaInfo;
