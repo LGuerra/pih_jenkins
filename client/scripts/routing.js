@@ -4,8 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 var routeStore = {};
-
-function registerRoute(routename, delayedComponent, callbackInstead) {
+export function registerRoute(routename, delayedComponent, callbackInstead) {
   if (routeStore.hasOwnProperty(routename)) {
     console.warn('Route "' + routename + '" is already defined');
   }
@@ -13,7 +12,7 @@ function registerRoute(routename, delayedComponent, callbackInstead) {
   routeStore[routename] = makeDispatcher(routename, delayedComponent, callbackInstead);
 }
 
-function registerRaw(routename, callback) {
+export function registerRaw(routename, callback) {
   return registerRoute(routename, null, callback);
 }
 
@@ -32,7 +31,7 @@ function makeDispatcher(viewPath, delayedComponent, callbackInstead) {
   }
 }
 
-function dispatch() {
+export function dispatch() {
   var routeParts  = document.location.pathname.substring(1).split('/');
   var basePath    = routeParts.shift();
   var routeParams = routeParts;
@@ -41,10 +40,4 @@ function dispatch() {
   if (routeStore.hasOwnProperty(basePath)) {
     routeStore[basePath].apply(null, routeParams);
   }
-}
-
-export default {
-  register: registerRoute,
-  registerRaw: registerRaw,
-  dispatch: dispatch
 }

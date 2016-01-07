@@ -8,12 +8,8 @@ class Landing extends React.Component {
   }
 
   render() {
-    var hatClass = 'hat ' + this.props.type;
     return (
-      <div className={hatClass}>
-        <h1>{'pa k kieres saber jaja saludos'}</h1>
-        <Component/>
-      </div>
+        <h1>{'Funciona saludos'}</h1>
     );
   }
 }
