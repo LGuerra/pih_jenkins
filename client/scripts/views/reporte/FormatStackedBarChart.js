@@ -32,7 +32,7 @@ class FormatStackedBarChart extends React.Component {
     return (
       <StackedBarChart
         data={getDummyStackedData(4, 4)}
-        height={280}
+        height={295}
         idContainer={'stacked-chart'} />
     );
   }

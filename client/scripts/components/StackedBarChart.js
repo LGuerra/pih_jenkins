@@ -51,7 +51,7 @@ class StackedBarChart extends React.Component {
       .domain(props.data.map(function(el) {
         return (el.label);
       }))
-      .rangeRoundBands([this.conf.height, props.margin.bottom], 0.62);
+      .rangeRoundBands([this.conf.height, props.margin.bottom], 0.75);
 
     this.conf.yScale = d3.scale.linear()
       .domain([0, 100])
@@ -75,7 +75,7 @@ class StackedBarChart extends React.Component {
     this.conf.gContent = this.conf.svgContainer
       .append('g')
       .attr('id', 'g-content')
-      .attr('transform', 'translate(' + (props.margin.left + 20) + ', -10)');
+      .attr('transform', 'translate(' + (props.margin.left + 25) + ', -10)');
 
     //Append axis to graphic content
     this.conf.xaxisLine = this.conf.gContent.append('g')
@@ -84,7 +84,7 @@ class StackedBarChart extends React.Component {
 
     this.conf.yaxisLine = this.conf.gContent.append('g')
       .attr('class', 'y axis')
-      .attr('transform', 'translate(0,' + (props.margin.bottom + 5) + ')')
+      .attr('transform', 'translate(0,' + (props.margin.bottom + 20) + ')')
       .call(this.conf.yAxis);
 
     this.conf.gContent.selectAll('.axis')

@@ -146,7 +146,7 @@ class Page extends React.Component{
                 <div className={'col-sm-9'}>
                   <FormatLineChart/>
                 </div>
-                <div style={{marginTop: '75px'}} className={'col-sm-3'}>
+                <div className={'col-sm-3 apariencia-anual'}>
                   <p className={'primary-price'}>{'5.3%'}</p>
                   <p className={'subtitle'}>apreciación anual</p>
                 </div>
