@@ -122,7 +122,8 @@ class Page extends React.Component{
         <header>
           <MainNavbar
             width={'100%'}>
-              <h3>Principal bar</h3>
+              <img height={'30px'} style={{margin: '7px 10px'}} src={IMAGES.santander} />
+              <img height={'30px'} style={{margin: '7px 10px'}} src={IMAGES.intelimetrica} />
           </MainNavbar>
           <SecondaryNavbar
             width={'100%'} />

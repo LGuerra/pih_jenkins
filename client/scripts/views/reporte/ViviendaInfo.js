@@ -14,7 +14,9 @@ class ViviendaInfo extends React.Component {
             <p className={'subtitle'}>Precio total Enero 2016</p>
           </div>
           <div className={'col-sm-4'}>
-            <p className={'secondary-price'}>Estrellas</p>
+            <img height={'20px'} src={IMAGES.star} />
+            <img height={'20px'} src={IMAGES.star} />
+            <img height={'20px'} src={IMAGES.star} />
             <p className={'subtitle'}>Confianza</p>
           </div>
           <div className={'col-sm-4'}>
