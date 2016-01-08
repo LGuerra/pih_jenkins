@@ -114,7 +114,7 @@ class Page extends React.Component{
     ];
 
     var borderRight = {
-      borderRight: '2px solid #1394BC'
+      borderRight: '1px solid #c9c9c9'
     };
 
     return (
@@ -137,9 +137,11 @@ class Page extends React.Component{
           </div>
         </div>
         <div style={{backgroundColor: '#f2f5f9', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
-          <h3 style={{marginTop: '5px', color: '#1394BC'}}>{'Información de la colonia Anzures'}</h3>
+          <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+          <hr width={'100px'} className={'section-title-hr'}/>
           <div className={'row block-container'}>
             <div style={borderRight} className={'col-sm-6'}>
+              <h4 className={'subsection-title'}>Precio Histórico Enero 2010 - Enero 2015</h4>
               <div className={'row'}>
                 <div className={'col-sm-9'}>
                   <FormatLineChart/>
@@ -151,6 +153,7 @@ class Page extends React.Component{
               </div>
             </div>
             <div className={'col-sm-6'}>
+              <h4 className={'subsection-title'}>Distribución de Precio Enero 2016</h4>
               <FormatBarChart />
               <PrecioDistribucion />
             </div>
@@ -160,13 +163,15 @@ class Page extends React.Component{
               <OfertaDisponible />
             </div>
             <div className={'col-sm-8'}>
+              <h4 className={'subsection-title'}>Distribución de Tipología</h4>
               <FormatStackedBarChart />
             </div>
           </div>
         </div>
-        <div className={'row block-container'}>
+        <div className={'row block-container'} style={{marginTop: '10px'}}>
           <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
-            <h4>Comparables</h4>
+            <h3 className={'section-title'}>Viviendas Comparables</h3>
+            <hr width={'100px'} className={'section-title-hr'}/>
             <Table
               specificClass={'mercado-table  table-hover'}
               data={tableData}

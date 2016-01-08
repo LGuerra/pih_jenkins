@@ -38,7 +38,7 @@ class StickyNavbar extends React.Component{
         top: '0',
         zIndex: '100',
         borderTop: '0',
-        backgroundColor: '#e7e7e7'
+        backgroundColor: '#F8F8F8',
       }}>
         <div style={{display: 'flex', alignItems: 'center'}}  className={'row'}>
           <div className={'col-sm-4'}>
