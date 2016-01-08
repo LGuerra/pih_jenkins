@@ -18,7 +18,12 @@ class ViviendaInfo extends React.Component {
             <p className={'subtitle'}>Precio total Enero 2016</p>
           </div>
           <div style={{textAlign: 'center'}}>
-            <p>Estrellas</p>
+            <img height={'20px'} src={IMAGES.star} />
+            <img height={'20px'} src={IMAGES.star} />
+            <img height={'20px'} src={IMAGES.star} />
+            <img height={'20px'} src={IMAGES.star} />
+            <img height={'20px'} src={IMAGES.star} />
+            <p style={{marginTop: '10px'}} className={'subtitle'}>Confianza</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>$15,000</p>

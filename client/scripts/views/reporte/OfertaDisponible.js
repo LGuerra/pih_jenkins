@@ -23,7 +23,7 @@ class OfertaDisponible extends React.Component {
             <p className={'subtitle'}>Listados en los últimos 6 meses</p>
           </div>
         </div>
-        <div style={{marginTop: '42px'}} className={'row'}>
+        <div style={{marginTop: '42px', marginBottom: '85px'}} className={'row'}>
           <div className={'col-sm-12 tiempo'}>
             <div className={'tiempo-container'}>
               <p className={'primary-price'}>2 meses</p>
