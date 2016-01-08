@@ -113,3 +113,11 @@
   margin-right: 0px !important;
   margin-left: 0px !important;
 }
+
+@media screen and (max-width: 768px) {
+  .row {
+    div {
+      border: none !important;
+    }
+  }
+}

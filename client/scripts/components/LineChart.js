@@ -1,29 +1,6 @@
 import React from 'react';
 import d3 from 'd3';
-
-function getDummyLineData(numLines, numRegisters) {
-  var data = [];
-  var line;
-  var date;
-  for (var i = 0; i < numLines; i++) {
-    line = [];
-    date = new Date();
-    for (var j = 0; j < numRegisters; j++) {
-      var newDate = new Date(date.setDate(date.getDate() + 1));
-      line.push({
-        value: j,
-        xVariable: newDate
-      });
-    }
-    data.push({
-      label: 'line-' + i,
-      data: line,
-      color: '#1394BC'
-    });
-  }
-
-  return (data);
-}
+import moment from 'moment';
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -75,15 +52,18 @@ class LineChart extends React.Component {
       width: props.width || $('#' + props.idContainer).outerWidth()
     };
 
-    this.conf.tooltip = d3.select('body')
-      .append('div')
-      .attr('class', 'tooltip')
-      .style('display', 'none');
-
     this.conf.svgContainer = d3.select('#' + this.props.idContainer)
       .append('svg')
       .attr('height', this.conf.height)
       .attr('width', this.conf.width);
+
+    this.conf.tooltip = this.conf.svgContainer
+      .append('g')
+      .attr('class', 'tooltip')
+      .style('opacity', '0');
+
+    this.conf.tooltipText = this.conf.tooltip
+      .append('text');
 
     this._appendAxis();
     this._appendLines();
@@ -185,8 +165,8 @@ class LineChart extends React.Component {
         .attr('r', 3);
     });
 
-    var totalPoints = i;
-    this.conf.markerContainer
+    this.conf.totalPoints = i;
+    this.conf.rectMouseover = this.conf.markerContainer
       .selectAll('rect.rect-mouseover')
       .data(arrayRects)
       .enter()
@@ -195,7 +175,7 @@ class LineChart extends React.Component {
       .attr('height', this.conf.height - 25)
       .attr('width', (d, i) => {
         var width = _this.conf.width - _this.props.margin.left - _this.props.margin.right;
-        width = width / totalPoints;
+        width = width / this.conf.totalPoints;
         return (width);
       })
       .attr('x', (d, i) => {
@@ -205,10 +185,21 @@ class LineChart extends React.Component {
       .style('pointer-events', 'all')
       .on('mouseover', function(d,i) {
         _this.conf.tooltip
-          .style('display', 'inline')
-          .style('opacity', 0.9)
-          .html(_this.props.tooltipFormat(d, i));
+          .style('opacity', 0.9);
 
+        _this.conf.tooltip
+          .attr('transform', function() {
+            var posx = _this.conf.xScale(d.data0.value.xVariable);
+            var posy = _this.conf.yScale(d.data0.value.value);
+            var mom = moment(_this.conf.xScale.domain());
+            return ('translate(' + (posx + 20) + ', ' + (posy + 20) + ')');
+          });
+
+        _this.conf.tooltipText
+          .text(function(d, i) {
+            return ('Oct $2,267,000');
+          });
+/*
         var tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         var tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
@@ -224,6 +215,7 @@ class LineChart extends React.Component {
           .style('left', (posx) + 'px')
           .style('top',  (posy) + 'px');
 
+*/
         _this.conf.focus.style('display', null);
         _this.conf.focus.selectAll('circle')
           .style('display', 'none');
@@ -238,7 +230,7 @@ class LineChart extends React.Component {
       })
       .on('mouseout', function(d, i) {
         _this.conf.tooltip
-          .style('display', 'none');
+          .style('opacity', 0);
 
         _this.conf.focus
           .style('display', 'none');
@@ -278,16 +270,55 @@ class LineChart extends React.Component {
         totalLength = length;
       }
     });
+  }
+  _updateDimensions () {
+    var props = this.props;
+    this.conf.width = this.props.width || $('#' + this.props.idContainer).outerWidth();
 
-    this.conf.lineContent.selectAll('path.line')
-      .attr('stroke-dasharray', totalLength + ' ' + totalLength)
-      .attr('stroke-dashoffset', totalLength)
-      .transition()
-      .duration(1000)
-      .ease('linear')
-      .attr('stroke-dashoffset', 0);
+    this.conf.svgContainer
+      .attr('width', this.conf.width);
+
+
+    //Set scales
+    this.conf.xScale
+      .range([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
+
+    this.conf.xAxis
+      .scale(this.conf.xScale)
+
+    //Append axis to graphic content
+    this.conf.xaxisLine
+      .call(this.conf.xAxis);
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('path, line')
+      .attr('fill', 'none')
+      .attr('stroke', '#000')
+      .style('shape-rendering', 'crispEdges');
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('text')
+      .style('font', '10px sans-serif');
+
+    this.conf.lineGen = this._setupLineGen();
+
+    this.conf.lines
+      .attr('d', (d, i) => {
+        return (this.conf.lineGen(d.data));
+      });
+
+    this.conf.rectMouseover
+      .attr('width', (d, i) => {
+        var width = this.conf.width - this.props.margin.left - this.props.margin.right;
+        width = width / this.conf.totalPoints;
+        return (width);
+      })
+      .attr('x', (d, i) => {
+        return (this.conf.xScale(d.data0.value.xVariable));
+      })
   }
   componentDidMount() {
+    window.addEventListener('resize', this._updateDimensions.bind(this));
     this._initChart();
   }
   render() {

@@ -161,7 +161,43 @@ class BarChart extends React.Component {
         return (_this.conf.height - _this.conf.yScale(d.value) - _this.props.margin.bottom);
       });
   }
+  _updateDimensions () {
+    var props = this.props;
+    this.conf.width = this.props.width || $('#' + this.props.idContainer).outerWidth();
+
+    this.conf.svgContainer
+      .attr('width', this.conf.width);
+
+
+    //Set scales
+    this.conf.xScale
+      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
+
+    this.conf.xAxis
+      .scale(this.conf.xScale)
+
+    //Append axis to graphic content
+    this.conf.xaxisLine
+      .call(this.conf.xAxis);
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('path, line')
+      .attr('fill', 'none')
+      .attr('stroke', '#000')
+      .style('shape-rendering', 'crispEdges');
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('text')
+      .style('font', '10px sans-serif');
+
+    this.conf.bars
+      .attr('x',(d) => {
+        return (this.conf.xScale(d.label));
+      })
+      .attr('width', this.conf.xScale.rangeBand());
+  }
   componentDidMount () {
+    window.addEventListener('resize', this._updateDimensions.bind(this));
     this._initChart();
   }
   render () {

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import LineChart from '../../components/LineChart';
 
@@ -12,7 +13,7 @@ function getDummyLineData(numLines, numRegisters) {
     for (var j = 0; j < numRegisters; j++) {
       var newDate = new Date(date.setDate(date.getDate() + 1));
       line.push({
-        value: j,
+        value: _.random(0, 100),
         xVariable: newDate
       });
     }
@@ -41,7 +42,7 @@ class FormatLineChart extends React.Component {
   render() {
     return (
       <LineChart
-        data={getDummyLineData(1, 100)}
+        data={getDummyLineData(1, 14)}
         tooltipFormat={this._tooltipLineFormat}
         height={250}
         idContainer={'line-chart'} />

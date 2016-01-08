@@ -280,7 +280,93 @@ class StackedBarChart extends React.Component {
         return (xPos);
       });
   }
+  _updateDimensions () {
+    var props = this.props;
+    var totals = {};
+    var acumValue = {};
+    var totalOpacity = {};
+    this.conf.data.forEach(function(group, indexGroup) {
+      var i = 0;
+      group.bars.forEach(function(bar, indexBar) {
+        i += bar.value;
+      });
+      totals[group.label] = i;
+      acumValue[group.label] = 0;
+      totalOpacity[group.label] = 1;
+    });
+
+    this.conf.width = this.props.width || $('#' + this.props.idContainer).outerWidth();
+
+    this.conf.svgContainer
+      .attr('width', this.conf.width);
+
+    //Set scales
+    this.conf.yScale
+      .range([0, this.conf.width - props.margin.left - props.margin.right - 20]);
+
+
+    this.conf.yAxis
+      .tickFormat(function(d) {
+        return (d + '%');
+      })
+      .scale(this.conf.yScale)
+
+    //Append axis to graphic content
+    this.conf.yaxisLine
+      .call(this.conf.yAxis);
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('path, line')
+      .attr('fill', 'none')
+      .attr('stroke', '#B5B5B5')
+      .style('shape-rendering', 'crispEdges');
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('text')
+      .attr('fill', '#828282')
+
+    this.conf.gContent.selectAll('.axis.x')
+      .selectAll('path, line')
+      .style('display', 'none');
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('text')
+      .style('font', '10px sans-serif');
+
+    this.conf.bars
+      .attr('width', (d, i) => {
+        return (this.conf.yScale((d.value * 100) / totals[d.group]));
+      })
+      .attr('x', (d) => {
+        var xPos = this.conf.yScale(acumValue[d.group]);
+        acumValue[d.group] += (d.value * 100) / totals[d.group];
+        return (xPos);
+      });
+
+    for (let key in acumValue) {
+      acumValue[key] = 0;
+    }
+
+    this.conf.values
+      .attr('x', (d) => {
+        var xPos = acumValue[d.group] + (this.conf.yScale((d.value * 100) / totals[d.group]) / 2);
+        acumValue[d.group] += this.conf.yScale((d.value * 100) / totals[d.group]);
+        return (xPos);
+      });
+
+    for (let key in acumValue) {
+      acumValue[key] = 0;
+    }
+
+    this.conf.titles
+      .attr('x', (d) => {
+        var xPos = acumValue[d.group] + (this.conf.yScale((d.value * 100) / totals[d.group]) / 2);
+        acumValue[d.group] += this.conf.yScale((d.value * 100) / totals[d.group]);
+        return (xPos);
+      });
+  }
   componentDidMount() {
+    window.addEventListener('resize', this._updateDimensions.bind(this));
     this._initChart();
   }
   render() {
