@@ -118,7 +118,7 @@ class Page extends React.Component{
     };
 
     return (
-      <div>
+      <div className={'noselect'}>
         <header>
           <MainNavbar
             width={'100%'}>

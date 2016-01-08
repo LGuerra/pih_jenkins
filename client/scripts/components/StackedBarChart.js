@@ -228,10 +228,10 @@ class StackedBarChart extends React.Component {
       .text(function(d, i) {
         return (((d.value * 100) / totals[d.group]).toFixed(0) + '%');
       })
-      .style('text-anchor', 'middle')
+      .attr('text-anchor', 'middle')
       .style('opacity', 0)
       .attr('y', function(d) {
-        return (_this.conf.xScale(d.group) + 12);
+        return (_this.conf.xScale(d.group) - 2);
       })
       .attr('x', function(d) {
         var xPos = acumValue[d.group] + (_this.conf.yScale((d.value * 100) / totals[d.group]) / 2);
@@ -270,7 +270,7 @@ class StackedBarChart extends React.Component {
       .text(function(d, i) {
         return (d.label);
       })
-      .style('text-anchor', 'middle')
+      .attr('text-anchor', 'middle')
       .attr('y', function(d) {
         return (_this.conf.xScale(d.group) + 28);
       })

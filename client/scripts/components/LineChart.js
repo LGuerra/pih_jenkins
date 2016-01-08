@@ -2,6 +2,19 @@ import React from 'react';
 import d3 from 'd3';
 import moment from 'moment';
 
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Diciembre'
+];
+
 class LineChart extends React.Component {
   constructor(props) {
     super(props);
@@ -57,13 +70,10 @@ class LineChart extends React.Component {
       .attr('height', this.conf.height)
       .attr('width', this.conf.width);
 
-    this.conf.tooltip = this.conf.svgContainer
-      .append('g')
+    this.conf.tooltip = d3.select('body')
+      .append('div')
       .attr('class', 'tooltip')
-      .style('opacity', '0');
-
-    this.conf.tooltipText = this.conf.tooltip
-      .append('text');
+      .style('display', 'none');
 
     this._appendAxis();
     this._appendLines();
@@ -93,8 +103,11 @@ class LineChart extends React.Component {
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
       .tickFormat(function(d, i) {
-        return (i);
+        var m = moment(d);
+        var date = months[m.month()] + ' ' + m.date();
+        return (date);
       })
+      .ticks(3)
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
@@ -185,21 +198,10 @@ class LineChart extends React.Component {
       .style('pointer-events', 'all')
       .on('mouseover', function(d,i) {
         _this.conf.tooltip
-          .style('opacity', 0.9);
+          .style('display', 'inline')
+          .style('opacity', 0.9)
+          .html(_this.props.tooltipFormat(d, i));
 
-        _this.conf.tooltip
-          .attr('transform', function() {
-            var posx = _this.conf.xScale(d.data0.value.xVariable);
-            var posy = _this.conf.yScale(d.data0.value.value);
-            var mom = moment(_this.conf.xScale.domain());
-            return ('translate(' + (posx + 20) + ', ' + (posy + 20) + ')');
-          });
-
-        _this.conf.tooltipText
-          .text(function(d, i) {
-            return ('Oct $2,267,000');
-          });
-/*
         var tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         var tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
@@ -215,7 +217,6 @@ class LineChart extends React.Component {
           .style('left', (posx) + 'px')
           .style('top',  (posy) + 'px');
 
-*/
         _this.conf.focus.style('display', null);
         _this.conf.focus.selectAll('circle')
           .style('display', 'none');
