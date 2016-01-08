@@ -81,7 +81,7 @@ var LineChart = React.createClass({
     this.conf = {
       data: props.data,
       height: props.height,
-      width: props.width || $('#' + props.idContainer).outerWidth(),
+      width: props.width || $('#' + props.idContainer).outerWidth()
     };
 
     this.conf.tooltip = d3.select('body')
