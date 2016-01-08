@@ -7,14 +7,9 @@ class ColoniaInfo extends React.Component {
   render() {
     return (
       <div className={'oferta-disponible'}>
-        <h4>Colonia Anzures</h4>
-        <div style={{
-          marginTop: '20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }} className={'row'}>
-          <div style={{textAlign: 'center'}}>
+        <h4 className={'subsection-title'}>Colonia Anzures</h4>
+        <div style={{marginTop: '20px'}} className={'row'}>
+          <div className={'col-sm-4'}>
             <p className={'green-price'}>$2,915,000</p>
             <p className={'subtitle'}>Precio total Enero 2016</p>
           </div>

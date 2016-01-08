@@ -7,19 +7,15 @@ class ViviendaInfo extends React.Component {
   render() {
     return (
       <div className={'oferta-disponible'}>
-        <h4>Vivienda valuada</h4>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          marginTop: '20px'
-        }} className={'row'}>
-          <div>
+        <h4 className={'subsection-title'}>Vivienda valuada</h4>
+        <div style={{marginTop: '20px'}} className={'row'}>
+          <div className={'col-sm-4'}>
             <p className={'green-price'}>$2,915,000</p>
             <p className={'subtitle'}>Precio total Enero 2016</p>
           </div>
-          <div>
-            <p>Estrellas</p>
+          <div className={'col-sm-4'}>
+            <p className={'secondary-price'}>Estrellas</p>
+            <p className={'subtitle'}>Confianza</p>
           </div>
           <div className={'col-sm-4'}>
             <p className={'secondary-price'}>$15,000</p>

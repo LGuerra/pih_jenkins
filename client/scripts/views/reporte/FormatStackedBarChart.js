@@ -13,8 +13,8 @@ function getDummyStackedData(numGroups, numBarsByGroup) {
       group.bars.push({
         label: 'bar-' + j,
         value: _.random(0, 100),
-        color: '#1394BC',
-        hoverColor: '#848484'
+        color: '#848484',
+        hoverColor: '#1394bc'
       });
     }
     data.push(group);
@@ -32,8 +32,7 @@ class FormatStackedBarChart extends React.Component {
     return (
       <StackedBarChart
         data={getDummyStackedData(4, 4)}
-        title={'Distribución de Tipología'}
-        height={230}
+        height={280}
         idContainer={'stacked-chart'} />
     );
   }

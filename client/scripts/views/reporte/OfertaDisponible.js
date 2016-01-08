@@ -7,7 +7,7 @@ class OfertaDisponible extends React.Component {
   render() {
     return (
       <div className={'oferta-disponible'}>
-        <h4>Oferta Disponible</h4>
+        <h4 className={'subsection-title'}>Oferta Disponible</h4>
         <div style={{marginTop: '65px'}} className={'row listados'}>
           <div className={'col-sm-6 '}>
             <p className={'primary-price'}>985</p>

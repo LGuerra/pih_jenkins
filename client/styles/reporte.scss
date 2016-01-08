@@ -6,13 +6,10 @@
   transition:         $transition-property $transition-time $method;
 }
 
-.sticky {
-  position: fixed;
-  width: 100%;
-  left: 0;
-  top: 0;
-  z-index: 100;
-  border-top: 0;
+#sticky-nav{
+  -webkit-box-shadow: 0px 4px 4px rgba(0,0,0,0.06);
+  -moz-box-shadow: 0px 4px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 4px rgba(0,0,0,0.06);
 }
 
 .navbar {
@@ -31,12 +28,13 @@
     border-bottom: 1px solid #E6E6E6;
   }
   thead {
-    border-bottom: 2px solid #1394BC;
+    border-bottom: 2px solid #353535;
   }
 }
 
 .block-container {
   margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 .green-price {
@@ -65,6 +63,23 @@
   text-align: center;
   font-size: 12px;
   color: #828282;
+}
+
+.section-title{
+  color: #000;
+  font-weight: normal;
+  text-align: center;
+  font-size: 21px;
+}
+.section-title-hr{
+  border-top: 1px solid #e51e35;
+  margin-top: 0px;
+}
+
+.subsection-title{
+  font-weight: 500;
+  font-size: 17px;
+  color: #656565;
 }
 
 .tooltip-container {
