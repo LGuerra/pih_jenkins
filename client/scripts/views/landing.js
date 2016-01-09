@@ -1,22 +1,20 @@
 import React from 'react';
 import { Input, DropdownButton, MenuItem,
          ButtonGroup, Button, Glyphicon,
-         Image} from 'react-bootstrap';
+         Image, Dropdown} from 'react-bootstrap';
+import IMDropdownButton from '../components/DropdownButton';
 
 import Component from '../components/component';
 import API from '../api';
 
 function parseSuggestions(hit) {
-  let ids = [];
-  let fields =[];
-  let highlights [];
-  for ( let e in hit ) {
-    ids.push(e.id);
-    fields.push(e.fields.name);
-    highlights.push(e.highlights.name);
+  let ans = [];
+  for ( let i = 0; i < hit.length; i++ ) {
+    ans.push({id: hit[i].id,
+              field: hit[i].fields.name,
+              highlights: hit[i].highlights.name});
   }
-  console.log(hit);
-  return [ids, fields, highlights];
+  return ans;
 }
 
 class Landing extends React.Component {
@@ -35,13 +33,16 @@ class Landing extends React.Component {
 
   _sendRequest () {
     let searchInput = this.refs.searchInput.getValue();
+    let _this = this;
+
     if (searchInput.length >= 3) {
       API.landing({"q": searchInput + "*", "return": "name", "highlight.name": "{}"})
         .done(function(response) {
-          let [i,f,h] = parseSuggestions(response.hits.hit);
-          //this.setState(searchSuggestions:
-          console.log(i,f,h);
+          let suggests = parseSuggestions(response.hits.hit);
+          _this.setState({suggestions: suggests});
         });
+    } else {
+      _this.setState({suggestions: []});
     }
   }
 
@@ -63,19 +64,24 @@ class Landing extends React.Component {
         </Button>
       </ButtonGroup>
     );
-    console.log(this.state.searchType);
 
+    let suggestionItems;
+    if (this.state.suggestions) {
+      let suggestions = this.state.suggestions;
+      if (suggestions.length > 0) {
+        console.log("there are suggestions", suggestions);
+        suggestionItems = suggestions.map(e => <MenuItem key={e.id} eventKey={e.id}><em>holi{e.highlights}</em></MenuItem>);
+        console.log(suggestionItems);
+      }
+    }
+
+    let metrics = ['Vivienda','Zona'];
     return (
         <div className="landing-page">
           <div className="row">
             <div className="col-md-12">
               <div id="id-search-container" className="col-md-6 col-md-offset-3 search-container">
-                <Input type="text"
-                       ref="searchInput"
-                       placeholder="Ingrese dirección"
-                       onChange={this._sendRequest}
-                       buttonBefore={searchType}
-                       buttonAfter={searchButton} ></Input>
+                <IMDropdownButton items={metrics} styles={{width: 100}}/>
               </div>
             </div>
           </div>
