@@ -23,13 +23,13 @@ class FormatBarChart extends React.Component {
   _tooltipBarFormat(d, i) {
     var html = '<div class="tooltip-container">';
       html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + '120' + '</p>';
-        html += '<p class="tooltip-unit">' + 'Viviendas' + '</p>';
+        html += '<p class="tooltip-title">' + '$1,000,000' + '</p>';
+        html += '<p class="tooltip-title">' + '&nbsp;a&nbsp;' + '</p>';
+        html += '<p class="tooltip-title">' + ' $3,000,000' + '</p>';
       html += '</div>';
       html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + '$1,000,000' + '</p>';
-        html += '<p class="tooltip-value">' + 'a' + '</p>';
-        html += '<p class="tooltip-value">' + ' $3,000,000' + '</p>';
+        html += '<p class="tooltip-value">' + '120' + '</p>';
+        html += '<p class="tooltip-unit">' + '&nbsp;Viviendas' + '</p>';
       html += '</div>';
     html += '</div>';
     return (html);
