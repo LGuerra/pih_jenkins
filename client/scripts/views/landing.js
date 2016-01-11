@@ -20,11 +20,20 @@ function parseSuggestions(hit) {
 class Landing extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {   metrics: [ 'Vivienda', 'Zona' ],
-                  searchType: 'Vivienda'};
+    this.state = { metrics:       ['Vivienda', 'Zona'],
+                   searchType:     'Vivienda',
+                   vivienda:       'dpto.',
+                   operacion:      'compra',
+                   areaConstruida: '100m2',
+                   edad:           5,
+                   habitaciones:   2,
+                   banos:          1,
+                   cajones:        1
+                 };
     this._searchTypeSelected = this._searchTypeSelected.bind(this);
-    this._sendRequest = this._sendRequest.bind(this);
+    this._sendRequest        = this._sendRequest.bind(this);
     this._inputChangeHandler = this._inputChangeHandler.bind(this);
+    this._modalChange        = this._modalChange.bind(this);
   }
 
   _searchTypeSelected (sType) {
@@ -50,7 +59,13 @@ class Landing extends React.Component {
     } else {
       _this.setState({suggestions: []});
     }
+  }
 
+  _modalChange(modalData) {
+    console.log("**+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*++*+");
+    console.log("*+*+*+*+*+MODAL CHANGED*+*+*+**+*+*+");
+    console.log("*+*+*+*+*+", modalData);
+    this.setState(modalData);
   }
 
   render() {
@@ -87,7 +102,7 @@ class Landing extends React.Component {
                 </div>
                 <div className="row">
                   <div className="col-md-10 col-md-offset-1" style={{padding: 0}}>
-                    <ModalVivienda />
+                    <ModalVivienda modalChange={this._modalChange} />
                   </div>
                 </div>
               </div>

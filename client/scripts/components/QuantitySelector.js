@@ -16,6 +16,14 @@ class IMQuantitySelector extends React.Component {
     if (this.state.quantity < this.props.upperLimit) this.setState({quantity: this.state.quantity +1});
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state) {
+      this.props.quantityChange(nextState.quantity);
+      return true;
+    }
+    return false;
+  }
+
   render () {
     return (
       <div className="im-quantity-selector" style={this.props.styles}>
