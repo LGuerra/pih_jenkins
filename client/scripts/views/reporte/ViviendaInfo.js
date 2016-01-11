@@ -5,6 +5,13 @@ class ViviendaInfo extends React.Component {
     super(props);
   }
   render() {
+    var stars = new Array();
+    for (let i = 0; i < this.props.reputacion; i++) {
+      stars.push(
+        <img key={'star-' + i} height={'20px'} src={IMAGES.star} />
+      );
+    }
+
     return (
       <div className={'oferta-disponible'}>
         <h4>Vivienda valuada</h4>
@@ -18,11 +25,7 @@ class ViviendaInfo extends React.Component {
             <p className={'subtitle'}>Precio total Enero 2016</p>
           </div>
           <div style={{textAlign: 'center'}}>
-            <img height={'20px'} src={IMAGES.star} />
-            <img height={'20px'} src={IMAGES.star} />
-            <img height={'20px'} src={IMAGES.star} />
-            <img height={'20px'} src={IMAGES.star} />
-            <img height={'20px'} src={IMAGES.star} />
+            {stars}
             <p style={{marginTop: '10px'}} className={'subtitle'}>Confianza</p>
           </div>
           <div style={{textAlign: 'center'}}>
@@ -34,5 +37,9 @@ class ViviendaInfo extends React.Component {
     );
   }
 }
+
+ViviendaInfo.defaultProps = {
+  reputacion: 4
+};
 
 export default ViviendaInfo;

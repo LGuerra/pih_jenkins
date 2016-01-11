@@ -107,7 +107,7 @@ class LineChart extends React.Component {
         var date = months[m.month()] + ' ' + m.date();
         return (date);
       })
-      .ticks(3)
+      .ticks(Math.floor(this.conf.width / 120))
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
@@ -134,12 +134,37 @@ class LineChart extends React.Component {
     this.conf.gContent.selectAll('.axis')
       .selectAll('path, line')
       .attr('fill', 'none')
-      .attr('stroke', '#000')
+      .attr('stroke', '#B5B5B5')
       .style('shape-rendering', 'crispEdges');
 
     this.conf.gContent.selectAll('.axis')
       .selectAll('text')
+      .attr('fill', '#828282')
       .style('font', '10px sans-serif');
+
+    if (!props.showAxis.x.line) {
+      this.conf.gContent.selectAll('.axis.x')
+        .selectAll('path, line')
+        .style('display', 'none');
+    }
+
+    if (!props.showAxis.y.line) {
+      this.conf.gContent.selectAll('.axis.y')
+        .selectAll('path, line')
+        .style('display', 'none');
+    }
+
+    if (!props.showAxis.x.ticks) {
+      this.conf.gContent.selectAll('.axis.x')
+        .selectAll('text')
+        .style('display', 'none');
+    }
+
+    if (!props.showAxis.y.ticks) {
+      this.conf.gContent.selectAll('.axis.y')
+        .selectAll('text')
+        .style('display', 'none');
+    }
   }
   _appendLines() {
     var _this = this;
@@ -279,12 +304,12 @@ class LineChart extends React.Component {
     this.conf.svgContainer
       .attr('width', this.conf.width);
 
-
     //Set scales
     this.conf.xScale
       .range([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
 
     this.conf.xAxis
+      .ticks(Math.floor(this.conf.width / 120))
       .scale(this.conf.xScale)
 
     //Append axis to graphic content
@@ -316,7 +341,18 @@ class LineChart extends React.Component {
       })
       .attr('x', (d, i) => {
         return (this.conf.xScale(d.data0.value.xVariable));
-      })
+      });
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('path, line')
+      .attr('fill', 'none')
+      .attr('stroke', '#B5B5B5')
+      .style('shape-rendering', 'crispEdges');
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('text')
+      .attr('fill', '#828282')
+      .style('font', '10px sans-serif');
   }
   componentDidMount() {
     window.addEventListener('resize', this._updateDimensions.bind(this));

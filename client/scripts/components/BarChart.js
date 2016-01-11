@@ -84,8 +84,37 @@ class BarChart extends React.Component {
     this.conf.gContent.selectAll('.axis')
       .selectAll('path, line')
       .attr('fill', 'none')
-      .attr('stroke', '#000')
+      .attr('stroke', '#B5B5B5')
       .style('shape-rendering', 'crispEdges');
+
+    if (!props.showAxis.x.line) {
+      this.conf.gContent.selectAll('.axis.x')
+        .selectAll('path, line')
+        .style('display', 'none');
+    }
+
+    if (!props.showAxis.y.line) {
+      this.conf.gContent.selectAll('.axis.y')
+        .selectAll('path, line')
+        .style('display', 'none');
+    }
+
+    if (!props.showAxis.x.ticks) {
+      this.conf.gContent.selectAll('.axis.x')
+        .selectAll('text')
+        .style('display', 'none');
+    }
+
+    if (!props.showAxis.y.ticks) {
+      this.conf.gContent.selectAll('.axis.y')
+        .selectAll('text')
+        .style('display', 'none');
+    }
+
+    this.conf.gContent.selectAll('.axis')
+      .selectAll('text')
+      .attr('fill', '#828282')
+
 
     this.conf.gContent.selectAll('.axis')
       .selectAll('text')

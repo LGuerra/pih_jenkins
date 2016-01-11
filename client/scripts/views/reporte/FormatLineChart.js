@@ -43,9 +43,10 @@ class FormatLineChart extends React.Component {
   render() {
     return (
       <LineChart
+        showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
         data={getDummyLineData(1, 14)}
         tooltipFormat={this._tooltipLineFormat}
-        height={250}
+        height={180}
         idContainer={'line-chart'} />
     );
   }

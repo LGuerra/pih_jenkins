@@ -21,9 +21,9 @@ import StickyNavbar from          './reporte/StickyNavbar';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ComparativoViviendas from  './reporte/ComparativoViviendas';
 import ComparativoColonias from   './reporte/ComparativoColonias';
+import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
 
-
-class Page extends React.Component{
+class Reporte extends React.Component{
   constructor(props) {
     super(props);
 
@@ -106,6 +106,9 @@ class Page extends React.Component{
     var borderRight = {
       borderRight: '1px solid #c9c9c9'
     };
+    var secondaryNavbar;
+    var infoBlocks;
+    var compareTables;
 
     if (this.state.loadingReport) {
       loadingFrame =
@@ -120,17 +123,12 @@ class Page extends React.Component{
         </div>;
     }
 
-    return (
-      <div className={'noselect'}>
-        <header>
-          <MainNavbar
-           onDownloadReport={this._downloadReport}>
-          </MainNavbar>
-            {loadingFrame}
-          <SecondaryNavbar
-            width={'100%'} />
-          <StickyNavbar />
-        </header>
+    if (this.props.type === 'vivienda') {
+      secondaryNavbar = (
+        <SecondaryNavbar
+          width={'100%'} />
+      );
+      infoBlocks = (
         <div className={'row block-container'}>
           <div style={borderRight} className={'col-sm-6'}>
             <ViviendaInfo />
@@ -139,6 +137,34 @@ class Page extends React.Component{
             <ColoniaInfo />
           </div>
         </div>
+      );
+      compareTables = (
+        <ComparativoViviendas />
+      );
+    } else {
+      infoBlocks = (
+        <div className={'row block-container'}>
+          <div className={'col-sm-12'}>
+            <ColoniaInfo />
+          </div>
+        </div>
+      );
+      compareTables = (
+        <ComparativoColonias />
+      );
+    }
+
+    return (
+      <div className={'noselect'}>
+        <header>
+          <MainNavbar
+           onDownloadReport={this._downloadReport}>
+          </MainNavbar>
+            {loadingFrame}
+          {secondaryNavbar}
+          <StickyNavbar />
+        </header>
+        {infoBlocks}
         <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
           {loadingFrame}
           <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
@@ -147,10 +173,12 @@ class Page extends React.Component{
             <div style={borderRight} className={'col-sm-6'}>
               <h4 className={'subsection-title'}>Precio Histórico Enero 2010 - Enero 2015</h4>
               <div className={'row'}>
-                <div className={'col-sm-9'}>
+                <div className={'col-sm-12'}>
                   <FormatLineChart/>
                 </div>
-                <div className={'col-sm-3 apariencia-anual'}>
+              </div>
+              <div className={'row'}>
+                <div className={'col-sm-12'} style={{marginTop: '17px'}}>
                   <p className={'primary-price'}>{'5.3%'}</p>
                   <p className={'subtitle'}>apreciación anual</p>
                 </div>
@@ -174,7 +202,12 @@ class Page extends React.Component{
         </div>
         <div className={'row block-container'} style={{marginTop: '10px'}}>
           <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
-            <ComparativoColonias />
+            {compareTables}
+          </div>
+        </div>
+        <div className={'row'}>
+          <div style={{marginBottom: '30px'}} className={'col-sm-12'}>
+            <FormatGoogleMaps />
           </div>
         </div>
       </div>
@@ -182,4 +215,8 @@ class Page extends React.Component{
   }
 }
 
-module.exports = Page;
+Reporte.defaultProps = {
+  type: 'vivienda'
+}
+
+module.exports = Reporte;

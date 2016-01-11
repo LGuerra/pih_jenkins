@@ -4,8 +4,8 @@ import Table from '../../components/Table';
 
 var tableData = [
   {
+    'Precio por m²': '$10,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -13,8 +13,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$11,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -22,8 +22,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$12,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -31,8 +31,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$13,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -40,8 +40,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$14,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -49,8 +49,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$15,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -58,8 +58,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$16,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -67,8 +67,8 @@ var tableData = [
     'Edad': '10'
   },
   {
+    'Precio por m²': '$17,000',
     'Valor de Avalúo': '$2,794,000',
-    'Tipo': 'Departamento en condominio',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
@@ -84,9 +84,10 @@ class ComparativoViviendas extends React.Component {
   render() {
     return (
       <div>
-        <h3 className={'section-title'}>Viviendas comparables</h3>
+        <h3 className={'section-title'}>{'Departamentos comparables en los últimos 6 meses'}</h3>
         <hr width={'100px'} className={'section-title-hr'}/>
         <Table
+          limit={5}
           specificClass={'mercado-table table-hover'}
           data={tableData} />
       </div>

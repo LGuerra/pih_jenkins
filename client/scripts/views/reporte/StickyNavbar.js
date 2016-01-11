@@ -5,7 +5,8 @@ class StickyNavbar extends React.Component{
     super(props);
   }
   componentDidMount() {
-    var stickyNavTop = $('.secondary-nav').offset().top;
+    var stickyNavTop = $('.secondary-nav').offset() ?
+      $('.secondary-nav').offset().top : 50;
 
     var stickyNav = function(){
       var scrollTop = $(window).scrollTop();

@@ -5,11 +5,27 @@ import _ from 'lodash'
 class Table extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      limit: props.limit
+    }
+  }
+  _onToggle() {
+    if (this.state.limit === 0) {
+      this.setState({
+        limit: this.props.limit
+      });
+    } else {
+      this.setState({
+        limit: 0
+      });
+    }
   }
   render () {
     var data = this.props.data;
     var keys = Object.keys(data[0]);
     var tdArray;
+    var limit = this.state.limit;
+    var verMasControl;
 
     if (this.props.sortBy) {
       data = _.sortBy(data, this.props.sortBy.field);
@@ -30,10 +46,24 @@ class Table extends React.Component {
         tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
       }
 
-      return (
-        <tr key={'row-' + index}>{tdArray}</tr>
-      );
+      if (!limit || index < limit) {
+        return (
+          <tr key={'row-' + index}>{tdArray}</tr>
+        );
+      }
     });
+
+    if (limit || limit == 0) {
+      let label = 'Ver +';
+      if (limit == 0) {
+        label = 'Ver -';
+      }
+      verMasControl = (
+        <div style={{cursor: 'pointer'}} onClick={this._onToggle.bind(this)}>
+          <h5 style={{textAlign: 'center'}}>{label}</h5>
+        </div>
+      )
+    }
 
     return (
     <div className={'table-container'}>
@@ -47,6 +77,7 @@ class Table extends React.Component {
           {rows}
         </tbody>
       </table>
+      {verMasControl}
     </div>
     );
   }
