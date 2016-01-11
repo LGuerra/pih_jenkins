@@ -11,12 +11,18 @@ class IMMenuItem extends React.Component {
     return this.props.selectMItem(this.state.content);
   }
 
+  parseContent(text){
+    //text = {text.replace(/&#32;/g,' ')};
+    return <span dangerouslySetInnerHTML={{__html: text.replace(/em>/g,'b>')}} />;
+    //return text
+  }
+
   render() {
     return (
         <div className="im-menu-item"
              style={{width: this.props.styles.width}}
              onClick={this.handleClick}>
-          {this.state.content}
+          {this.parseContent(this.state.content)}
         </div>
     );
   }

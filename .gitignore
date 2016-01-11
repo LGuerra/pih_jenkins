@@ -17,6 +17,7 @@
 /tmp
 *.swp
 *.swo
+*.swn
 .env
 
 # Elastic Beanstalk Files

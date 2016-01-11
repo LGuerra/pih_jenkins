@@ -32,7 +32,7 @@ class ModalVivienda extends React.Component {
   }
   render () {
     return (
-      <div>
+      <div className="modal-box">
         <div className="row modal-row">
           <div className="col-md-4">
             <IMQuantitySelector styles={{display: "inline-block"}}

@@ -1,5 +1,6 @@
 .im-dropdown-button {
   text-align: center;
+  width: 100%;
 
   .im-dropdown-button-text {
     display: inline-block;
@@ -30,6 +31,8 @@
 
 .im-dropdown {
   margin-left: 5px;
+  z-index: 3;
+  position: absolute;
   .im-menu-item {
     background-color: white;
     height: 40px;
