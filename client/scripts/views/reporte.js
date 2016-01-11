@@ -25,7 +25,8 @@ class MainNavbar extends React.Component{
     return (
       <nav className={'navbar navbar-default'} style={{
         width: this.props.width,
-        backgroundColor: this.props.bgColor
+        backgroundColor: this.props.bgColor,
+        minHeight: '44px',
       }}>
       {this.props.children}
       </nav>
@@ -122,8 +123,8 @@ class Page extends React.Component{
         <header>
           <MainNavbar
             width={'100%'}>
-              <img height={'30px'} style={{margin: '7px 10px'}} src={IMAGES.santander} />
-              <img height={'30px'} style={{margin: '7px 10px'}} src={IMAGES.intelimetrica} />
+              <img height={'25px'} style={{margin: '7px 10px'}} src={IMAGES.santander} />
+              <img height={'25px'} style={{margin: '7px 10px'}} src={IMAGES.intelimetrica} />
           </MainNavbar>
           <SecondaryNavbar
             width={'100%'} />
@@ -137,7 +138,7 @@ class Page extends React.Component{
             <ColoniaInfo />
           </div>
         </div>
-        <div style={{backgroundColor: '#f2f5f9', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
+        <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
           <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
           <hr width={'100px'} className={'section-title-hr'}/>
           <div className={'row block-container'}>

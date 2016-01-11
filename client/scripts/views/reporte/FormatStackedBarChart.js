@@ -13,8 +13,8 @@ function getDummyStackedData(numGroups, numBarsByGroup) {
       group.bars.push({
         label: 'bar-' + j,
         value: _.random(0, 100),
-        color: '#848484',
-        hoverColor: '#1394bc'
+        color: '#35C0BE',
+        hoverColor: '#2a9998'
       });
     }
     data.push(group);

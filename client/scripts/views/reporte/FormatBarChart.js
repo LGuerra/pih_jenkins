@@ -39,8 +39,8 @@ class FormatBarChart extends React.Component {
       <BarChart
         data={getDummyBarData(10)}
         tooltipFormat={this._tooltipBarFormat}
-        color={'#DDDDDD'}
-        hoverColor={'#1394BC'}
+        color={'#35C0BE'}
+        hoverColor={'#2a9998'}
         height={178}
         idContainer={'bar-chart'} />
     );
