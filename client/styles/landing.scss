@@ -12,3 +12,50 @@
   margin-right: 0px !important;
   margin-left: 0px !important;
 }
+
+.search-button {
+  background-color: #05637F;
+  height: 40px;
+  width: 100px;
+  text-align: center;
+  border: 1px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+.search-dropdown-button {
+  background-color: white;
+  height: 40px;
+  border: 1px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right-color: blue;
+  border-right-style: solid;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.modal-dropdown-button {
+  display: inline-block;
+  background-color: rgba(1,1,1,0);
+  border: 1px;
+  color: black;
+  font-weight: 500;
+  border-bottom-style: solid;
+  border-bottom-color: gray;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.modal-row {
+  padding-top: 20px;
+}
+.modal-button-container {
+  width: 60%;
+}

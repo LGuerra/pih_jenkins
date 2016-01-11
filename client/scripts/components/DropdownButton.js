@@ -18,22 +18,24 @@ class IMDropdownButton extends React.Component {
   }
 
   selectMenuItem(a) {
-    console.log(a);
+    this.props.selectMItem(a);
     this.setState({selectedItem: a, showDropdown: false});
   }
+
 
   render() {
     let imDropdown;
     if (this.state.showDropdown) {
-      imDropdown = (<IMDropdown items={this.props.items} styles={{width: 100}} selectMItem={this.selectMenuItem}/>);
+      imDropdown = (<IMDropdown items={this.props.items} styles={{width: 95}} selectMItem={this.selectMenuItem}/>);
     }
 
     return (
-      <div>
-        <button className="im-dropdown-button" style={this.props.styles} onClick={this.openDropdown}>
+      <div className={this.props.outerButtonClassName} style={{display: 'inline-block', padding: 0}}>
+        <button className={"im-dropdown-button " + this.props.className } style={this.props.styles} onClick={this.openDropdown}>
           <span className="im-dropdown-button-text">
-          {this.state.selectedItem}  *
+          {this.state.selectedItem}
           </span>
+          <span> <img src={IMAGES.downArrow} width="10"></img> </span>
           {/*<span className="glyphicon glyphicon-menu-dropdown" aria-hidden="true">\/</span>*/}
         </button>
         {imDropdown}

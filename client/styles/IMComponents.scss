@@ -1,12 +1,5 @@
 .im-dropdown-button {
-  background-color: white;
-  height: 40px;
   text-align: center;
-  border: 1px;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-  border-right-color: blue;
-  border-right-style: solid;
 
   .im-dropdown-button-text {
     display: inline-block;
@@ -16,6 +9,24 @@
     outline: 0;
   }
 }
+
+.im-input-dropdown {
+  display: inline;
+
+  input[type="text"] {
+    width: 100%;
+    height: 40px;
+    text-align: left;
+    border: 1px;
+    padding: 0 0 0 15px;
+
+    &:focus {
+      outline: 0;
+    }
+
+  }
+}
+
 
 .im-dropdown {
   margin-left: 5px;
@@ -34,3 +45,15 @@
   }
 }
 
+.im-quantity-selector-button {
+  display: inline-block;
+  background-color: rgba(1,1,1,0);
+  height: 30px;
+  width: 30px;
+  border: 1px;
+  color: black;
+  font-weight: 500;
+  &:focus {
+    outline: 0;
+  }
+}

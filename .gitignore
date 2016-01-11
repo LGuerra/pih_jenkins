@@ -16,6 +16,7 @@
 !/log/.keep
 /tmp
 *.swp
+*.swo
 .env
 
 # Elastic Beanstalk Files
