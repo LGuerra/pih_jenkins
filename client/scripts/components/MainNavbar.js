@@ -13,9 +13,14 @@ class MainNavbar extends React.Component{
             <img height={'30px'} style={{margin: '7px 10px'}} src={IMAGES.intelimetrica} />
           </div>
           <div className={'col-sm-3'}>
-            <div onClick={this.props.onDownloadReport} style={{cursor: 'pointer', paddingTop: '14px', display: 'flex'}}>
-              <p>Descergar reporte</p>
-              <img height={'15px'} style={{margin: '2px 10px'}} src={IMAGES.descarga} />
+            <div style={{cursor: 'pointer', paddingTop: '14px', display: 'flex', alignItems: 'flex-start'}}>
+              <div style={{display: 'flex'}} onClick={this.props.onDownloadReport}>
+                <p>Descergar reporte</p>
+                <img height={'15px'} style={{margin: '2px 10px'}} src={IMAGES.descarga} />
+              </div>
+              <div style={{marginTop: '-2px'}}>
+                <img height={'15px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
+              </div>
             </div>
           </div>
         </div>

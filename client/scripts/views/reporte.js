@@ -6,7 +6,6 @@ import _ from 'lodash';
 import moment from 'moment';
 
 // Components
-import Table from       '../components/Table';
 import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
 
@@ -20,6 +19,8 @@ import FormatBarChart from        './reporte/FormatBarChart';
 import FormatStackedBarChart from './reporte/FormatStackedBarChart';
 import StickyNavbar from          './reporte/StickyNavbar';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
+import ComparativoViviendas from  './reporte/ComparativoViviendas';
+import ComparativoColonias from   './reporte/ComparativoColonias';
 
 
 class Page extends React.Component{
@@ -75,7 +76,6 @@ class Page extends React.Component{
 
   }
   _downloadReport() {
-    console.log(this);
     var host = '/reporter/report/';
     var date = moment().format('DD-MM-YYYY');
 
@@ -84,7 +84,11 @@ class Page extends React.Component{
     this.setState({
       loadingReport: true
     }, () => {
-      console.log('AQUI');
+      setTimeout(() => {
+        this.setState({
+          loadingReport: false
+        })
+      }, 2000);
       /*
       $.get(this.url)
         .done(() => {
@@ -98,81 +102,6 @@ class Page extends React.Component{
   }
   render() {
     var loadingFrame;
-    var tableData = [
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      },
-      {
-        'Valor de Avalúo': '$2,794,000',
-        'Tipo': 'Departamento en condominio',
-        'Recámaras': '2',
-        'Baños': '2',
-        'Estacionamientos': '1',
-        'Construcción m²': '74',
-        'Edad': '10'
-      }
-    ];
-
     var borderRight = {
       borderRight: '1px solid #c9c9c9'
     };
@@ -194,7 +123,9 @@ class Page extends React.Component{
       <div className={'noselect'}>
         <header>
           <MainNavbar
-           onDownloadReport={this._downloadReport} />
+           onDownloadReport={this._downloadReport}>
+          </MainNavbar>
+            {loadingFrame}
           <SecondaryNavbar
             width={'100%'} />
           <StickyNavbar />
@@ -207,7 +138,6 @@ class Page extends React.Component{
             <ColoniaInfo />
           </div>
         </div>
-        {loadingFrame}
         <div style={{backgroundColor: '#f2f5f9', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
           <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
           <hr width={'100px'} className={'section-title-hr'}/>
@@ -242,12 +172,7 @@ class Page extends React.Component{
         </div>
         <div className={'row block-container'} style={{marginTop: '10px'}}>
           <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
-            <h3 className={'section-title'}>Viviendas Comparables</h3>
-            <hr width={'100px'} className={'section-title-hr'}/>
-            <Table
-              specificClass={'mercado-table table-hover'}
-              data={tableData}
-              />
+            <ComparativoColonias />
           </div>
         </div>
       </div>

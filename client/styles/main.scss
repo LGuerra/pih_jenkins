@@ -1,5 +1,9 @@
 @import 'reporte';
 
+body {
+  min-width: 350px;
+}
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -7,4 +11,17 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .spinner {
+    width: 100px;
+    height: 40px;
+    div {
+      background-color: #B5B5B5;
+    }
+  }
 }
