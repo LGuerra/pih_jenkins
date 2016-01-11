@@ -11,16 +11,18 @@ class StickyNavbar extends React.Component{
       var scrollTop = $(window).scrollTop();
       if (scrollTop > (stickyNavTop * 2)) {
         $('#sticky-nav').css({
+          display: 'block',
           opacity: 1,
-          WebkitTransition : 'opacity 0.5s ease-in-out',
-          MozTransition    : 'opacity 0.5s ease-in-out',
-          MsTransition     : 'opacity 0.5s ease-in-out',
-          OTransition      : 'opacity 0.5s ease-in-out',
-          transition       : 'opacity 0.5s ease-in-out'
+          WebkitTransition : 'opacity 1s ease-in-out',
+          MozTransition    : 'opacity 1s ease-in-out',
+          MsTransition     : 'opacity 1s ease-in-out',
+          OTransition      : 'opacity 1s ease-in-out',
+          transition       : 'opacity 1s ease-in-out'
         });
       } else {
         $('#sticky-nav').css({
-          opacity: 0
+          opacity: 0,
+          display: 'none'
         });
       }
     };
