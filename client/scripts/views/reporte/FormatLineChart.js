@@ -20,7 +20,7 @@ function getDummyLineData(numLines, numRegisters) {
     data.push({
       label: 'line-' + i,
       data: line,
-      color: '#1394BC'
+      color: '#35C0BE'
     });
   }
 
@@ -34,7 +34,8 @@ class FormatLineChart extends React.Component {
   _tooltipLineFormat() {
     var html = '<div class="tooltip-container">';
       html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + 'Oct $2,267,000' + '</p>';
+        html += '<p class="tooltip-title">' + 'Oct&nbsp;' + '</p>';
+        html += '<p class="tooltip-value">' + '$2,267,000' + '</p>';
       html += '</div>';
     html += '</div>';
     return (html);

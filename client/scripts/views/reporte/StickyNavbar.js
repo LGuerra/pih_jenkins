@@ -62,6 +62,11 @@ class StickyNavbar extends React.Component{
                 <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'Baños'}</p>
               </div>
               <div className={'navbar-icon'}>
+                <img width={'15px'} src={IMAGES.car} />
+                <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{'1'}</p>
+                <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'Estacionamientos'}</p>
+              </div>
+              <div className={'navbar-icon'}>
                 <img width={'15px'} src={IMAGES.area} />
                 <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{'1'}</p>
                 <p style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'m²'}</p>

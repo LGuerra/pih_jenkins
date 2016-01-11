@@ -35,6 +35,7 @@ class Page extends React.Component{
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
   }
+
   _printInfo(url) {
     var link = document.createElement('a');
     link.href = url;
@@ -138,7 +139,8 @@ class Page extends React.Component{
             <ColoniaInfo />
           </div>
         </div>
-        <div style={{backgroundColor: '#f2f5f9', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
+        <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
+          {loadingFrame}
           <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
           <hr width={'100px'} className={'section-title-hr'}/>
           <div className={'row block-container'}>
