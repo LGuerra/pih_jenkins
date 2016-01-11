@@ -3,8 +3,12 @@ import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash';
 
+import moment from 'moment';
+
 // Components
-import Table from '../components/Table';
+import Table from       '../components/Table';
+import MainNavbar from  '../components/MainNavbar';
+import Spinner from     '../components/Spinner';
 
 // View's Components
 import OfertaDisponible from      './reporte/OfertaDisponible';
@@ -17,28 +21,84 @@ import FormatStackedBarChart from './reporte/FormatStackedBarChart';
 import StickyNavbar from          './reporte/StickyNavbar';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
 
-class MainNavbar extends React.Component{
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <nav className={'navbar navbar-default'} style={{
-        width: this.props.width,
-        backgroundColor: this.props.bgColor,
-        minHeight: '44px',
-      }}>
-      {this.props.children}
-      </nav>
-    );
-  }
-}
 
 class Page extends React.Component{
   constructor(props) {
     super(props);
+
+    //Get initial State
+    this.state = {
+      loadingReport: false
+    }
+
+    //Methods instances
+    this._downloadReport = this._downloadReport.bind(this);
+  }
+
+  _printInfo(url) {
+    var link = document.createElement('a');
+    link.href = url;
+    link.click();
+
+    this.setState({
+      loadingReport: false
+    });
+  }
+  _buildPromises(principal, identifier, dataType, data) {
+    var operation = this.state.operation;
+    var state = this.state.state;
+    var actualDate = moment().format('DD-MM-YYYY');
+    var promise;
+    var operatorPortafolioTotal = this.refs.portafolio_total.state.operation;
+    var host = '/reporter';
+
+    var url = host + '/' + principal;
+    url += '/' + operation + '/' + state + '/' + operatorPortafolioTotal + '/' + actualDate + '/' + identifier;
+
+    if (dataType === 'json') {
+      promise = $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+      });
+    } else {
+      promise = $.ajax({
+        url: url,
+        type: 'POST',
+        data: data
+      });
+    }
+
+    return (promise);
+  }
+  _generateInfo() {
+
+  }
+  _downloadReport() {
+    console.log(this);
+    var host = '/reporter/report/';
+    var date = moment().format('DD-MM-YYYY');
+
+
+    this.reportUrl = host + date;
+    this.setState({
+      loadingReport: true
+    }, () => {
+      console.log('AQUI');
+      /*
+      $.get(this.url)
+        .done(() => {
+          this._printInfo(this.url);
+        })
+        .fail(() => {
+          this._generateInfo(this.url);
+        });
+      */
+    });
   }
   render() {
+    var loadingFrame;
     var tableData = [
       {
         'Valor de Avalúo': '$2,794,000',
@@ -118,15 +178,25 @@ class Page extends React.Component{
       borderRight: '1px solid #c9c9c9'
     };
 
+    if (this.state.loadingReport) {
+      loadingFrame =
+        <div style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            height: $(document).height() + 'px',
+            width: '100%',
+            zIndex: '10',
+            position: 'absolute'
+          }}>
+          <Spinner style={{height: '100vh'}}/>
+        </div>;
+    }
+
     return (
       <div className={'noselect'}>
         <header>
           <MainNavbar
-            width={'100%'}>
-              <img height={'25px'} style={{margin: '7px 10px'}} src={IMAGES.santander} />
-              <img height={'25px'} style={{margin: '7px 10px'}} src={IMAGES.intelimetrica} />
-          </MainNavbar>
-          <SecondaryNavbar
+           onDownloadReport={this._downloadReport} />
+         <SecondaryNavbar
             width={'100%'} />
           <StickyNavbar />
         </header>
@@ -138,6 +208,8 @@ class Page extends React.Component{
             <ColoniaInfo />
           </div>
         </div>
+
+        {loadingFrame}
         <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
           <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
           <hr width={'100px'} className={'section-title-hr'}/>
@@ -148,7 +220,7 @@ class Page extends React.Component{
                 <div className={'col-sm-9'}>
                   <FormatLineChart/>
                 </div>
-                <div style={{marginTop: '75px'}} className={'col-sm-3'}>
+                <div className={'col-sm-3 apariencia-anual'}>
                   <p className={'primary-price'}>{'5.3%'}</p>
                   <p className={'subtitle'}>apreciación anual</p>
                 </div>
@@ -175,7 +247,7 @@ class Page extends React.Component{
             <h3 className={'section-title'}>Viviendas Comparables</h3>
             <hr width={'100px'} className={'section-title-hr'}/>
             <Table
-              specificClass={'mercado-table  table-hover'}
+              specificClass={'mercado-table table-hover'}
               data={tableData}
               />
           </div>

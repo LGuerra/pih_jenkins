@@ -7,12 +7,17 @@ class PrecioDistribucion extends React.Component {
   render() {
     return (
       <div>
-        <div style={{marginTop: '20px'}} className={'row'}>
-          <div className={'col-sm-6'}>
+        <div style={{
+          marginTop: '20px',
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center'
+        }}>
+          <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>$850,000</p>
             <p className={'subtitle'}>Precio máximo</p>
           </div>
-          <div className={'col-sm-6'}>
+          <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>$2,350,000</p>
             <p className={'subtitle'}>Precio minimo</p>
           </div>

@@ -36,16 +36,18 @@ class Table extends React.Component {
     });
 
     return (
-    <table className={this.props.specificClass}>
-      <thead>
-        <tr>
-          {titles}
-        </tr>
-      </thead>
-      <tbody>
-        {rows}
-      </tbody>
-    </table>
+    <div className={'table-container'}>
+      <table className={this.props.specificClass}>
+        <thead>
+          <tr>
+            {titles}
+          </tr>
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </table>
+    </div>
     );
   }
 }
