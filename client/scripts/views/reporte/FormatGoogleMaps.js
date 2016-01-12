@@ -8,9 +8,10 @@ class FormatGoogleMaps extends React.Component {
   componentDidMount() {
     var map = this.refs.map.mapRef;
 
-    $.when( $.ajax('https://pih-api.intelimetrica.com/dev/suburb/adjacent-suburbs?suburb=090121758'))
+    $.when( $.ajax('https://pih-api.intelimetrica.com/dev/suburb/adjacent-suburbs?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/geojson?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/centroid?suburb=090121758'))
       .then(loadTopoJSONs, failure);
     function loadTopoJSONs(data, adjacent, current) {
+      console.log(data, adjacent, current);
       map.data.setStyle({
         fillColor: 'red',
         strokeWeight: 1

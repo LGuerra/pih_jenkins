@@ -25,7 +25,7 @@ class IMMenuItem extends React.Component {
   render() {
     return (
         <div className="im-menu-item"
-             style={{width: this.props.styles.width}}
+             style={{width: '100%'}}
              onClick={this.handleClick}>
           {this.parseContent(this.state.content)}
         </div>

@@ -69,8 +69,8 @@ class IMDropdownButton extends React.Component {
 
     return (
       <div className={this.props.outerButtonClassName}
-           style={{display: 'inline-block', padding: 0}} >
-        <button className={"im-dropdown-button " + this.props.className }
+           style={{display: 'inline-block', padding: 0, width: '100%'}} >
+        <button className={"pull-right im-dropdown-button " + this.props.className }
                 style={this.props.styles}
                 onClick={this._openDropdown}
                 onKeyDown={this._keyDown}>

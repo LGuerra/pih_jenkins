@@ -97,7 +97,7 @@ class IMInputDropdown extends React.Component {
 
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
-                                styles={{width:450}}
+                                styles={{width:this.refs.input.offsetWidth - 6}}
                                 selectMItem={this.selectMenuItem}/>);
   }
 

@@ -172,46 +172,41 @@ class Landing extends React.Component {
                                                                vivienda={this.state.vivienda}
                                                                operacion={this.state.operacion}
                                                                areaConstruida={this.state.areaConstruida}
-                                                               edad={this.state.edad}
-                                                               />) : "";
+                                                               edad={this.state.edad} />) : "";
 
     return (
         <div className="landing-page" onClick={this._clickOutside} >
-          <div className="row">
-            <div className="col-md-12">
-              <div id="id-search-container" onClick={this._stopPropagation} className="col-md-6 col-md-offset-3 search-container">
-                <div className="row">
-                  <div className="col-md-2" style={{padding: 0}}>
-                    <IMDropdownButton reference={"searchType"}
-                                      className="search-dropdown-button"
-                                      outerButtonClassName="pull-right"
-                                      items={this.state.metrics}
-                                      showDropdown={ddmodalShown.ddSearchType}
-                                      styles={{width: 100}}
-                                      onClick={this._clickSearchTypeButton}
-                                      handleKey13={this._keyDownSearchType}
-                                      selectedItem={this.state.searchType}
-                                      selectMItem={this._searchTypeSelected}/>
-                  </div>
-                  <div className="col-md-8" style={{padding: 0}}>
-                    <IMInputDropdown ref={"searchInput"}
-                                     items={this.state.suggestions}
-                                     placeholder={this.state.placeholder}
-                                     showSuggestions={ddmodalShown.ddInput}
-                                     changeHandler={this._inputChangeHandler}/>
-                  </div>
-                  <div className="col-md-2" style={{padding: 0}}>
-                    <button className="search-button" onClick={this._sendRequest}>
-                      <img src={IMAGES.lupa}></img>
-                    </button>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-10 col-md-offset-1" style={{padding: 0}}>
-                    {modalVivienda}
-                  </div>
-                </div>
+          <div className={'search-div'}>
+            <div id="id-search-container" onClick={this._stopPropagation} className={'search-container'}>
+              <div className={'sarch-dropdown'}>
+                <IMDropdownButton reference={"searchType"}
+                                  className="search-dropdown-button"
+                                  outerButtonClassName="pull-right"
+                                  items={this.state.metrics}
+                                  showDropdown={ddmodalShown.ddSearchType}
+                                  styles={{width: '90px'}}
+                                  onClick={this._clickSearchTypeButton}
+                                  handleKey13={this._keyDownSearchType}
+                                  selectedItem={this.state.searchType}
+                                  selectMItem={this._searchTypeSelected}/>
               </div>
+              <div className={'sarch-input'}>
+                <IMInputDropdown ref={"searchInput"}
+                                 items={this.state.suggestions}
+                                 placeholder={this.state.placeholder}
+                                 showSuggestions={ddmodalShown.ddInput}
+                                 changeHandler={this._inputChangeHandler}/>
+              </div>
+              <div className={'sarch-button'}>
+                <button className="search-button" onClick={this._sendRequest}>
+                  <img src={IMAGES.lupa}></img>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-10 col-md-offset-1" style={{padding: 0}}>
+              {modalVivienda}
             </div>
           </div>
         </div>
