@@ -109,7 +109,8 @@ class IMInputDropdown extends React.Component {
 
     return (
       <div className="im-input-dropdown">
-        <input type="text"
+        <input id="landing-input"
+               type="text"
                ref="input"
                placeholder={this.props.placeholder}
                onChange={this.props.changeHandler}

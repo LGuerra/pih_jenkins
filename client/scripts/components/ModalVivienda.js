@@ -109,7 +109,7 @@ class ModalVivienda extends React.Component {
                                 lowerLimit={1}
                                 upperLimit={10}
                                 quantityChange={this._selectHabitacion}/>
-            <span> <img src={IMAGES.downArrow} width="10"></img> </span>
+            <span> <img src={IMAGES.blue_bed} width="20"></img> </span>
           </div>
           <div className="col-md-4">
             <IMQuantitySelector styles={{display: "inline-block"}}
@@ -117,7 +117,7 @@ class ModalVivienda extends React.Component {
                                 lowerLimit={1}
                                 upperLimit={10}
                                 quantityChange={this._selectBanos}/>
-            <span> <img src={IMAGES.downArrow} width="10"></img> </span>
+            <span> <img src={IMAGES.blue_wc} width="20"></img> </span>
           </div>
           <div className="col-md-4 pull-right">
             <IMQuantitySelector styles={{display: "inline-block"}}
@@ -125,7 +125,7 @@ class ModalVivienda extends React.Component {
                                 lowerLimit={1}
                                 upperLimit={5}
                                 quantityChange={this._selectCajones}/>
-            <span> <img src={IMAGES.downArrow} width="10"></img> </span>
+            <span> <img src={IMAGES.blue_car} width="20"></img> </span>
           </div>
         </div>
         <div className="row modal-row">

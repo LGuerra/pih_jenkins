@@ -41,10 +41,16 @@ class Landing extends React.Component {
     this._clickOutside          = this._clickOutside.bind(this);
     this._keyDownSearchType     = this._keyDownSearchType.bind(this);
     this._stopPropagation       = this._stopPropagation.bind(this);
+    this._focusOnInput          = this._focusOnInput.bind(this);
   }
 
   _closeAllddModalShown () {
     return {modal: false, ddSearchType: false, ddInput: false};
+  }
+
+  _focusOnInput () {
+    document.getElementById("landing-input").focus();
+    //this.refs.searchInput.focus();
   }
 
   _sendRequest () {
@@ -149,6 +155,7 @@ class Landing extends React.Component {
     let ddmShown   = this._closeAllddModalShown();
     ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
     this.setState({ddmodalShown: ddmShown});
+    this._focusOnInput();
   }
 
   _stopPropagation (e) {

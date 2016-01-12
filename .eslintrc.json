@@ -10,7 +10,8 @@
   },
   "globals": {
     "$": true,
-    "IMAGES": true
+    "IMAGES": true,
+    "google": true
   },
   "extends": "eslint:recommended",
   "ecmaFeatures": {
