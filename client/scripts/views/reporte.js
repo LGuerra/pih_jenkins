@@ -179,9 +179,9 @@ class Reporte extends React.Component{
                 </div>
               </div>
               <div className={'row'}>
-                <div className={'col-sm-12'} style={{marginTop: '17px'}}>
-                  <p className={'primary-price'}>{'5.3%'}</p>
-                  <p className={'subtitle'}>apreciación anual</p>
+                <div className={'col-sm-12'} style={{marginTop: '10px'}}>
+                  <p className={'secondary-price'}>{'5.3%'}</p>
+                  <p className={'subtitle'}>Apreciación anual</p>
                 </div>
               </div>
             </div>

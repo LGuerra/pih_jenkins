@@ -15,17 +15,17 @@ class OfertaDisponible extends React.Component {
           flexDirection: 'column',
           alignItems: 'center'}}
           className={'listados'}>
-          <div style={{textAlign: 'center', padding: '15px 0px'}}>
-            <p className={'primary-price'}>985</p>
+          <div style={{textAlign: 'center', padding: '18px 0px'}}>
+            <p className={'secondary-price'}>985</p>
             <p className={'subtitle'}>Listados en Dic 2015</p>
           </div>
-          <div style={{textAlign: 'center', padding: '15px 0px'}}>
-            <p className={'primary-price'}>7,000</p>
+          <div style={{textAlign: 'center', padding: '18px 0px'}}>
+            <p className={'secondary-price'}>7,000</p>
             <p className={'subtitle'}>Listados en los últimos 6 meses</p>
           </div>
-          <div style={{textAlign: 'center', padding: '15px 0px'}}>
+          <div style={{textAlign: 'center', padding: '18px 0px'}}>
             <div className={'tiempo-container'}>
-              <p className={'primary-price'}>2 meses</p>
+              <p className={'secondary-price'}>2 meses</p>
               <p className={'subtitle'}>Tiempo promedio en el mercado</p>
             </div>
           </div>

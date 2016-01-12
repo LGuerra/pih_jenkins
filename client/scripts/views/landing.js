@@ -202,7 +202,7 @@ class Landing extends React.Component {
                   </div>
                   <div className="col-md-2" style={{padding: 0}}>
                     <button className="search-button" onClick={this._sendRequest}>
-                      <img src={IMAGES.lupa}></img>
+                      <img src={IMAGES.lupa} style={{width: '27px'}}></img>
                     </button>
                   </div>
                 </div>

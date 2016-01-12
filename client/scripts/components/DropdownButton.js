@@ -77,7 +77,7 @@ class IMDropdownButton extends React.Component {
           <span className="im-dropdown-button-text">
           {this.state.selectedItem}
           </span>
-          <span> <img src={IMAGES.downArrow} width="10"></img> </span>
+          <span className={'pull-right'}> <img src={IMAGES.downArrow} width="10"></img> </span>
         </button>
         {imDropdown}
       </div>
