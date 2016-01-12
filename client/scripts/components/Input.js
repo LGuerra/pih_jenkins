@@ -4,13 +4,13 @@ import IMDropdown from './Dropdown'
 class IMInputDropdown extends React.Component {
   constructor(props){
     super(props);
-    this.state            = {showDropdown: false, items: []};
+    this.state            = {showDropdown: false, items: [], selectedItem: ""};
     this.getValue         = this.getValue.bind(this);
     this.selectMenuItem   = this.selectMenuItem.bind(this);
-    this.manageInput      = this.manageInput.bind(this);
     this.updatedItems     = this.updatedItems.bind(this);
     this.showDropdown     = this.showDropdown.bind(this);
     this.createIMDropdown = this.createIMDropdown.bind(this);
+    this.keyDownInput     = this.keyDownInput.bind(this);
   }
 
   getValue() {
@@ -23,11 +23,6 @@ class IMInputDropdown extends React.Component {
     this.refs.input.value = selectedItem;
     this.setState({selectedItem: selectedItem, showDropdown: false});
 
-  }
-
-  manageInput() {
-    this.props.changeHandler();
-    console.log("INPUTDROPDOWN\n   this.props.items >> ", this.props.items);
   }
 
   updatedItems() {
@@ -73,6 +68,33 @@ class IMInputDropdown extends React.Component {
     this.setState({showDropdown: this.props.showSuggestions});
   }
 
+  keyDownInput (e) {
+    let arr = this.state.items;
+    let length = arr.length;
+    let i = arr.indexOf(this.state.selectedItem);
+    if ( e.keyCode === 40 ) {
+      i += 1;
+      if (i >= length) i -= length;
+      this.setState({selectedItem: arr[i], lastKeyPressed: 40});
+      this.refs.input.value = this.state.contents[i];
+    }
+    if ( e.keyCode === 38 ) {
+      i -= 1;
+      if (i < 0) i += length;
+      this.setState({selectedItem: arr[i], lastKeyPressed: 38});
+      this.refs.input.value = this.state.contents[i];
+    }
+    if ( e.keyCode === 13 ) {
+      this.setState({lastKeyPressed: 13});
+      this.selectMenuItem(this.state.selectedItem);
+      //this.setState({selectedItem: arr[i]});
+      //this.props.selectMItem(arr[i]);
+      //this.props.handleKey13(arr[i]);
+      //this._closeDropdown()
+    }
+  }
+
+
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
                                 styles={{width:450}}
@@ -87,7 +109,12 @@ class IMInputDropdown extends React.Component {
 
     return (
       <div className="im-input-dropdown">
-        <input type="text" ref="input" onChange={this.props.changeHandler} onFocus={this.showDropdown}></input>
+        <input type="text"
+               ref="input"
+               placeholder={this.props.placeholder}
+               onChange={this.props.changeHandler}
+               onFocus={this.showDropdown}
+               onKeyDown={this.keyDownInput}></input>
         {imDropdown}
       </div>
     );

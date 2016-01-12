@@ -4,7 +4,7 @@ import IMMenuItem from './MenuItem'
 class IMDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {menuItems: this.props.items};
+    this.state       = {menuItems: this.props.items};
   }
 
   componentWillReceiveProps(nextProps) {

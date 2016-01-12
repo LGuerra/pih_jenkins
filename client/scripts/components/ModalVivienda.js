@@ -17,15 +17,19 @@ class ModalVivienda extends React.Component {
                                       areaConstruida: false,
                                       edad: false}
                  };
-    this._selectVivienda       = this._selectVivienda.bind(this);
-    this._selectOperacion      = this._selectOperacion.bind(this);
-    this._selectAreaConstruida = this._selectAreaConstruida.bind(this);
-    this._selectEdad           = this._selectEdad.bind(this);
-    this._selectHabitacion     = this._selectHabitacion.bind(this);
-    this._selectBanos          = this._selectBanos.bind(this);
-    this._selectCajones        = this._selectCajones.bind(this);
-    this.clicked               = this.clicked.bind(this);
-    this.closeShowingDropdowns = this.closeShowingDropdowns.bind(this);
+    this._selectVivienda        = this._selectVivienda.bind(this);
+    this._selectOperacion       = this._selectOperacion.bind(this);
+    this._selectAreaConstruida  = this._selectAreaConstruida.bind(this);
+    this._selectEdad            = this._selectEdad.bind(this);
+    this._selectHabitacion      = this._selectHabitacion.bind(this);
+    this._selectBanos           = this._selectBanos.bind(this);
+    this._selectCajones         = this._selectCajones.bind(this);
+    this.clicked                = this.clicked.bind(this);
+    this.closeShowingDropdowns  = this.closeShowingDropdowns.bind(this);
+    this._keyDownVivienda       = this._keyDownVivienda.bind(this);
+    this._keyDownOperacion      = this._keyDownOperacion.bind(this);
+    this._keyDownAreaConstruida = this._keyDownAreaConstruida.bind(this);
+    this._keyDownEdad           = this._keyDownEdad.bind(this);
   }
 
   closeShowingDropdowns () {
@@ -76,6 +80,23 @@ class ModalVivienda extends React.Component {
     dropdowns[which] = state;
     this.setState({showingDropdowns: dropdowns});
   }
+
+  _keyDownVivienda(a) {
+    this._selectVivienda(a);
+  }
+
+  _keyDownOperacion(a) {
+    this._selectOperacion(a);
+  }
+
+  _keyDownAreaConstruida(a) {
+    this._selectAreaConstruida(a);
+  }
+
+  _keyDownEdad(a) {
+    this._selectEdad(a);
+  }
+
   render () {
 
     let showing = this.state.showingDropdowns;
@@ -118,6 +139,7 @@ class ModalVivienda extends React.Component {
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.tipoVivienda}
                               onClick={this.clicked}
+                              handleKey13={this._keyDownVivienda}
                               selectedItem={this.state.vivienda}
                               selectMItem={this._selectVivienda} />
           </div>
@@ -131,6 +153,7 @@ class ModalVivienda extends React.Component {
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.tipoOperacion}
                               onClick={this.clicked}
+                              handleKey13={this._keyDownOperacion}
                               selectedItem={this.state.operacion}
                               selectMItem={this._selectOperacion} />
           </div>
@@ -146,6 +169,7 @@ class ModalVivienda extends React.Component {
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.areaConstruida}
                               onClick={this.clicked}
+                              handleKey13={this._keyDownAreaConstruida}
                               selectedItem={this.state.areaConstruida}
                               selectMItem={this._selectAreaConstruida} />
           </div>
@@ -159,6 +183,7 @@ class ModalVivienda extends React.Component {
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.edad}
                               onClick={this.clicked}
+                              handleKey13={this._keyDownEdad}
                               selectedItem={this.state.edad}
                               selectMItem={this._selectEdad} />
           </div>

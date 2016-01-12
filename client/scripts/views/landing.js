@@ -22,6 +22,7 @@ class Landing extends React.Component {
     super(props);
     this.state = { metrics:       ['Vivienda', 'Zona'],
                    searchType:     'Vivienda',
+                   placeholder:    "Ingresa una dirección",
                    vivienda:       'dpto.',
                    operacion:      'compra',
                    areaConstruida: '100m2',
@@ -37,6 +38,9 @@ class Landing extends React.Component {
     this._modalChange           = this._modalChange.bind(this);
     this._clickSearchTypeButton = this._clickSearchTypeButton.bind(this);
     this._closeAllddModalShown  = this._closeAllddModalShown.bind(this);
+    this._clickOutside          = this._clickOutside.bind(this);
+    this._keyDownSearchType     = this._keyDownSearchType.bind(this);
+    this._stopPropagation       = this._stopPropagation.bind(this);
   }
 
   _closeAllddModalShown () {
@@ -66,14 +70,16 @@ class Landing extends React.Component {
     if (sType !== this.state.searchType) {
       ans.searchType = sType;
     }
+    ans.placeholder = "Ingresa una Colonia";
     if (sType === "Vivienda") {
       ddmShown.modal = true;
+      ans.placeholder = "Ingresa una dirección";
     }
     ans.ddmodalShown = ddmShown;
     this.setState(ans);
   }
 
-  _clickSearchTypeButton(a,b) {
+  _clickSearchTypeButton(a,b,c) {
     // IF SearchType was open
     //   Close it
     //   IF SearchType is Vivienda
@@ -83,6 +89,7 @@ class Landing extends React.Component {
     // ELSE (SearchType was closed)
     //   Close modal and Input
     //   Open it
+
     let ddmodalShown = this._closeAllddModalShown();
     let currentShown = this.state.ddmodalShown;
     if (currentShown.ddSearchType) {
@@ -90,7 +97,23 @@ class Landing extends React.Component {
     } else {
       ddmodalShown.ddSearchType = true;
     }
-    this.setState({ddmodalShown: ddmodalShown});
+
+    this.setState({ddmodalShown: ddmodalShown, searchType: c});
+  }
+
+  _keyDownSearchType(sType) {
+    let ddmShown = this._closeAllddModalShown();
+    let ans = {};
+    if (sType !== this.state.searchType) {
+      ans.searchType = sType;
+    }
+    ans.placeholder = "Ingresa una Colonia";
+    if (sType === "Vivienda") {
+      ans.placeholder = "Ingresa una dirección";
+      ddmShown.modal = true;
+    }
+    ans.ddmodalShown = ddmShown;
+    this.setState(ans);
   }
 
   _inputChangeHandler() {
@@ -101,7 +124,6 @@ class Landing extends React.Component {
     if (searchInput.length >= 3) {
       ddmShown.ddInput = true;
       if (this.state.searchType === "Vivienda") {
-
         console.log("SEARCH IN GOOGLE");
         _this.setState({ddmodalShown: ddmShown});
       }
@@ -123,6 +145,17 @@ class Landing extends React.Component {
     }
   }
 
+  _clickOutside (e) {
+    let ddmShown   = this._closeAllddModalShown();
+    ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
+    this.setState({ddmodalShown: ddmShown});
+  }
+
+  _stopPropagation (e) {
+    e.stopPropagation();
+
+  }
+
   render() {
     let ddmodalShown = this.state.ddmodalShown;
     let modalVivienda = (ddmodalShown.modal) ? (<ModalVivienda modalChange={this._modalChange}
@@ -136,10 +169,10 @@ class Landing extends React.Component {
                                                                />) : "";
 
     return (
-        <div className="landing-page">
+        <div className="landing-page" onClick={this._clickOutside} >
           <div className="row">
             <div className="col-md-12">
-              <div id="id-search-container" className="col-md-6 col-md-offset-3 search-container">
+              <div id="id-search-container" onClick={this._stopPropagation} className="col-md-6 col-md-offset-3 search-container">
                 <div className="row">
                   <div className="col-md-2" style={{padding: 0}}>
                     <IMDropdownButton reference={"searchType"}
@@ -149,12 +182,14 @@ class Landing extends React.Component {
                                       showDropdown={ddmodalShown.ddSearchType}
                                       styles={{width: 100}}
                                       onClick={this._clickSearchTypeButton}
+                                      handleKey13={this._keyDownSearchType}
                                       selectedItem={this.state.searchType}
                                       selectMItem={this._searchTypeSelected}/>
                   </div>
                   <div className="col-md-8" style={{padding: 0}}>
                     <IMInputDropdown ref={"searchInput"}
                                      items={this.state.suggestions}
+                                     placeholder={this.state.placeholder}
                                      showSuggestions={ddmodalShown.ddInput}
                                      changeHandler={this._inputChangeHandler}/>
                   </div>
