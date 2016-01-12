@@ -7,7 +7,7 @@ class ColoniaInfo extends React.Component {
   render() {
     return (
       <div className={'oferta-disponible'}>
-        <h4>Colonia Anzures</h4>
+        <h4 className={'subsection-title'}>Colonia Anzures</h4>
         <div style={{
           marginTop: '20px',
           display: 'flex',
