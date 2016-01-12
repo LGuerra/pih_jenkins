@@ -45,7 +45,7 @@ class StickyNavbar extends React.Component{
       }}>
         <div className={'row'}>
           <div className={'col-md-4 col-sm-12'}>
-            <p style={{marginTop: '10px', marginBottom: '0px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>
+            <p style={{marginTop: '12px', marginBottom: '0px', fontSize: '12px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>
           </div>
           <div className={'col-md-8 col-sm-12'}>
             <div className={'navbar-icons'}>

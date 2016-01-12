@@ -13,7 +13,7 @@ class SecondaryNavbar extends React.Component{
         <hr width={'100px'} className={'section-title-hr'}/>
         <div className={'row'}>
           <div className={'col-md-4 col-sm-12'}>
-            <p style={{marginTop: '10px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>
+            <p style={{marginTop: '8px', fontSize: '12px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>
           </div>
           <div className={'col-md-8 col-sm-12'}>
             <div className={'navbar-icons'}>

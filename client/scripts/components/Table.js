@@ -54,13 +54,13 @@ class Table extends React.Component {
     });
 
     if (limit || limit == 0) {
-      let label = 'Ver +';
+      let label = 'Más comparables';
       if (limit == 0) {
-        label = 'Ver -';
+        label = 'Menos comparables';
       }
       verMasControl = (
         <div style={{cursor: 'pointer'}} onClick={this._onToggle.bind(this)}>
-          <h5 style={{textAlign: 'center'}}>{label}</h5>
+          <h5 style={{textAlign: 'center', color: '#357dc0'}}>{label}</h5>
         </div>
       )
     }

@@ -84,8 +84,9 @@ class ComparativoViviendas extends React.Component {
   render() {
     return (
       <div>
-        <h3 className={'section-title'}>{'Departamentos comparables en los últimos 6 meses'}</h3>
-        <hr width={'100px'} className={'section-title-hr'}/>
+        <h3 className={'section-title'}>{'Departamentos comparables'}</h3>
+        <hr width={'100px'} className={'section-title-hr'} style={{marginBottom:'10px'}}/>
+        <p className={'subtitle'}> en los últimos 6 meses</p>
         <Table
           limit={5}
           specificClass={'mercado-table table-hover'}
