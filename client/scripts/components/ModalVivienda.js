@@ -5,13 +5,17 @@ import IMQuantitySelector from './QuantitySelector';
 class ModalVivienda extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { vivienda:       "dpto.",
-                   operacion:      "compra",
-                   areaConstruida: "100m2",
-                   edad:           5,
-                   habitaciones:   2,
-                   banos:          1,
-                   cajones:        1
+    this.state = { vivienda:         this.props.vivienda,
+                   operacion:        this.props.operacion,
+                   areaConstruida:   this.props.areaConstruida,
+                   edad:             this.props.edad,
+                   habitaciones:     this.props.habitaciones,
+                   banos:            this.props.banos,
+                   cajones:          this.props.cajones,
+                   showingDropdowns: {tipoVivienda:  false,
+                                      tipoOperacion: false,
+                                      areaConstruida: false,
+                                      edad: false}
                  };
     this._selectVivienda       = this._selectVivienda.bind(this);
     this._selectOperacion      = this._selectOperacion.bind(this);
@@ -20,47 +24,61 @@ class ModalVivienda extends React.Component {
     this._selectHabitacion     = this._selectHabitacion.bind(this);
     this._selectBanos          = this._selectBanos.bind(this);
     this._selectCajones        = this._selectCajones.bind(this);
+    this.clicked               = this.clicked.bind(this);
+    this.closeShowingDropdowns = this.closeShowingDropdowns.bind(this);
+  }
+
+  closeShowingDropdowns () {
+    return {tipoVivienda:  false, tipoOperacion: false, areaConstruida: false, edad: false};
   }
 
   _selectVivienda (a) {
-    if (a !== this.state.vivienda) this.setState({vivienda: a});
-    console.log("MODAL VIVIENDA state", this.state);
+    if (a !== this.state.vivienda) this.setState({vivienda: a, showingDropdowns: this.closeShowingDropdowns()});
+    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({vivienda: a});
   }
 
   _selectOperacion (a) {
-    if (a !== this.state.operacion) this.setState({operacion: a});
+    if (a !== this.state.operacion) this.setState({operacion: a, showingDropdowns: this.closeShowingDropdowns()});
+    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({operacion: a});
   }
 
   _selectAreaConstruida (a) {
-    if (a !== this.state.areaConstruida) this.setState({areaConstruida: a});
+    if (a !== this.state.areaConstruida) this.setState({areaConstruida: a, showingDropdowns: this.closeShowingDropdowns()});
+    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({areaConstruida: a});
   }
 
   _selectEdad (a) {
-    if (a !== this.state.edad) this.setState({edad: a});
+    if (a !== this.state.edad) this.setState({edad: a, showingDropdowns: this.closeShowingDropdowns()});
+    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({edad: a});
   }
 
   _selectHabitacion (a) {
     if (a !== this.state.habitaciones) this.setState({habitaciones: a});
     this.props.modalChange({habitaciones: a});
-    console.log("Habitaciones: ", a);
   }
 
   _selectBanos (a) {
     if (a !== this.state.banos) this.setState({banos: a});
     this.props.modalChange({banos: a});
-    console.log("Baños: ", a);
   }
 
   _selectCajones (a) {
     if (a !== this.state.cajones) this.setState({cajones: a});
     this.props.modalChange({cajones: a});
-    console.log("Cajones: ", a);
+  }
+
+  clicked (which, state) {
+    let dropdowns = this.closeShowingDropdowns();
+    dropdowns[which] = state;
+    this.setState({showingDropdowns: dropdowns});
   }
   render () {
+
+    let showing = this.state.showingDropdowns;
     return (
       <div className="modal-box">
         <div className="row modal-row">
@@ -94,20 +112,26 @@ class ModalVivienda extends React.Component {
             Tipo de vivienda
           </div>
           <div className="col-md-3">
-            <IMDropdownButton ref={"tipoVivienda"}
+            <IMDropdownButton reference={"tipoVivienda"}
                               items={["dpto.", "casa", "lote"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
+                              showDropdown={showing.tipoVivienda}
+                              onClick={this.clicked}
+                              selectedItem={this.state.vivienda}
                               selectMItem={this._selectVivienda} />
           </div>
           <div className="col-md-3">
             Tipo de operación
           </div>
           <div className="col-md-3">
-            <IMDropdownButton ref={"tipoOperacion"}
+            <IMDropdownButton reference={"tipoOperacion"}
                               items={["compra","venta"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
+                              showDropdown={showing.tipoOperacion}
+                              onClick={this.clicked}
+                              selectedItem={this.state.operacion}
                               selectMItem={this._selectOperacion} />
           </div>
         </div>
@@ -116,20 +140,26 @@ class ModalVivienda extends React.Component {
             Área de construcción
           </div>
           <div className="col-md-3">
-            <IMDropdownButton ref={"areaConstruida"}
+            <IMDropdownButton reference={"areaConstruida"}
                               items={["100m2", "200m2", "300m2", "350m2+"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
+                              showDropdown={showing.areaConstruida}
+                              onClick={this.clicked}
+                              selectedItem={this.state.areaConstruida}
                               selectMItem={this._selectAreaConstruida} />
           </div>
           <div className="col-md-3">
             Edad
           </div>
           <div className="col-md-3">
-            <IMDropdownButton ref={"edad"}
+            <IMDropdownButton reference={"edad"}
                               items={["5","10","20","30","40+"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
+                              showDropdown={showing.edad}
+                              onClick={this.clicked}
+                              selectedItem={this.state.edad}
                               selectMItem={this._selectEdad} />
           </div>
         </div>

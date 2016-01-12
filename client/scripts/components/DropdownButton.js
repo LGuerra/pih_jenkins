@@ -4,39 +4,49 @@ import IMDropdown from './Dropdown';
 class IMDropdownButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selectedItem: this.props.items[0]};
-    this.openDropdown = this.openDropdown.bind(this);
-    this.selectMenuItem = this.selectMenuItem.bind(this);
+    this.state           = { selectedItem: this.props.selectedItem,
+                             showDropdown: this.props.showDropdown
+                           };
+    this._openDropdown   = this._openDropdown.bind(this);
+    this._closeDropdown  = this._closeDropdown.bind(this);
+    this._selectMenuItem = this._selectMenuItem.bind(this);
   }
 
-  openDropdown(e) {
-    if(this.state.showDropdown) {
-      this.setState({showDropdown: false});
-    } else {
-      this.setState({showDropdown: true});
-    }
+  _openDropdown() {
+    this.props.onClick(this.props.reference, !this.state.showDropdown);
+    if (!this.state.showDropdown) this.setState({showDropdown: true});
+    else this._closeDropdown();
   }
 
-  selectMenuItem(a) {
+  _closeDropdown() {
+    if (this.state.showDropdown) this.setState({showDropdown: false});
+  }
+
+  _selectMenuItem(a) {
+    this.setState({selectedItem: a});
     this.props.selectMItem(a);
-    this.setState({selectedItem: a, showDropdown: false});
+    this._closeDropdown();
   }
 
+  shouldComponentUpdate (nextProps) {
+    if (this.props !== nextProps)
+      this.setState({showDropdown: nextProps.showDropdown});
+    return true;
+  }
 
   render() {
     let imDropdown;
     if (this.state.showDropdown) {
-      imDropdown = (<IMDropdown items={this.props.items} styles={{width: 95}} selectMItem={this.selectMenuItem}/>);
+      imDropdown = (<IMDropdown items={this.props.items} styles={{width: 95}} selectMItem={this._selectMenuItem}/>);
     }
 
     return (
       <div className={this.props.outerButtonClassName} style={{display: 'inline-block', padding: 0}}>
-        <button className={"im-dropdown-button " + this.props.className } style={this.props.styles} onClick={this.openDropdown}>
+        <button className={"im-dropdown-button " + this.props.className } style={this.props.styles} onClick={this._openDropdown}>
           <span className="im-dropdown-button-text">
           {this.state.selectedItem}
           </span>
           <span> <img src={IMAGES.downArrow} width="10"></img> </span>
-          {/*<span className="glyphicon glyphicon-menu-dropdown" aria-hidden="true">\/</span>*/}
         </button>
         {imDropdown}
       </div>

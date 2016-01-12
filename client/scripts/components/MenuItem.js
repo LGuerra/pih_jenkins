@@ -12,9 +12,7 @@ class IMMenuItem extends React.Component {
   }
 
   parseContent(text){
-    //text = {text.replace(/&#32;/g,' ')};
     return <span dangerouslySetInnerHTML={{__html: text.replace(/em>/g,'b>')}} />;
-    //return text
   }
 
   render() {

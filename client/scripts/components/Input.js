@@ -44,43 +44,31 @@ class IMInputDropdown extends React.Component {
 
   //shouldComponentUpdate(nextProps) {
   componentWillReceiveProps(nextProps) {
-    console.log("------InputDropdown------");
-    if (nextProps.items !== this.props.items) {
-      console.log("nextProps", nextProps);
-      this.props = nextProps;
-      console.log("    shouldComponentUpdate - Received new props", this.props);
-      if (this.props.items !== undefined && this.props.items.length > 0) {
-        console.log("            Should do a this.setState({showDropdown: true})");
-        this.setState({showDropdown: true});
-        this.updateItems();
-        /*if (!this.state.showDropdown){
-          this.setState({showDropdown: true});
-        }*/
-      } else {
-        console.log("            Should do a this.setState({showDropdown: false})");
-        this.setState({showDropdown: false});
-        /*if (this.state.showDropdown){
-          this.setState({showDropdown: false});
-        }*/
+    //El aanterior showSuggestions TRUE, nuevo showSuggestions FALSE
+    if (!nextProps.showSuggestions) {
+      this.setState({showDropdown: false});
+    } else {
+      if (nextProps.items !== this.props.items) {
+        this.props = nextProps;
+        if (this.props.items !== undefined && this.props.items.length > 0) {
+          this.updateItems();
+          this.setState({showDropdown: this.props.showSuggestions});
+        } else {
+          this.setState({showDropdown: this.props.showSuggestions});
+        }
       }
-      return true;
     }
-    return false;
+    return true;
   }
 
   showDropdown() {
-    if (this.state.items.length > 0)
-      this.setState({showDropdown: true});
+    this.setState({showDropdown: this.props.showSuggestions});
+    this.props.changeHandler();
   }
 
   render() {
-    console.log("        this.state.items after componentWillReceiveProps >>", this.state.items);
-    console.log("        this.state.showDropdown >> ", this.state.showDropdown);
     let imDropdown;
     if (this.state.showDropdown) {
-      //console.log("    this.state.showDropdown >> ", this.state.showDropdown);
-      //console.log("IMInputDropdown >>\n");
-      //console.log("    this.props.items >>", this.props.items);
       imDropdown = (<IMDropdown items={this.state.items}
                                 styles={{width:450}}
                                 selectMItem={this.selectMenuItem}/>);
