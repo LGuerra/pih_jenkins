@@ -112,6 +112,7 @@ class LineChart extends React.Component {
 
     this.conf.yAxis = d3.svg.axis()
       .scale(this.conf.yScale)
+      .innerTickSize(-this.conf.width)
       .ticks(5)
       .orient('left');
 
@@ -144,13 +145,13 @@ class LineChart extends React.Component {
 
     if (!props.showAxis.x.line) {
       this.conf.gContent.selectAll('.axis.x')
-        .selectAll('path, line')
+        .selectAll('path')
         .style('display', 'none');
     }
 
     if (!props.showAxis.y.line) {
       this.conf.gContent.selectAll('.axis.y')
-        .selectAll('path, line')
+        .selectAll('path')
         .style('display', 'none');
     }
 
@@ -311,6 +312,9 @@ class LineChart extends React.Component {
     this.conf.xAxis
       .ticks(Math.floor(this.conf.width / 120))
       .scale(this.conf.xScale)
+
+    this.conf.yAxis
+      .innerTickSize(-(this.conf.width));
 
     //Append axis to graphic content
     this.conf.xaxisLine

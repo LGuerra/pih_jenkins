@@ -6,19 +6,21 @@ class FormatGoogleMaps extends React.Component {
     super(props);
   }
   componentDidMount() {
-    console.log(this.refs.map.mapRef);
     var map = this.refs.map.mapRef;
 
     $.when( $.ajax('https://pih-api.intelimetrica.com/dev/suburb/adjacent-suburbs?suburb=090121758'))
       .then(loadTopoJSONs, failure);
     function loadTopoJSONs(data, adjacent, current) {
       map.data.setStyle({
-        fillColor: 'green',
+        fillColor: 'red',
         strokeWeight: 1
       });
       data.geojsons.map(function(suburb) {
-        console.log(suburb);
-        map.data.addGeoJson(suburb);
+        map.data.addGeoJson(suburb, {uno: 1});
+      });
+
+      map.data.addListener('mouseover', function(event) {
+        console.log(event.feature.getProperty('b'));
       });
       /*
       var currentPolygon = map.data.addGeoJson(current[0][0]);

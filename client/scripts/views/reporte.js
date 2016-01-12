@@ -8,6 +8,7 @@ import moment from 'moment';
 // Components
 import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
+import BackToTop from   '../components/BackToTop';
 
 // View's Components
 import OfertaDisponible from      './reporte/OfertaDisponible';
@@ -210,13 +211,18 @@ class Reporte extends React.Component{
             <FormatGoogleMaps />
           </div>
         </div>
+        <div>
+        </div>
+        <div>
+          <BackToTop />
+        </div>
       </div>
     );
   }
 }
 
 Reporte.defaultProps = {
-  type: 'vivienda'
+  type: 'colonia'
 }
 
 module.exports = Reporte;

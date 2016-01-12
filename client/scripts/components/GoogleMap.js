@@ -1,17 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 
+import ReactDOM from 'react-dom';
 import MapUtils from '../map_utils';
 
 class GoogleMap extends React.Component {
   constructor(props) {
     super(props);
-  }
-  getDefaultProps() {
-    return {
-      poly: null,
-      withPolygon: false
-    };
   }
   getZoomObject() {
     var zoom = this.props.zoom;
@@ -47,7 +42,7 @@ class GoogleMap extends React.Component {
     var zoomRight = props.zoomRight || 0;
 
     // Create map reference
-    this.mapRef = new google.maps.Map(React.findDOMNode(this), mapOptions);
+    this.mapRef = new google.maps.Map(ReactDOM.findDOMNode(this), mapOptions);
     addListener = _.partial(google.maps.event.addListener, this.mapRef);
 
     // Set drawing manager
@@ -225,5 +220,10 @@ GoogleMap.propTypes = {
   style: React.PropTypes.object,
   zoomTop: React.PropTypes.number
 }
+
+GoogleMap.defaultProps = {
+  poly: null,
+  withPolygon: false
+};
 
 module.exports = GoogleMap;
