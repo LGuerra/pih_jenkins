@@ -102,13 +102,13 @@ class Landing extends React.Component {
   }
 
   _clickSearchTypeButton(a,b,c) {
-    // IF SearchType was open
+    // IF SearchType was close
     //   Close it
     //   IF SearchType is Vivienda
     //     Show modal
     //   ELSE
     //     Show nothing
-    // ELSE (SearchType was closed)
+    // ELSE (SearchType was open)
     //   Close modal and Input
     //   Open it
     let ddmodalShown = this._closeAllddModalShown();
@@ -116,6 +116,7 @@ class Landing extends React.Component {
     if (currentShown.ddSearchType) {
       if (this.state.searchType === "Vivienda") ddmodalShown.modal = true;
     } else {
+      if (this.state.searchType === "Vivienda") ddmodalShown.modal = true;
       ddmodalShown.ddSearchType = true;
     }
     this.setState({ddmodalShown: ddmodalShown, searchType: c});
