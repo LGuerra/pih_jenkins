@@ -124,7 +124,15 @@ var MapUtils = {
     stylers: [{
         visibility: "off"
     }]
-}, {
+},{
+    featureType: "road.arterial",
+    elementType: "labels.icon",
+    stylers: [
+        {
+            visibility: "off"
+        }
+    ]
+},{
     featureType: "transit.station.rail",
     elementType: "all",
     stylers: [{
