@@ -178,7 +178,7 @@ class ModalVivienda extends React.Component {
           </div>
           <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"edad"}
-                              items={["5","10","20","30","40+"]}
+                              items={["5 años","10 años","20 años","30 años","40 años o más"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.edad}
