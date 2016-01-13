@@ -212,7 +212,7 @@ class BarChart extends React.Component {
     this.conf.gContent.selectAll('.axis')
       .selectAll('path, line')
       .attr('fill', 'none')
-      .attr('stroke', '#000')
+      .attr('stroke', '#B5B5B5')
       .style('shape-rendering', 'crispEdges');
 
     this.conf.gContent.selectAll('.axis')

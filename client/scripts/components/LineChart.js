@@ -112,7 +112,7 @@ class LineChart extends React.Component {
 
     this.conf.yAxis = d3.svg.axis()
       .scale(this.conf.yScale)
-      .innerTickSize(-this.conf.width)
+      .innerTickSize(-(this.conf.width - this.props.margin.right - this.props.margin.left))
       .ticks(5)
       .orient('left');
 
@@ -313,8 +313,13 @@ class LineChart extends React.Component {
       .ticks(Math.floor(this.conf.width / 120))
       .scale(this.conf.xScale)
 
+    this.conf.gContent.selectAll('.axis.y')
+      .selectAll('.tick')
+      .selectAll('line')
+      .attr('x2', this.conf.width - props.margin.left - props.margin.right);
+
     this.conf.yAxis
-      .innerTickSize(-(this.conf.width));
+      .tickSize(0, (this.conf.width - props.margin.right - props.margin.left));
 
     //Append axis to graphic content
     this.conf.xaxisLine
@@ -374,7 +379,7 @@ LineChart.defaultProps = {
   height: '300',
   margin: {
     left: 30,
-    right: 10,
+    right: 25,
     top: 25,
     bottom: 25
   }

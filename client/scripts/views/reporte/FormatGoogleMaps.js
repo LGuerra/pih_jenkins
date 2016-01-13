@@ -8,37 +8,57 @@ class FormatGoogleMaps extends React.Component {
       latlon: null
     };
   }
+  highlightFeature(id) {
+    let map = this.refs.map.mapRef;
+
+    map.data.setStyle(function(feature) {
+      let fillColor = feature.getProperty('current') ? 'red' : 'blue';
+      if (feature.getProperty('id') === id) {
+        return {
+          fillColor: 'green',
+          strokeWeight: 1
+        };
+      } else {
+        return {
+          fillColor: fillColor,
+          strokeWeight: 1
+        };
+      }
+    });
+  }
   componentDidMount() {
     var map = this.refs.map.mapRef;
 
     $.when( $.ajax('https://pih-api.intelimetrica.com/dev/suburb/adjacent-suburbs?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/geojson?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/centroid?suburb=090121758'))
       .then(loadTopoJSONs, failure);
     function loadTopoJSONs(adjacent, actual, centroid) {
-      map.data.setStyle({
-        fillColor: 'red',
-        strokeWeight: 1
-      });
       map.setCenter({lat: centroid[0].lng, lng: centroid[0].lat});
-      adjacent[0].geojsons.map(function(suburb) {
-        map.data.addGeoJson(suburb, {uno: 1});
+
+      adjacent[0].geojsons.map(function(suburb, index) {
+        suburb.properties = {
+          id: index
+        };
+        map.data.addGeoJson(suburb);
       });
-      map.data.addListener('mouseover', function(event) {
-        console.log(this);
-        console.log(event.feature.getProperty('b'));
+
+      map.data.addGeoJson({
+        type: 'Feature',
+        geometry: actual[0],
+        properties: {
+          current: true
+        }
       });
-      /*
-      var currentPolygon = map.data.addGeoJson(current[0][0]);
+
       map.data.setStyle(function(feature) {
-        var isCurrent = feature.getProperty('current');
-        var color = isCurrent ? 'red' : 'blue';
+        let fillColor = feature.getProperty('current') ? 'red' : 'blue';
         return {
-          fillColor: color,
+          fillColor: fillColor,
           strokeWeight: 1
         };
       });
-      var myLatlng = {lng: centroid[0].lat, lat: centroid[0].lng};
-      map.panTo(myLatlng);
-      */
+      map.data.addListener('mouseover', function(event) {
+        console.log(this);
+      });
     }
 
     var failure = function() {

@@ -32,9 +32,10 @@ class FormatLineChart extends React.Component {
     super(props);
   }
   _tooltipLineFormat() {
+    var date = 'Oct&nbsp;';
     var html = '<div class="tooltip-container">';
       html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-title">' + 'Oct&nbsp;' + '</p>';
+        html += `<p class="tooltip-title">'${date}'</p>`;
         html += '<p class="tooltip-value">' + '$2,267,000' + '</p>';
       html += '</div>';
     html += '</div>';
@@ -47,6 +48,12 @@ class FormatLineChart extends React.Component {
         data={getDummyLineData(1, 14)}
         tooltipFormat={this._tooltipLineFormat}
         height={180}
+        margin={{
+          left: 30,
+          right: 10,
+          top: 25,
+          bottom: 25
+        }}
         idContainer={'line-chart'} />
     );
   }

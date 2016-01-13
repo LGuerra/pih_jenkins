@@ -98,6 +98,15 @@
     .modal-row {
       .col-md-4 {
         padding-right: 0px;
+        padding-left: 0px
+      }
+      .im-quantity-selector-button {
+        padding: 0px;
+      }
+    }
+    .im-dropdown-button {
+      img {
+        display: none;
       }
     }
   }

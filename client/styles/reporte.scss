@@ -27,6 +27,7 @@
     text-align: center;
     padding: 10px 5px 10px 5px;
     border-bottom: 1px solid #E6E6E6;
+    cursor: pointer;
   }
   thead {
     border-bottom: 2px solid #35C0BE;
@@ -131,10 +132,8 @@
 
 @media screen and (max-width: 768px) {
   .block-container {
-    .row {
-      div {
-        border: none !important;
-      }
+    div {
+      border: none !important;
     }
   }
 }

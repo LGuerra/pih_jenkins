@@ -102,6 +102,10 @@ class Reporte extends React.Component{
       */
     });
   }
+  _onMouseoverColoniaTable(data) {
+    console.log(data);
+    this.refs.format_googlemap.highlightFeature(data.id);
+  }
   render() {
     var loadingFrame;
     var borderRight = {
@@ -151,7 +155,8 @@ class Reporte extends React.Component{
         </div>
       );
       compareTables = (
-        <ComparativoColonias />
+        <ComparativoColonias
+          onMouseover={this._onMouseoverColoniaTable.bind(this)}/>
       );
     }
 
@@ -208,7 +213,8 @@ class Reporte extends React.Component{
         </div>
         <div className={'row'}>
           <div style={{marginBottom: '30px'}} className={'col-sm-12'}>
-            <FormatGoogleMaps />
+            <FormatGoogleMaps
+              ref={'format_googlemap'}/>
           </div>
         </div>
         <div>
