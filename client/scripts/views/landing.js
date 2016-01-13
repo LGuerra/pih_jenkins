@@ -9,10 +9,23 @@ import API from '../api';
 
 function parseSuggestions(hit) {
   let ans = [];
-  for ( let i = 0; i < hit.length; i++ ) {
+  for ( let i = 0; i < hit.length; i += 1 ) {
     ans.push({id: hit[i].id,
               content: hit[i].fields.name,
               highlights: hit[i].highlights.name});
+  }
+  return ans;
+}
+function parseSuggestionsGoogle(addresses) {
+  let ans = [];
+  for ( let i = 0; i < addresses.length; i += 1 ) {
+    let offset    = addresses[i].matched_substrings[0].offset;
+    let length    = addresses[i].matched_substrings[0].length;
+    let content   = addresses[i].description;
+    let highlight = content.slice(0,offset) + "<b>" + content.slice(offset, offset+length) + "</b>" + content.slice(offset+length);
+    ans.push({ id:         addresses[i].place_id,
+               content:    content,
+               highlights: highlight});
   }
   return ans;
 }
@@ -95,7 +108,6 @@ class Landing extends React.Component {
     // ELSE (SearchType was closed)
     //   Close modal and Input
     //   Open it
-
     let ddmodalShown = this._closeAllddModalShown();
     let currentShown = this.state.ddmodalShown;
     if (currentShown.ddSearchType) {
@@ -103,7 +115,6 @@ class Landing extends React.Component {
     } else {
       ddmodalShown.ddSearchType = true;
     }
-
     this.setState({ddmodalShown: ddmodalShown, searchType: c});
   }
 
@@ -130,17 +141,36 @@ class Landing extends React.Component {
     if (searchInput.length >= 3) {
       ddmShown.ddInput = true;
       if (this.state.searchType === "Vivienda") {
-        console.log("SEARCH IN GOOGLE");
-        _this.setState({ddmodalShown: ddmShown});
-      }
-      else {
-        API.landing({"q": "(or(prefix'"+ searchInput + "')name:'" + searchInput + "')" ,
+
+        // Callback to set suggestions into state. Will recieve suggestions in prediction variable
+        let displaySuggestions = (predictions, status) => {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            console.log(predictions);
+            suggests = parseSuggestionsGoogle(predictions);
+            console.log("SEARCH IN GOOGLE");
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
+          }
+        };
+
+        // Create service to use googleapi autocompletion
+        let service = new google.maps.places.AutocompleteService();
+        // Build Request
+        let request = { input: searchInput, types: ['geocode'] , componentRestrictions: {country: 'mx'}};
+        // Execute service and print result in callback
+        service.getPlacePredictions(request, displaySuggestions);
+      } else {
+        let arr    = searchInput.split(" ");
+        let prefix = arr.pop();
+        let b      = arr.map( e => "'"+e+"'").join(", ");
+        API.landing({"q": "(or(and"+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
                      "return": "name",
                      "q.parser": "structured",
                      "highlight.name": "{}"})
           .done(function(response) {
             //Desirable - IF response.isEmpty tell the user there is no data
+            //console.log(response.hits.hit);
             suggests = parseSuggestions(response.hits.hit);
+            //console.log(suggests);
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
           });
       }
