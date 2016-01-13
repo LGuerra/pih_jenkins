@@ -103,7 +103,7 @@ class ModalVivienda extends React.Component {
     return (
       <div className="modal-box">
         <div className="row modal-row">
-          <div className="col-md-4">
+          <div style={{textAlign: 'center'}} className="col-md-4 col-sm-4 col-xs-4">
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.habitaciones}
                                 lowerLimit={1}
@@ -111,7 +111,7 @@ class ModalVivienda extends React.Component {
                                 quantityChange={this._selectHabitacion}/>
             <span> <img src={IMAGES.blue_bed} width="20"></img> </span>
           </div>
-          <div className="col-md-4">
+          <div style={{textAlign: 'center'}} className="col-md-4 col-sm-4 col-xs-4">
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.banos}
                                 lowerLimit={1}
@@ -119,7 +119,7 @@ class ModalVivienda extends React.Component {
                                 quantityChange={this._selectBanos}/>
             <span> <img src={IMAGES.blue_wc} width="20"></img> </span>
           </div>
-          <div className="col-md-4 pull-right">
+          <div style={{textAlign: 'center'}} className="col-md-4 col-sm-4 col-xs-4 pull-right">
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.cajones}
                                 lowerLimit={1}
@@ -129,10 +129,10 @@ class ModalVivienda extends React.Component {
           </div>
         </div>
         <div className="row modal-row">
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-7">
             Tipo de vivienda
           </div>
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"tipoVivienda"}
                               items={["Departamento", "Casa", "Lote"]}
                               className="modal-dropdown-button"
@@ -143,10 +143,10 @@ class ModalVivienda extends React.Component {
                               selectedItem={this.state.vivienda}
                               selectMItem={this._selectVivienda} />
           </div>
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-7">
             Tipo de operación
           </div>
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"tipoOperacion"}
                               items={["Compra","Renta"]}
                               className="modal-dropdown-button"
@@ -159,10 +159,10 @@ class ModalVivienda extends React.Component {
           </div>
         </div>
         <div className="row modal-row">
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-7">
             Área de construcción
           </div>
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"areaConstruida"}
                               items={["100m²", "200m²", "300m²", "350m²+"]}
                               className="modal-dropdown-button"
@@ -173,10 +173,10 @@ class ModalVivienda extends React.Component {
                               selectedItem={this.state.areaConstruida}
                               selectMItem={this._selectAreaConstruida} />
           </div>
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-7">
             Edad
           </div>
-          <div className="col-md-3">
+          <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"edad"}
                               items={["5","10","20","30","40+"]}
                               className="modal-dropdown-button"

@@ -130,9 +130,11 @@
 }
 
 @media screen and (max-width: 768px) {
-  .row {
-    div {
-      border: none !important;
+  .block-container {
+    .row {
+      div {
+        border: none !important;
+      }
     }
   }
 }
@@ -156,4 +158,10 @@
   overflow-y: auto;
   overflow: auto;
   margin: 0 0 1em;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
 }

@@ -4,23 +4,26 @@ import GoogleMap from '../../components/GoogleMap';
 class FormatGoogleMaps extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      latlon: null
+    };
   }
   componentDidMount() {
     var map = this.refs.map.mapRef;
 
     $.when( $.ajax('https://pih-api.intelimetrica.com/dev/suburb/adjacent-suburbs?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/geojson?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/centroid?suburb=090121758'))
       .then(loadTopoJSONs, failure);
-    function loadTopoJSONs(data, adjacent, current) {
-      console.log(data, adjacent, current);
+    function loadTopoJSONs(adjacent, actual, centroid) {
       map.data.setStyle({
         fillColor: 'red',
         strokeWeight: 1
       });
-      data.geojsons.map(function(suburb) {
+      map.setCenter({lat: centroid[0].lng, lng: centroid[0].lat});
+      adjacent[0].geojsons.map(function(suburb) {
         map.data.addGeoJson(suburb, {uno: 1});
       });
-
       map.data.addListener('mouseover', function(event) {
+        console.log(this);
         console.log(event.feature.getProperty('b'));
       });
       /*
@@ -43,6 +46,7 @@ class FormatGoogleMaps extends React.Component {
     };
   }
   render() {
+    var googleMap;
     return (
       <GoogleMap
         latitud={19.2837698}

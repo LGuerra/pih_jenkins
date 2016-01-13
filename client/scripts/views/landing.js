@@ -7,6 +7,9 @@ import IMInputDropdown from '../components/Input'
 import ModalVivienda from '../components/ModalVivienda';
 import API from '../api';
 
+import MainNavbar from  '../components/MainNavbar';
+
+
 function parseSuggestions(hit) {
   let ans = [];
   for ( let i = 0; i < hit.length; i++ ) {
@@ -175,20 +178,23 @@ class Landing extends React.Component {
                                                                edad={this.state.edad} />) : "";
 
     return (
+      <div>
+        <MainNavbar />
         <div className="landing-page" onClick={this._clickOutside} >
           <div className={'search-div'}>
             <div id="id-search-container" onClick={this._stopPropagation} className={'search-container'}>
               <div className={'sarch-dropdown'}>
+                <div>
                 <IMDropdownButton reference={"searchType"}
                                   className="search-dropdown-button"
-                                  outerButtonClassName="pull-right"
                                   items={this.state.metrics}
                                   showDropdown={ddmodalShown.ddSearchType}
-                                  styles={{width: '90px'}}
+                                  styles={{width: '100%'}}
                                   onClick={this._clickSearchTypeButton}
                                   handleKey13={this._keyDownSearchType}
                                   selectedItem={this.state.searchType}
                                   selectMItem={this._searchTypeSelected}/>
+                </div>
               </div>
               <div className={'sarch-input'}>
                 <IMInputDropdown ref={"searchInput"}
@@ -205,11 +211,12 @@ class Landing extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-10 col-md-offset-1" style={{padding: 0}}>
+            <div className={'modal-div'}>
               {modalVivienda}
             </div>
           </div>
         </div>
+      </div>
     );
   }
 }

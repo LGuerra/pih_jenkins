@@ -1,7 +1,7 @@
 .landing-page {
-  height: 100vh;
+  height: calc(100vh - 50px);
   background-color: #F2F5FA;
-  padding-top: 15%;
+  padding-top: 10%;
 }
 
 .row {
@@ -72,16 +72,33 @@
     width: 100%;
     display: flex;
     .sarch-dropdown {
-      width: 15%;
+      width: 75px;
     }
     .sarch-input {
-      width: 70%;
+      width: calc(100% - 150px);
     }
     .sarch-button {
-      width: 15%;
+      width: 75px;
     }
   }
   @media screen and (max-width: 1000px) {
     width: 80%;
+  }
+}
+
+.modal-div {
+  width: 800px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (max-width: 1000px) {
+  .modal-div {
+    width: 80%;
+    .modal-row {
+      .col-md-4 {
+        padding-right: 0px;
+      }
+    }
   }
 }
