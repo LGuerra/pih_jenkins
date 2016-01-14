@@ -4,8 +4,8 @@ import IMDropdown from './Dropdown'
 class IMInputDropdown extends React.Component {
   constructor(props){
     super(props);
-    this.state            = {showDropdown: false, items: [], selectedItem: ""};
-    this.getValue         = this.getValue.bind(this);
+    this.state             = {showDropdown: false, items: [], selectedItem: "", selectedSuggestion: ""};
+    this.getValue          = this.getValue.bind(this);
     this.selectMenuItem   = this.selectMenuItem.bind(this);
     this.updatedItems     = this.updatedItems.bind(this);
     this.showDropdown     = this.showDropdown.bind(this);
@@ -18,11 +18,9 @@ class IMInputDropdown extends React.Component {
   }
 
   selectMenuItem(a) {
-
     let selectedItem = this.state.contents[this.state.items.indexOf(a)];
     this.refs.input.value = selectedItem;
     this.setState({selectedItem: selectedItem, showDropdown: false});
-
   }
 
   updatedItems() {
@@ -51,6 +49,8 @@ class IMInputDropdown extends React.Component {
         if (this.props.items !== undefined && this.props.items.length > 0) {
           let updatedItems = this.updatedItems();
           this.setState({showDropdown: true,
+                         selectedItem: updatedItems.contents[0],
+                         selectedSuggestion: updatedItems.items[0],
                          items: updatedItems.items,
                          contents: updatedItems.contents,
                          ids: updatedItems.ids});
@@ -63,7 +63,6 @@ class IMInputDropdown extends React.Component {
   }
 
   showDropdown() {
-    //let items = this.updateItems();
     this.props.changeHandler();
     this.setState({showDropdown: this.props.showSuggestions});
   }
@@ -71,34 +70,34 @@ class IMInputDropdown extends React.Component {
   keyDownInput (e) {
     let arr = this.state.items;
     let length = arr.length;
-    let i = arr.indexOf(this.state.selectedItem);
+    let i = arr.indexOf(this.state.selectedSuggestion);
     if ( e.keyCode === 40 ) {
       i += 1;
       if (i >= length) i -= length;
-      this.setState({selectedItem: arr[i], lastKeyPressed: 40});
+      this.setState({selectedSuggestion: arr[i], lastKeyPressed: 40});
       this.refs.input.value = this.state.contents[i];
     }
     if ( e.keyCode === 38 ) {
       i -= 1;
       if (i < 0) i += length;
-      this.setState({selectedItem: arr[i], lastKeyPressed: 38});
+      this.setState({selectedSuggestion: arr[i], lastKeyPressed: 38});
       this.refs.input.value = this.state.contents[i];
     }
     if ( e.keyCode === 13 ) {
+      if( this.state.lastKeyPressed === 13 ) {
+        this.props.crOnSearch();
+      } else {
+        this.selectMenuItem(this.state.selectedSuggestion);
+      }
       this.setState({lastKeyPressed: 13});
-      this.selectMenuItem(this.state.selectedItem);
-      //this.setState({selectedItem: arr[i]});
-      //this.props.selectMItem(arr[i]);
-      //this.props.handleKey13(arr[i]);
-      //this._closeDropdown()
     }
   }
 
 
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
-                                styles={{width:this.refs.input.offsetWidth - 6}}
-                                selectMItem={this.selectMenuItem}/>);
+                        styles={{width:this.refs.input.offsetWidth - 6}}
+                        selectMItem={this.selectMenuItem}/>);
   }
 
   render() {
