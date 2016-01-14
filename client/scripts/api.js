@@ -1,9 +1,13 @@
 /* * File that encapsulates the logic
  * for api calls
  */
-
-var _ = require('lodash');
-//var Helpers = require('./helpers');
+var isFunction = require('lodash/lang/isFunction');
+var isObject = require('lodash/lang/isObject');
+var isUndefined = require('lodash/lang/isUndefined');
+var isNull = require('lodash/lang/isNull');
+var toArray = require('lodash/lang/toArray');
+var compose = require('lodash.compose');
+var identity = require('lodash.identity');
 
 function apiGetRequest(endpoint, parameters, callback) {
   var promise = $.ajax({
@@ -49,15 +53,15 @@ function ignoreWhenEmpty(obj, property) {
 }
 
 function isParams(arg) {
-  return !_.isFunction(arg) && _.isObject(arg);
+  return !isFunction(arg) && isObject(arg);
 }
 
 function callbackOrFailure(callback, failure) {
   return function(response) {
-    if (_.isUndefined(response.status)) {
+    if (isUndefined(response.status)) {
       callback(response);
     } else {
-      if (_.isFunction(failure)) {
+      if (isFunction(failure)) {
         failure(response);
       }
     }
@@ -66,7 +70,7 @@ function callbackOrFailure(callback, failure) {
 
 function endpoint(_endpoint) {
   var match = _endpoint.match(/^(.*)<\w+>(.*)$/);
-  if (_.isNull(match)) {
+  if (isNull(match)) {
     return _endpoint;
   } else {
     return function(placeholder) {
@@ -76,18 +80,18 @@ function endpoint(_endpoint) {
 }
 
 function simpleApiMethod(endpoint, preProcess) {
-  var requiresArgument = _.isFunction(endpoint);
-  var precall = _.isFunction(preProcess) ? preProcess : _.identity;
+  var requiresArgument = isFunction(endpoint);
+  var precall = isFunction(preProcess) ? preProcess : identity;
 
   return function(/*parameters*/) {
-    var args = _.toArray(arguments);
+    var args = toArray(arguments);
     var realEndpoint = requiresArgument ? endpoint(args.shift()) : endpoint;
     var params = isParams(args[0]) ? args.shift() : {};
     return apiGetRequest(realEndpoint, params);
   };
 }
 
-var buildMethod = _.compose(simpleApiMethod, endpoint);
+var buildMethod = compose(simpleApiMethod, endpoint);
 
 // Public API calls
 

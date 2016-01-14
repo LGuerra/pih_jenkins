@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import random from 'lodash/number/random';
 
 import LineChart from '../../components/LineChart';
 
@@ -13,7 +13,7 @@ function getDummyLineData(numLines, numRegisters) {
     for (var j = 0; j < numRegisters; j++) {
       var newDate = new Date(date.setDate(date.getDate() + 1));
       line.push({
-        value: _.random(0, 100),
+        value: random(0, 100),
         xVariable: newDate
       });
     }

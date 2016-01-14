@@ -1,6 +1,6 @@
 import React from 'react';
 import d3 from 'd3';
-import _ from 'lodash';
+import random from 'lodash/number/random';
 
 function getDummyStackedData(numGroups, numBarsByGroup) {
   var data = new Array();
@@ -11,7 +11,7 @@ function getDummyStackedData(numGroups, numBarsByGroup) {
     for (var j = 0; j < numBarsByGroup; j++) {
       group.bars.push({
         label: 'bar-' + j,
-        value: _.random(0, 100),
+        value: random(0, 100),
         color: '#1394BC',
         hoverColor: '#848484'
       });
