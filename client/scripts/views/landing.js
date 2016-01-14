@@ -36,17 +36,18 @@ function parseSuggestionsGoogle(addresses) {
 class Landing extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { metrics:       ['Vivienda', 'Zona'],
-                   searchType:     'Vivienda',
-                   placeholder:    "Ingresa una dirección",
-                   vivienda:       'Departamento',
-                   operacion:      'Compra',
-                   areaConstruida: '100m²',
-                   edad:           '5 años',
-                   habitaciones:   2,
-                   banos:          1,
-                   cajones:        1,
-                   ddmodalShown:   {modal: true, ddSearchType: false, ddInput: false}
+    this.state = { metrics:           ['Vivienda', 'Zona'],
+                   searchType:         'Vivienda',
+                   placeholder:        "Ingresa una dirección",
+                   vivienda:           'Departamento',
+                   operacion:          'Compra',
+                   areaConstruida:     '100m²',
+                   edad:               '5 años',
+                   habitaciones:       2,
+                   banos:              1,
+                   cajones:            1,
+                   ddmodalShown:       {modal: true, ddSearchType: false, ddInput: false},
+                   modaldd:            false
                  };
     this._searchTypeSelected    = this._searchTypeSelected.bind(this);
     this._sendRequest           = this._sendRequest.bind(this);
@@ -58,6 +59,7 @@ class Landing extends React.Component {
     this._keyDownSearchType     = this._keyDownSearchType.bind(this);
     this._stopPropagation       = this._stopPropagation.bind(this);
     this._focusOnInput          = this._focusOnInput.bind(this);
+    this._modalDD               = this._modalDD.bind(this);
   }
 
   _closeAllddModalShown () {
@@ -96,7 +98,7 @@ class Landing extends React.Component {
     if (sType === "Vivienda") {
       ddmShown.modal = true;
       ans.placeholder = "Ingresa una dirección";
-    }
+    } else ddmShown.modal = false;
     ans.ddmodalShown = ddmShown;
     this.setState(ans);
   }
@@ -119,7 +121,7 @@ class Landing extends React.Component {
       if (this.state.searchType === "Vivienda") ddmodalShown.modal = true;
       ddmodalShown.ddSearchType = true;
     }
-    this.setState({ddmodalShown: ddmodalShown, searchType: c});
+    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false});
   }
 
   _keyDownSearchType(sType) {
@@ -144,15 +146,17 @@ class Landing extends React.Component {
     let suggests = [];
     if (searchInput.length >= 3) {
       ddmShown.ddInput = true;
+      ddmShown.modal   = true;
+
       if (this.state.searchType === "Vivienda") {
 
         // Callback to set suggestions into state. Will recieve suggestions in prediction variable
         let displaySuggestions = (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
-            console.log(predictions);
+            //console.log(predictions);
             suggests = parseSuggestionsGoogle(predictions);
-            console.log("SEARCH IN GOOGLE");
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
+            //console.log("SEARCH IN GOOGLE");
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false});
           }
         };
 
@@ -163,6 +167,7 @@ class Landing extends React.Component {
         // Execute service and print result in callback
         service.getPlacePredictions(request, displaySuggestions);
       } else {
+        ddmShown.modal = false;
         let arr    = searchInput.split(" ");
         let prefix = arr.pop();
         let b      = arr.map( e => "'"+e+"'").join(", ");
@@ -188,18 +193,26 @@ class Landing extends React.Component {
   _clickOutside (e) {
     let ddmShown   = this._closeAllddModalShown();
     ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
-    this.setState({ddmodalShown: ddmShown});
-    this._focusOnInput();
+    //console.log("click outside");
+    this.setState({ddmodalShown: ddmShown, suggestions: [], modaldd: false});
+    //this._focusOnInput();
+  }
+
+  _modalDD (e) {
+    let ddmShown = this._closeAllddModalShown();
+    ddmShown.modal = true;
+    this.setState({modaldd: e, ddmodalShown: ddmShown});
   }
 
   _stopPropagation (e) {
     e.stopPropagation();
-
   }
 
   render() {
     let ddmodalShown = this.state.ddmodalShown;
     let modalVivienda = (ddmodalShown.modal) ? (<ModalVivienda modalChange={this._modalChange}
+                                                               ddshown={this.state.modaldd}
+                                                               hideDropdowns={this._modalDD}
                                                                habitaciones={this.state.habitaciones}
                                                                banos={this.state.banos}
                                                                cajones={this.state.cajones}
@@ -231,6 +244,7 @@ class Landing extends React.Component {
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
                                  placeholder={this.state.placeholder}
+                                 crOnSearch={this._sendRequest}
                                  showSuggestions={ddmodalShown.ddInput}
                                  changeHandler={this._inputChangeHandler}/>
               </div>
@@ -242,7 +256,7 @@ class Landing extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className={'modal-div'}>
+            <div className={'modal-div'} onClick={this._stopPropagation}>
               {modalVivienda}
             </div>
           </div>

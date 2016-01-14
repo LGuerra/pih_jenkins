@@ -78,6 +78,7 @@ class ModalVivienda extends React.Component {
   clicked (which, state) {
     let dropdowns = this.closeShowingDropdowns();
     dropdowns[which] = state;
+    this.props.hideDropdowns(state);
     this.setState({showingDropdowns: dropdowns});
   }
 
@@ -97,9 +98,16 @@ class ModalVivienda extends React.Component {
     this._selectEdad(a);
   }
 
-  render () {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.ddshown !== nextProps.ddshown && nextProps.ddshown === false) {
+      this.setState({showingDropdowns: this.closeShowingDropdowns()});
+    }
 
+  }
+
+  render () {
     let showing = this.state.showingDropdowns;
+
     return (
       <div className="modal-box">
         <div className="row modal-row">
