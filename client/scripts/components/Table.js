@@ -20,6 +20,7 @@ class Table extends React.Component {
     }
   }
   render () {
+    var _this = this;
     var data = this.props.data;
     var keys = Object.keys(data[0]);
     var tdArray;
@@ -45,10 +46,17 @@ class Table extends React.Component {
         tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
       }
 
+
       if (!limit || index < limit) {
-        return (
-          <tr key={'row-' + index}>{tdArray}</tr>
-        );
+        if (_this.props.onMouseoverRow) {
+          return (
+            <tr onMouseOut={_this.props.onMouseoverRow.bind(_this, {id: null})} onMouseOver={_this.props.onMouseoverRow.bind(_this, element)} key={'row-' + index}>{tdArray}</tr>
+          );
+        } else {
+          return (
+            <tr key={'row-' + index}>{tdArray}</tr>
+          );
+        }
       }
     });
 

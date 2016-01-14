@@ -21,6 +21,7 @@ class FormatBarChart extends React.Component {
     super(props);
   }
   _tooltipBarFormat(d, i) {
+    var cadena = `${i}`;
     var html = '<div class="tooltip-container">';
       html += '<div class="tooltip-row">';
         html += '<p class="tooltip-title">' + '$1,000,000' + '</p>';
@@ -43,6 +44,12 @@ class FormatBarChart extends React.Component {
         color={'#35C0BE'}
         hoverColor={'#2a9998'}
         height={180}
+        margin={{
+          left: 40,
+          right: 35,
+          top: 25,
+          bottom: 25
+        }}
         idContainer={'bar-chart'} />
     );
   }

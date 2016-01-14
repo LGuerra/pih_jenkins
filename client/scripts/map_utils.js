@@ -198,7 +198,6 @@ var MapUtils = {
         controlDiv.appendChild(drawTool);
         controlDiv.style.border = "0px";
         var button = document.createElement("button");
-        // button.innerHTML = conf.getPolyState() ? "<img width='13px' height='13px' src='" +lapiz_white+ "'></img> " + cancelMessage : "<img width='13px' height='13px' src='" +lapiz_white+ "'></img> " + drawMessage;
         button.className = "blue-button button-drawpolygon";
         drawTool.appendChild(button);
         if(conf.removalListener !== null && document.getElementById(conf.removalListener) !== null){

@@ -7,31 +7,36 @@ var tableData1 = [
     'Colonia': 'Anzures',
     'Precio m²': '$15,000',
     'Viviendas ofertadas': '250',
-    'Apreciación prom.': '5.6%'
+    'Apreciación prom.': '5.6%',
+    'id': 0
   },
   {
     'Colonia': 'Anzures',
     'Precio m²': '$15,000',
     'Viviendas ofertadas': '250',
-    'Apreciación prom.': '5.6%'
+    'Apreciación prom.': '5.6%',
+    'id': 1
   },
   {
     'Colonia': 'Anzures',
     'Precio m²': '$15,000',
     'Viviendas ofertadas': '250',
-    'Apreciación prom.': '5.6%'
+    'Apreciación prom.': '5.6%',
+    'id': 2
   },
   {
     'Colonia': 'Anzures',
     'Precio m²': '$15,000',
     'Viviendas ofertadas': '250',
-    'Apreciación prom.': '5.6%'
+    'Apreciación prom.': '5.6%',
+    'id': 3
   },
   {
     'Colonia': 'Anzures',
     'Precio m²': '$15,000',
     'Viviendas ofertadas': '250',
-    'Apreciación prom.': '5.6%'
+    'Apreciación prom.': '5.6%',
+    'id': 4
   }
 ]
 
@@ -47,11 +52,13 @@ class ComparativoColonias extends React.Component {
         <div className={'row'}>
           <div className={'col-md-6 col-sm-12'}>
             <Table
+              onMouseoverRow={this.props.onMouseover}
               specificClass={'mercado-table table-hover'}
               data={tableData1} />
           </div>
           <div className={'col-md-6 col-sm-12'}>
             <Table
+              onMouseoverRow={this.props.onMouseover}
               specificClass={'mercado-table table-hover'}
               data={tableData1} />
           </div>

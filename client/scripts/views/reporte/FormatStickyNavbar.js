@@ -1,48 +1,14 @@
 import React from 'react';
 
-class StickyNavbar extends React.Component{
+import StickyNavbar from '../../components/StickyNavbar';
+
+class FormatStickyNavbar extends React.Component{
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    var stickyNavTop = $('.secondary-nav').offset() ?
-      $('.secondary-nav').offset().top : 50;
-
-    var stickyNav = function(){
-      var scrollTop = $(window).scrollTop();
-      if (scrollTop > (stickyNavTop * 2)) {
-        $('#sticky-nav').css({
-          display: 'block',
-          opacity: 1,
-          WebkitTransition : 'opacity 1s ease-in-out',
-          MozTransition    : 'opacity 1s ease-in-out',
-          MsTransition     : 'opacity 1s ease-in-out',
-          OTransition      : 'opacity 1s ease-in-out',
-          transition       : 'opacity 1s ease-in-out'
-        });
-      } else {
-        $('#sticky-nav').css({
-          opacity: 0,
-          display: 'none'
-        });
-      }
-    };
-    stickyNav();
-    $(window).scroll(function() {
-      stickyNav();
-    });
-  }
   render() {
-    return (
-      <div id={'sticky-nav'} style={{
-        position: 'fixed',
-        width: '100%',
-        left: '0',
-        top: '0',
-        zIndex: '100',
-        borderTop: '0',
-        backgroundColor: '#F8F8F8'
-      }}>
+    var content = this.props.viewType === 'vivienda' ?
+      (
         <div className={'row'}>
           <div className={'col-md-4 col-sm-12'}>
             <p style={{marginTop: '12px', marginBottom: '0px', fontSize: '12px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>
@@ -75,9 +41,32 @@ class StickyNavbar extends React.Component{
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className={'row'}>
+          <div className={'col-md-4 col-sm-12'}>
+            <p style={{marginTop: '15px', marginBottom: '0px', fontSize: '20px'}}>{'Colonia Anzures'}</p>
+          </div>
+          <div className={'col-md-8 col-sm-12'}>
+            <div className={'navbar-icons'}>
+              <div className={'navbar-icon'}>
+                <p className={'green-price'}>$2,915,000</p>
+              </div>
+              <div className={'navbar-icon'}>
+                <div style={{textAlign: 'center'}}>
+                  <p className={'secondary-price'}>$15,000</p>
+                  <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio promedio por m²</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    return (
+      <StickyNavbar>
+        {content}
+      </StickyNavbar>
     );
   }
 }
 
-export default StickyNavbar;
+export default FormatStickyNavbar;
