@@ -20,7 +20,6 @@ function getDummyStackedData(numGroups, numBarsByGroup) {
     data.push(group);
     group = {};
   }
-
   return (data);
 }
 

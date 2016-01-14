@@ -47,15 +47,14 @@ class Table extends React.Component {
         tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
       }
 
-
       if (!limit || index < limit) {
         if (_this.props.onMouseoverRow) {
           return (
-            <tr onMouseOut={_this.props.onMouseoverRow.bind(_this, {id: null})} onMouseOver={_this.props.onMouseoverRow.bind(_this, element)} key={'row-' + index}>{tdArray}</tr>
+            <tr data-id={element[_this.props.idField]} donMouseOut={_this.props.onMouseoverRow.bind(_this, {id: null})} onMouseOver={_this.props.onMouseoverRow.bind(_this, element)} key={'row-' + index}>{tdArray}</tr>
           );
         } else {
           return (
-            <tr key={'row-' + index}>{tdArray}</tr>
+            <tr data-id={element[_this.props.idField]} dkey={'row-' + index}>{tdArray}</tr>
           );
         }
       }
