@@ -3,8 +3,6 @@ import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash';
 
-import moment from 'moment';
-
 // Components
 import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
@@ -18,7 +16,7 @@ import PrecioDistribucion from    './reporte/PrecioDistribucion';
 import FormatLineChart from       './reporte/FormatLineChart';
 import FormatBarChart from        './reporte/FormatBarChart';
 import FormatStackedBarChart from './reporte/FormatStackedBarChart';
-import StickyNavbar from          './reporte/StickyNavbar';
+import FormatStickyNavbar from    './reporte/FormatStickyNavbar';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ComparativoViviendas from  './reporte/ComparativoViviendas';
 import ComparativoColonias from   './reporte/ComparativoColonias';
@@ -49,7 +47,11 @@ class Reporte extends React.Component{
   _buildPromises(principal, identifier, dataType, data) {
     var operation = this.state.operation;
     var state = this.state.state;
-    var actualDate = moment().format('DD-MM-YYYY');
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    var actualDate = dd + '-' + mm + '-' + yyyy;
     var promise;
     var operatorPortafolioTotal = this.refs.portafolio_total.state.operation;
     var host = '/reporter';
@@ -79,8 +81,11 @@ class Reporte extends React.Component{
   }
   _downloadReport() {
     var host = '/reporter/report/';
-    var date = moment().format('DD-MM-YYYY');
-
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    var date = dd + '-' + mm + '-' + yyyy;
 
     this.reportUrl = host + date;
     this.setState({
@@ -139,7 +144,8 @@ class Reporte extends React.Component{
             <ViviendaInfo />
           </div>
           <div className={'col-sm-6'}>
-            <ColoniaInfo />
+            <ColoniaInfo
+              viewType={this.state.type}/>
           </div>
         </div>
       );
@@ -168,13 +174,26 @@ class Reporte extends React.Component{
           </MainNavbar>
             {loadingFrame}
           {secondaryNavbar}
-          <StickyNavbar />
+          <FormatStickyNavbar
+            viewType={this.props.type}/>
         </header>
+        {this.props.type === 'colonia' ? (
+          <div>
+            <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+            <hr width={'100px'} className={'section-title-hr'}/>
+          </div>)
+          : ''
+        }
         {infoBlocks}
         <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
           {loadingFrame}
-          <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
-          <hr width={'100px'} className={'section-title-hr'}/>
+          {this.props.type === 'vivienda' ? (
+            <div>
+              <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+              <hr width={'100px'} className={'section-title-hr'}/>
+            </div>)
+            : ''
+          }
           <div className={'row block-container'}>
             <div style={borderRight} className={'col-sm-6'}>
               <h4 className={'subsection-title'}>Precio Histórico Enero 2010 - Enero 2015</h4>

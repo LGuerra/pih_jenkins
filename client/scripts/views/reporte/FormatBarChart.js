@@ -22,7 +22,6 @@ class FormatBarChart extends React.Component {
   }
   _tooltipBarFormat(d, i) {
     var cadena = `${i}`;
-    console.log(cadena);
     var html = '<div class="tooltip-container">';
       html += '<div class="tooltip-row">';
         html += '<p class="tooltip-title">' + '$1,000,000' + '</p>';

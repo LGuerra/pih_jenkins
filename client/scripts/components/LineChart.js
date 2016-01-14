@@ -1,6 +1,5 @@
 import React from 'react';
 import d3 from 'd3';
-import moment from 'moment';
 
 const months = [
   'Enero',
@@ -103,8 +102,8 @@ class LineChart extends React.Component {
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
       .tickFormat(function(d, i) {
-        var m = moment(d);
-        var date = months[m.month()] + ' ' + m.date();
+        var dateObj = new Date(d);
+        var date = months[dateObj.getMonth()] + ' ' + dateObj.getDate();
         return (date);
       })
       .ticks(Math.floor(this.conf.width / 120))
