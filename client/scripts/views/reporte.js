@@ -1,5 +1,6 @@
 // Vendor
 import React from 'react';
+import ReactDOM from 'react-dom';
 import d3 from 'd3';
 import _ from 'lodash';
 
@@ -7,6 +8,7 @@ import _ from 'lodash';
 import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
 import BackToTop from   '../components/BackToTop';
+import Modal from       '../components/Modal';
 
 // View's Components
 import OfertaDisponible from      './reporte/OfertaDisponible';
@@ -33,6 +35,7 @@ class Reporte extends React.Component{
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
+    this._openForm = this._openForm.bind(this);
   }
 
   _printInfo(url) {
@@ -107,11 +110,40 @@ class Reporte extends React.Component{
       */
     });
   }
+  _openForm() {
+    this.showFormModal();
+  }
   _onMouseoverColoniaTable(data) {
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
     this.refs.comparativo_colonias.highlightRow(data);
+  }
+  componentDidMount() {
+    var modal =
+      (<Modal refs='modal' width='380px'>
+        <div style={{position: 'relative'}}>
+          <a  href='#'
+            style={{ marginTop: '2em',
+              textDecoration: 'none',
+              color: '#5C5C5C',
+              fontWeight: 'bold',
+              position: 'absolute',
+              right: '-6px',
+              bottom: '-6px'}}
+              data-dismiss='modal'>
+            <i className={'fa fa-times'}></i>
+          </a>
+        </div>
+        <p style={{marginBottom: '0px'}}>
+          {'AQUI VA EL FORMULARIO'}
+        </p>
+      </Modal>);
+
+    // Setup Modal
+    this.showFormModal = Modal.memoizeRender(function() {
+      return ReactDOM.render(modal, document.getElementById('modal-reserved-area'));
+    });
   }
   render() {
     var loadingFrame;
@@ -168,12 +200,12 @@ class Reporte extends React.Component{
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
       );
     }
-
     return (
       <div className={'noselect'}>
         <header>
           <MainNavbar
-           onDownloadReport={this._downloadReport}>
+            onOpenForm={this._openForm}
+            onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
           {secondaryNavbar}
