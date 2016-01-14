@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>PihBanca</title>
+  <title>PIH Banca</title>
   <%= csrf_meta_tags %>
 
   <% if Rails.env.production? %>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?client=<%= ENV['GOOGLE_MAPS_CLIENT_ID'] %>&v=3.15&libraries=places,drawing&sensor=true"></script>
   <% else %>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
   <% end %>
 </head>
 <body>

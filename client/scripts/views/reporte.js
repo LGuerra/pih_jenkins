@@ -1,7 +1,5 @@
 // Vendor
 import React from 'react';
-import d3 from 'd3';
-import _ from 'lodash';
 
 import moment from 'moment';
 

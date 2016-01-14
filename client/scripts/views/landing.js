@@ -1,14 +1,10 @@
 import React from 'react';
-import { Input, DropdownButton, MenuItem,
-         ButtonGroup, Button, Glyphicon,
-         Image, Dropdown} from 'react-bootstrap';
 import IMDropdownButton from '../components/DropdownButton';
 import IMInputDropdown from '../components/Input'
 import ModalVivienda from '../components/ModalVivienda';
 import API from '../api';
 
 import MainNavbar from  '../components/MainNavbar';
-
 
 function parseSuggestions(hit) {
   let ans = [];
@@ -165,6 +161,7 @@ class Landing extends React.Component {
         let arr    = searchInput.split(" ");
         let prefix = arr.pop();
         let b      = arr.map( e => "'"+e+"'").join(", ");
+        // TODO use template strings 
         API.landing({"q": "(or(and"+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
                      "return": "name",
                      "q.parser": "structured",

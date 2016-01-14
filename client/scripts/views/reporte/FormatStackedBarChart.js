@@ -1,5 +1,5 @@
 import React from 'react'
-import _ from 'lodash';
+import random from 'lodash/number/random';
 
 import StackedBarChart from '../../components/StackedBarChart';
 
@@ -12,7 +12,7 @@ function getDummyStackedData(numGroups, numBarsByGroup) {
     for (var j = 0; j < numBarsByGroup; j++) {
       group.bars.push({
         label: 'bar-' + j,
-        value: _.random(0, 100),
+        value: random(0, 100),
         color: '#35C0BE',
         hoverColor: '#2a9998'
       });

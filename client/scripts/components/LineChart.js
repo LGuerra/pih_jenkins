@@ -104,7 +104,7 @@ class LineChart extends React.Component {
       .scale(this.conf.xScale)
       .tickFormat(function(d, i) {
         var m = moment(d);
-        var date = months[m.month()] + ' ' + m.date();
+        var date = months[m] + ' ' + m.date();
         return (date);
       })
       .ticks(Math.floor(this.conf.width / 120))

@@ -1,5 +1,10 @@
 import React from 'react';
-import _ from 'lodash';
+
+import __map from 'lodash/collection/map'; 
+import __extend from 'lodash/object/extend';
+import __partial from 'lodash/function/partial';
+import __isFunction from 'lodash/lang/isFunction';
+import __isArray from 'lodash/lang/isArray';
 
 import ReactDOM from 'react-dom';
 import MapUtils from '../map_utils';
@@ -10,7 +15,7 @@ class GoogleMap extends React.Component {
   }
   getZoomObject() {
     var zoom = this.props.zoom;
-    if (!_.isArray(zoom)) {
+    if (!__isArray(zoom)) {
       return {zoom: zoom};
     } else if (zoom.length < 3) {
       return {zoom: zoom[0], maxZoom: zoom[1]};
@@ -36,14 +41,14 @@ class GoogleMap extends React.Component {
     var zoomControls = null;
     var drawControls = null;
     var drawingManager =  new google.maps.drawing.DrawingManager(MapUtils.drawing_manager);
-    _.extend(mapOptions, this.getZoomObject());
+    __extend(mapOptions, this.getZoomObject());
     this.polygon = {is_active: false};
     var zoomTop = props.zoomTop || 0;
     var zoomRight = props.zoomRight || 0;
 
     // Create map reference
     this.mapRef = new google.maps.Map(ReactDOM.findDOMNode(this), mapOptions);
-    addListener = _.partial(google.maps.event.addListener, this.mapRef);
+    addListener = __partial(google.maps.event.addListener, this.mapRef);
 
     // Set drawing manager
     drawingManager.setDrawingMode(null);
@@ -67,7 +72,7 @@ class GoogleMap extends React.Component {
     zoomDiv.index = 1;
 
     // Add event listener
-    if (_.isFunction(props.onLocationChange)) {
+    if (__isFunction(props.onLocationChange)) {
       addListener('idle', function() {
         var center = this.mapRef.getCenter();
         var zoom = this.mapRef.getZoom();
@@ -130,7 +135,7 @@ class GoogleMap extends React.Component {
     // Polygon functions
     function addPolygon(map, polyValue) {
       var polyLatLngArr = parsePolyValues(polyValue);
-      var target =  _.extend({}, drawingManager.polygonOptions, {paths:polyLatLngArr});
+      var target =  __extend({}, drawingManager.polygonOptions, {paths:polyLatLngArr});
       var _polygon = new google.maps.Polygon(target);
       _polygon.setMap(map);
       _polygon.is_active = true;
@@ -139,7 +144,7 @@ class GoogleMap extends React.Component {
 
     function parsePolyValues(polyValues) {
       var polygonArrayPoints = polyValues.split(':');
-      return _.map(polygonArrayPoints, function(str) {
+      return __map(polygonArrayPoints, function(str) {
         return stringToLatLng(str);
       });
     }
@@ -161,7 +166,7 @@ class GoogleMap extends React.Component {
 
     function getPathAsParameter(overlay) {
       var overlayPath = overlay.getPath().getArray();
-      var parameterizedPath = _.map(overlayPath, function(point) {
+      var parameterizedPath = __map(overlayPath, function(point) {
         return point.lng() + ',' + point.lat();
       });
 

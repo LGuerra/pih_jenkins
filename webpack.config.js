@@ -1,14 +1,19 @@
 var path = require('path');
 var webpack = require('webpack');
 
-// Add gzip
+var node_modules = path.resolve(__dirname, 'node_modules');
+var client = path.resolve(__dirname, 'client');
+var bootstrap = path.resolve(__dirname, 'node_modules/bootstrap/dist/css');
 
+var modulePaths = [node_modules, client, bootstrap];
+
+// Add gzip
 var extractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './client/scripts/main.js',
-    vendor: ['jquery']
+    main: path.resolve(__dirname, './client/scripts/main.js'),
+    vendor: ['jquery', 'bootstrap']
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js'),
@@ -24,6 +29,7 @@ module.exports = {
     filename: '[name].js'
   },
   watch: 'true',
+  // modulesDirectories: modulePaths,
   module: {
     preLoaders: [
       {
@@ -33,16 +39,6 @@ module.exports = {
       }
     ],
     loaders: [
-          // **IMPORTANT** This is needed so that each bootstrap js file required by
-      // bootstrap-webpack has access to the jQuery object
-      { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
-
-      // Needed for the css-loader when [bootstrap-webpack](https://github.com/bline/bootstrap-webpack)
-      // loads bootstrap's css.
-      { test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&mimetype=image/svg+xml" },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -58,7 +54,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: extractTextPlugin.extract('style-loader', 'css-loader')
       },
       {
         test: /\.(png|jpg)$/,
