@@ -9,6 +9,7 @@ import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
 import BackToTop from   '../components/BackToTop';
 import Modal from       '../components/Modal';
+import SearchForm from  '../components/SearchForm';
 
 // View's Components
 import OfertaDisponible from      './reporte/OfertaDisponible';
@@ -121,7 +122,7 @@ class Reporte extends React.Component{
   }
   componentDidMount() {
     var modal =
-      (<Modal refs='modal' width='380px'>
+      (<Modal refs='modal' width={800} height={400}>
         <div style={{position: 'relative'}}>
           <a  href='#'
             style={{ marginTop: '2em',
@@ -135,9 +136,7 @@ class Reporte extends React.Component{
             <i className={'fa fa-times'}></i>
           </a>
         </div>
-        <p style={{marginBottom: '0px'}}>
-          {'AQUI VA EL FORMULARIO'}
-        </p>
+        <SearchForm />
       </Modal>);
 
     // Setup Modal
@@ -221,7 +220,6 @@ class Reporte extends React.Component{
         }
         {infoBlocks}
         <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
-          {loadingFrame}
           {this.props.type === 'vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
