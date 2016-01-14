@@ -217,6 +217,7 @@ class Landing extends React.Component {
                 <div>
                 <IMDropdownButton reference={"searchType"}
                                   className="search-dropdown-button"
+                                  dropdownClassName="search-dropdown"
                                   items={this.state.metrics}
                                   showDropdown={ddmodalShown.ddSearchType}
                                   styles={{width: '100%'}}
