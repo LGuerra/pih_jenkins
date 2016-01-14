@@ -111,7 +111,6 @@ class LineChart extends React.Component {
 
     this.conf.yAxis = d3.svg.axis()
       .scale(this.conf.yScale)
-      .innerTickSize(-(this.conf.width - this.props.margin.right - this.props.margin.left))
       .ticks(5)
       .orient('left');
 
@@ -222,6 +221,8 @@ class LineChart extends React.Component {
       .style('fill', 'none')
       .style('pointer-events', 'all')
       .on('mouseover', function(d,i) {
+        var minPosX = _this.conf.xScale.domain()[0];
+        var minPosY = _this.conf.yScale.domain()[0];
         _this.conf.tooltip
           .style('display', 'inline')
           .style('opacity', 0.9)
@@ -252,7 +253,42 @@ class LineChart extends React.Component {
             .attr('transform', () => {
               return ('translate(' + ((_this.conf.xScale(d['data' + i].value.xVariable))) + ',' + _this.conf.yScale(d['data' + i].value.value) + ')');
             });
+
+          _this.conf.gContent.append('line')
+            .attr('x1', (_this.conf.xScale(d['data' + i].value.xVariable)))
+            .attr('y1', _this.conf.yScale(d['data' + i].value.value) + 2)
+            .attr('x2', (_this.conf.xScale(d['data' + i].value.xVariable)))
+            .attr('y2', _this.conf.yScale(d['data' + i].value.value))
+            .attr('class', 'mark-line')
+            .style('stroke', '#c3c3c3')
+            .style('fill', 'none')
+            .style('stroke-width', 2)
+            .style('stroke-dasharray', ('3, 3'))
+            .style('opacity', 0)
+            .transition()
+            .duration(375)
+            .ease('linear')
+            .style('opacity', 1)
+            .attr('y2', _this.conf.yScale(minPosY));
+
+          _this.conf.gContent.append('line')
+            .attr('x1', (_this.conf.xScale(d['data' + i].value.xVariable)) -2)
+            .attr('x2', (_this.conf.xScale(d['data' + i].value.xVariable)))
+            .attr('y1', _this.conf.yScale(d['data' + i].value.value))
+            .attr('y2', _this.conf.yScale(d['data' + i].value.value))
+            .attr('class', 'mark-line')
+            .style('stroke', '#c3c3c3')
+            .style('fill', 'none')
+            .style('stroke-width', 2)
+            .style('stroke-dasharray', ('3, 3'))
+            .style('opacity', 0)
+            .transition()
+            .duration(375)
+            .ease('linear')
+            .style('opacity', 1)
+            .attr('x2', _this.conf.xScale(minPosX));
         }
+
       })
       .on('mouseout', function(d, i) {
         _this.conf.tooltip
@@ -260,6 +296,10 @@ class LineChart extends React.Component {
 
         _this.conf.focus
           .style('display', 'none');
+
+        _this.conf.gContent
+          .selectAll('.mark-line')
+          .remove();
       });
 
     this.conf.lines = this.conf.lineContent
@@ -311,14 +351,6 @@ class LineChart extends React.Component {
     this.conf.xAxis
       .ticks(Math.floor(this.conf.width / 120))
       .scale(this.conf.xScale)
-
-    this.conf.gContent.selectAll('.axis.y')
-      .selectAll('.tick')
-      .selectAll('line')
-      .attr('x2', this.conf.width - props.margin.left - props.margin.right);
-
-    this.conf.yAxis
-      .tickSize(0, (this.conf.width - props.margin.right - props.margin.left));
 
     //Append axis to graphic content
     this.conf.xaxisLine

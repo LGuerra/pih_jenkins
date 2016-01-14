@@ -32,6 +32,12 @@
   thead {
     border-bottom: 2px solid #35C0BE;
   }
+  tr {
+    @include transition(all, 0.5s, ease);
+  }
+  tr.active-row {
+    background-color: #EFEFEF;
+  }
 }
 
 .block-container {

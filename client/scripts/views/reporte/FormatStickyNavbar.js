@@ -42,21 +42,16 @@ class FormatStickyNavbar extends React.Component{
           </div>
         </div>
       ) : (
-        <div className={'row'}>
-          <div className={'col-md-4 col-sm-12'}>
-            <p style={{marginTop: '15px', marginBottom: '0px', fontSize: '20px'}}>{'Colonia Anzures'}</p>
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <div>
+            <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '20px'}}>{'Colonia Anzures'}</p>
           </div>
-          <div className={'col-md-8 col-sm-12'}>
-            <div className={'navbar-icons'}>
-              <div className={'navbar-icon'}>
-                <p className={'green-price'}>$2,915,000</p>
-              </div>
-              <div className={'navbar-icon'}>
-                <div style={{textAlign: 'center'}}>
-                  <p className={'secondary-price'}>$15,000</p>
-                  <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio promedio por m²</p>
-                </div>
-              </div>
+          <div>
+            <p style={{marginTop: '10px', marginBottom: '10px'}} className={'green-price'}>$2,915,000</p>
+          </div>
+          <div style={{marginTop: '17px', marginBottom: '0px'}}>
+            <div style={{textAlign: 'center'}}>
+              <p>$15,000 Precio promedio por m²</p>
             </div>
           </div>
         </div>

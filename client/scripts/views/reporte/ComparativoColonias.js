@@ -1,4 +1,5 @@
-import React from 'react';
+import React from     'react';
+import ReactDOM from  'react-dom';
 
 import Table from '../../components/Table';
 
@@ -44,6 +45,18 @@ class ComparativoColonias extends React.Component {
   constructor(props) {
     super(props);
   }
+  highlightRow(id) {
+    var rows = $(ReactDOM.findDOMNode(this)).find('tr');
+    rows.each(function(index) {
+      if ($(this).data('id') === id) {
+        if ($(this).attr('class')) {
+          $(this).removeClass('active-row')
+        } else {
+          $(this).addClass('active-row')
+        }
+      }
+    });
+  }
   render() {
     return (
       <div>
@@ -52,12 +65,14 @@ class ComparativoColonias extends React.Component {
         <div className={'row'}>
           <div className={'col-md-6 col-sm-12'}>
             <Table
+              idField={'id'}
               onMouseoverRow={this.props.onMouseover}
               specificClass={'mercado-table table-hover'}
               data={tableData1} />
           </div>
           <div className={'col-md-6 col-sm-12'}>
             <Table
+              idField={'id'}
               onMouseoverRow={this.props.onMouseover}
               specificClass={'mercado-table table-hover'}
               data={tableData1} />

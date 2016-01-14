@@ -24,7 +24,7 @@ class IMDropdown extends React.Component {
     }));
 
     return (
-      <div className="im-dropdown" style={this.props.styles}>
+      <div className={"im-dropdown " + ((this.props.className) ? this.props.className : "")} style={this.props.styles}>
         {menuItems}
       </div>
     );
