@@ -64,7 +64,7 @@ class IMDropdownButton extends React.Component {
   render() {
     let imDropdown;
     if (this.state.showDropdown) {
-      imDropdown = (<IMDropdown items={this.props.items} styles={{width: '100%', right: '0'}} selectMItem={this._selectMenuItem}/>);
+      imDropdown = (<IMDropdown items={this.props.items} className={this.props.dropdownClassName} selectMItem={this._selectMenuItem}/>);
     }
 
     return (
