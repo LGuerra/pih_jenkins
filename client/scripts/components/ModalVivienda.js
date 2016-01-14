@@ -110,8 +110,8 @@ class ModalVivienda extends React.Component {
 
     return (
       <div className="modal-box">
-        <div className="row modal-row">
-          <div style={{textAlign: 'center'}} className="col-md-4 col-sm-4 col-xs-4">
+        <div className="modal-row modal-icons-row">
+          <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.habitaciones}
                                 lowerLimit={1}
@@ -119,7 +119,7 @@ class ModalVivienda extends React.Component {
                                 quantityChange={this._selectHabitacion}/>
             <span> <img src={IMAGES.blue_bed} width="20"></img> </span>
           </div>
-          <div style={{textAlign: 'center'}} className="col-md-4 col-sm-4 col-xs-4">
+          <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.banos}
                                 lowerLimit={1}
@@ -127,7 +127,7 @@ class ModalVivienda extends React.Component {
                                 quantityChange={this._selectBanos}/>
             <span> <img src={IMAGES.blue_wc} width="20"></img> </span>
           </div>
-          <div style={{textAlign: 'center'}} className="col-md-4 col-sm-4 col-xs-4 pull-right">
+          <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.cajones}
                                 lowerLimit={1}

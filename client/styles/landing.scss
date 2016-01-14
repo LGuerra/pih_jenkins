@@ -15,9 +15,8 @@
   width: 75px;
   text-align: center;
   border: 1px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   &:focus {
     outline: 0;
   }
@@ -26,13 +25,27 @@
   background-color: white;
   height: 40px;
   border: 1px;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   border-right-color: #35c0be;
   border-right-style: solid;
-  font-weight: normal
+  font-weight: normal;
+  padding-right: 9px;
   &:focus {
     outline: 0;
+  }
+}
+
+.search-dropdown{
+  width: 100%;
+  right: 0;
+  border-radius: 5px;
+  top: -1px;
+  box-shadow: 0px 0px 11px 2px rgba(0,0,0,0.05);
+  .im-menu-item{
+    padding-left: 15px;
+    padding-top: 12px;
+    min-height: 40px;
   }
 }
 
@@ -40,7 +53,6 @@
   background-color: white;
   margin-top: 15px;
   padding-bottom: 35px;
-  border: 1px solid #E4E4E4;
   border-radius: 8px;
 }
 .modal-dropdown-button {
@@ -50,7 +62,8 @@
   color: black;
   font-weight: 500;
   border-bottom-style: solid;
-  border-bottom-color: #a9a9a9;
+  border-bottom-color: #C3C3C3;
+  margin: 0px 15px;
   &:focus {
     outline: 0;
   }
@@ -58,21 +71,35 @@
 
 .modal-row {
   padding-top: 20px;
+  font-size: 13px;
 }
+
+.modal-icons-row{
+  display: flex;
+  justify-content: space-around;
+}
+
 .modal-button-container {
   width: 60%;
+  top: -4px;
+  .im-dropdown{
+    top: -1px;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0px 0px 11px 2px rgba(0,0,0,0.05);
+  }
 }
+
 
 .search-div {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 800px;
+  width: 700px;
   .search-container {
     width: 100%;
     display: flex;
     .sarch-dropdown {
-      width: 75px;
+      width: 95px;
     }
     .sarch-input {
       width: calc(100% - 150px);
@@ -86,8 +113,17 @@
   }
 }
 
+.im-input-dropdown{
+  .im-dropdown{
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    left: 8px;
+  }
+}
+
 .modal-div {
-  width: 800px;
+  width: 700px;
   display: block;
   margin-left: auto;
   margin-right: auto;

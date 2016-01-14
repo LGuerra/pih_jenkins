@@ -24,7 +24,7 @@ class MainNavbar extends React.Component{
           <div className={'col-sm-3 col-xs-3'}>
             <div style={{cursor: 'pointer', paddingTop: '14px', display: 'flex', justifyContent: 'flex-end'}}>
               <div style={{marginTop: '-2px'}}>
-                <img height={'15px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
+                <img height={'20px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
               </div>
             </div>
           </div>
