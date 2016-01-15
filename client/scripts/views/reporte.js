@@ -176,18 +176,20 @@ class Reporte extends React.Component{
            onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
-          {secondaryNavbar}
           <FormatStickyNavbar
             viewType={this.props.type}/>
         </header>
-        {this.props.type === 'colonia' ? (
-          <div>
-            <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
-            <hr width={'100px'} className={'section-title-hr'}/>
-          </div>)
-          : ''
-        }
-        {infoBlocks}
+        <div className={'header-section'}>
+          {secondaryNavbar}
+          {this.props.type === 'colonia' ? (
+            <div>
+              <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+              <hr width={'100px'} className={'section-title-hr'}/>
+            </div>)
+            : ''
+          }
+          {infoBlocks}
+        </div>
         <div style={{padding: '10px', marginTop: '20px'}} className={'info-colonia info-colonia-section'}>
           {loadingFrame}
           {this.props.type === 'vivienda' ? (
@@ -251,7 +253,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'vivienda'
+  type: 'colonia'
 }
 
 module.exports = Reporte;

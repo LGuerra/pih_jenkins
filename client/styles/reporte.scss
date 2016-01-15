@@ -81,6 +81,7 @@
 }
 
 .info-colonia-section{
+  @include transition(all, 0.75s, ease);
   background-color: #fff;
   &:hover{
     background-color: rgba(242, 245, 249, 0.4);
@@ -88,6 +89,15 @@
 }
 
 .comparables-section{
+  @include transition(all, 0.75s, ease);
+  background-color: #fff;
+  &:hover{
+    background-color: rgba(242, 245, 249, 0.4);
+  }
+}
+
+.header-section {
+  @include transition(all, 0.75s, ease);
   background-color: #fff;
   &:hover{
     background-color: rgba(242, 245, 249, 0.4);
