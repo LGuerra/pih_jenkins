@@ -1,6 +1,5 @@
 import d3 from 'd3';
 import React from 'react';
-import _ from 'lodash';
 
 class BarChart extends React.Component {
   constructor(props) {

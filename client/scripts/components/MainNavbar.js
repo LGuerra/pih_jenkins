@@ -7,9 +7,16 @@ class MainNavbar extends React.Component{
   }
   render() {
     var downloadReport = this.props.onDownloadReport
-    ? (<div style={{display: 'flex', margin: '0px 15px'}} onClick={this.props.onDownloadReport}>
-        <p style={{fontSize: '12px', marginTop: '3px'}}>Descargar reporte</p>
-        <img height={'15px'} style={{margin: '2px 10px'}} src={IMAGES.descarga} />
+    ? (<div style={{display: 'flex', margin: '0px'}} onClick={this.props.onDownloadReport}>
+        <p style={{fontSize: '12px', marginTop: '17px'}}>Descargar reporte</p>
+        <img height={'15px'} style={{margin: '16px 10px'}} src={IMAGES.descarga} />
+      </div>)
+    : '';
+
+    var openForm = this.props.onOpenForm
+    ? (<div style={{display: 'flex', margin: '0px'}} onClick={this.props.onOpenForm}>
+        <p style={{fontSize: '12px', marginTop: '17px'}}>Nueva búsqueda</p>
+        <img height={'15px'} style={{margin: '16px 10px'}} src={IMAGES.descarga} />
       </div>)
     : '';
 
@@ -25,10 +32,21 @@ class MainNavbar extends React.Component{
           </a>
           </div>
           <div className={'col-sm-4 col-xs-4'}>
-            <div style={{cursor: 'pointer', display: 'flex', justifyContent: 'flex-end'}}>
+            <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end'}}>
               {miniSearchForm}
-              <div style={{marginTop: '-2px', paddingTop: '14px'}}>
-                <img height={'20px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
+              {downloadReport}
+              <div style={{marginTop: '-2px'}}>
+                <ul className="nav navbar-nav">
+                  <li className="dropdown">
+                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                      <img height={'20px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
+                    </a>
+                    <ul className="dropdown-menu">
+                      <li><a href="/users/edit">Cambiar contraseña</a></li>
+                      <li><a href="/helpers/logout">Salir</a></li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

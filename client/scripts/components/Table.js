@@ -1,6 +1,5 @@
 import React from 'react';
-import d3 from 'd3';
-import _ from 'lodash'
+import __sortBy from 'lodash/collection/sortBy';
 
 class Table extends React.Component {
   constructor(props) {
@@ -29,7 +28,7 @@ class Table extends React.Component {
     var verMasControl;
 
     if (this.props.sortBy) {
-      data = _.sortBy(data, this.props.sortBy.field);
+      data = __sortBy(data, this.props.sortBy.field);
       data = this.props.sortBy.reverse ? data.reverse() : data;
     }
 

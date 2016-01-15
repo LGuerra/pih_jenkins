@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>PihBanca</title>
+  <title>PIH Banca</title>
   <%= csrf_meta_tags %>
 
   <% if Rails.env.production? %>
@@ -12,6 +12,7 @@
   <% end %>
 </head>
 <body>
+<div id="modal-reserved-area"></div>
 <%= yield %>
 <%= render 'layouts/asset_configuration' %>
 </body>

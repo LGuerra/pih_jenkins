@@ -1,0 +1,34 @@
+<nav class="navbar navbar-default" style="minHeight:40px" >
+  <div class="row">
+    <div class="col-sm-12 col-xs-12">
+      <a href="/">
+        <img height="25px" style="margin: 10px" src="<%= asset_path 'logo.svg' %>" />
+        <img height="26px" style="margin: 10px" src="<%= asset_path 'logo_im.svg' %>" />
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="sign-in-container">
+  <div class="sign-in-form fadeInDown animated">
+    <h2>Inicie sesión</h2>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:autocomplete => "off"}) do |f| %>
+      <div class="input-group form-group  has-feedback has-feedback-left">
+        <span class="input-group-addon"><img height="14px" width="18px" src="<%= asset_path 'user-black.svg' %>" /></span>
+        <%= f.email_field :email, autofocus: true , class: 'input form-control', placeholder: 'Correo electrónico' %>
+      </div>
+      <div class="input-group form-group  has-feedback has-feedback-left">
+        <span class="input-group-addon"><img height="14px" width="18px" src="<%= asset_path 'lock.svg' %>" /></span>
+        <%= f.password_field :password, autocomplete: "off", class: 'input form-control', placeholder: 'Contraseña' %>
+      </div>
+      <%= f.submit "Entrar", class: 'init-session blue-button' %>
+      <div class="forgot-remember">
+        <div class="pull-left">
+          <% if devise_mapping.rememberable? -%>
+            <%= f.check_box :remember_me %>
+            <%= f.label :Recordarme , class: 'remember-me'%>
+          <% end -%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

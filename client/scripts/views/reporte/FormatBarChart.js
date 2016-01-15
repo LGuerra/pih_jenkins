@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import random from 'lodash/number/random';
 
 import BarChart from '../../components/BarChart';
 
@@ -8,11 +8,10 @@ function getDummyBarData(numBars) {
 
   for (var i = 0; i < numBars; i++) {
     data.push({
-      value: _.random(0, 100),
+      value: random(0, 100),
       label: 'bar' + i
     });
   }
-
   return (data);
 }
 

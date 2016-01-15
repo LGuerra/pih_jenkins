@@ -1,0 +1,143 @@
+@charset "UTF-8";
+$sign_in_form_width: 300px;
+$sign_in_form_height: 220px;
+$sign_up_form_width: 390px;
+$sign_up_form_height: 330px;
+$forgotten_form_width: 300px;
+$forgotten_form_height: 220px;
+$new_password_form_width: 300px;
+$new_password_form_height: 205px;
+
+.field{
+  height: 40px;
+}
+.divider{
+  background:$font-color;
+  display:inline;
+  height:1px;
+  width:40%;
+}
+.init-session{
+  height: 30px;
+  margin: 3px auto 15px auto;
+  width: 100%;
+}
+.has-feedback{
+  input{
+    padding-left: 10px;
+  }
+  span {
+    background-color: $marker-font-color;
+    border: 1px solid $gray-5;
+  }
+}
+#forgotten-password{
+  font-size:11px;
+  position: relative;
+  top: 3px;
+}
+.remember-me{
+  font-size: 11px;
+  bottom: 1px;
+  color: $gray-3;
+  font-size:10px;
+  position: relative
+}
+
+.form-group{
+  margin-bottom:10px;
+  span{
+    padding: 7px;
+    i{
+      font-size: 14px;
+      margin-top: 1px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  img{
+    height: 14px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+.sign-up-container, .sign-in-container, .forgotten-container, .new-password-container {
+  background: url('./../images/map.jpg');
+  height:calc(100% - 51px);
+  position: fixed;
+  width:100%;
+}
+.session-registration-form{
+  @include border-radius(5px);
+  @include box-shadow(0px, 0px, 21px, #7e7e7e, false);
+  padding:15px;
+  position: absolute;
+  background: $marker-font-color;
+}
+.sign-in-form{
+  @extend .session-registration-form;
+  height: $sign_in_form_height;
+  left: calc(50% - (#{$sign_in_form_width}/2));
+  top: calc(50% - (#{$sign_in_form_height}/2));
+  width: $sign_in_form_width;
+  h2 {
+    font-size: 16px;
+    margin: 0 auto 15px auto;
+  }
+}
+.sign-up-form{
+  @extend .session-registration-form;
+  height: $sign_up_form_height;
+  left: calc(50% - (#{$sign_up_form_width}/2));
+  top: calc(50% - (#{$sign_up_form_height}/2));
+  width: $sign_up_form_width;
+  .intelimetrica-radio-button{
+    padding-right:20px;
+    input{
+      width: 16px;
+    }
+  }
+  .input-group {
+    margin: 20px 0;
+  }
+  h2 {
+    font-size: 16px;
+  }
+}
+.forgotten-form{
+  @extend .session-registration-form;
+  height: $forgotten_form_height;
+  left: calc(50% - (#{$forgotten_form_width}/2));
+  top: calc(50% - (#{$forgotten_form_height}/2));
+  width: $forgotten_form_width;
+  h2 {
+    font-size: 16px;
+    margin-top: 3px;
+  }
+  p {
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+}
+.new-password-form{
+  @extend .session-registration-form;
+  height: $new_password_form_height;
+  left: calc(50% - (#{$new_password_form_width}/2));
+  top: calc(50% - (#{$new_password_form_height}/2));
+  width: $new_password_form_width;
+  h2 {
+    font-size: 16px;
+    margin: 0 auto 15px auto;
+  }
+  p {
+    font-size: 12px;
+    margin-bottom: 25px;
+  }
+  .btn {
+    margin-top: 10px;
+  }
+}
+.forgot-remember{
+  height: 30px;
+  width:100%;
+}
