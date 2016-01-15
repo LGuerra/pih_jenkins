@@ -5,7 +5,6 @@ class ColoniaInfo extends React.Component {
     super(props)
   }
   render() {
-    console.log(this.props);
     var colName = this.props.viewType === 'vivienda' ?
       (<h4 className={'subsection-title'}>Colonia Anzures</h4>)
       : '';

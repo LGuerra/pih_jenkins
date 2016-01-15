@@ -22,13 +22,13 @@ class MainNavbar extends React.Component{
     return (
       <nav className={'navbar navbar-default'} style={{minHeight: '40px'}} >
         <div className={'row'}>
-          <div className={'col-sm-8 col-xs-8'}>
+          <div className={'col-sm-7 col-xs-7'}>
           <a href={'/'}>
               <img height={'25px'} style={{margin: '10px'}} src={IMAGES.santander} />
               <img height={'26px'} style={{margin: '10px'}} src={IMAGES.intelimetrica} />
           </a>
           </div>
-          <div className={'col-sm-4 col-xs-4'}>
+          <div className={'col-sm-5 col-xs-5'}>
             <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end'}}>
               {openForm}
               {downloadReport}

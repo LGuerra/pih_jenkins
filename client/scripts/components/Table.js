@@ -33,7 +33,7 @@ class Table extends React.Component {
     }
 
     var titles = keys.map(function(element, index) {
-      if (element !== 'empty') {
+      if (element !== 'empty' && (_this.props.idField !== element || _this.props.idFieldVisible)) {
         return (<th key={'title-' + element}>{element}</th>);
       } else {
         return (<th key={'title-' + element}></th>);
@@ -43,7 +43,9 @@ class Table extends React.Component {
     var rows = data.map(function(element, index) {
       tdArray = [];
       for (let k in element) {
-        tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
+        if ((k !== _this.props.idField || _this.props.idFieldVisible)) {
+          tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
+        }
       }
 
       if (!limit || index < limit) {

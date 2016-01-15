@@ -281,7 +281,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'vivienda'
+  type: 'colonia'
 }
 
 module.exports = Reporte;

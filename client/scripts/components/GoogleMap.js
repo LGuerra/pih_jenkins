@@ -197,6 +197,7 @@ class GoogleMap extends React.Component {
       return this.props.style.width !== nextProps.style.width || !samePosition;
     }
     */
+    return (true);
   }
   componentDidUpdate() {
     /*
