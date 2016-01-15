@@ -1,10 +1,13 @@
 // Vendor
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 // Components
 import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
 import BackToTop from   '../components/BackToTop';
+import Modal from       '../components/Modal';
+import SearchForm from  '../components/SearchForm';
 
 // View's Components
 import OfertaDisponible from      './reporte/OfertaDisponible';
@@ -31,6 +34,7 @@ class Reporte extends React.Component{
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
+    this._openForm = this._openForm.bind(this);
   }
 
   _printInfo(url) {
@@ -105,11 +109,38 @@ class Reporte extends React.Component{
       */
     });
   }
+  _openForm() {
+    this.showFormModal();
+  }
   _onMouseoverColoniaTable(data) {
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
     this.refs.comparativo_colonias.highlightRow(data);
+  }
+  componentDidMount() {
+    var modal =
+      (<Modal refs='modal' width={800} height={400}>
+        <div style={{position: 'relative'}}>
+          <a  href='#'
+            style={{ marginTop: '2em',
+              textDecoration: 'none',
+              color: '#5C5C5C',
+              fontWeight: 'bold',
+              position: 'absolute',
+              right: '-6px',
+              bottom: '-6px'}}
+              data-dismiss='modal'>
+            <i className={'fa fa-times'}></i>
+          </a>
+        </div>
+        <SearchForm />
+      </Modal>);
+
+    // Setup Modal
+    this.showFormModal = Modal.memoizeRender(function() {
+      return ReactDOM.render(modal, document.getElementById('modal-reserved-area'));
+    });
   }
   render() {
     var loadingFrame;
@@ -166,12 +197,12 @@ class Reporte extends React.Component{
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
       );
     }
-
     return (
       <div className={'noselect'}>
         <header>
           <MainNavbar
-           onDownloadReport={this._downloadReport}>
+            onOpenForm={this._openForm}
+            onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
           {secondaryNavbar}
@@ -187,7 +218,6 @@ class Reporte extends React.Component{
         }
         {infoBlocks}
         <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
-          {loadingFrame}
           {this.props.type === 'vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>

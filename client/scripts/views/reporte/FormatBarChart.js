@@ -12,7 +12,6 @@ function getDummyBarData(numBars) {
       label: 'bar' + i
     });
   }
-
   return (data);
 }
 

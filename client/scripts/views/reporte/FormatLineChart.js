@@ -23,7 +23,6 @@ function getDummyLineData(numLines, numRegisters) {
       color: '#35C0BE'
     });
   }
-
   return (data);
 }
 
