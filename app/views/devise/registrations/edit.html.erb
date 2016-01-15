@@ -1,39 +1,50 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<nav class="navbar navbar-default" style="minHeight:40px" >
+<div class="row">
+  <div class="col-sm-12 col-xs-12">
+    <a href="/">
+      <img height="25px" style="margin: 10px" src="<%= asset_path 'logo.svg' %>" />
+  <img height="26px" style="margin: 10px" src="<%= asset_path 'logo_im.svg' %>" />
+    </a>
   </div>
+</div>
+</nav>
+<div class="sign-in-container">
+<div class="sign-up-form fadeInDown animated">
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <% if devise_error_messages! != '' %>
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <strong>Error en los datos.</strong> Verifique la información
+      </div>
+    <% else %>
+      <h2>Cambiar contraseña</h2>
+    <% end %>
+
+    <div class="form-group">
+      <div class="input-group form-group  has-feedback has-feedback-left">
+        <span class="input-group-addon"><i class="form-control-feedback fa fa-lock"></i></span>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control input', placeholder: 'Nueva contraseña' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group form-group  has-feedback has-feedback-left">
+        <span class="input-group-addon"><i class="form-control-feedback fa fa-lock"></i></span>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control input', placeholder: 'Confirmar contraseña' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group form-group  has-feedback has-feedback-left">
+        <span class="input-group-addon"><i class="form-control-feedback fa fa-lock"></i></span>
+        <%= f.password_field :current_password, autocomplete: "off", class: 'form-control input', placeholder: 'Contraseña actual'%>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Guardar", class: 'init-session pull-right blue-button' %>
+    </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+  <a href="/">Cancelar</a>
+</div>
+</div>
