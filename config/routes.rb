@@ -2,11 +2,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
+  get 'helpers/user_info'
   get 'health_check' => 'health_check#index'
   root 'pages#index'
-
   get 'reporte' => 'pages#reporte', as: :reporte
-
   get '/2013-01-01/*url', to: 'api#tunnel_request'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
