@@ -23,7 +23,7 @@ class ViviendaInfo extends React.Component {
           alignItems: 'center'}}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>$2,915,000</p>
-            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio total Enero 2016</p>
+            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio total enero 2016</p>
             <p className={'subtitle'}>{stars} Confianza</p>
           </div>
           <div style={{textAlign: 'center'}}>

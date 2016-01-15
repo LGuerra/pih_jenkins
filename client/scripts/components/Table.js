@@ -62,13 +62,13 @@ class Table extends React.Component {
     });
 
     if (limit || limit == 0) {
-      let label = 'Más comparables';
+      let label = <p><img src={IMAGES.plus} width={'15px'}></img><span> comparables</span></p>;
       if (limit == 0) {
-        label = 'Menos comparables';
+        label = <p><img src={IMAGES.less} width={'15px'}></img><span> comparables</span></p>;
       }
       verMasControl = (
         <div style={{cursor: 'pointer'}} onClick={this._onToggle.bind(this)}>
-          <h5 style={{textAlign: 'center', color: '#357dc0'}}>{label}</h5>
+          <h5 style={{textAlign: 'center', color: '#9c9c9c', fontWeight: 'normal'}}>{label}</h5>
         </div>
       )
     }

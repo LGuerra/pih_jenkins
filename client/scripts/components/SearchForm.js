@@ -35,7 +35,7 @@ class SearchForm extends React.Component {
                    placeholder:        "Ingresa una dirección",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
-                   areaConstruida:     '100m²',
+                   areaConstruida:     '100 m²',
                    edad:               '5 años',
                    habitaciones:       2,
                    banos:              1,
@@ -88,7 +88,7 @@ class SearchForm extends React.Component {
     if (sType !== this.state.searchType) {
       ans.searchType = sType;
     }
-    ans.placeholder = "Ingresa una Colonia";
+    ans.placeholder = "Ingresa una colonia";
     if (sType === "Vivienda") {
       ddmShown.modal = true;
       ans.placeholder = "Ingresa una dirección";

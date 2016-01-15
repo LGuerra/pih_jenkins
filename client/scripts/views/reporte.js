@@ -207,19 +207,22 @@ class Reporte extends React.Component{
             onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
-          {secondaryNavbar}
           <FormatStickyNavbar
             viewType={this.props.type}/>
         </header>
-        {this.props.type === 'colonia' ? (
-          <div>
-            <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
-            <hr width={'100px'} className={'section-title-hr'}/>
-          </div>)
-          : ''
-        }
-        {infoBlocks}
-        <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
+        <div className={'header-section'}>
+          {secondaryNavbar}
+          {this.props.type === 'colonia' ? (
+            <div>
+              <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+              <hr width={'100px'} className={'section-title-hr'}/>
+            </div>)
+            : ''
+          }
+          {infoBlocks}
+        </div>
+        <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
+          {loadingFrame}
           {this.props.type === 'vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
@@ -258,13 +261,13 @@ class Reporte extends React.Component{
             </div>
           </div>
         </div>
-        <div className={'row block-container'} style={{marginTop: '10px'}}>
+        <div className={'row block-container comparables-section'} style={{marginTop: '10px'}}>
           <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
             {compareTables}
           </div>
         </div>
         <div className={'row'}>
-          <div style={{marginBottom: '30px'}} className={'col-sm-12'}>
+          <div className={'col-sm-12'}>
             <FormatGoogleMaps
               onMouseoverFeature={this._onMouseoverFeature.bind(this)}
               ref={'format_googlemap'}/>
@@ -281,7 +284,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'colonia'
+  type: 'vivienda'
 }
 
 module.exports = Reporte;

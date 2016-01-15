@@ -83,6 +83,32 @@
   text-align: center;
   font-size: 18px;
 }
+
+.info-colonia-section{
+  @include transition(all, 0.75s, ease);
+  background-color: #fff;
+  &:hover{
+    background-color: rgba(242, 245, 245, 0.55);
+  }
+}
+
+.comparables-section{
+  @include transition(all, 0.75s, ease);
+  background-color: #fff;
+  &:hover{
+    background-color: rgba(242, 245, 245, 0.55);
+  }
+}
+
+.header-section {
+  @include transition(all, 0.75s, ease);
+  background-color: #fff;
+  padding: 1px 0px 10px 0px;
+  &:hover{
+    background-color: rgba(242, 245, 245, 0.55);
+  }
+}
+
 .section-title-hr{
   border-top: 2px solid #FE696B;
   margin-top: 0px;
@@ -132,6 +158,17 @@
       margin-bottom: 0px !important;
       margin-left: 10px;
     }
+  }
+}
+
+.navbar-icon {
+  display: flex;
+  align-items: center;
+  width: auto;
+  margin-right:
+  p {
+    margin-bottom: 0px !important;
+    margin-left: 10px;
   }
 }
 
@@ -188,4 +225,8 @@
 
 .gmnoprint {
   display: none;
+}
+
+.oferta-disponible-price{
+  font-size: 20px;
 }
