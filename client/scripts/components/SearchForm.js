@@ -88,7 +88,7 @@ class SearchForm extends React.Component {
     if (sType !== this.state.searchType) {
       ans.searchType = sType;
     }
-    ans.placeholder = "Ingresa una Colonia";
+    ans.placeholder = "Ingresa una colonia";
     if (sType === "Vivienda") {
       ddmShown.modal = true;
       ans.placeholder = "Ingresa una dirección";

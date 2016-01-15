@@ -84,7 +84,7 @@
   @include transition(all, 0.75s, ease);
   background-color: #fff;
   &:hover{
-    background-color: rgba(242, 245, 249, 0.4);
+    background-color: rgba(242, 245, 245, 0.55);
   }
 }
 
@@ -92,15 +92,16 @@
   @include transition(all, 0.75s, ease);
   background-color: #fff;
   &:hover{
-    background-color: rgba(242, 245, 249, 0.4);
+    background-color: rgba(242, 245, 245, 0.55);
   }
 }
 
 .header-section {
   @include transition(all, 0.75s, ease);
   background-color: #fff;
+  padding: 1px 0px 10px 0px;
   &:hover{
-    background-color: rgba(242, 245, 249, 0.4);
+    background-color: rgba(242, 245, 245, 0.55);
   }
 }
 
@@ -156,6 +157,17 @@
   }
 }
 
+.navbar-icon {
+  display: flex;
+  align-items: center;
+  width: auto;
+  margin-right:
+  p {
+    margin-bottom: 0px !important;
+    margin-left: 10px;
+  }
+}
+
 .row {
   margin-right: 0px !important;
   margin-left: 0px !important;
@@ -194,4 +206,8 @@
   position: fixed;
   right: 14px;
   bottom: 14px;
+}
+
+.oferta-disponible-price{
+  font-size: 20px;
 }

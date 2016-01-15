@@ -190,7 +190,7 @@ class Reporte extends React.Component{
           }
           {infoBlocks}
         </div>
-        <div style={{padding: '10px', marginTop: '20px'}} className={'info-colonia info-colonia-section'}>
+        <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
           {loadingFrame}
           {this.props.type === 'vivienda' ? (
             <div>
@@ -253,7 +253,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'colonia'
+  type: 'vivienda'
 }
 
 module.exports = Reporte;
