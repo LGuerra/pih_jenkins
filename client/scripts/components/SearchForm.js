@@ -35,7 +35,7 @@ class SearchForm extends React.Component {
                    placeholder:        "Ingresa una dirección",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
-                   areaConstruida:     '100m²',
+                   areaConstruida:     '100 m²',
                    edad:               '5 años',
                    habitaciones:       2,
                    banos:              1,

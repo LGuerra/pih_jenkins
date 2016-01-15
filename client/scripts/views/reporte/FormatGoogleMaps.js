@@ -85,7 +85,7 @@ class FormatGoogleMaps extends React.Component {
           height: '400px'
         }}
         ref='map'
-        zoomTop={1} />
+        zoomTop={10} />
     );
   }
 }

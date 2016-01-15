@@ -17,7 +17,7 @@ class OfertaDisponible extends React.Component {
           className={'listados'}>
           <div style={{textAlign: 'center', padding: '18px 0px'}}>
             <p className={'secondary-price'}>985</p>
-            <p className={'subtitle'}>Listados en Dic 2015</p>
+            <p className={'subtitle'}>Listados en diciembre 2015</p>
           </div>
           <div style={{textAlign: 'center', padding: '18px 0px'}}>
             <p className={'secondary-price'}>7,000</p>
