@@ -38,7 +38,7 @@ class MainNavbar extends React.Component{
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                       <img height={'20px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
                     </a>
-                    <ul className="dropdown-menu">
+                    <ul className="dropdown-menu users-dropdown">
                       <li><a href="/users/edit">Cambiar contraseña</a></li>
                       <li><a href="/helpers/logout">Salir</a></li>
                     </ul>
