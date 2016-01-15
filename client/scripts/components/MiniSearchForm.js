@@ -27,11 +27,11 @@ function parseSuggestionsGoogle(addresses) {
   return ans;
 }
 
-class SearchForm extends React.Component {
+class MiniSearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { metrics:           ['Vivienda', 'Colonia'],
-                   searchType:         'Vivienda',
+                   searchType:         this.props.searchType,
                    placeholder:        "Ingresa una dirección",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
@@ -216,14 +216,13 @@ class SearchForm extends React.Component {
                                                                edad={this.state.edad} />) : "";
 
     return (
-        <div className="landing-page" onClick={this._clickOutside} >
-          <div className={'search-div'}>
-            <div id="id-search-container" onClick={this._stopPropagation} className={'search-container'}>
-              <div className={'sarch-dropdown'}>
+          <div className={'mini-search-div'} style={{paddingTop: 8}}>
+            <div id="id-search-container" onClick={this._stopPropagation} className={'mini-search-container'}>
+              <div className={'mini-sarch-dropdown'}>
                 <div>
                 <IMDropdownButton reference={"searchType"}
-                                  className="search-dropdown-button"
-                                  dropdownClassName="search-dropdown"
+                                  className="mini-search-dropdown-button"
+                                  dropdownClassName="mini-search-dropdown"
                                   items={this.state.metrics}
                                   showDropdown={ddmodalShown.ddSearchType}
                                   styles={{width: '100%'}}
@@ -233,7 +232,7 @@ class SearchForm extends React.Component {
                                   selectMItem={this._searchTypeSelected}/>
                 </div>
               </div>
-              <div className={'sarch-input'}>
+              <div className={'mini-sarch-input'}>
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
                                  placeholder={this.state.placeholder}
@@ -241,21 +240,20 @@ class SearchForm extends React.Component {
                                  showSuggestions={ddmodalShown.ddInput}
                                  changeHandler={this._inputChangeHandler}/>
               </div>
-              <div className={'sarch-button'}>
-                <button className="search-button" onClick={this._sendRequest}>
-                  <img src={IMAGES.lupa}></img>
+              <div className={'mini-sarch-button'}>
+                <button className="mini-search-button" onClick={this._sendRequest}>
+                  <img width={20} height={20} src={IMAGES.lupa}></img>
                 </button>
               </div>
             </div>
-          </div>
-          <div className="row">
+          {/* <div className="row">
             <div className={'modal-div'} onClick={this._stopPropagation}>
               {modalVivienda}
             </div>
+          </div>*/}
           </div>
-        </div>
     );
   }
 }
 
-export default SearchForm;
+export default MiniSearchForm;

@@ -135,7 +135,7 @@ class Reporte extends React.Component{
         </div>;
     }
 
-    if (this.props.type === 'vivienda') {
+    if (this.props.type === 'Vivienda') {
       secondaryNavbar = (
         <SecondaryNavbar
           width={'100%'} />
@@ -173,14 +173,15 @@ class Reporte extends React.Component{
       <div className={'noselect'}>
         <header>
           <MainNavbar
-           onDownloadReport={this._downloadReport}>
+            type={this.props.type}
+            onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
           {secondaryNavbar}
           <FormatStickyNavbar
             viewType={this.props.type}/>
         </header>
-        {this.props.type === 'colonia' ? (
+        {this.props.type === 'Colonia' ? (
           <div>
             <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
             <hr width={'100px'} className={'section-title-hr'}/>
@@ -190,7 +191,7 @@ class Reporte extends React.Component{
         {infoBlocks}
         <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
           {loadingFrame}
-          {this.props.type === 'vivienda' ? (
+          {this.props.type === 'Vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
@@ -251,7 +252,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'colonia'
+  type: 'Colonia'
 }
 
 module.exports = Reporte;

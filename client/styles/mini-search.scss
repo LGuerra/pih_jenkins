@@ -1,0 +1,148 @@
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.mini-search-button {
+  background-color: #35c0be;
+  height: 30px;
+  width: 50px;
+  text-align: center;
+  border: 1px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  &:focus {
+    outline: 0;
+  }
+}
+.mini-search-dropdown-button {
+  background-color: white;
+  height: 30px;
+  border: 1px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right-color: #35c0be;
+  border-right-style: solid;
+  font-weight: normal;
+  padding-right: 9px;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.mini-search-dropdown{
+  width: 100%;
+  right: 0;
+  border-radius: 5px;
+  top: -1px;
+  box-shadow: 0px 0px 11px 2px rgba(0,0,0,0.05);
+  .im-menu-item{
+    padding-left: 15px;
+    padding-top: 12px;
+    min-height: 40px;
+  }
+}
+
+.modal-box {
+  background-color: white;
+  margin-top: 15px;
+  padding-bottom: 35px;
+  border-radius: 8px;
+}
+.modal-dropdown-button {
+  display: inline-block;
+  background-color: rgba(1,1,1,0);
+  border: 1px;
+  color: black;
+  font-weight: 500;
+  border-bottom-style: solid;
+  border-bottom-color: #C3C3C3;
+  margin: 0px 15px;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.modal-row {
+  padding-top: 20px;
+  font-size: 13px;
+}
+
+.modal-icons-row{
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-button-container {
+  width: 60%;
+  top: -4px;
+  .im-dropdown{
+    top: -1px;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0px 0px 11px 2px rgba(0,0,0,0.05);
+  }
+}
+
+
+.mini-search-div {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+  .mini-search-container {
+    width: 100%;
+    display: flex;
+    .mini-sarch-dropdown {
+      width: 90px;
+    }
+    .mini-sarch-input {
+      width: calc(100% - 150px);
+      .im-input-dropdown {
+        input[type="text"] {
+          height: 30px;
+        }
+      }
+    }
+    .mini-sarch-button {
+      width: 50px;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    width: 80%;
+  }
+}
+
+.im-input-dropdown{
+  .im-dropdown{
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    left: 8px;
+  }
+}
+
+.modal-div {
+  width: 700px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (max-width: 1000px) {
+  .modal-div {
+    width: 80%;
+    .modal-row {
+      .col-md-4 {
+        padding-right: 0px;
+        padding-left: 0px
+      }
+      .im-quantity-selector-button {
+        padding: 0px;
+      }
+    }
+    .im-dropdown-button {
+      img {
+        display: none;
+      }
+    }
+  }
+}

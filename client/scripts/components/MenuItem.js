@@ -33,4 +33,4 @@ class IMMenuItem extends React.Component {
   }
 }
 
-module.exports = IMMenuItem;
+export default IMMenuItem;

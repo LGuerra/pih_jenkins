@@ -86,4 +86,4 @@ class IMDropdownButton extends React.Component {
   }
 }
 
-module.exports = IMDropdownButton;
+export default IMDropdownButton;

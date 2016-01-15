@@ -1,4 +1,5 @@
-import React from 'react';
+import React          from 'react';
+import MiniSearchForm from './MiniSearchForm'
 
 class MainNavbar extends React.Component{
   constructor(props) {
@@ -12,18 +13,21 @@ class MainNavbar extends React.Component{
       </div>)
     : '';
 
+    let miniSearchForm = (this.props.type) ? <MiniSearchForm searchType={this.props.type}/> : "" ;
+
     return (
       <nav className={'navbar navbar-default'} style={{minHeight: '40px'}} >
         <div className={'row'}>
-          <div className={'col-sm-9 col-xs-9'}>
+          <div className={'col-sm-8 col-xs-8'}>
           <a href={'/'}>
               <img height={'25px'} style={{margin: '10px'}} src={IMAGES.santander} />
               <img height={'26px'} style={{margin: '10px'}} src={IMAGES.intelimetrica} />
           </a>
           </div>
-          <div className={'col-sm-3 col-xs-3'}>
-            <div style={{cursor: 'pointer', paddingTop: '14px', display: 'flex', justifyContent: 'flex-end'}}>
-              <div style={{marginTop: '-2px'}}>
+          <div className={'col-sm-4 col-xs-4'}>
+            <div style={{cursor: 'pointer', display: 'flex', justifyContent: 'flex-end'}}>
+              {miniSearchForm}
+              <div style={{marginTop: '-2px', paddingTop: '14px'}}>
                 <img height={'20px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
               </div>
             </div>

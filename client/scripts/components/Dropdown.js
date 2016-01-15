@@ -31,4 +31,4 @@ class IMDropdown extends React.Component {
   }
 }
 
-module.exports = IMDropdown;
+export default IMDropdown;
