@@ -292,6 +292,7 @@ class LineChart extends React.Component {
       })
       .on('mouseout', function(d, i) {
         _this.conf.tooltip
+          .style('display', 'none')
           .style('opacity', 0);
 
         _this.conf.focus

@@ -3,25 +3,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Components
-import MainNavbar from  '../components/MainNavbar';
-import Spinner from     '../components/Spinner';
 import BackToTop from   '../components/BackToTop';
+import MainNavbar from  '../components/MainNavbar';
 import Modal from       '../components/Modal';
 import SearchForm from  '../components/SearchForm';
+import Spinner from     '../components/Spinner';
 
 // View's Components
-import OfertaDisponible from      './reporte/OfertaDisponible';
-import ViviendaInfo from          './reporte/ViviendaInfo';
 import ColoniaInfo from           './reporte/ColoniaInfo';
-import PrecioDistribucion from    './reporte/PrecioDistribucion';
-import FormatLineChart from       './reporte/FormatLineChart';
+import ComparativoColonias from   './reporte/ComparativoColonias';
+import ComparativoViviendas from  './reporte/ComparativoViviendas';
 import FormatBarChart from        './reporte/FormatBarChart';
+import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
+import FormatLineChart from       './reporte/FormatLineChart';
 import FormatStackedBarChart from './reporte/FormatStackedBarChart';
 import FormatStickyNavbar from    './reporte/FormatStickyNavbar';
+import OfertaDisponible from      './reporte/OfertaDisponible';
+import PrecioDistribucion from    './reporte/PrecioDistribucion';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
-import ComparativoViviendas from  './reporte/ComparativoViviendas';
-import ComparativoColonias from   './reporte/ComparativoColonias';
-import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
+import ViviendaInfo from          './reporte/ViviendaInfo';
 
 class Reporte extends React.Component{
   constructor(props) {
@@ -116,7 +116,9 @@ class Reporte extends React.Component{
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
-    this.refs.comparativo_colonias.highlightRow(data);
+    if (this.refs.comparativo_colonias) {
+      this.refs.comparativo_colonias.highlightRow(data);
+    }
   }
   componentDidMount() {
     var modal =
@@ -176,7 +178,7 @@ class Reporte extends React.Component{
           </div>
           <div className={'col-sm-6'}>
             <ColoniaInfo
-              viewType={this.state.type}/>
+              viewType={this.props.type}/>
           </div>
         </div>
       );
@@ -279,7 +281,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'colonia'
+  type: 'vivienda'
 }
 
 module.exports = Reporte;

@@ -53,7 +53,7 @@ class Table extends React.Component {
           );
         } else {
           return (
-            <tr data-id={element[_this.props.idField]} dkey={'row-' + index}>{tdArray}</tr>
+            <tr data-id={element[_this.props.idField]} dkey={'row-' + index} key={'row-' + index}>{tdArray}</tr>
           );
         }
       }
