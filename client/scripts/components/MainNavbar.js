@@ -22,17 +22,17 @@ class MainNavbar extends React.Component{
     return (
       <nav className={'navbar navbar-default'} style={{minHeight: '40px'}} >
         <div className={'row'}>
-          <div className={'col-sm-7 col-xs-7'}>
+          <div className={'col-md-6 col-sm-6 col-xs-0 navbar-logos-div'}>
           <a href={'/'}>
               <img height={'25px'} style={{margin: '10px'}} src={IMAGES.santander} />
               <img height={'26px'} style={{margin: '10px'}} src={IMAGES.intelimetrica} />
           </a>
           </div>
-          <div className={'col-sm-5 col-xs-5'}>
+          <div className={'col-md-6 col-sm-6 col-xs-12'}>
             <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end'}}>
               {openForm}
               {downloadReport}
-              <div style={{marginTop: '-2px'}}>
+              <div className="collapse navbar-collapse navbar-ex1-collapse" style={{marginTop: '-2px'}}>
                 <ul className="nav navbar-nav">
                   <li className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

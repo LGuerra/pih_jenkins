@@ -18,6 +18,11 @@
     right: 0;
     left: auto !important;
   }
+  .navbar-logos-div {
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
+  }
 }
 
 .mercado-table {

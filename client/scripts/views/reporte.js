@@ -23,14 +23,38 @@ import PrecioDistribucion from    './reporte/PrecioDistribucion';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ViviendaInfo from          './reporte/ViviendaInfo';
 
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+
 class Reporte extends React.Component{
   constructor(props) {
     super(props);
 
-    //Get initial State
-    this.state = {
-      loadingReport: false
+
+    var type = getURLParameter('tipo') === 'Zona' ? 'colonia' : 'vivienda';
+
+    if (type === 'colonia') {
+      //Get initial State
+      this.state = {
+        loadingReport: false,
+        type: type,
+        coloniaID: getURLParameter('zona')
+      }
+    } else {
+      //Get initial State
+      this.state = {
+        loadingReport: false,
+        type: type,
+        viviendaID: getURLParameter('zona')
+      }
     }
+
+    this.setState({
+      loadingReport: false,
+      zona: getURLParameter('zona'),
+      type: getURLParameter('tipo')
+    });
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
@@ -43,7 +67,7 @@ class Reporte extends React.Component{
     link.click();
 
     this.setState({
-      loadingReport: false
+      loadingReport: false,
     });
   }
   _buildPromises(principal, identifier, dataType, data) {
@@ -166,7 +190,7 @@ class Reporte extends React.Component{
         </div>;
     }
 
-    if (this.props.type === 'vivienda') {
+    if (this.state.type === 'vivienda') {
       secondaryNavbar = (
         <SecondaryNavbar
           width={'100%'} />
@@ -178,7 +202,7 @@ class Reporte extends React.Component{
           </div>
           <div className={'col-sm-6'}>
             <ColoniaInfo
-              viewType={this.props.type}/>
+              viewType={this.state.type}/>
           </div>
         </div>
       );
@@ -208,11 +232,11 @@ class Reporte extends React.Component{
           </MainNavbar>
             {loadingFrame}
           <FormatStickyNavbar
-            viewType={this.props.type}/>
+            viewType={this.state.type}/>
         </header>
         <div className={'header-section'}>
           {secondaryNavbar}
-          {this.props.type === 'colonia' ? (
+          {this.state.type === 'colonia' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
@@ -223,7 +247,7 @@ class Reporte extends React.Component{
         </div>
         <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
           {loadingFrame}
-          {this.props.type === 'vivienda' ? (
+          {this.state.type === 'vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
@@ -269,6 +293,7 @@ class Reporte extends React.Component{
         <div className={'row'}>
           <div className={'col-sm-12'}>
             <FormatGoogleMaps
+              zoneID={this.state.coloniaID}
               onMouseoverFeature={this._onMouseoverFeature.bind(this)}
               ref={'format_googlemap'}/>
           </div>

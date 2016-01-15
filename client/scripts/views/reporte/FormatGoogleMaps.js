@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleMap from '../../components/GoogleMap';
 
+import config from '../../config';
 class FormatGoogleMaps extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +40,8 @@ class FormatGoogleMaps extends React.Component {
   componentDidMount() {
     var map = this.refs.map.mapRef;
     var _this = this;
-    $.when( $.ajax('https://pih-api.intelimetrica.com/dev/suburb/adjacent-suburbs?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/geojson?suburb=090121758'), $.ajax('https://pih-api.intelimetrica.com/dev/suburb/centroid?suburb=090121758'))
+    var url = config.urlSuburb;
+    $.when( $.ajax(url + 'adjacent-suburbs?suburb=' + this.props.zoneID), $.ajax(url + 'geojson?suburb=' + this.props.zoneID), $.ajax(url + 'centroid?suburb=' + this.props.zoneID))
       .then(loadTopoJSONs, failure);
     function loadTopoJSONs(adjacent, actual, centroid) {
       map.setCenter({lat: centroid[0].lng, lng: centroid[0].lat});

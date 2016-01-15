@@ -66,7 +66,11 @@ class SearchForm extends React.Component {
   }
 
   _sendRequest () {
-    console.log("Send request with parameter...", this.refs.searchInput.getValue());
+    var templateUrl = ('/reporte?zona=:zona:&tipo=:reportType:')
+      .replace(':zona:', this.refs.searchInput.state.selectedID)
+      .replace(':reportType:', this.state.searchType);
+
+    window.open(templateUrl);
   }
 
   _modalChange(modalData) {

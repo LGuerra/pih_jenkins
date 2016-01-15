@@ -4,7 +4,7 @@ import IMDropdown from './Dropdown'
 class IMInputDropdown extends React.Component {
   constructor(props){
     super(props);
-    this.state             = {showDropdown: false, items: [], selectedItem: "", selectedSuggestion: ""};
+    this.state             = {showDropdown: false, items: [], selectedItem: "", selectedID: "", selectedSuggestion: ""};
     this.getValue          = this.getValue.bind(this);
     this.selectMenuItem   = this.selectMenuItem.bind(this);
     this.updatedItems     = this.updatedItems.bind(this);
@@ -19,8 +19,9 @@ class IMInputDropdown extends React.Component {
 
   selectMenuItem(a) {
     let selectedItem = this.state.contents[this.state.items.indexOf(a)];
+    let selectedID   = this.state.ids[this.state.items.indexOf(a)]
     this.refs.input.value = selectedItem;
-    this.setState({selectedItem: selectedItem, showDropdown: false});
+    this.setState({selectedItem: selectedItem, selectedID: selectedID, showDropdown: false});
   }
 
   updatedItems() {
@@ -49,6 +50,7 @@ class IMInputDropdown extends React.Component {
         if (this.props.items !== undefined && this.props.items.length > 0) {
           let updatedItems = this.updatedItems();
           this.setState({showDropdown: true,
+                         selectedID: updatedItems.ids[0],
                          selectedItem: updatedItems.contents[0],
                          selectedSuggestion: updatedItems.items[0],
                          items: updatedItems.items,
