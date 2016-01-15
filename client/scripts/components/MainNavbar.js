@@ -39,8 +39,8 @@ class MainNavbar extends React.Component{
                       <img height={'20px'} style={{margin: '0px 10px'}} src={IMAGES.user} />
                     </a>
                     <ul className="dropdown-menu">
-                      <li><a href="#">Cambiar contraseña</a></li>
-                      <li><a href="#">Salir</a></li>
+                      <li><a href="/users/edit">Cambiar contraseña</a></li>
+                      <li><a href="/helpers/logout">Salir</a></li>
                     </ul>
                   </li>
                 </ul>

@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
+
+  get 'helpers/logout' => 'helpers#custom_logout', as: :custom_logout
   get 'helpers/user_info'
+
   get 'health_check' => 'health_check#index'
   root 'pages#index'
   get 'reporte' => 'pages#reporte', as: :reporte
