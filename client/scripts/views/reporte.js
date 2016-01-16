@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import MainNavbar from  '../components/MainNavbar';
 import Spinner from     '../components/Spinner';
 import BackToTop from   '../components/BackToTop';
-import Modal from       '../components/Modal';
+//import Modal from       '../components/Modal';
 import SearchForm from  '../components/SearchForm';
 
 // View's Components
@@ -34,7 +34,7 @@ class Reporte extends React.Component{
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
-    this._openForm = this._openForm.bind(this);
+    //this._openForm = this._openForm.bind(this);
   }
 
   _printInfo(url) {
@@ -109,16 +109,16 @@ class Reporte extends React.Component{
       */
     });
   }
-  _openForm() {
+  /*_openForm() {
     this.showFormModal();
-  }
+  }*/
   _onMouseoverColoniaTable(data) {
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
     this.refs.comparativo_colonias.highlightRow(data);
   }
-  componentDidMount() {
+  /*componentDidMount() {
     var modal =
       (<Modal refs='modal' width={800} height={400}>
         <div style={{position: 'relative'}}>
@@ -141,7 +141,7 @@ class Reporte extends React.Component{
     this.showFormModal = Modal.memoizeRender(function() {
       return ReactDOM.render(modal, document.getElementById('modal-reserved-area'));
     });
-  }
+  }*/
   render() {
     var loadingFrame;
     var borderRight = {
@@ -281,7 +281,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'Colonia'
+  type: 'Vivienda'
 }
 
 module.exports = Reporte;

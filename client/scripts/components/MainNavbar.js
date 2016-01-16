@@ -8,7 +8,7 @@ class MainNavbar extends React.Component{
   render() {
     var downloadReport = this.props.onDownloadReport
     ? (<div style={{display: 'flex', margin: '0px'}} onClick={this.props.onDownloadReport}>
-        <p style={{fontSize: '12px', marginTop: '17px'}}>Descargar reporte</p>
+        {/*<p style={{fontSize: '12px', marginTop: '17px'}}>Descargar reporte</p>*/}
         <img height={'15px'} style={{margin: '16px 10px'}} src={IMAGES.descarga} />
       </div>)
     : '';

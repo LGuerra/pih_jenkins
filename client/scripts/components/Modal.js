@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom'
 import _ from 'lodash';
 
 class Modal extends React.Component{
@@ -6,13 +7,13 @@ class Modal extends React.Component{
     super(props);
   }
   show() {
-    $(React.findDOMNode(this)).modal('show');
+    $(ReactDOM.findDOMNode(this)).modal('show');
   }
   componentDidMount() {
-    $(React.findDOMNode(this)).modal('show');
+    $(ReactDOM.findDOMNode(this)).modal('show');
   }
   componentWillUnmount() {
-    $(React.findDOMNode(this)).off('hidden');
+    $(ReactDOM.findDOMNode(this)).off('hidden');
   }
   handleClick(e) {
     e.stopPropagation();
