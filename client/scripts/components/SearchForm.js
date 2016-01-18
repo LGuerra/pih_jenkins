@@ -70,7 +70,7 @@ class SearchForm extends React.Component {
       .replace(':zona:', this.refs.searchInput.state.selectedID)
       .replace(':reportType:', this.state.searchType);
 
-    window.open(templateUrl);
+    window.open(templateUrl, '_self');
   }
 
   _modalChange(modalData) {

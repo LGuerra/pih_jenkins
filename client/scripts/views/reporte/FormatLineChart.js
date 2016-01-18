@@ -43,6 +43,7 @@ class FormatLineChart extends React.Component {
   render() {
     return (
       <LineChart
+        svgClass={'printable-chart'}
         showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
         data={getDummyLineData(1, 14)}
         tooltipFormat={this._tooltipLineFormat}

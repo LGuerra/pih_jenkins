@@ -32,6 +32,7 @@ class BarChart extends React.Component {
 
     this.conf.svgContainer = d3.select('#' + this.props.idContainer)
       .append('svg')
+      .attr('class', props.svgClass)
       .attr('height', this.conf.height)
       .attr('width', this.conf.width);
 

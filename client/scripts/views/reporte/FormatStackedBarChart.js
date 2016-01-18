@@ -30,6 +30,7 @@ class FormatStackedBarChart extends React.Component {
   render() {
     return (
       <StackedBarChart
+        svgClass={'printable-chart'}
         data={getDummyStackedData(4, 4)}
         height={295}
         idContainer={'stacked-chart'} />
