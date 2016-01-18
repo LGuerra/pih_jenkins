@@ -37,6 +37,7 @@ class FormatBarChart extends React.Component {
   render() {
     return (
       <BarChart
+        svgClass={'printable-chart'}
         showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
         data={getDummyBarData(10)}
         tooltipFormat={this._tooltipBarFormat}
