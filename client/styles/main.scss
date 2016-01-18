@@ -33,3 +33,16 @@ body {
   }
 }
 
+.users-dropdown{
+  background-color: #e7e7e7;
+  border: 1px solid #D2D2D2;
+  border-top: none;
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 0.15);
+  a:hover{
+    color: #35c0be !important;
+    background-color: #e7e7e7 !important;
+  }
+  li{
+    padding: 2px 0px;
+  }
+}
