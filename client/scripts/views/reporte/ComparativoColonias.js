@@ -63,14 +63,7 @@ class ComparativoColonias extends React.Component {
         <h3 className={'section-title'}>Colonias colindantes</h3>
         <hr width={'100px'} className={'section-title-hr'}/>
         <div className={'row'}>
-          <div className={'col-md-6 col-sm-12'}>
-            <Table
-              idField={'id'}
-              onMouseoverRow={this.props.onMouseover}
-              specificClass={'mercado-table table-hover'}
-              data={tableData1} />
-          </div>
-          <div className={'col-md-6 col-sm-12'}>
+          <div className={'col-md-12 col-sm-12'}>
             <Table
               idField={'id'}
               onMouseoverRow={this.props.onMouseover}

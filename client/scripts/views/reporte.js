@@ -31,30 +31,25 @@ class Reporte extends React.Component{
   constructor(props) {
     super(props);
 
-
     var type = getURLParameter('tipo') === 'Zona' ? 'colonia' : 'vivienda';
 
     if (type === 'colonia') {
       //Get initial State
       this.state = {
-        loadingReport: false,
-        type: type,
         coloniaID: getURLParameter('zona')
       }
     } else {
       //Get initial State
       this.state = {
-        loadingReport: false,
-        type: type,
         viviendaID: getURLParameter('zona')
       }
     }
 
-    this.setState({
-      loadingReport: false,
-      zona: getURLParameter('zona'),
-      type: getURLParameter('tipo')
-    });
+    this.loadingReport = false;
+    this.state.type = getURLParameter('tipo');
+    this.state.zona = getURLParameter('zona');
+    this.type = type;
+
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
@@ -67,7 +62,7 @@ class Reporte extends React.Component{
     link.click();
 
     this.setState({
-      loadingReport: false,
+      loadingReport: false
     });
   }
   _buildPromises(principal, identifier, dataType, data) {
@@ -113,6 +108,8 @@ class Reporte extends React.Component{
     var yyyy = today.getFullYear();
     var date = dd + '-' + mm + '-' + yyyy;
 
+    this._getImages();
+
     this.reportUrl = host + date;
     this.setState({
       loadingReport: true
@@ -132,6 +129,33 @@ class Reporte extends React.Component{
         });
       */
     });
+  }
+  _getImages() {
+    var images = [];
+    var svgs = $('svg.printable-chart');
+    var svgXml;
+
+
+    for (var i = 0; i < svgs.length; i++) {
+      svgXml = (new XMLSerializer).serializeToString(svgs[i]);
+      canvg('canvas', svgXml);
+
+      // the canvas calls to output a png
+      var canvas = document.getElementById('canvas');
+
+      images.push({
+        nombre: $(svgs[i]).attr('id'),
+        image: canvas.toDataURL({
+          format: 'jpeg',
+          quality: 0.3
+        })
+      });
+    }
+
+    images.forEach(function(image) {
+      console.log(image.image);
+    })
+    return (images);
   }
   _openForm() {
     this.showFormModal();
@@ -202,6 +226,7 @@ class Reporte extends React.Component{
           </div>
           <div className={'col-sm-6'}>
             <ColoniaInfo
+              zoneID={this.state.zona}
               viewType={this.state.type}/>
           </div>
         </div>
@@ -213,7 +238,9 @@ class Reporte extends React.Component{
       infoBlocks = (
         <div className={'row block-container'}>
           <div className={'col-sm-12'}>
-            <ColoniaInfo />
+            <ColoniaInfo
+              zoneID={this.state.zona}
+              viewType={this.state.type} />
           </div>
         </div>
       );
@@ -277,7 +304,8 @@ class Reporte extends React.Component{
           </div>
           <div className={'row block-container'}>
             <div style={borderRight} className={'col-sm-4'}>
-              <OfertaDisponible />
+              <OfertaDisponible
+                zoneID={this.state.zona} />
             </div>
             <div className={'col-sm-8'}>
               <h4 className={'subsection-title'}>Distribución de Tipología</h4>
@@ -303,6 +331,8 @@ class Reporte extends React.Component{
         <div>
           <BackToTop />
         </div>
+        <canvas id='canvas' style={{display: 'none'}} width='300px' height='200px'>
+        </canvas>
       </div>
     );
   }
