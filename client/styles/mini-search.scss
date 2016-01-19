@@ -98,7 +98,14 @@
     .mini-sarch-input {
       width: calc(100% - 150px);
       .im-input-dropdown {
+        .input-error {
+          //border-bottom: 1px solid #C03537;
+          //border-right: 1px solid #C03537;
+          //border-top: 1px solid #C03537;*/
+          &::-webkit-input-placeholder { color: #FE696B}
+        }
         input[type="text"] {
+          @include transition(color, 0.4s, ease);
           height: 30px;
         }
       }
@@ -118,6 +125,18 @@
     left: 0;
     margin: 0 auto;
     left: 8px;
+  }
+}
+
+.search-button-modal {
+  background-color: #35c0be;
+  height: 30px;
+  width: 56px;
+  text-align: center;
+  border: 1px;
+  border-radius: 5px;
+  &:focus {
+    outline: 0;
   }
 }
 
@@ -144,5 +163,11 @@
         display: none;
       }
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .modal-dialog {
+    width: 720px;
   }
 }

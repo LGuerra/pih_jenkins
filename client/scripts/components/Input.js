@@ -97,6 +97,7 @@ class IMInputDropdown extends React.Component {
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
                         styles={{width:this.refs.input.offsetWidth - 6}}
+                        selectedSuggestion={this.state.selectedSuggestion}
                         selectMItem={this.selectMenuItem}/>);
   }
 
@@ -111,6 +112,7 @@ class IMInputDropdown extends React.Component {
         <input id="landing-input"
                type="text"
                ref="input"
+               className={this.props.className}
                placeholder={this.props.placeholder}
                onChange={this.props.changeHandler}
                onFocus={this.showDropdown}

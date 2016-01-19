@@ -47,7 +47,8 @@ class MiniSearchForm extends React.Component {
                    cajones:            1,
                    ddmodalShown:       {modal: true, ddSearchType: false, ddInput: false},
                    modaldd:            false,
-                   searchInput:        ""
+                   searchInput:        "",
+                   inputClass:         ""
                  };
     this._searchTypeSelected    = this._searchTypeSelected.bind(this);
     this._sendRequest           = this._sendRequest.bind(this);
@@ -61,6 +62,7 @@ class MiniSearchForm extends React.Component {
     this._focusOnInput          = this._focusOnInput.bind(this);
     this._modalDD               = this._modalDD.bind(this);
     this._showFormModal         = this._showFormModal.bind(this);
+    this._requestVivienda       = this._requestVivienda.bind(this);
   }
 
   _closeAllddModalShown () {
@@ -72,36 +74,42 @@ class MiniSearchForm extends React.Component {
     //this.refs.searchInput.focus();
   }
 
+  _requestVivienda () {
+    console.log("_requestVivienda");
+  }
+
   _sendRequest () {
     let searchInput = this.refs.searchInput.getValue();
-    if (this.state.searchType === "Vivienda") {
-      if (!searchInput) {
-        searchInput = "Ingresa la dirección de una vivienda";
-        //document.getElementById("modal-vivienda").innerHTML = searchInput;
+    if (!searchInput) {
+      this.setState({inputClass: "input-error"});
+      console.log("Request not sent");
+      searchInput = "Ingresa la dirección de una vivienda";
+    } else {
+      if (this.state.searchType === "Vivienda") {
+        this.setState({searchInput: searchInput, inputClass: ""},
+          ()=>this._showFormModal(this.state.searchInput,
+                                  this._modalChange,
+                                  this.state.modaldd,
+                                  this._modalDD,
+                                  this._requestVivienda,
+                                  this.state.habitaciones,
+                                  this.state.banos,
+                                  this.state.cajones,
+                                  this.state.vivienda,
+                                  this.state.operacion,
+                                  this.state.areaConstruida,
+                                  this.state.edad
+                                  ));
+        console.log("Send request with parameter...", this.refs.searchInput.getValue());
+      } else {
+        this.setState({searchInput: searchInput, inputClass: ""});
+        console.log("Send request with parameter...", this.refs.searchInput.getValue());
       }
-      this.setState({searchInput: searchInput},
-        ()=>this._showFormModal(this.state.searchInput,
-                                this._modalChange,
-                                this.state.modaldd,
-                                this._modalDD,
-                                this.state.habitaciones,
-                                this.state.banos,
-                                this.state.cajones,
-                                this.state.vivienda,
-                                this.state.operacion,
-                                this.state.areaConstruida,
-                                this.state.edad
-                                ));
-
-      //this._showFormModal();
-      //myVariable, modalChange, ddshown, hideDropdowns, habitaciones,
-      //banos, cajones, vivienda, operacion, areaConstruida, edad)
     }
-    console.log("Send request with parameter...", this.refs.searchInput.getValue());
-
   }
 
   _modalChange(modalData) {
+    console.log("_modalChange");
     this.setState(modalData);
   }
 
@@ -126,6 +134,7 @@ class MiniSearchForm extends React.Component {
       ans.placeholder = "Ingresa una dirección";
     } else ddmShown.modal = false;
     ans.ddmodalShown = ddmShown;
+    ans.inputClass = "";
     this.setState(ans);
   }
 
@@ -147,7 +156,7 @@ class MiniSearchForm extends React.Component {
       if (this.state.searchType === "Vivienda") ddmodalShown.modal = true;
       ddmodalShown.ddSearchType = true;
     }
-    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false});
+    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false, inputClass: ""});
   }
 
   _keyDownSearchType(sType) {
@@ -162,6 +171,7 @@ class MiniSearchForm extends React.Component {
       ddmShown.modal = true;
     }
     ans.ddmodalShown = ddmShown;
+    ans.inputClass = "";
     this.setState(ans);
   }
 
@@ -182,7 +192,7 @@ class MiniSearchForm extends React.Component {
             //console.log(predictions);
             suggests = parseSuggestionsGoogle(predictions);
             //console.log("SEARCH IN GOOGLE");
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false});
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""});
           }
         };
 
@@ -206,7 +216,7 @@ class MiniSearchForm extends React.Component {
             //console.log(response.hits.hit);
             suggests = parseSuggestions(response.hits.hit);
             //console.log(suggests);
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""});
           });
       }
     } else {
@@ -235,70 +245,28 @@ class MiniSearchForm extends React.Component {
     e.stopPropagation();
   }
 
-  _modalVivienda() {
-    let ddmodalShown = this.state.ddmodalShown;
-
-
-    let modalVivienda = (
-        <div>
-          <ModalVivienda modalChange    ={this._modalChange}
-                         ddshown        ={this.state.modaldd}
-                         hideDropdowns  ={this._modalDD}
-                         habitaciones   ={this.state.habitaciones}
-                         banos          ={this.state.banos}
-                         cajones        ={this.state.cajones}
-                         vivienda       ={this.state.vivienda}
-                         operacion      ={this.state.operacion}
-                         areaConstruida ={this.state.areaConstruida}
-                         edad           ={this.state.edad} />
-           <p id="modal-vivienda">{this.state.searchInput}</p>
-         </div>);
-
-     return modalVivienda;
-  }
-
-  _showFormModal(searchInput, modalChange, ddshown, hideDropdowns, habitaciones,
-                 banos, cajones, vivienda, operacion, areaConstruida, edad ) {
-    this.showFormModal(searchInput, modalChange, ddshown, hideDropdowns, habitaciones,
-                       banos, cajones, vivienda, operacion, areaConstruida, edad );
+  _showFormModal(searchInput, modalChange, ddshown, hideDropdowns, requestVivienda, habitaciones,
+                 banos, cajones, vivienda, operacion, areaConstruida, edad) {
+    this.showFormModal(searchInput, modalChange, ddshown, hideDropdowns, requestVivienda, habitaciones,
+                       banos, cajones, vivienda, operacion, areaConstruida, edad);
   }
 
   componentDidMount() {
-    /*let modal =
-       (<Modal refs='modal' width={800} height={400}>
-          <div style={{position: 'relative'}}>
-            <a href='#'
-              style={{ marginTop:      '2em',
-                       textDecoration: 'none',
-                       color:          '#5C5C5C',
-                       fontWeight:     'bold',
-                       position:       'absolute',
-                       right:          '-6px',
-                       bottom:         '-6px'}}
-              data-dismiss='modal'>
-              <i className={'fa fa-times'}></i>
-            </a>
-          </div>
-          {this._modalVivienda()}
-        </Modal>);
-
-    this.showFormModal = Modal.memoizeRender(function() {
-      return ReactDOM.render(modal, document.getElementById('modal-reserved-area'));
-    });*/
-    this.showFormModal = Modal.memoizeRender(function(myVariable, modalChange, ddshown, hideDropdowns, habitaciones,
-                                                      banos, cajones, vivienda, operacion, areaConstruida, edad) {
+    this.showFormModal = Modal.memoizeRender(function(myVariable, modalChange, ddshown, hideDropdowns,
+                                                      requestVivienda, habitaciones, banos, cajones,
+                                                      vivienda, operacion, areaConstruida, edad) {
       return ReactDOM.render(<MiniModalVivienda myVariable={myVariable}
                                                 modalChange={modalChange}
                                                 ddshown={ddshown}
                                                 hideDropdowns={hideDropdowns}
+                                                requestVivienda={requestVivienda}
                                                 habitaciones={habitaciones}
                                                 banos={banos}
                                                 cajones={cajones}
                                                 vivienda={vivienda}
                                                 operacion={operacion}
                                                 areaConstruida={areaConstruida}
-                                                edad={edad}
-                                                />,
+                                                edad={edad} />,
                                                 document.getElementById('modal-reserved-area'));
     });
   }
@@ -323,9 +291,11 @@ class MiniSearchForm extends React.Component {
                                   selectMItem={this._searchTypeSelected}/>
                 </div>
               </div>
-              <div className={'mini-sarch-input'}>
+              <div className={'mini-sarch-input '}>
+
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
+                                 className={this.state.inputClass}
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
                                  showSuggestions={ddmodalShown.ddInput}

@@ -5,8 +5,9 @@ import Modal from './Modal';
 class MiniModalVivienda extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { myVariable: this.props.myVariable };
-    this.show  = this.show.bind(this);
+    this.state        = { myVariable: this.props.myVariable };
+    this.show         = this.show.bind(this);
+    this._sendRequest = this._sendRequest.bind(this);
   }
 
   show (myVariable, callback) {
@@ -14,9 +15,33 @@ class MiniModalVivienda extends React.Component {
     this.refs.modal.show();
   }
 
+  _sendRequest () {
+    this.props.requestVivienda();
+  }
+
   render() {
     console.log(this.props);
-    let message       = <div>{this.state.myVariable}</div>;
+    let btn_bar;
+
+    if (this.state.myVariable !== "Ingresa la dirección de una vivienda") {
+      btn_bar = ( <div className="row">
+                    <p className="col-md-10 text-right" style={{display: 'inline-block', color: '#35C0BE'}}>
+                      {this.state.myVariable}
+                    </p>
+                    <div className="col-md-2" style={{display: 'inline-block'}}>
+                      <button className="search-button-modal" onClick={this._sendRequest}>
+                        <img width="20px" height="20px" src={IMAGES.lupa}></img>
+                      </button>
+                    </div>
+                  </div>
+               );
+    } else {
+      btn_bar = ( <div className="row">
+                    <p className="col-md-12 text-right" style={{display: 'inline-block', color: '#C03537'}}>
+                    {this.state.myVariable}
+                    </p>
+                  </div>);
+    }
     let modalVivienda = <ModalVivienda modalChange    ={this.props.modalChange}
                                        ddshown        ={this.props.ddshown}
                                        hideDropdowns  ={this.props.hideDropdowns}
@@ -29,9 +54,9 @@ class MiniModalVivienda extends React.Component {
                                        edad           ={this.props.edad} />;
 
     return (
-      <Modal ref='modal' top={150}>
+      <Modal ref='modal' top={150} >
         {modalVivienda}
-        {message}
+        {btn_bar}
       </Modal>
     );
   }
