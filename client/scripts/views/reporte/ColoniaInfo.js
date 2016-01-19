@@ -1,34 +1,59 @@
 import React from 'react';
 
-import config from '../../config';
 import Helpers from '../../helpers';
 
 class ColoniaInfo extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-
-    };
+    this.state = {};
   }
   componentDidMount() {
-    var url = config.urlSuburb;
-    $.when($.get(url + 'average-offer?suburb=' + this.props.zoneID), $.get(url + 'average-m2?suburb=' + this.props.zoneID))
-      .done((averageOfferR, averageM2R) => {
+    let apigClient = apigClientFactory.newClient();
+    let avergageOfferDefer = $.Deferred();
+    let averageM2Defer = $.Deferred();
+    let coloniaInfoDef = $.Deferred();
+
+    apigClient.suburbAverageOfferGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((averageOfferR) => {
+      avergageOfferDefer.resolve(averageOfferR.data);
+    });
+
+    apigClient.suburbAverageM2Get({
+      suburb: this.props.zoneID
+    }, {}, {}).then((averageM2R) => {
+      averageM2Defer.resolve(averageM2R.data);
+    });
+
+    apigClient.suburbInfoGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((suburbInfoR) => {
+      coloniaInfoDef.resolve(suburbInfoR.data);
+    })
+
+    $.when(avergageOfferDefer.promise(), averageM2Defer.promise(), coloniaInfoDef.promise())
+      .done((avergageOfferR, averageM2R, coloniaInfoR) => {
         this.setState({
           data: {
-            averageOffer: averageOfferR[0].avg,
-            averageM2: averageM2R[0].avg
+            averageOffer: avergageOfferR.avg,
+            averageM2: averageM2R.avg,
+            zonaInfo: {
+              nombre: coloniaInfoR.nombre,
+              SHF: coloniaInfoR.precio_m2_shf
+            }
           }
-        })
+        }, () => {
+          this.props.onGetColoniaInfo(this.state.data);
+        });
       });
   }
   render() {
     let content;
-    let colName = this.props.viewType === 'vivienda' ?
-      (<h4 className={'subsection-title'}>Colonia Anzures</h4>)
-      : '';
 
     if (this.state.data) {
+      let colName = this.props.viewType === 'vivienda' ?
+        (<h4 className={'subsection-title'}>Colonia Anzures</h4>)
+        : '';
       content = (<div className={'oferta-disponible'}>
         {colName}
         <div style={{
@@ -46,7 +71,9 @@ class ColoniaInfo extends React.Component {
             <p className={'subtitle'}>Precio promedio por m²</p>
           </div>
           <div style={{textAlign: 'center'}}>
-            <p className={'secondary-price'}>{Helpers.formatAsPrice(15000)}</p>
+            <p className={'secondary-price'}>
+              {this.state.data.zonaInfo.SHF ? Helpers.formatAsPrice(this.state.data.zonaInfo.SHF) : 'No disponible'}
+            </p>
             <p className={'subtitle'}>Precio SHF por m²</p>
           </div>
         </div>

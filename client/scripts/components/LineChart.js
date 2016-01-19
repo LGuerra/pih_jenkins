@@ -1,19 +1,6 @@
 import React from 'react';
 import d3 from 'd3';
 
-const months = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Diciembre'
-];
-
 class LineChart extends React.Component {
   constructor(props) {
     super(props);
@@ -70,6 +57,30 @@ class LineChart extends React.Component {
       .attr('height', this.conf.height)
       .attr('width', this.conf.width);
 
+    if (props.xTitleUnit) {
+      this.conf.svgContainer.append('text')
+        .attr('y', this.conf.height - 5)
+        .attr('x', (this.conf.width / 2))
+        .style('fill', 'rgb(130, 130, 130)')
+        .style('text-anchor', 'middle')
+        .style('font-size', '12px')
+        .style('font', '10px sans-serif')
+        .text(props.xTitleUnit);
+    }
+
+    if (this.props.yTitleUnit) {
+      this.conf.svgContainer.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 5)
+        .attr('x', 0 - (this.conf.height / 2))
+        .attr('dy', '0.5em')
+        .style('font-size', '12px')
+        .style('font', '10px sans-serif')
+        .style('fill', 'rgb(130, 130, 130)')
+        .style('text-anchor', 'middle')
+        .text(this.props.yTitleUnit);
+    }
+
     this.conf.tooltip = d3.select('body')
       .append('div')
       .attr('class', 'tooltip')
@@ -96,22 +107,19 @@ class LineChart extends React.Component {
       .range([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
 
     this.conf.yScale = d3.scale.linear()
-      .domain([0, minMaxY[1]])
+      .domain([minMaxY[0] - (minMaxY[0] * 0.05), minMaxY[1]])
       .range([this.conf.height - props.margin.top, props.margin.bottom]);
 
     //Define axis configuration
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
-      .tickFormat(function(d, i) {
-        var dateObj = new Date(d);
-        var date = months[dateObj.getMonth()] + ' ' + dateObj.getDate();
-        return (date);
-      })
-      .ticks(Math.floor(this.conf.width / 120))
+      .tickFormat(props.xtickFormat)
+      .ticks(9)
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
       .scale(this.conf.yScale)
+      .tickFormat(props.ytickFormat)
       .ticks(5)
       .orient('left');
 

@@ -139,12 +139,14 @@
   }
   .tooltip-value {
     font-size: 10px;
+    padding-left: 5px;
   }
   .tooltip-unit {
     font-size: 10px;
   }
   .tooltip-row {
     display: flex;
+    justify-content: center;
   }
 }
 

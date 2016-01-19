@@ -36,6 +36,17 @@ class BarChart extends React.Component {
       .attr('height', this.conf.height)
       .attr('width', this.conf.width);
 
+    if (props.xTitleUnit) {
+      this.conf.svgContainer.append('text')
+        .attr('y', this.conf.height - 5)
+        .attr('x', (this.conf.width / 2))
+        .style('fill', 'rgb(130, 130, 130)')
+        .style('font-size', '12px')
+        .style('text-anchor', 'middle')
+        .style('font', '10px sans-serif')
+        .text(props.xTitleUnit);
+    }
+
     this._appendAxis();
     this._appendBars();
   }
@@ -51,24 +62,20 @@ class BarChart extends React.Component {
       .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
 
     this.conf.yScale = d3.scale.linear()
-      .domain([0, minMaxY[1]])
+      .domain([(minMaxY[0] - minMaxY[0] * 0.1), minMaxY[1]])
       .range([this.conf.height - props.margin.top, props.margin.bottom]);
 
     //Define axis configuration
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
       .ticks(1)
-      .tickFormat(function(d, i) {
-        if ((i % 3) === 0) {
-          return d;
-        } else {
-          return '';
-        }
-      })
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
       .scale(this.conf.yScale)
+      .tickFormat(function(d) {
+        return (d * 100).toFixed(0) + '%';
+      })
       .ticks(5)
       .orient('left');
 
@@ -146,11 +153,13 @@ class BarChart extends React.Component {
       .attr('fill',(d) => {
         return (_this.props.color);
       })
-      .attr('y',(d) => {
-        return _this.conf.yScale(0);
-      })
       .style('cursor', 'pointer')
-      .attr('height', 0)
+      .attr('y',(d) => {
+        return _this.conf.yScale(d.value);
+      })
+      .attr('height',(d) => {
+        return (_this.conf.height - _this.conf.yScale(d.value) - _this.props.margin.bottom);
+      })
       .on('mouseover', function(d, i) {
         _this.conf.tooltip
           .style('display', 'inline')
@@ -185,16 +194,6 @@ class BarChart extends React.Component {
           .transition()
           .duration(400)
           .attr('fill', _this.props.color);
-      });
-
-    this.conf.bars
-      .transition()
-      .duration(1000)
-      .attr('y',(d) => {
-        return _this.conf.yScale(d.value);
-      })
-      .attr('height',(d) => {
-        return (_this.conf.height - _this.conf.yScale(d.value) - _this.props.margin.bottom);
       });
   }
   _updateDimensions () {

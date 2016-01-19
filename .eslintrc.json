@@ -11,7 +11,8 @@
   "globals": {
     "$": true,
     "IMAGES": true,
-    "google": true
+    "google": true,
+    "apigClientFactory": true
   },
   "extends": "eslint:recommended",
   "ecmaFeatures": {

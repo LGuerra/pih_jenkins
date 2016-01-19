@@ -54,6 +54,7 @@ class Reporte extends React.Component{
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
     this._openForm = this._openForm.bind(this);
+    this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
   }
 
   _printInfo(url) {
@@ -168,6 +169,11 @@ class Reporte extends React.Component{
       this.refs.comparativo_colonias.highlightRow(data);
     }
   }
+  _onGetColoniaInfo(info) {
+    this.setState({
+      coloniaInfo: info
+    });
+  }
   componentDidMount() {
     var modal =
       (<Modal refs='modal' width={800} height={400}>
@@ -214,6 +220,7 @@ class Reporte extends React.Component{
         </div>;
     }
 
+
     if (this.state.type === 'vivienda') {
       secondaryNavbar = (
         <SecondaryNavbar
@@ -226,6 +233,7 @@ class Reporte extends React.Component{
           </div>
           <div className={'col-sm-6'}>
             <ColoniaInfo
+              onGetColoniaInfo={this._onGetColoniaInfo}
               zoneID={this.state.zona}
               viewType={this.state.type}/>
           </div>
@@ -239,6 +247,7 @@ class Reporte extends React.Component{
         <div className={'row block-container'}>
           <div className={'col-sm-12'}>
             <ColoniaInfo
+              onGetColoniaInfo={this._onGetColoniaInfo}
               zoneID={this.state.zona}
               viewType={this.state.type} />
           </div>
@@ -250,6 +259,7 @@ class Reporte extends React.Component{
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
       );
     }
+    let zonaName = this.state.coloniaInfo ? this.state.coloniaInfo.zonaInfo.nombre : '';
     return (
       <div className={'noselect'}>
         <header>
@@ -259,13 +269,14 @@ class Reporte extends React.Component{
           </MainNavbar>
             {loadingFrame}
           <FormatStickyNavbar
+            coloniaInfo={this.state.coloniaInfo}
             viewType={this.state.type}/>
         </header>
         <div className={'header-section'}>
           {secondaryNavbar}
-          {this.state.type === 'colonia' ? (
+          {this.state.type === 'Zona' ? (
             <div>
-              <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+              <h3 className={'section-title'}>{'Datos de la colonia ' + zonaName}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
             </div>)
             : ''
@@ -286,7 +297,8 @@ class Reporte extends React.Component{
               <h4 className={'subsection-title'}>Precio Histórico Enero 2010 - Enero 2015</h4>
               <div className={'row'}>
                 <div className={'col-sm-12'}>
-                  <FormatLineChart/>
+                  <FormatLineChart
+                    zoneID={this.state.zona} />
                 </div>
               </div>
               <div className={'row'}>
@@ -298,8 +310,8 @@ class Reporte extends React.Component{
             </div>
             <div className={'col-sm-6'}>
               <h4 className={'subsection-title'}>Distribución de Precio Enero 2016</h4>
-              <FormatBarChart />
-              <PrecioDistribucion />
+              <FormatBarChart
+                zoneID={this.state.coloniaID}/>
             </div>
           </div>
           <div className={'row block-container'}>
@@ -309,7 +321,8 @@ class Reporte extends React.Component{
             </div>
             <div className={'col-sm-8'}>
               <h4 className={'subsection-title'}>Distribución de Tipología</h4>
-              <FormatStackedBarChart />
+              <FormatStackedBarChart
+                zoneID={this.state.zona}/>
             </div>
           </div>
         </div>

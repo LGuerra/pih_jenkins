@@ -3,58 +3,106 @@ import random from 'lodash/number/random';
 
 import LineChart from '../../components/LineChart';
 
-function getDummyLineData(numLines, numRegisters) {
-  var data = [];
-  var line;
-  var date;
-  for (var i = 0; i < numLines; i++) {
-    line = [];
-    date = new Date();
-    for (var j = 0; j < numRegisters; j++) {
-      var newDate = new Date(date.setDate(date.getDate() + 1));
-      line.push({
-        value: random(0, 100),
-        xVariable: newDate
-      });
-    }
-    data.push({
-      label: 'line-' + i,
-      data: line,
-      color: '#35C0BE'
-    });
-  }
-  return (data);
-}
+import Helpers from '../../helpers';
+
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre'
+];
 
 class FormatLineChart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
+
+    this._xTickFormat = this._xTickFormat.bind(this);
   }
-  _tooltipLineFormat() {
-    var date = 'Oct&nbsp;';
+  _xTickFormat(d, i) {
+    let dateObj = new Date(d);
+    let date = months[dateObj.getMonth()] + ' ' + dateObj.getDate();
+    return (date);
+  }
+  _yTickFormat(d, i) {
+    return (Helpers.formatAsPrice(d));
+  }
+  _tooltipLineFormat(d) {
+    var dateObj = new Date(d.data0.value.xVariable);
+    var dateFormatted = months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate()) + 1) + ' del ' + dateObj.getFullYear();
+
     var html = '<div class="tooltip-container">';
       html += '<div class="tooltip-row">';
-        html += `<p class="tooltip-title">'${date}'</p>`;
-        html += '<p class="tooltip-value">' + '$2,267,000' + '</p>';
+        html += '<p class="tooltip-title">' + dateFormatted + ' - </p>';
+        html += '<p class="tooltip-value">' + Helpers.formatAsPrice(d.data0.value.value) + '</p>';
       html += '</div>';
     html += '</div>';
     return (html);
   }
+  _formatData(data) {
+    let arrayPoints = [];
+
+    arrayPoints = data.map((element, index) => {
+      return ({
+        value: element.promedio_venta,
+        xVariable: new Date(element.fecha)
+      });
+    });
+
+    return [{
+      color: '#35C0BE',
+      label: 'Promedio de venta',
+      data: arrayPoints
+    }];
+  }
+  componentDidMount() {
+    let apigClient = apigClientFactory.newClient();
+
+    apigClient.suburbHistoricGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((suburbHistoricR) => {
+      let data = this._formatData(suburbHistoricR.data);
+      this.setState({
+        data: data
+      });
+    });
+  }
   render() {
+    let content;
+
+    if (this.state.data) {
+      content = (
+        <LineChart
+          svgClass={'printable-chart'}
+          showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
+          data={this.state.data}
+          tooltipFormat={this._tooltipLineFormat}
+          yTitleUnit={'Precio promedio'}
+          height={180}
+          xtickFormat={this._xTickFormat}
+          ytickFormat={this._yTickFormat}
+          margin={{
+            left: 70,
+            right: 30,
+            top: 25,
+            bottom: 25
+          }}
+          idContainer={'line-chart'} />
+      )
+    } else {
+      content = (<div></div>);
+    }
+
     return (
-      <LineChart
-        svgClass={'printable-chart'}
-        showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
-        data={getDummyLineData(1, 14)}
-        tooltipFormat={this._tooltipLineFormat}
-        height={180}
-        margin={{
-          left: 30,
-          right: 10,
-          top: 25,
-          bottom: 25
-        }}
-        idContainer={'line-chart'} />
+      content
     );
   }
 }

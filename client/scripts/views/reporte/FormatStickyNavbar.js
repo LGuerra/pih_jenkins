@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Helpers from '../../helpers';
+
 import StickyNavbar from '../../components/StickyNavbar';
 
 class FormatStickyNavbar extends React.Component{
@@ -7,8 +9,11 @@ class FormatStickyNavbar extends React.Component{
     super(props);
   }
   render() {
-    var content = this.props.viewType === 'vivienda' ?
-      (
+    let props = this.props;
+    let content;
+
+    if (props.viewType === 'vivienda') {
+      content = (
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: '10px 0px'}}>
           <div style={{maxWidth: '33.3%'}}>
             <p style={{marginTop: '12px', marginBottom: '0px', fontSize: '12px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>
@@ -37,21 +42,26 @@ class FormatStickyNavbar extends React.Component{
             <p style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'m²'}</p>
           </div>
         </div>
-      ) : (
-        <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+
+      );
+    } else {
+      if (props.coloniaInfo) {
+        content = (<div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
           <div>
-            <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}>{'Colonia Anzures'}</p>
+            <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}>{'Colonia ' + props.coloniaInfo.zonaInfo.nombre}</p>
           </div>
           <div>
-            <p style={{marginTop: '10px', marginBottom: '10px'}} className={'green-price'}>$2,915,000</p>
+            <p style={{marginTop: '10px', marginBottom: '10px'}} className={'green-price'}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</p>
           </div>
           <div style={{marginTop: '17px', marginBottom: '0px'}}>
             <div style={{textAlign: 'center'}}>
-              <p>$15,000 Precio promedio por m²</p>
+              <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' precio promedio por m²'}</p>
             </div>
           </div>
-        </div>
-      );
+        </div>);
+      }
+    }
+
     return (
       <StickyNavbar>
         {content}

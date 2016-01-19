@@ -12,16 +12,38 @@ class OfertaDisponible extends React.Component {
     };
   }
   componentDidMount() {
-    let url = config.urlSuburb;
-    $.when($.get(url + 'monthly-listing?suburb=' + this.props.zoneID), $.get(url + 'semester-listing?suburb=' + this.props.zoneID), $.get(url + 'average-time?suburb=' + this.props.zoneID))
+    let apigClient = apigClientFactory.newClient();
+    let monthlyListingDefer = $.Deferred();
+    let semesterListingDefer = $.Deferred();
+    let averageTimeDefer = $.Deferred();
+
+    apigClient.suburbMonthlyListingGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((monthlyListingR) => {
+      monthlyListingDefer.resolve(monthlyListingR.data);
+    });
+
+    apigClient.suburbSemesterListingGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((semesterListingR) => {
+      semesterListingDefer.resolve(semesterListingR.data);
+    });
+
+    apigClient.suburbAverageTimeGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((averageTimeR) => {
+      averageTimeDefer.resolve(averageTimeR.data);
+    });
+
+    $.when(monthlyListingDefer.promise(), semesterListingDefer.promise(), averageTimeDefer.promise())
       .done((monthlyListingR, semesterListingR, averageTimeR) => {
         this.setState({
           data: {
-            monthlyListing: monthlyListingR[0],
-            semesterListing: semesterListingR[0],
-            averageTime: averageTimeR[0]
+            monthlyListing: monthlyListingR.count,
+            semesterListing: semesterListingR.count,
+            averageTime: averageTimeR.avg
           }
-        })
+        });
       });
   }
   render() {
@@ -37,16 +59,16 @@ class OfertaDisponible extends React.Component {
           alignItems: 'center'}}
           className={'listados'}>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
-            <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.monthlyListing.count))}</p>
-            <p className={'subtitle'}>Listados en diciembre 2015</p>
+            <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.monthlyListing))}</p>
+            <p className={'subtitle'}>Listados en el último mes</p>
           </div>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
-            <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.semesterListing.count))}</p>
+            <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.semesterListing))}</p>
             <p className={'subtitle'}>Listados en los últimos 6 meses</p>
           </div>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
             <div className={'tiempo-container'}>
-              <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.averageTime.avg)) + ' meses'}</p>
+              <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.averageTime)) + ' días'}</p>
               <p className={'subtitle'}>Tiempo promedio en el mercado</p>
             </div>
           </div>

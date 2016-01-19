@@ -451,6 +451,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.suburbHistoricGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        
+        var suburbHistoricGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/historic').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbHistoricGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbHistoricOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbHistoricOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/historic').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbHistoricOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.suburbInfoGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

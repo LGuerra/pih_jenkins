@@ -1,40 +1,99 @@
 import React from 'react'
 import random from 'lodash/number/random';
 
-import StackedBarChart from '../../components/StackedBarChart';
+import _ from 'lodash';
 
-function getDummyStackedData(numGroups, numBarsByGroup) {
-  var data = new Array();
-  var group = {};
-  for (var i = 0; i < numGroups; i++) {
-    group.label = 'group-' + i;
-    group.bars = [];
-    for (var j = 0; j < numBarsByGroup; j++) {
-      group.bars.push({
-        label: 'bar-' + j,
-        value: random(0, 100),
-        color: '#35C0BE',
-        hoverColor: '#2a9998'
-      });
-    }
-    data.push(group);
-    group = {};
-  }
-  return (data);
-}
+import StackedBarChart from '../../components/StackedBarChart';
 
 class FormatStackedBarChart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
+  }
+  _formatData(data) {
+    var formattedData = data.typology_distribution.map(function(element, index) {
+      let label = Object.keys(element)[0];
+      let bars = element[label];
+      bars.forEach(function(bar) {
+        bar.color = '#35C0BE';
+        bar.hoverColor = '#2a9998';
+      });
+
+      if (label === 'Recamaras') {
+        bars = _.sortBy(bars, function(element) {
+          return (element.label);
+        })
+      }
+
+      if (label === 'Superficie construida') {
+        bars = _.sortBy(bars, function(element) {
+          return (element.label);
+        });
+
+        let indexes = {};
+
+        bars.forEach(function(obj, index) {
+          if (obj.label[0] === '<') {
+            obj.label = '≤ ' + obj.label.substr(2);
+            indexes.lt_c = index;
+          }
+          if (obj.label[0] === '>') {
+            obj.label = '≥ ' + obj.label.substr(2);
+            indexes.ht_c = index;
+          }
+          obj.label = obj.label.substr(0, obj.label.length - 2) + 'm²';
+        });
+
+        let ltC = bars.splice(indexes.lt_c, 1);
+        let htC = bars.splice(indexes.ht_c - 1, 1);
+
+        bars.reverse();
+
+        bars.unshift(ltC[0]);
+        bars.push(htC[0]);
+      }
+
+      return ({
+        label: label,
+        bars: bars
+      });
+    });
+
+    return (formattedData);
+  }
+  componentDidMount() {
+    let apigClient = apigClientFactory.newClient();
+
+    apigClient.stadisticsTypologyDistributionPost({}, {
+      id_col: this.props.zoneID
+    }, {}).then((stadisticsTypologyDistributionR) => {
+      let data = this._formatData(stadisticsTypologyDistributionR.data);
+      this.setState({
+        data: data
+      });
+    });
   }
   render() {
-    return (
-      <StackedBarChart
-        svgClass={'printable-chart'}
-        data={getDummyStackedData(4, 4)}
-        height={295}
-        idContainer={'stacked-chart'} />
-    );
+    let content;
+
+    if (this.state.data) {
+      content = (
+        <StackedBarChart
+          svgClass={'printable-chart'}
+          data={this.state.data}
+          height={295}
+          margin={{
+            left: 80,
+            right: 35,
+            top: 25,
+            bottom: 25
+          }}
+          idContainer={'stacked-chart'} />
+      );
+    } else {
+      content = (<div></div>);
+    }
+    return (content);
   }
 }
 

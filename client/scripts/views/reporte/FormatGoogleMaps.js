@@ -38,7 +38,28 @@ class FormatGoogleMaps extends React.Component {
     }
   }
   componentDidMount() {
-    var map = this.refs.map.mapRef;
+    let map = this.refs.map.mapRef;
+    let apigClient = apigClientFactory.newClient();
+
+    apigClient.suburbGeojsonGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((geojsonR) => {
+      map.data.addGeoJson({
+        type: 'Feature',
+        geometry: geojsonR.data,
+        properties: {
+          current: true
+        }
+      });
+    });
+
+    apigClient.suburbCentroidGet({
+      suburb: this.props.zoneID
+    }, {}, {}).then((suburbCentroidR) => {
+      map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
+    });
+
+    /*
     var _this = this;
     var url = config.urlSuburb;
     $.when( $.ajax(url + 'adjacent-suburbs?suburb=' + this.props.zoneID), $.ajax(url + 'geojson?suburb=' + this.props.zoneID), $.ajax(url + 'centroid?suburb=' + this.props.zoneID))
@@ -74,6 +95,7 @@ class FormatGoogleMaps extends React.Component {
     var failure = function() {
       console.log('Error');
     };
+    */
   }
   render() {
     var googleMap;
