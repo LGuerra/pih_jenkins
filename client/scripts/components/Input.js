@@ -4,8 +4,13 @@ import IMDropdown from './Dropdown'
 class IMInputDropdown extends React.Component {
   constructor(props){
     super(props);
-    this.state             = {showDropdown: false, items: [], selectedItem: "", selectedSuggestion: ""};
-    this.getValue          = this.getValue.bind(this);
+    this.state            = {  showDropdown: false,
+                               items: [],
+                               selectedItem: "",
+                               selectedSuggestion: "",
+                               searchInput: ""
+                            };
+    this.getValue         = this.getValue.bind(this);
     this.selectMenuItem   = this.selectMenuItem.bind(this);
     this.updatedItems     = this.updatedItems.bind(this);
     this.showDropdown     = this.showDropdown.bind(this);

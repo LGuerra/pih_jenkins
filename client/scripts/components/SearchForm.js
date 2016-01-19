@@ -149,6 +149,8 @@ class SearchForm extends React.Component {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             //console.log(predictions);
             suggests = parseSuggestionsGoogle(predictions);
+            suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
+
             //console.log("SEARCH IN GOOGLE");
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false});
           }
@@ -173,6 +175,7 @@ class SearchForm extends React.Component {
             //Desirable - IF response.isEmpty tell the user there is no data
             //console.log(response.hits.hit);
             suggests = parseSuggestions(response.hits.hit);
+            suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
             //console.log(suggests);
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
           });
