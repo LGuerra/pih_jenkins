@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 class Modal extends React.Component{
@@ -28,6 +28,8 @@ class Modal extends React.Component{
         callback = _.last(args);
         showArgs = _.initial(args);
       }
+
+      console.log(modal);
 
       if (modal === undefined) {
         modal = renderFunction.apply(null, showArgs);

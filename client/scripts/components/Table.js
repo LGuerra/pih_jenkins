@@ -33,7 +33,7 @@ class Table extends React.Component {
     }
 
     var titles = keys.map(function(element, index) {
-      if (element !== 'empty') {
+      if (element !== 'empty' && (_this.props.idField !== element || _this.props.idFieldVisible)) {
         return (<th key={'title-' + element}>{element}</th>);
       } else {
         return (<th key={'title-' + element}></th>);
@@ -43,7 +43,9 @@ class Table extends React.Component {
     var rows = data.map(function(element, index) {
       tdArray = [];
       for (let k in element) {
-        tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
+        if ((k !== _this.props.idField || _this.props.idFieldVisible)) {
+          tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
+        }
       }
 
       if (!limit || index < limit) {
@@ -53,20 +55,20 @@ class Table extends React.Component {
           );
         } else {
           return (
-            <tr data-id={element[_this.props.idField]} dkey={'row-' + index}>{tdArray}</tr>
+            <tr data-id={element[_this.props.idField]} dkey={'row-' + index} key={'row-' + index}>{tdArray}</tr>
           );
         }
       }
     });
 
     if (limit || limit == 0) {
-      let label = 'Más comparables';
+      let label = <p><img src={IMAGES.plus} width={'15px'}></img><span> comparables</span></p>;
       if (limit == 0) {
-        label = 'Menos comparables';
+        label = <p><img src={IMAGES.less} width={'15px'}></img><span> comparables</span></p>;
       }
       verMasControl = (
         <div style={{cursor: 'pointer'}} onClick={this._onToggle.bind(this)}>
-          <h5 style={{textAlign: 'center', color: '#357dc0'}}>{label}</h5>
+          <h5 style={{textAlign: 'center', color: '#9c9c9c', fontWeight: 'normal'}}>{label}</h5>
         </div>
       )
     }

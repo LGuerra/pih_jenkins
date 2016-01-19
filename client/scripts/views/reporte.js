@@ -3,34 +3,63 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Components
-import MainNavbar from  '../components/MainNavbar';
-import Spinner from     '../components/Spinner';
 import BackToTop from   '../components/BackToTop';
 //import Modal from       '../components/Modal';
+import MainNavbar from  '../components/MainNavbar';
+//import Modal from       '../components/Modal';
 import SearchForm from  '../components/SearchForm';
+import Spinner from     '../components/Spinner';
 
 // View's Components
-import OfertaDisponible from      './reporte/OfertaDisponible';
-import ViviendaInfo from          './reporte/ViviendaInfo';
 import ColoniaInfo from           './reporte/ColoniaInfo';
-import PrecioDistribucion from    './reporte/PrecioDistribucion';
-import FormatLineChart from       './reporte/FormatLineChart';
+import ComparativoColonias from   './reporte/ComparativoColonias';
+import ComparativoViviendas from  './reporte/ComparativoViviendas';
 import FormatBarChart from        './reporte/FormatBarChart';
+import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
+import FormatLineChart from       './reporte/FormatLineChart';
 import FormatStackedBarChart from './reporte/FormatStackedBarChart';
 import FormatStickyNavbar from    './reporte/FormatStickyNavbar';
+import OfertaDisponible from      './reporte/OfertaDisponible';
+import PrecioDistribucion from    './reporte/PrecioDistribucion';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
-import ComparativoViviendas from  './reporte/ComparativoViviendas';
-import ComparativoColonias from   './reporte/ComparativoColonias';
-import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
+import ViviendaInfo from          './reporte/ViviendaInfo';
+
+function getURLParameter(name) {
+  /**
+   * Disabling eslint to avoid regex ERROR*/
+  /*eslint-disable*/
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+  /*eslint-enable*/
+}
 
 class Reporte extends React.Component{
   constructor(props) {
     super(props);
 
-    //Get initial State
-    this.state = {
-      loadingReport: false
+
+    var type = getURLParameter('tipo') === 'Zona' ? 'colonia' : 'vivienda';
+
+    if (type === 'colonia') {
+      //Get initial State
+      this.state = {
+        loadingReport: false,
+        type: type,
+        coloniaID: getURLParameter('zona')
+      }
+    } else {
+      //Get initial State
+      this.state = {
+        loadingReport: false,
+        type: type,
+        viviendaID: getURLParameter('zona')
+      }
     }
+
+    this.setState({
+      loadingReport: false,
+      zona: getURLParameter('zona'),
+      type: getURLParameter('tipo')
+    });
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
@@ -116,7 +145,9 @@ class Reporte extends React.Component{
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
-    this.refs.comparativo_colonias.highlightRow(data);
+    if (this.refs.comparativo_colonias) {
+      this.refs.comparativo_colonias.highlightRow(data);
+    }
   }
   /*componentDidMount() {
     var modal =
@@ -206,21 +237,23 @@ class Reporte extends React.Component{
             onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
-          {secondaryNavbar}
           <FormatStickyNavbar
-            viewType={this.props.type}/>
+            viewType={this.state.type}/>
         </header>
-        {this.props.type === 'Colonia' ? (
-          <div>
-            <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
-            <hr width={'100px'} className={'section-title-hr'}/>
-          </div>)
-          : ''
-        }
-        {infoBlocks}
-        <div style={{backgroundColor: 'rgba(242, 245, 249, 0.4)', padding: '10px', marginTop: '20px'}} className={'info-colonia'}>
+        <div className={'header-section'}>
+          {secondaryNavbar}
+          {this.state.type === 'Colonia' ? (
+            <div>
+              <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+              <hr width={'100px'} className={'section-title-hr'}/>
+            </div>)
+            : ''
+          }
+          {infoBlocks}
+        </div>
+        <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
           {loadingFrame}
-          {this.props.type === 'Vivienda' ? (
+          {this.state.type === 'Vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
@@ -237,7 +270,7 @@ class Reporte extends React.Component{
               </div>
               <div className={'row'}>
                 <div className={'col-sm-12'} style={{marginTop: '10px'}}>
-                  <p className={'secondary-price'}>{'5.3%'}</p>
+                  <p className={'secondary-price'}>{'+ 5.3%'}</p>
                   <p className={'subtitle'}>Apreciación anual</p>
                 </div>
               </div>
@@ -258,14 +291,15 @@ class Reporte extends React.Component{
             </div>
           </div>
         </div>
-        <div className={'row block-container'} style={{marginTop: '10px'}}>
+        <div className={'row block-container comparables-section'} style={{marginTop: '10px'}}>
           <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
             {compareTables}
           </div>
         </div>
         <div className={'row'}>
-          <div style={{marginBottom: '30px'}} className={'col-sm-12'}>
+          <div className={'col-sm-12'}>
             <FormatGoogleMaps
+              zoneID={this.state.coloniaID}
               onMouseoverFeature={this._onMouseoverFeature.bind(this)}
               ref={'format_googlemap'}/>
           </div>

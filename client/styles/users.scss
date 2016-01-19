@@ -1,5 +1,5 @@
 @charset "UTF-8";
-$sign_in_form_width: 300px;
+$sign_in_form_width: 350px;
 $sign_in_form_height: 220px;
 $sign_up_form_width: 390px;
 $sign_up_form_height: 330px;
@@ -21,6 +21,14 @@ $new_password_form_height: 205px;
   height: 30px;
   margin: 3px auto 15px auto;
   width: 100%;
+  background-color: #35c0be;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  color: #ffffff;
+  &:hover{
+    background-color: #2A9998;
+  }
 }
 .has-feedback{
   input{
@@ -60,6 +68,21 @@ $new_password_form_height: 205px;
     padding-left: 2px;
     padding-right: 2px;
   }
+  .input-group-addon{
+    border: none;
+  }
+  .has-feedback span{
+    border: none;
+  }
+  .form-control{
+    border: none; 
+    box-shadow: none;
+    border-bottom: 1px solid #9c9c9c;  
+    border-radius: 0;
+    &:focus{
+      border-bottom: 1px solid #35c0be;
+    }
+  }
 }
 .sign-up-container, .sign-in-container, .forgotten-container, .new-password-container {
   background: url('./../images/map.jpg');
@@ -69,7 +92,7 @@ $new_password_form_height: 205px;
 }
 .session-registration-form{
   @include border-radius(5px);
-  @include box-shadow(0px, 0px, 21px, #7e7e7e, false);
+  @include box-shadow(0px, 0px, 12px, #7e7e7e, false);
   padding:15px;
   position: absolute;
   background: $marker-font-color;

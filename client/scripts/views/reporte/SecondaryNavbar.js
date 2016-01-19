@@ -39,7 +39,7 @@ class SecondaryNavbar extends React.Component{
               <div className={'navbar-icon'}>
                 <img width={'15px'} src={IMAGES.area} />
                 <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{'1'}</p>
-                <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'m² de Construcción'}</p>
+                <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'m² de construcción'}</p>
               </div>
             </div>
           </div>

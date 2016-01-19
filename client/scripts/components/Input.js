@@ -24,8 +24,9 @@ class IMInputDropdown extends React.Component {
 
   selectMenuItem(a) {
     let selectedItem = this.state.contents[this.state.items.indexOf(a)];
+    let selectedID   = this.state.ids[this.state.items.indexOf(a)]
     this.refs.input.value = selectedItem;
-    this.setState({selectedItem: selectedItem, showDropdown: false});
+    this.setState({selectedItem: selectedItem, selectedID: selectedID, showDropdown: false});
   }
 
   updatedItems() {
@@ -54,6 +55,7 @@ class IMInputDropdown extends React.Component {
         if (this.props.items !== undefined && this.props.items.length > 0) {
           let updatedItems = this.updatedItems();
           this.setState({showDropdown: true,
+                         selectedID: updatedItems.ids[0],
                          selectedItem: updatedItems.contents[0],
                          selectedSuggestion: updatedItems.items[0],
                          items: updatedItems.items,

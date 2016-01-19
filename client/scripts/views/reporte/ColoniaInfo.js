@@ -19,7 +19,7 @@ class ColoniaInfo extends React.Component {
         }}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>$2,915,000</p>
-            <p className={'subtitle'}>Precio total Enero 2016</p>
+            <p className={'subtitle'}>Precio total enero 2016</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>$15,000</p>
@@ -27,7 +27,7 @@ class ColoniaInfo extends React.Component {
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>$15,000</p>
-            <p className={'subtitle'}>Precio SHF</p>
+            <p className={'subtitle'}>Precio SHF por m²</p>
           </div>
         </div>
       </div>

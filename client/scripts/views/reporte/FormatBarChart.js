@@ -9,7 +9,7 @@ function getDummyBarData(numBars) {
   for (var i = 0; i < numBars; i++) {
     data.push({
       value: random(0, 100),
-      label: 'bar' + i
+      label: 'nombre lar bar' + i
     });
   }
   return (data);

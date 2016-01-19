@@ -6,7 +6,8 @@ class ViviendaInfo extends React.Component {
   }
   render() {
     var stars = new Array();
-    for (let i = 0; i < this.props.reputacion; i++) {
+    var reputacion = this.props.reputacion > 5 ? 5 : this.props.reputacion;
+    for (let i = 0; i < reputacion; i++) {
       stars.push(
         <img key={'star-' + i} height={'12px'} src={IMAGES.star} style={{marginBottom: '3px'}}/>
       );
@@ -22,7 +23,7 @@ class ViviendaInfo extends React.Component {
           alignItems: 'center'}}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>$2,915,000</p>
-            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio total Enero 2016</p>
+            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio total enero 2016</p>
             <p className={'subtitle'}>{stars} Confianza</p>
           </div>
           <div style={{textAlign: 'center'}}>
@@ -36,7 +37,7 @@ class ViviendaInfo extends React.Component {
 }
 
 ViviendaInfo.defaultProps = {
-  reputacion: 1
+  reputacion: 3
 };
 
 export default ViviendaInfo;

@@ -56,7 +56,14 @@ class BarChart extends React.Component {
     //Define axis configuration
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
-      .ticks(10)
+      .ticks(1)
+      .tickFormat(function(d, i) {
+        if ((i % 3) === 0) {
+          return d;
+        } else {
+          return '';
+        }
+      })
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
