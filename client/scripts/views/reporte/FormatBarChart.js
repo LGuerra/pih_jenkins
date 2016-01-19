@@ -66,6 +66,7 @@ class FormatBarChart extends React.Component {
     return (formattedData);
   }
   componentDidMount() {
+    console.log(this.props);
     let apigClient = apigClientFactory.newClient();
 
     apigClient.stadisticsPriceDistributionPost({}, {

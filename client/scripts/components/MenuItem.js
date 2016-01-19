@@ -24,7 +24,7 @@ class IMMenuItem extends React.Component {
 
   render() {
     return (
-        <div className="im-menu-item"
+        <div className={"im-menu-item " + this.props.className}
              style={{width: '100%'}}
              onClick={this.handleClick}>
           {this.parseContent(this.state.content)}
@@ -33,4 +33,4 @@ class IMMenuItem extends React.Component {
   }
 }
 
-module.exports = IMMenuItem;
+export default IMMenuItem;

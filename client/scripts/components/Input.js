@@ -4,8 +4,13 @@ import IMDropdown from './Dropdown'
 class IMInputDropdown extends React.Component {
   constructor(props){
     super(props);
-    this.state             = {showDropdown: false, items: [], selectedItem: "", selectedID: "", selectedSuggestion: ""};
-    this.getValue          = this.getValue.bind(this);
+    this.state            = {  showDropdown: false,
+                               items: [],
+                               selectedItem: "",
+                               selectedSuggestion: "",
+                               searchInput: ""
+                            };
+    this.getValue         = this.getValue.bind(this);
     this.selectMenuItem   = this.selectMenuItem.bind(this);
     this.updatedItems     = this.updatedItems.bind(this);
     this.showDropdown     = this.showDropdown.bind(this);
@@ -21,7 +26,18 @@ class IMInputDropdown extends React.Component {
     let selectedItem = this.state.contents[this.state.items.indexOf(a)];
     let selectedID   = this.state.ids[this.state.items.indexOf(a)]
     this.refs.input.value = selectedItem;
-    this.setState({selectedItem: selectedItem, selectedID: selectedID, showDropdown: false});
+    console.log("selectMenuItem("+a+")");
+    if (selectedID === -1) {
+      console.log("No can do. Please select of the suggestions above");
+      $('[data-toggle="popover"]').popover('show');
+      setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
+      this.setState({lastKeyPressed: ""});
+    } else {
+      this.setState({selectedItem: selectedItem,
+                     selectedID: selectedID,
+                     showDropdown: false,
+                     lastKeyPressed: 13});
+    }
   }
 
   updatedItems() {
@@ -55,7 +71,8 @@ class IMInputDropdown extends React.Component {
                          selectedSuggestion: updatedItems.items[0],
                          items: updatedItems.items,
                          contents: updatedItems.contents,
-                         ids: updatedItems.ids});
+                         ids: updatedItems.ids,
+                         lastKeyPressed: ""});
         } else {
           this.setState({showDropdown: false});
         }
@@ -66,7 +83,7 @@ class IMInputDropdown extends React.Component {
 
   showDropdown() {
     this.props.changeHandler();
-    this.setState({showDropdown: this.props.showSuggestions});
+    this.setState({showDropdown: this.props.showSuggestions, lastKeyPressed: ""});
   }
 
   keyDownInput (e) {
@@ -91,7 +108,6 @@ class IMInputDropdown extends React.Component {
       } else {
         this.selectMenuItem(this.state.selectedSuggestion);
       }
-      this.setState({lastKeyPressed: 13});
     }
   }
 
@@ -99,6 +115,7 @@ class IMInputDropdown extends React.Component {
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
                         styles={{width:this.refs.input.offsetWidth - 6}}
+                        selectedSuggestion={this.state.selectedSuggestion}
                         selectMItem={this.selectMenuItem}/>);
   }
 
@@ -109,10 +126,16 @@ class IMInputDropdown extends React.Component {
     }
 
     return (
-      <div className="im-input-dropdown">
+      <div className="im-input-dropdown"
+           data-container="body"
+           data-toggle="popover"
+           data-placement="top"
+           data-content="Elige una de las sugerencias"
+           data-trigger="manual" >
         <input id="landing-input"
                type="text"
                ref="input"
+               className={this.props.className}
                placeholder={this.props.placeholder}
                onChange={this.props.changeHandler}
                onFocus={this.showDropdown}

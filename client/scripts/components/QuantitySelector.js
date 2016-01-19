@@ -35,4 +35,4 @@ class IMQuantitySelector extends React.Component {
   }
 }
 
-module.exports = IMQuantitySelector;
+export default IMQuantitySelector;

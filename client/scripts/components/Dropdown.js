@@ -16,9 +16,12 @@ class IMDropdown extends React.Component {
 
   render() {
     let menuItems = (this.state.menuItems.map((e,i) => {
+      let className = "";
+      if (e === this.props.selectedSuggestion) { className = "hover"; }
       return (<IMMenuItem key={i}
                           content={e}
                           styles={this.props.styles}
+                          className={className}
                           selectMItem={this.props.selectMItem}/>
       );
     }));
@@ -31,4 +34,4 @@ class IMDropdown extends React.Component {
   }
 }
 
-module.exports = IMDropdown;
+export default IMDropdown;

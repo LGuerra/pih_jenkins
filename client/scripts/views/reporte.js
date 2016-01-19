@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 
 // Components
 import BackToTop from   '../components/BackToTop';
+//import Modal from       '../components/Modal';
 import MainNavbar from  '../components/MainNavbar';
-import Modal from       '../components/Modal';
+//import Modal from       '../components/Modal';
 import SearchForm from  '../components/SearchForm';
 import Spinner from     '../components/Spinner';
 
@@ -24,36 +25,39 @@ import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ViviendaInfo from          './reporte/ViviendaInfo';
 
 function getURLParameter(name) {
-  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+  /**
+   * Disabling eslint to avoid regex ERROR*/
+  /*eslint-disable*/
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+  /*eslint-enable*/
 }
 
 class Reporte extends React.Component{
   constructor(props) {
     super(props);
 
-    var type = getURLParameter('tipo') === 'Zona' ? 'colonia' : 'vivienda';
+    var type = getURLParameter('tipo') === 'Colonia' ? 'colonia' : 'Vivienda';
 
     if (type === 'colonia') {
       //Get initial State
       this.state = {
-        coloniaID: getURLParameter('zona')
+        coloniaID: getURLParameter('colonia')
       }
     } else {
       //Get initial State
       this.state = {
-        viviendaID: getURLParameter('zona')
+        viviendaID: getURLParameter('colonia')
       }
     }
 
     this.loadingReport = false;
     this.state.type = getURLParameter('tipo');
-    this.state.zona = getURLParameter('zona');
+    this.state.colonia = getURLParameter('colonia');
     this.type = type;
 
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
-    this._openForm = this._openForm.bind(this);
     this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
   }
 
@@ -158,9 +162,6 @@ class Reporte extends React.Component{
     })
     return (images);
   }
-  _openForm() {
-    this.showFormModal();
-  }
   _onMouseoverColoniaTable(data) {
     this.refs.format_googlemap.highlightFeature(data.id);
   }
@@ -172,30 +173,6 @@ class Reporte extends React.Component{
   _onGetColoniaInfo(info) {
     this.setState({
       coloniaInfo: info
-    });
-  }
-  componentDidMount() {
-    var modal =
-      (<Modal refs='modal' width={800} height={400}>
-        <div style={{position: 'relative'}}>
-          <a  href='#'
-            style={{ marginTop: '2em',
-              textDecoration: 'none',
-              color: '#5C5C5C',
-              fontWeight: 'bold',
-              position: 'absolute',
-              right: '-6px',
-              bottom: '-6px'}}
-              data-dismiss='modal'>
-            <i className={'fa fa-times'}></i>
-          </a>
-        </div>
-        <SearchForm />
-      </Modal>);
-
-    // Setup Modal
-    this.showFormModal = Modal.memoizeRender(function() {
-      return ReactDOM.render(modal, document.getElementById('modal-reserved-area'));
     });
   }
   render() {
@@ -219,9 +196,7 @@ class Reporte extends React.Component{
           <Spinner style={{height: '100vh'}}/>
         </div>;
     }
-
-
-    if (this.state.type === 'vivienda') {
+    if (this.state.type === 'Vivienda') {
       secondaryNavbar = (
         <SecondaryNavbar
           width={'100%'} />
@@ -234,7 +209,7 @@ class Reporte extends React.Component{
           <div className={'col-sm-6'}>
             <ColoniaInfo
               onGetColoniaInfo={this._onGetColoniaInfo}
-              zoneID={this.state.zona}
+              zoneID={this.state.colonia}
               viewType={this.state.type}/>
           </div>
         </div>
@@ -248,7 +223,7 @@ class Reporte extends React.Component{
           <div className={'col-sm-12'}>
             <ColoniaInfo
               onGetColoniaInfo={this._onGetColoniaInfo}
-              zoneID={this.state.zona}
+              zoneID={this.state.colonia}
               viewType={this.state.type} />
           </div>
         </div>
@@ -259,11 +234,12 @@ class Reporte extends React.Component{
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
       );
     }
-    let zonaName = this.state.coloniaInfo ? this.state.coloniaInfo.zonaInfo.nombre : '';
+    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
     return (
       <div className={'noselect'}>
         <header>
           <MainNavbar
+            type={this.props.type}
             onOpenForm={this._openForm}
             onDownloadReport={this._downloadReport}>
           </MainNavbar>
@@ -274,9 +250,9 @@ class Reporte extends React.Component{
         </header>
         <div className={'header-section'}>
           {secondaryNavbar}
-          {this.state.type === 'Zona' ? (
+          {this.state.type === 'Colonia' ? (
             <div>
-              <h3 className={'section-title'}>{'Datos de la colonia ' + zonaName}</h3>
+              <h3 className={'section-title'}>{'Datos de la colonia ' + coloniaName}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
             </div>)
             : ''
@@ -285,7 +261,7 @@ class Reporte extends React.Component{
         </div>
         <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
           {loadingFrame}
-          {this.state.type === 'vivienda' ? (
+          {this.state.type === 'Vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
               <hr width={'100px'} className={'section-title-hr'}/>
@@ -298,7 +274,7 @@ class Reporte extends React.Component{
               <div className={'row'}>
                 <div className={'col-sm-12'}>
                   <FormatLineChart
-                    zoneID={this.state.zona} />
+                    zoneID={this.state.colonia} />
                 </div>
               </div>
               <div className={'row'}>
@@ -317,12 +293,12 @@ class Reporte extends React.Component{
           <div className={'row block-container'}>
             <div style={borderRight} className={'col-sm-4'}>
               <OfertaDisponible
-                zoneID={this.state.zona} />
+                zoneID={this.state.colonia} />
             </div>
             <div className={'col-sm-8'}>
               <h4 className={'subsection-title'}>Distribución de Tipología</h4>
               <FormatStackedBarChart
-                zoneID={this.state.zona}/>
+                zoneID={this.state.colonia}/>
             </div>
           </div>
         </div>
@@ -352,7 +328,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'vivienda'
+  type: 'Vivienda'
 }
 
 module.exports = Reporte;

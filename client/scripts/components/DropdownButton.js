@@ -4,9 +4,9 @@ import IMDropdown from './Dropdown';
 class IMDropdownButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state           = { selectedItem: this.props.selectedItem,
-                             showDropdown: this.props.showDropdown
-                           };
+    this.state = { selectedItem: this.props.selectedItem,
+                   showDropdown: this.props.showDropdown
+                 };
     this._openDropdown   = this._openDropdown.bind(this);
     this._closeDropdown  = this._closeDropdown.bind(this);
     this._selectMenuItem = this._selectMenuItem.bind(this);
@@ -86,4 +86,4 @@ class IMDropdownButton extends React.Component {
   }
 }
 
-module.exports = IMDropdownButton;
+export default IMDropdownButton;
