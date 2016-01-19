@@ -87,10 +87,13 @@ class SearchForm extends React.Component {
     //   [Done before this question]close dropdowns and modals
     // IF now selected is Vivienda
     //   open modal
+    console.log("_searchTypeSelected", sType);
     let ddmShown = this._closeAllddModalShown();
     let ans = {};
     if (sType !== this.state.searchType) {
       ans.searchType = sType;
+      ans.suggestions = [];
+      document.getElementById("landing-input").value = "";
     }
     ans.placeholder = "Ingresa una colonia";
     if (sType === "Vivienda") {
