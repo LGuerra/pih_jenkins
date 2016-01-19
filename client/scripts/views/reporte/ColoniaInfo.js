@@ -19,7 +19,7 @@ class ColoniaInfo extends React.Component {
         }}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>$2,915,000</p>
-            <p className={'subtitle'}>Precio total enero 2016</p>
+            <p className={'subtitle'}>Precio promedio total enero 2016</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>$15,000</p>
