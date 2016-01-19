@@ -10,7 +10,7 @@ class SecondaryNavbar extends React.Component{
         width: this.props.width
       }}>
         <h3 className={'section-title'}>{'Información de la vivienda'}</h3>
-        <hr width={'100px'} className={'section-title-hr'}/>
+        <div className={'line-divider'}></div>        
         <div className={'row'}>
           <div className={'col-md-4 col-sm-12'}>
             <p style={{marginTop: '8px', fontSize: '12px'}}>{'Mariano Escobedo #748 col. Anzures Miguel Hidalgo, D.F. C.P. 11590'}</p>

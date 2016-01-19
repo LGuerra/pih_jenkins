@@ -61,7 +61,7 @@ class ComparativoColonias extends React.Component {
     return (
       <div>
         <h3 className={'section-title'}>Colonias colindantes</h3>
-        <hr width={'100px'} className={'section-title-hr'}/>
+        <div className={'line-divider'}></div>
         <div className={'row'}>
           <div className={'col-md-6 col-sm-12'}>
             <Table

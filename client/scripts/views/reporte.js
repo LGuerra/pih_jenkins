@@ -215,7 +215,7 @@ class Reporte extends React.Component{
           {this.props.type === 'colonia' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
-              <hr width={'100px'} className={'section-title-hr'}/>
+              <div className={'line-divider'}></div>
             </div>)
             : ''
           }
@@ -226,13 +226,13 @@ class Reporte extends React.Component{
           {this.props.type === 'vivienda' ? (
             <div>
               <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
-              <hr width={'100px'} className={'section-title-hr'}/>
+              <div className={'line-divider'}></div>
             </div>)
             : ''
           }
           <div className={'row block-container'}>
             <div style={borderRight} className={'col-sm-6'}>
-              <h4 className={'subsection-title'}>Precio Histórico Enero 2010 - Enero 2015</h4>
+              <h4 className={'subsection-title'}>Precio Histórico por m² Enero 2010 - Enero 2015</h4>
               <div className={'row'}>
                 <div className={'col-sm-12'}>
                   <FormatLineChart/>
@@ -246,7 +246,7 @@ class Reporte extends React.Component{
               </div>
             </div>
             <div className={'col-sm-6'}>
-              <h4 className={'subsection-title'}>Distribución de Precio Enero 2016</h4>
+              <h4 className={'subsection-title'}>Distribución de Precio por m² - Enero 2016</h4>
               <FormatBarChart />
               <PrecioDistribucion />
             </div>
@@ -262,7 +262,7 @@ class Reporte extends React.Component{
           </div>
         </div>
         <div className={'row block-container comparables-section'} style={{marginTop: '10px'}}>
-          <div className={'col-sm-12'} style={{marginBottom: '30px'}}>
+          <div className={'col-sm-12'}>
             {compareTables}
           </div>
         </div>
@@ -284,7 +284,7 @@ class Reporte extends React.Component{
 }
 
 Reporte.defaultProps = {
-  type: 'vivienda'
+  type: 'colonia'
 }
 
 module.exports = Reporte;

@@ -85,7 +85,7 @@ class ComparativoViviendas extends React.Component {
     return (
       <div>
         <h3 className={'section-title'}>{'Departamentos comparables'}</h3>
-        <hr width={'100px'} className={'section-title-hr'} style={{marginBottom:'10px'}}/>
+        <div className={'line-divider'}></div>
         <p className={'subtitle'}> en los últimos 6 meses</p>
         <Table
           limit={5}
