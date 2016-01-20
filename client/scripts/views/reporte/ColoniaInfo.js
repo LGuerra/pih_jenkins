@@ -64,7 +64,7 @@ class ColoniaInfo extends React.Component {
         }}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>{Helpers.formatAsPrice(this.state.data.averageOffer)}</p>
-            <p className={'subtitle'}>Precio total enero 2016</p>
+            <p className={'subtitle'}>Precio promedio total enero 2016</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.averageM2)}</p>

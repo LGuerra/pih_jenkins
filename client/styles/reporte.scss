@@ -106,9 +106,13 @@
   }
 }
 
-.section-title-hr{
-  border-top: 2px solid #FE696B;
-  margin-top: 0px;
+.line-divider { 
+  margin: 10px auto;
+  height: 2px;
+  width: 150px;
+  background: -moz-linear-gradient(left, #ffffff 0%, #fe696b 25%, #fe696b 75%, #ffffff 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #ffffff 0%,#fe696b 25%,#fe696b 75%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #ffffff 0%,#fe696b 25%,#fe696b 75%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 .subsection-title{
