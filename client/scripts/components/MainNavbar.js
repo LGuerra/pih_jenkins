@@ -24,7 +24,6 @@ class MainNavbar extends React.Component{
         <div className={'row'}>
           <div className={'col-sm-7 col-xs-7'}>
           <a href={'/'}>
-              <img height={'25px'} style={{margin: '10px'}} src={IMAGES.santander} />
               <img height={'26px'} style={{margin: '10px'}} src={IMAGES.intelimetrica} />
           </a>
           </div>
