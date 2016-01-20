@@ -103,6 +103,18 @@
     }
     .sarch-input {
       width: calc(100% - 150px);
+      .im-input-dropdown {
+        .input-error {
+          &::-webkit-input-placeholder { color: #FE696B}
+          &:-moz-placeholder           { color: #FE696B}
+          &::-moz-placeholder          { color: #FE696B}
+          &:-ms-input-placeholder      { color: #FE696B}
+          &:placeholder-shown          { color: #FE696B}
+        }
+        input[type="text"] {
+          @include transition(color, 1.4s, linear);
+        }
+      }
     }
     .sarch-button {
       width: 75px;

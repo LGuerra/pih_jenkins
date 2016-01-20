@@ -12,7 +12,8 @@
     "$": true,
     "IMAGES": true,
     "google": true,
-    "apigClientFactory": true
+    "apigClientFactory": true,
+    "canvg": true
   },
   "extends": "eslint:recommended",
   "ecmaFeatures": {

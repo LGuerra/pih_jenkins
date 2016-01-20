@@ -28,7 +28,7 @@ class IMInputDropdown extends React.Component {
     this.refs.input.value = selectedItem;
     console.log("selectMenuItem("+a+")");
     if (selectedID === -1) {
-      console.log("No can do. Please select of the suggestions above");
+      console.log("No can do. Please select one of the suggestions above");
       $('[data-toggle="popover"]').popover('show');
       setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
       this.setState({lastKeyPressed: ""});
