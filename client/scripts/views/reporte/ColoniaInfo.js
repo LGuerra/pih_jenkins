@@ -14,19 +14,19 @@ class ColoniaInfo extends React.Component {
     let coloniaInfoDef = $.Deferred();
 
     apigClient.suburbAverageOfferGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((averageOfferR) => {
       avergageOfferDefer.resolve(averageOfferR.data);
     });
 
     apigClient.suburbAverageM2Get({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((averageM2R) => {
       averageM2Defer.resolve(averageM2R.data);
     });
 
     apigClient.suburbInfoGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((suburbInfoR) => {
       coloniaInfoDef.resolve(suburbInfoR.data);
     })

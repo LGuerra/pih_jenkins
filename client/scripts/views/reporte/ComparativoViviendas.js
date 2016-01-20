@@ -4,75 +4,75 @@ import Table from '../../components/Table';
 
 var tableData = [
   {
-    'Precio por m²': '$10,000',
+    'Precio de oferta': '$10,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$11,000',
+    'Precio de oferta': '$11,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$12,000',
+    'Precio de oferta': '$12,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$13,000',
+    'Precio de oferta': '$13,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$14,000',
+    'Precio de oferta': '$14,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$15,000',
+    'Precio de oferta': '$15,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$16,000',
+    'Precio de oferta': '$16,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   },
   {
-    'Precio por m²': '$17,000',
+    'Precio de oferta': '$17,000',
     'Valor de Avalúo': '$2,794,000',
     'Recámaras': '2',
     'Baños': '2',
     'Estacionamientos': '1',
-    'Construcción m²': '74',
+    'Área construida': '74',
     'Edad': '10'
   }
 ];

@@ -235,16 +235,52 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.suburbAdajacentSuburbsGeojsonsGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
+        
+        var suburbAdajacentSuburbsGeojsonsGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/adajacent-suburbs-geojsons').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbAdajacentSuburbsGeojsonsGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbAdajacentSuburbsGeojsonsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbAdajacentSuburbsGeojsonsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/adajacent-suburbs-geojsons').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbAdajacentSuburbsGeojsonsOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.suburbAdjacentSuburbsGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbAdjacentSuburbsGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/adjacent-suburbs').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -274,13 +310,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbAverageM2Get = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbAverageM2GetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/average-m2').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -310,13 +346,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbAverageOfferGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbAverageOfferGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/average-offer').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -346,13 +382,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbAverageTimeGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbAverageTimeGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/average-time').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -382,13 +418,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbCentroidGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbCentroidGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/centroid').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -418,13 +454,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbGeojsonGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbGeojsonGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/geojson').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -454,13 +490,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbHistoricGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbHistoricGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/historic').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -490,13 +526,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbInfoGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbInfoGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/info').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -526,13 +562,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbMonthlyListingGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbMonthlyListingGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/monthly-listing').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -562,13 +598,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.suburbSemesterListingGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['suburb'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
         
         var suburbSemesterListingGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/suburb/semester-listing').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['suburb']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
             body: body
         };
         
@@ -592,6 +628,42 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(suburbSemesterListingOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbsInfoGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['id_cols'], ['body']);
+        
+        var suburbsInfoGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburbs/info').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_cols']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbsInfoGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbsInfoOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbsInfoOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburbs/info').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbsInfoOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
 

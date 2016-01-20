@@ -103,7 +103,7 @@ class Reporte extends React.Component{
     return (promise);
   }
   _generateInfo() {
-
+    var coloniaInfo = this.refs.coloniaInfo.state;
   }
   _downloadReport() {
     var host = '/reporter/report/';
@@ -114,6 +114,7 @@ class Reporte extends React.Component{
     var date = dd + '-' + mm + '-' + yyyy;
 
     this._getImages();
+    this._generateInfo(this.url);
 
     this.reportUrl = host + date;
     this.setState({
@@ -130,7 +131,6 @@ class Reporte extends React.Component{
           this._printInfo(this.url);
         })
         .fail(() => {
-          this._generateInfo(this.url);
         });
       */
     });
@@ -208,6 +208,7 @@ class Reporte extends React.Component{
           </div>
           <div className={'col-sm-6'}>
             <ColoniaInfo
+              ref={'coloniaInfo'}
               onGetColoniaInfo={this._onGetColoniaInfo}
               zoneID={this.state.colonia}
               viewType={this.state.type}/>
@@ -222,6 +223,7 @@ class Reporte extends React.Component{
         <div className={'row block-container'}>
           <div className={'col-sm-12'}>
             <ColoniaInfo
+              ref={'coloniaInfo'}
               onGetColoniaInfo={this._onGetColoniaInfo}
               zoneID={this.state.colonia}
               viewType={this.state.type} />
@@ -234,7 +236,7 @@ class Reporte extends React.Component{
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
       );
     }
-    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
+    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.zonaInfo.nombre : '';
     return (
       <div className={'noselect'}>
         <header>

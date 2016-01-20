@@ -67,7 +67,7 @@ class FormatLineChart extends React.Component {
     let apigClient = apigClientFactory.newClient();
 
     apigClient.suburbHistoricGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((suburbHistoricR) => {
       let data = this._formatData(suburbHistoricR.data);
       this.setState({
