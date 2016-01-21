@@ -7,160 +7,124 @@ var lapiz_white = IMAGES.lapiz_white;
 
 var MapUtils = {
   styles: [{
-    featureType: "administrative.neighborhood",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "poi.business",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "poi.government",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "poi.medical",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "poi.park",
-    elementType: "geometry.fill",
-    stylers: [{
-        color: "#d6e1c6"
+      "featureType": "administrative",
+      "elementType": "all",
+      "stylers": [{
+        "saturation": 0
+      }]
     }, {
-        visibility: "on"
-    }]
-}, {
-    featureType: "poi.place_of_worship",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "poi.school",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "poi.sports_complex",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-}, {
-    featureType: "road.highway",
-    elementType: "geometry.fill",
-    stylers: [{
-        visibility: "on"
+      "featureType": "administrative.country",
+      "elementType": "all",
+      "stylers": [{
+        "visibility": "simplified"
+      }]
     }, {
-        color: "#ffeeaa"
+      "featureType": "administrative.province",
+      "elementType": "all",
+      "stylers": [{
+        "visibility": "off"
+      }]
     }, {
-        saturation: "-20"
-    }]
-}, {
-    featureType: "road.highway",
-    elementType: "geometry.stroke",
-    stylers: [{
-        visibility: "on"
+      "featureType": "landscape",
+      "elementType": "all",
+      "stylers": [{
+        "saturation": -10
+      }]
     }, {
-        color: "#ffcc88"
+      "featureType": "poi",
+      "elementType": "all",
+      "stylers": [{
+        "visibility": "off"
+      }]
     }, {
-        saturation: "-49"
-    }]
-}, {
-    featureType: "road.highway",
-    elementType: "labels.text",
-    stylers: [{
-        visibility: "on"
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [{
+        "saturation": -10
+      }, {
+        "lightness": 30
+      }, {
+        "visibility": "simplified"
+      }]
     }, {
-        hue: "#ff0000"
-    }]
-}, {
-    featureType: "road.highway",
-    elementType: "labels.text.fill",
-    stylers: [{
-        color: "#747474"
-    }]
-}, {
-    featureType: "road.highway",
-    elementType: "labels.text.stroke",
-    stylers: [{
-        visibility: "on"
+      "featureType": "road",
+      "elementType": "all",
+      "stylers": [{
+        "saturation": -100
+      }]
     }, {
-        color: "#ffffff"
-    }]
-}, {
-    featureType: "road.highway",
-    elementType: "labels.icon",
-    stylers: [{
-        visibility: "on"
-    }]
-}, {
-    featureType: "road.arterial",
-    elementType: "geometry.fill",
-    stylers: [{
-        visibility: "on"
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [{
+        "saturation": 0
+      }, {
+        "hue": "#5EAB1F"
+      }, {
+        "lightness": 0
+      }]
     }, {
-        color: "#ffffff"
-    }]
-}, {
-    featureType: "road.arterial",
-    elementType: "labels.text.stroke",
-    stylers: [{
-        color: "#ffffff"
-    }]
-}, {
-    featureType: "transit.line",
-    elementType: "all",
-    stylers: [{
-        visibility: "off"
-    }]
-},{
-    featureType: "road.arterial",
-    elementType: "labels.icon",
-    stylers: [
-        {
-            visibility: "off"
-        }
-    ]
-},{
-    featureType: "transit.station.rail",
-    elementType: "all",
-    stylers: [{
-        visibility: "on"
+      "featureType": "road.highway",
+      "elementType": "label",
+      "stylers": [{
+        "visibility": "simplified"
+      }]
     }, {
-        weight: .1
+      "featureType": "road.arterial",
+      "elementType": "all",
+      "stylers": [{
+        "saturation": -100
+      }, {
+        "lightness": 20
+      }]
     }, {
-        saturation: -100
+      "featureType": "road.arterial",
+      "elementType": "label",
+      "stylers": [{
+        "visibility": "on"
+      }]
     }, {
-        lightness: -6
-    }]
-}, {
-       featureType: "landscape.natural.terrain",
-       elementType: "geometry",
-       stylers: [
-           {
-               "visibility": "off"
-           }
-       ]
-}, {
-    featureType: "water",
-    elementType: "geometry.fill",
-    stylers: [{
-        visibility: "on"
+      "featureType": "road.local",
+      "elementType": "label",
+      "stylers": [{
+        "visibility": "on"
+      }]
     }, {
-        color: "#c2d6ec"
-    }]
-}],
+      "featureType": "transit",
+      "elementType": "all",
+      "stylers": [{
+        "saturation": -100
+      }]
+    }, {
+      "featureType": "water",
+      "elementType": "all",
+      "stylers": [{
+        "hue": "#0089CF"
+      }, {
+        "saturation": -50
+      }, {
+        "lightness": 30
+      }]
+    }, {
+      "featureType": "administrative.land_parcel",
+      "elementType": "all",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    },{
+        "featureType": "landscape.natural.terrain",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    }, {
+      "featureType": "landscape.man_made",
+      "elementType": "all",
+      "stylers": [{
+        "visibility": "off"
+      }]
+    }],
 
     ControlDiv: function(conf){
         var controlDiv =  conf.node;
@@ -173,12 +137,11 @@ var MapUtils = {
         // Set CSS for the controls.
         controlDiv.style.margin = top + 'px '+ right + 'px ' + right + 'px ' + left + 'px';
         controlDiv.style.cursor = 'pointer';
-        controlDiv.style.border = "1px solid #828282";
+        controlDiv.style.border = "1px solid #C7C7C7";
         controlDiv.style.backgroundColor = "#FFFFFF";
         controlDiv.style.borderRadius = '3px';
         controlDiv.style.height = height;
         controlDiv.style.width = width;
-        controlDiv.style.boxShadow = "-2px 2px 5px rgba(3, 0, 3, 0.2)";
         return controlDiv;
     },
     DrawingTool: function(conf){
@@ -247,7 +210,7 @@ var MapUtils = {
         var zoomin = document.createElement('div');
         zoomin.title = 'Click to zoom in';
         zoomin.style.display = "inline-block";
-        zoomin.style.borderBottom = "1px solid #828282";
+        zoomin.style.borderBottom = "1px solid #C7C7C7";
         zoomin.style.width = '100%';
         zoomin.style.height = '50%';
         controlDiv.appendChild(zoomin);
@@ -256,7 +219,7 @@ var MapUtils = {
         zoominText.innerHTML = '+';
         zoominText.style.fontSize = '25px';
         zoominText.style.textAlign = 'center';
-        zoominText.style.color = "#828282";
+        zoominText.style.color = "#5C5C5C";
         zoominText.style.position = 'absolute';
         zoominText.style.left = '6px';
         zoominText.style.top = '-2px';
@@ -282,7 +245,7 @@ var MapUtils = {
         zoomoutText.innerHTML = '-';
         zoomoutText.style.fontSize = '35px';
         zoomoutText.style.textAlign = 'center';
-        zoomoutText.style.color = "#828282";
+        zoomoutText.style.color = "#5C5C5C";
         zoomoutText.style.position = 'absolute';
         zoomoutText.style.left = '8px';
         zoomoutText.style.top = '49%';

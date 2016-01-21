@@ -114,7 +114,7 @@ class IMInputDropdown extends React.Component {
 
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
-                        styles={{width:this.refs.input.offsetWidth - 6}}
+                        styles={{width:this.refs.input.offsetWidth}}
                         selectedSuggestion={this.state.selectedSuggestion}
                         selectMItem={this.selectMenuItem}/>);
   }
@@ -131,6 +131,7 @@ class IMInputDropdown extends React.Component {
            data-toggle="popover"
            data-placement="top"
            data-content="Elige una de las sugerencias"
+           data-template='<div class="popover popover-alert" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
            data-trigger="manual" >
         <input id="landing-input"
                type="text"
