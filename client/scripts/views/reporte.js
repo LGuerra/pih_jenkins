@@ -241,7 +241,7 @@ class Reporte extends React.Component{
       <div className={'noselect'}>
         <header>
           <MainNavbar
-            type={this.props.type}
+            type={this.state.type}
             onOpenForm={this._openForm}
             onDownloadReport={this._downloadReport}>
           </MainNavbar>
