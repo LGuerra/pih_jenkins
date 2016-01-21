@@ -69,20 +69,62 @@ class SearchForm extends React.Component {
   _sendRequest () {
     let searchInput = this.refs.searchInput.getValue();
     if (!searchInput) {
-      this.setState({inputClass: "input-error"});
+      //this.setState({inputClass: "input-error"});
+      let contentError = (this.state.searchType === 'Vivienda') ? "Ingresa una dirección" : "Ingresa una Colonia";
+      $('[data-toggle="popover"]').popover({content: contentError, placement: 'top'});
+      $('[data-toggle="popover"]').popover('show');
+      setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
+
       console.log("Request not sent");
     } else {
       if (searchInput.length >= 3) {
-        if (searchInput === this.state.suggestions[0].content) {
+        if (this.refs.searchInput.state.selectedID === -1) {
+          $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: 'top'});
           $('[data-toggle="popover"]').popover('show');
-          setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
+          setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
+
         } else {
-          let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
-            .replace(':colonia:', this.refs.searchInput.state.selectedID)
-            .replace(':reportType:', this.state.searchType);
-      
-          window.open(templateUrl, '_self');
-          this.setState({inputClass: ""});
+          if (this.state.searchType === 'Vivienda') {
+            let tipoVivienda = (this.state.vivienda === "Departamento") ? 4 : 2;
+            let templateUrl = ('reporte?colonia=:colonia:');
+                templateUrl += '&tipo=Vivienda';
+                templateUrl += '&longitud=:longitud:';
+                templateUrl += '&latitud=:latitud:';
+                templateUrl += '&recamaras=' + this.state.habitaciones;
+                templateUrl += '&banos=' + this.state.banos;
+                templateUrl += '&estacionamientos=' + this.state.cajones;
+                templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
+                templateUrl += '&edad=' + (this.state.edad).replace(" años","");
+                templateUrl += '&area_construida=' + (this.state.areaConstruida).replace(" m²","");
+                templateUrl += '&address=' + searchInput;
+                templateUrl += '&tipo_operacion=0';
+            /**
+             * Use Google's API to get Latitude and Longitude via a PlacesService Request
+             */
+            let request = {placeId: this.refs.searchInput.state.selectedID};
+            let map = new google.maps.Map(document.createElement('div'));
+            let service = new google.maps.places.PlacesService(map);
+            service.getDetails(request, (place, status) => {
+              if (status == google.maps.places.PlacesServiceStatus.OK) {
+                let latitude  = place.geometry.location.G;
+                let longitude = place.geometry.location.K;
+                templateUrl.replace(':longitud:', longitude)
+                           .replace(':latitud:',  latitude);
+                window.open(templateUrl, '_self');
+              }
+            });
+            /**
+             * Send request to Reporte's view inside callback
+             */
+
+          } else {
+            let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+              .replace(':colonia:', this.refs.searchInput.state.selectedID)
+              .replace(':reportType:', this.state.searchType);
+
+            window.open(templateUrl, '_self');
+            this.setState({inputClass: ""});
+          }
         }
       }
     }
@@ -172,8 +214,10 @@ class SearchForm extends React.Component {
         // Callback to set suggestions into state. Will recieve suggestions in prediction variable
         let displaySuggestions = (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
-            //console.log(predictions);
+            console.log("predictions", predictions);
             suggests = parseSuggestionsGoogle(predictions);
+            console.log("suggests",suggests);
+
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
 
             //console.log("SEARCH IN GOOGLE");
@@ -269,6 +313,7 @@ class SearchForm extends React.Component {
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
                                  className={this.state.inputClass}
+                                 popoverPlacement={"top"}
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
                                  showSuggestions={ddmodalShown.ddInput}

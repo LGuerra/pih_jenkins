@@ -31,8 +31,11 @@ class IMInputDropdown extends React.Component {
     console.log("selectMenuItem("+a+")", selectedItem, selectedID);
     if (selectedID === -1) {
       console.log("No can do. Please select one of the suggestions above");
+
+      $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias",
+                                            placement: this.props.popoverPlacement});
       $('[data-toggle="popover"]').popover('show');
-      setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
+      setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
       this.setState({lastKeyPressed: ""});
     } else {
       this.setState({selectedItem: selectedItem,
@@ -137,8 +140,6 @@ class IMInputDropdown extends React.Component {
       <div className="im-input-dropdown"
            data-container="body"
            data-toggle="popover"
-           data-placement="top"
-           data-content="Elige una de las sugerencias"
            data-template='<div class="popover popover-alert" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
            data-trigger="manual" >
         <input id="landing-input"

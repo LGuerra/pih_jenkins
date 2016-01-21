@@ -142,7 +142,7 @@ class ModalVivienda extends React.Component {
           </div>
           <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"tipoVivienda"}
-                              items={["Departamento", "Casa", "Lote"]}
+                              items={["Departamento", "Casa"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.tipoVivienda}
@@ -156,7 +156,7 @@ class ModalVivienda extends React.Component {
           </div>
           <div className="col-md-3 col-sm-3 col-xs-5">
             <IMDropdownButton reference={"tipoOperacion"}
-                              items={["Compra","Renta"]}
+                              items={["Compra"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
                               showDropdown={showing.tipoOperacion}

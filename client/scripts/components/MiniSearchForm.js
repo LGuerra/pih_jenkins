@@ -37,7 +37,7 @@ class MiniSearchForm extends React.Component {
     super(props);
     this.state = { metrics:           ['Vivienda', 'Colonia'],
                    searchType:         this.props.searchType,
-                   placeholder:        "Ingresa una dirección",
+                   placeholder:        (this.props.searchType === "Vivienda") ? "Ingresa una dirección" : "Ingresa una Colonia",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
                    areaConstruida:     '100m²',
@@ -87,16 +87,25 @@ class MiniSearchForm extends React.Component {
   _sendRequest () {
     let searchInput = this.refs.searchInput.getValue();
     if (!searchInput) {
-      this.setState({inputClass: "input-error"});
-      console.log("Request not sent");
+
+      let contentError = (this.state.searchType === 'Vivienda') ? "Ingresa una dirección" : "Ingresa una Colonia";
+      $('[data-toggle="popover"]').popover({content: contentError, placement: 'left'});
+      $('[data-toggle="popover"]').popover('show');
+      setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
+
     } else {
       if (searchInput.length >= 3) {
+        console.log("selectedITemID", this.refs.searchInput.state.selectedID );
         if (searchInput === this.state.suggestions[0].content) {
+
+          $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: 'left'});
           $('[data-toggle="popover"]').popover('show');
-          setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
+          setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
+
         } else {
           if (this.state.searchType === "Vivienda") {
-            this.setState({searchInput: searchInput, inputClass: ""},
+            let closedd = this._closeAllddModalShown();
+            this.setState({searchInput: searchInput, inputClass: "", ddmodalShown: closedd},
               ()=>this._showFormModal(this.state.searchInput,
                                       this._modalChange,
                                       this.state.modaldd,
@@ -110,13 +119,13 @@ class MiniSearchForm extends React.Component {
                                       this.state.areaConstruida,
                                       this.state.edad
                                       ));
-            console.log("Send request with parameter...", this.refs.searchInput.getValue());
+            console.log("Open Modal");
           } else {
             this.setState({searchInput: searchInput, inputClass: ""});
             let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
               .replace(':colonia:', this.refs.searchInput.state.selectedID)
               .replace(':reportType:', this.state.searchType);
-            
+
             window.open(templateUrl, '_self');
             this.setState({inputClass: ""});
             console.log("Send request with parameter...", this.refs.searchInput.getValue());
@@ -319,6 +328,7 @@ class MiniSearchForm extends React.Component {
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
                                  className={this.state.inputClass}
+                                 popoverPlacement={"left"}
                                  dropdownClass={"mini-search-input-dropdown"}
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
