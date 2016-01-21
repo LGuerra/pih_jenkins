@@ -103,12 +103,17 @@
           //border-right: 1px solid #C03537;
           //border-top: 1px solid #C03537;*/
           &::-webkit-input-placeholder { color: #FE696B}
+          &:-moz-placeholder           { color: #FE696B}
+          &::-moz-placeholder          { color: #FE696B}
+          &:-ms-input-placeholder      { color: #FE696B}
+          &:placeholder-shown          { color: #FE696B}
         }
         input[type="text"] {
-          @include transition(color, 0.4s, ease);
+          @include transition(color, 1.4s, ease);
           height: 30px;
         }
       }
+      position: relative !important;
     }
     .mini-sarch-button {
       width: 50px;
@@ -116,15 +121,6 @@
   }
   @media screen and (max-width: 1000px) {
     width: 80%;
-  }
-}
-
-.im-input-dropdown{
-  .im-dropdown{
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    left: 8px;
   }
 }
 
@@ -138,6 +134,10 @@
   &:focus {
     outline: 0;
   }
+}
+
+.mini-search-input-dropdown {
+
 }
 
 .modal-div {

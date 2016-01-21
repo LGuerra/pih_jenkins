@@ -103,6 +103,19 @@
     }
     .sarch-input {
       width: calc(100% - 150px);
+      .im-input-dropdown {
+        .input-error {
+          &::-webkit-input-placeholder { color: #FE696B}
+          &:-moz-placeholder           { color: #FE696B}
+          &::-moz-placeholder          { color: #FE696B}
+          &:-ms-input-placeholder      { color: #FE696B}
+          &:placeholder-shown          { color: #FE696B}
+        }
+        input[type="text"] {
+          @include transition(color, 1.4s, linear);
+        }
+      }
+      position: relative !important;
     }
     .sarch-button {
       width: 75px;
@@ -114,11 +127,12 @@
 }
 
 .im-input-dropdown{
+  position: absolute;
+  width: 100%;
   .im-dropdown{
-    right: 0;
-    left: 0;
+    right: 0px;
+    left: 0px;
     margin: 0 auto;
-    left: 8px;
   }
 }
 
@@ -128,6 +142,14 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.popover-alert{
+  position: absolute !important;
+  box-shadow: none;
+  color: #FE696B;
+  margin-top: -15px !important;
+}
+
 @media screen and (max-width: 1000px) {
   .modal-div {
     width: 80%;

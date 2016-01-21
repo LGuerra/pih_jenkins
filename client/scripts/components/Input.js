@@ -4,11 +4,13 @@ import IMDropdown from './Dropdown'
 class IMInputDropdown extends React.Component {
   constructor(props){
     super(props);
-    this.state            = {  showDropdown: false,
-                               items: [],
-                               selectedItem: "",
+    this.state            = {  showDropdown:       false,
+                               items:              [],
+                               contents:           [],
+                               ids:                [],
+                               selectedItem:       "",
                                selectedSuggestion: "",
-                               searchInput: ""
+                               searchInput:        ""
                             };
     this.getValue         = this.getValue.bind(this);
     this.selectMenuItem   = this.selectMenuItem.bind(this);
@@ -26,16 +28,19 @@ class IMInputDropdown extends React.Component {
     let selectedItem = this.state.contents[this.state.items.indexOf(a)];
     let selectedID   = this.state.ids[this.state.items.indexOf(a)]
     this.refs.input.value = selectedItem;
-    console.log("selectMenuItem("+a+")");
+    console.log("selectMenuItem("+a+")", selectedItem, selectedID);
     if (selectedID === -1) {
-      console.log("No can do. Please select of the suggestions above");
+      console.log("No can do. Please select one of the suggestions above");
       $('[data-toggle="popover"]').popover('show');
       setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
       this.setState({lastKeyPressed: ""});
     } else {
       this.setState({selectedItem: selectedItem,
-                     selectedID: selectedID,
+                     selectedID:   selectedID,
                      showDropdown: false,
+                     contents:     [],
+                     ids:          [],
+                     items:        [],
                      lastKeyPressed: 13});
     }
   }
@@ -90,17 +95,19 @@ class IMInputDropdown extends React.Component {
     let arr = this.state.items;
     let length = arr.length;
     let i = arr.indexOf(this.state.selectedSuggestion);
-    if ( e.keyCode === 40 ) {
-      i += 1;
-      if (i >= length) i -= length;
-      this.setState({selectedSuggestion: arr[i], lastKeyPressed: 40});
-      this.refs.input.value = this.state.contents[i];
-    }
-    if ( e.keyCode === 38 ) {
-      i -= 1;
-      if (i < 0) i += length;
-      this.setState({selectedSuggestion: arr[i], lastKeyPressed: 38});
-      this.refs.input.value = this.state.contents[i];
+    if (this.state.contents.length > 0) {
+      if ( e.keyCode === 40 ) {
+        i += 1;
+        if (i >= length) i -= length;
+        this.setState({selectedSuggestion: arr[i], lastKeyPressed: 40});
+        this.refs.input.value = this.state.contents[i];
+      }
+      if ( e.keyCode === 38 ) {
+        i -= 1;
+        if (i < 0) i += length;
+        this.setState({selectedSuggestion: arr[i], lastKeyPressed: 38});
+        this.refs.input.value = this.state.contents[i];
+      }
     }
     if ( e.keyCode === 13 ) {
       if( this.state.lastKeyPressed === 13 ) {
@@ -114,7 +121,8 @@ class IMInputDropdown extends React.Component {
 
   createIMDropdown () {
     return (<IMDropdown items={this.state.items}
-                        styles={{width:this.refs.input.offsetWidth - 6}}
+                        className={this.props.dropdownClass}
+                        styles={{width:this.refs.input.offsetWidth}}
                         selectedSuggestion={this.state.selectedSuggestion}
                         selectMItem={this.selectMenuItem}/>);
   }
@@ -131,6 +139,7 @@ class IMInputDropdown extends React.Component {
            data-toggle="popover"
            data-placement="top"
            data-content="Elige una de las sugerencias"
+           data-template='<div class="popover popover-alert" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
            data-trigger="manual" >
         <input id="landing-input"
                type="text"

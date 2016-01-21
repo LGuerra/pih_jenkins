@@ -371,7 +371,7 @@ class Reporte extends React.Component{
             <div style={borderRight} className={'col-sm-6'}>
               <h4 className={'subsection-title'}>Precio Histórico por m² Enero 2010 - Enero 2015</h4>
               <div className={'row'}>
-                <div className={'col-sm-12'}>
+                <div className={'col-sm-12'} style={{marginTop: '15px'}}>
                   <FormatLineChart
                     id={'precio_historico'}
                     zoneID={this.state.coloniaID} />

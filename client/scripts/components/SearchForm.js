@@ -41,7 +41,8 @@ class SearchForm extends React.Component {
                    banos:              1,
                    cajones:            1,
                    ddmodalShown:       {modal: true, ddSearchType: false, ddInput: false},
-                   modaldd:            false
+                   modaldd:            false,
+                   inputClass:         ""
                  };
     this._searchTypeSelected    = this._searchTypeSelected.bind(this);
     this._sendRequest           = this._sendRequest.bind(this);
@@ -66,11 +67,25 @@ class SearchForm extends React.Component {
   }
 
   _sendRequest () {
-    var templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
-      .replace(':colonia:', this.refs.searchInput.state.selectedID)
-      .replace(':reportType:', this.state.searchType);
-
-    window.open(templateUrl, '_self');
+    let searchInput = this.refs.searchInput.getValue();
+    if (!searchInput) {
+      this.setState({inputClass: "input-error"});
+      console.log("Request not sent");
+    } else {
+      if (searchInput.length >= 3) {
+        if (searchInput === this.state.suggestions[0].content) {
+          $('[data-toggle="popover"]').popover('show');
+          setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
+        } else {
+          let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+            .replace(':colonia:', this.refs.searchInput.state.selectedID)
+            .replace(':reportType:', this.state.searchType);
+      
+          window.open(templateUrl, '_self');
+          this.setState({inputClass: ""});
+        }
+      }
+    }
   }
 
   _modalChange(modalData) {
@@ -101,6 +116,8 @@ class SearchForm extends React.Component {
       ans.placeholder = "Ingresa una dirección";
     } else ddmShown.modal = false;
     ans.ddmodalShown = ddmShown;
+    ans.inputClass = "";
+    ans.suggestions = [];
     this.setState(ans);
   }
 
@@ -122,7 +139,7 @@ class SearchForm extends React.Component {
       if (this.state.searchType === "Vivienda") ddmodalShown.modal = true;
       ddmodalShown.ddSearchType = true;
     }
-    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false});
+    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false, inputClass: ""});
   }
 
   _keyDownSearchType(sType) {
@@ -137,6 +154,7 @@ class SearchForm extends React.Component {
       ddmShown.modal = true;
     }
     ans.ddmodalShown = ddmShown;
+    ans.inputClass   = "";
     this.setState(ans);
   }
 
@@ -159,7 +177,7 @@ class SearchForm extends React.Component {
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
 
             //console.log("SEARCH IN GOOGLE");
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false});
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""});
           }
         };
 
@@ -184,7 +202,7 @@ class SearchForm extends React.Component {
             suggests = parseSuggestions(response.hits.hit);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
             //console.log(suggests);
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""});
           });
       }
     } else {
@@ -198,7 +216,7 @@ class SearchForm extends React.Component {
     let ddmShown   = this._closeAllddModalShown();
     ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
     //console.log("click outside");
-    this.setState({ddmodalShown: ddmShown, suggestions: [], modaldd: false});
+    this.setState({ddmodalShown: ddmShown, modaldd: false});
     //this._focusOnInput();
   }
 
@@ -210,6 +228,10 @@ class SearchForm extends React.Component {
 
   _stopPropagation (e) {
     e.stopPropagation();
+  }
+
+  componentDidMount () {
+    document.getElementById("landing-input").focus();
   }
 
   render() {
@@ -246,6 +268,7 @@ class SearchForm extends React.Component {
               <div className={'sarch-input'}>
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
+                                 className={this.state.inputClass}
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
                                  showSuggestions={ddmodalShown.ddInput}

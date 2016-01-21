@@ -60,7 +60,7 @@ class BarChart extends React.Component {
       .domain(props.data.map((el) => {
         return (el.label);
       }))
-      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
+      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.4);
 
     this.conf.yScale = d3.scale.linear()
       .domain([(minMaxY[0] - minMaxY[0] * 0.1), minMaxY[1]])

@@ -85,7 +85,7 @@ class Table extends React.Component {
     if (limit || limit == 0) {
       let label = <p style={{marginTop:'25px'}}><img src={IMAGES.plus} width={'15px'}></img><span> comparables</span></p>;
       if (limit == 0) {
-        label = <p><img src={IMAGES.less} width={'15px'}></img><span> comparables</span></p>;
+        label = <p style={{marginTop:'25px'}}><img src={IMAGES.less} width={'15px'}></img><span> comparables</span></p>;
       }
       verMasControl = (
         <div style={{cursor: 'pointer'}} onClick={this._onToggle.bind(this)}>
