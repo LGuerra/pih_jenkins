@@ -34,15 +34,16 @@ class FormatBarChart extends React.Component {
       title = Helpers.formatAsPrice(d.lim_inf) + ' a ' +  Helpers.formatAsPrice(d.lim_sup);
     }
 
-    let html = '<div class="tooltip-container">';
-      html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-title">' + title + '</p>';
-      html += '</div>';
-      html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-value">' + (d.value * 100).toFixed(1) + '%</p>';
-        html += '<p class="tooltip-unit">' + '&nbsp;Viviendas' + '</p>';
-      html += '</div>';
-    html += '</div>';
+    let html = `<div class="tooltip-container">
+      <div class="tooltip-row">
+        <p class="tooltip-title">${title}</p>
+      </div>
+      <div class="tooltip-row">
+        <p class="tooltip-value">${(d.value * 100).toFixed(1)}%</p>
+        <p class="tooltip-unit">${'&nbsp;Viviendas'}</p>
+      </div>
+    </div>`;
+
     return (html);
   }
   _formatData(data) {
@@ -82,6 +83,7 @@ class FormatBarChart extends React.Component {
 
     if (this.state.data) {
       content = (<BarChart
+        id={this.props.id}
         svgClass={'printable-chart'}
         showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
         data={this.state.data}
@@ -94,7 +96,7 @@ class FormatBarChart extends React.Component {
           left: 40,
           right: 35,
           top: 25,
-          bottom: 30
+          bottom: 25
         }}
         idContainer={'bar-chart'} /> );
     } else {

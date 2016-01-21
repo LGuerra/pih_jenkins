@@ -1,6 +1,7 @@
 // Vendor
 import React from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
 
 // Components
 import BackToTop from   '../components/BackToTop';
@@ -24,6 +25,8 @@ import PrecioDistribucion from    './reporte/PrecioDistribucion';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ViviendaInfo from          './reporte/ViviendaInfo';
 
+import Helpers from '../helpers';
+
 function getURLParameter(name) {
   /**
    * Disabling eslint to avoid regex ERROR*/
@@ -38,27 +41,41 @@ class Reporte extends React.Component{
 
     var type = getURLParameter('tipo') === 'Colonia' ? 'colonia' : 'Vivienda';
 
-    if (type === 'colonia') {
+    this.state = {};
+
+    if (type === 'Vivienda') {
       //Get initial State
       this.state = {
-        coloniaID: getURLParameter('colonia')
-      }
-    } else {
-      //Get initial State
-      this.state = {
-        viviendaID: getURLParameter('colonia')
+        viviendaParams: {
+          longitud:-99.16188119999998,
+          latitud:19.4284917,
+          recamaras: 1,
+          banos: 3,
+          estacionamientos: 2,
+          edad: 5,
+          id_tipo_propiedad: 2,
+          area_construida: 300,
+          address:'Paseo de la Reforma 222, Cuauhtémoc, Juárez, 06600 Ciudad de México, D.F., México',
+          tipo_operacion: 0
+        }
       }
     }
 
     this.loadingReport = false;
     this.state.type = getURLParameter('tipo');
-    this.state.colonia = getURLParameter('colonia');
-    this.type = type;
-
+    this.state.coloniaID = getURLParameter('colonia');
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
     this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
+    this._printInfo = this._printInfo.bind(this);
+    this._buildPromises = this._buildPromises.bind(this);
+    this._askForPDF = this._askForPDF.bind(this);
+    this._generateReport = this._generateReport.bind(this);
+    this._generateInfo = this._generateInfo.bind(this);
+    this._downloadReport = this._downloadReport.bind(this);
+    this._getImages = this._getImages.bind(this);
+    this._onGetViviendaInfo = this._onGetViviendaInfo.bind(this);
   }
 
   _printInfo(url) {
@@ -70,21 +87,9 @@ class Reporte extends React.Component{
       loadingReport: false
     });
   }
-  _buildPromises(principal, identifier, dataType, data) {
-    var operation = this.state.operation;
-    var state = this.state.state;
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;
-    var yyyy = today.getFullYear();
-    var actualDate = dd + '-' + mm + '-' + yyyy;
-    var promise;
-    var operatorPortafolioTotal = this.refs.portafolio_total.state.operation;
-    var host = '/reporter';
-
-    var url = host + '/' + principal;
-    url += '/' + operation + '/' + state + '/' + operatorPortafolioTotal + '/' + actualDate + '/' + identifier;
-
+  _buildPromises(identifier, dataType, data) {
+    let url = this.reportUrl + '/' + identifier;
+    let promise;
     if (dataType === 'json') {
       promise = $.ajax({
         url: url,
@@ -102,44 +107,112 @@ class Reporte extends React.Component{
 
     return (promise);
   }
-  _generateInfo() {
-    var coloniaInfo = this.refs.coloniaInfo.state;
+  _askForPDF(miliseconds, attempt, callback) {
+    var deferred = $.Deferred();
+    (function autoCallable() {
+      setTimeout(function() {
+        callback()
+          .then(deferred.resolve(), function() {
+            if (attempt > 0) {
+              attempt -= 1;
+              autoCallable();
+            } else {
+              deferred.reject();
+            }
+          });
+      }, miliseconds);
+    })();
+
+    return deferred.promise();
+  }
+  _generateReport(url) {
+    $.post(url)
+      .done(() => {
+        this._askForPDF(1000, 5, function() {
+          return ($.get(url));
+        })
+        .then(() => {
+          this._printInfo(url);
+        });
+      });
+  }
+  _generateInfo(url) {
+    let allPromises = [];
+    let viviendaInfo = {};
+    this._getImages().forEach((element) => {
+      allPromises.push(
+        this._buildPromises(
+          element.nombre + '.png', 'image', element.image
+        )
+      );
+    });
+
+    if (this.refs.viviendaInfo) {
+      viviendaInfo = _.merge(this.refs.viviendaInfo.state.data, this.refs.viviendaInfo.props.params);
+    }
+
+    let coloniaInfo = this.refs.coloniaInfo.state.data;
+    let ofertaDisponible = this.refs.ofertaDisponible.state.data;
+    let distribucionPrecio = this.refs.distribucionPrecio.state.data;
+
+    allPromises.push(this._buildPromises(
+      'info_colonia.json', 'json', coloniaInfo
+    ));
+    allPromises.push(this._buildPromises(
+      'oferta_disponible.json', 'json', ofertaDisponible
+    ));
+    allPromises.push(this._buildPromises(
+      'info_vivienda.json', 'json', viviendaInfo
+    ));
+    allPromises.push(this._buildPromises(
+      'distribucion_precio.json', 'json', distribucionPrecio
+    ));
+
+
+    $.when.apply($, allPromises)
+      .then(() => {
+        this._generateReport(url);
+      })
+      .fail((error, msg) => {
+        console.log('FAIL', error, msg);
+      });
+
   }
   _downloadReport() {
-    var host = '/reporter/report/';
+    var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1;
     var yyyy = today.getFullYear();
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
     var date = dd + '-' + mm + '-' + yyyy;
 
-    this._getImages();
-    this._generateInfo(this.url);
+    if (this.state.type === 'Vivienda') {
+      let randomText = Math.random().toString(36).substr(2, 10);
+      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + randomText + '/' + date;
+    } else {
+      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '/' + date;
+    }
 
-    this.reportUrl = host + date;
     this.setState({
       loadingReport: true
     }, () => {
-      setTimeout(() => {
-        this.setState({
-          loadingReport: false
-        })
-      }, 2000);
-      /*
-      $.get(this.url)
+      $.get(this.reportUrl)
         .done(() => {
-          this._printInfo(this.url);
+          this._printInfo(this.reportUrl);
         })
         .fail(() => {
+          this._generateInfo(this.reportUrl);
         });
-      */
     });
   }
   _getImages() {
     var images = [];
     var svgs = $('svg.printable-chart');
     var svgXml;
-
 
     for (var i = 0; i < svgs.length; i++) {
       svgXml = (new XMLSerializer).serializeToString(svgs[i]);
@@ -157,9 +230,6 @@ class Reporte extends React.Component{
       });
     }
 
-    images.forEach(function(image) {
-      console.log(image.image);
-    })
     return (images);
   }
   _onMouseoverColoniaTable(data) {
@@ -175,6 +245,11 @@ class Reporte extends React.Component{
       coloniaInfo: info
     });
   }
+  _onGetViviendaInfo(info) {
+    this.setState({
+      viviendaInfo: info
+    });
+  }
   render() {
     var loadingFrame;
     var borderRight = {
@@ -183,6 +258,8 @@ class Reporte extends React.Component{
     var secondaryNavbar;
     var infoBlocks;
     var compareTables;
+    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
+
 
     if (this.state.loadingReport) {
       loadingFrame =
@@ -199,24 +276,30 @@ class Reporte extends React.Component{
     if (this.state.type === 'Vivienda') {
       secondaryNavbar = (
         <SecondaryNavbar
+          data={_.pick(this.state.viviendaParams, 'recamaras', 'banos', 'estacionamientos', 'id_tipo_propiedad', 'area_construida', 'address')}
           width={'100%'} />
       );
       infoBlocks = (
         <div className={'row block-container'}>
-          <div style={borderRight} className={'col-sm-6'}>
-            <ViviendaInfo />
+          <div style={borderRight} className={'col-sm-4'}>
+            <ViviendaInfo
+              ref={'viviendaInfo'}
+              onGetViviendaInfo={this._onGetViviendaInfo}
+              params={this.state.viviendaParams}/>
           </div>
-          <div className={'col-sm-6'}>
+          <div className={'col-sm-8'}>
             <ColoniaInfo
+              coloniaName={coloniaName}
               ref={'coloniaInfo'}
               onGetColoniaInfo={this._onGetColoniaInfo}
-              zoneID={this.state.colonia}
+              zoneID={this.state.coloniaID}
               viewType={this.state.type}/>
           </div>
         </div>
       );
       compareTables = (
-        <ComparativoViviendas />
+        <ComparativoViviendas
+          params={this.state.viviendaParams}/>
       );
     } else {
       infoBlocks = (
@@ -225,7 +308,7 @@ class Reporte extends React.Component{
             <ColoniaInfo
               ref={'coloniaInfo'}
               onGetColoniaInfo={this._onGetColoniaInfo}
-              zoneID={this.state.colonia}
+              zoneID={this.state.coloniaID}
               viewType={this.state.type} />
           </div>
         </div>
@@ -233,28 +316,31 @@ class Reporte extends React.Component{
       compareTables = (
         <ComparativoColonias
           ref={'comparativo_colonias'}
+          zoneID={this.state.coloniaID}
+          onMouseout={this._onMouseoverColoniaTable.bind(this)}
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
       );
     }
-    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.zonaInfo.nombre : '';
+
     return (
       <div className={'noselect'}>
         <header>
           <MainNavbar
-            type={this.props.type}
+            type={this.state.type}
             onOpenForm={this._openForm}
             onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
           <FormatStickyNavbar
             coloniaInfo={this.state.coloniaInfo}
+            viviendaInfo={this.state.viviendaInfo}
             viewType={this.state.type}/>
         </header>
         <div className={'header-section'}>
           {secondaryNavbar}
           {this.state.type === 'Colonia' ? (
             <div>
-              <h3 className={'section-title'}>{'Datos de la colonia ' + coloniaName}</h3>
+              <h3 className={'section-title'}>{'Datos de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
               <div className={'line-divider'}></div>
             </div>)
             : ''
@@ -270,13 +356,25 @@ class Reporte extends React.Component{
             </div>)
             : ''
           }
+          <div>
+            <OfertaDisponible
+              ref={'ofertaDisponible'}
+              zoneID={this.state.coloniaID} />
+          </div>
+          <div>
+            <h4 className={'subsection-title'}>Distribución de Tipología</h4>
+            <FormatStackedBarChart
+              id={'distribucion_tipologia'}
+              zoneID={this.state.coloniaID}/>
+          </div>
           <div className={'row block-container'}>
             <div style={borderRight} className={'col-sm-6'}>
               <h4 className={'subsection-title'}>Precio Histórico por m² Enero 2010 - Enero 2015</h4>
               <div className={'row'}>
                 <div className={'col-sm-12'}>
                   <FormatLineChart
-                    zoneID={this.state.colonia} />
+                    id={'precio_historico'}
+                    zoneID={this.state.coloniaID} />
                 </div>
               </div>
               <div className={'row'}>
@@ -289,18 +387,9 @@ class Reporte extends React.Component{
             <div className={'col-sm-6'}>
               <h4 className={'subsection-title'}>Distribución de Precio por m² - Enero 2016</h4>
               <FormatBarChart
+                ref={'distribucionPrecio'}
+                id={'distribucion_precio'}
                 zoneID={this.state.coloniaID}/>
-            </div>
-          </div>
-          <div className={'row block-container'}>
-            <div style={borderRight} className={'col-sm-4'}>
-              <OfertaDisponible
-                zoneID={this.state.colonia} />
-            </div>
-            <div className={'col-sm-8'}>
-              <h4 className={'subsection-title'}>Distribución de Tipología</h4>
-              <FormatStackedBarChart
-                zoneID={this.state.colonia}/>
             </div>
           </div>
         </div>

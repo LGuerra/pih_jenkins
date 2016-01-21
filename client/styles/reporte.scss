@@ -30,8 +30,8 @@
     border-bottom: 1px solid #E6E6E6;
     cursor: pointer;
   }
-  thead {
-    border-bottom: 2px solid #35C0BE;
+  tbody {
+    border-top: 2px solid #35C0BE;
   }
   tr {
     @include transition(all, 0.5s, ease);

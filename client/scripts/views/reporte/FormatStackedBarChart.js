@@ -79,6 +79,7 @@ class FormatStackedBarChart extends React.Component {
     if (this.state.data) {
       content = (
         <StackedBarChart
+          id={this.props.id}
           svgClass={'printable-chart'}
           data={this.state.data}
           height={295}

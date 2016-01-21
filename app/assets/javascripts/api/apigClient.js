@@ -235,24 +235,6 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.suburbAdajacentSuburbsGeojsonsGet = function (params, body, additionalParams) {
-        if(additionalParams === undefined) { additionalParams = {}; }
-        
-        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
-        
-        var suburbAdajacentSuburbsGeojsonsGetRequest = {
-            verb: 'get'.toUpperCase(),
-            path: pathComponent + uritemplate('/suburb/adajacent-suburbs-geojsons').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
-            body: body
-        };
-        
-        
-        return apiGatewayClient.makeRequest(suburbAdajacentSuburbsGeojsonsGetRequest, authType, additionalParams, config.apiKey);
-    };
-    
-    
     apigClient.suburbAdajacentSuburbsGeojsonsOptions = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -451,6 +433,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.suburbFromCoordsGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['lng', 'lat'], ['body']);
+        
+        var suburbFromCoordsGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/from-coords').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['lng', 'lat']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbFromCoordsGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbFromCoordsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbFromCoordsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/from-coords').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbFromCoordsOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.suburbGeojsonGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -628,6 +646,78 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(suburbSemesterListingOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbTrustedGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['lng', 'lat'], ['body']);
+        
+        var suburbTrustedGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/trusted').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['lng', 'lat']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbTrustedGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbTrustedOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbTrustedOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/trusted').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbTrustedOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbsGeojsonsGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['id_cols'], ['body']);
+        
+        var suburbsGeojsonsGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburbs/geojsons').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_cols']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbsGeojsonsGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbsGeojsonsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbsGeojsonsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburbs/geojsons').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbsGeojsonsOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     

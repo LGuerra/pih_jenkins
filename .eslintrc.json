@@ -12,6 +12,7 @@
     "$": true,
     "IMAGES": true,
     "google": true,
+    "canvg": true,
     "apigClientFactory": true
   },
   "extends": "eslint:recommended",

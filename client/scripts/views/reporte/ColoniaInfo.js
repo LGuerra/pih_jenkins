@@ -37,7 +37,7 @@ class ColoniaInfo extends React.Component {
           data: {
             averageOffer: avergageOfferR.avg,
             averageM2: averageM2R.avg,
-            zonaInfo: {
+            coloniaInfo: {
               nombre: coloniaInfoR.nombre,
               SHF: coloniaInfoR.precio_m2_shf
             }
@@ -51,8 +51,8 @@ class ColoniaInfo extends React.Component {
     let content;
 
     if (this.state.data) {
-      let colName = this.props.viewType === 'vivienda' ?
-        (<h4 className={'subsection-title'}>Colonia Anzures</h4>)
+      let colName = this.props.viewType === 'Vivienda' ?
+        (<h4 className={'subsection-title'}>{Helpers.toTitleCase(this.props.coloniaName)}</h4>)
         : '';
       content = (<div className={'oferta-disponible'}>
         {colName}
@@ -72,7 +72,7 @@ class ColoniaInfo extends React.Component {
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>
-              {this.state.data.zonaInfo.SHF ? Helpers.formatAsPrice(this.state.data.zonaInfo.SHF) : 'No disponible'}
+              {this.state.data.coloniaInfo.SHF ? Helpers.formatAsPrice(this.state.data.coloniaInfo.SHF) : 'No disponible'}
             </p>
             <p className={'subtitle'}>Precio SHF por m²</p>
           </div>

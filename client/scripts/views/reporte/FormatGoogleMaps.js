@@ -14,25 +14,25 @@ class FormatGoogleMaps extends React.Component {
     let map = this.refs.map.mapRef;
     if (id) {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? 'red' : 'blue';
+        let fillColor = feature.getProperty('current') ? '#353535' : '#c7c7c7';
         if (feature.getProperty('id') === id) {
           return {
-            fillColor: 'green',
-            strokeWeight: 1
+            fillColor: '#2a9998',
+            strokeWeight: 2
           };
         } else {
           return {
             fillColor: fillColor,
-            strokeWeight: 1
+            strokeWeight: 2
           };
         }
       });
     } else {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? 'red' : 'blue';
+        let fillColor = feature.getProperty('current') ? '#353535' : '#c7c7c7';
         return {
           fillColor: fillColor,
-          strokeWeight: 1
+          strokeWeight: 2
         };
       });
     }
@@ -44,11 +44,11 @@ class FormatGoogleMaps extends React.Component {
     apigClient.suburbGeojsonGet({
       id_col: this.props.zoneID
     }, {}, {}).then((geojsonR) => {
-      console.log(geojsonR);
       map.data.addGeoJson({
         type: 'Feature',
         geometry: geojsonR.data,
         properties: {
+          id: this.props.zoneID,
           current: true
         }
       });
@@ -60,43 +60,47 @@ class FormatGoogleMaps extends React.Component {
       map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
     });
 
-    /*
-    var _this = this;
-    var url = config.urlSuburb;
-    $.when( $.ajax(url + 'adjacent-suburbs?suburb=' + this.props.zoneID), $.ajax(url + 'geojson?suburb=' + this.props.zoneID), $.ajax(url + 'centroid?suburb=' + this.props.zoneID))
-      .then(loadTopoJSONs, failure);
-    function loadTopoJSONs(adjacent, actual, centroid) {
-      map.setCenter({lat: centroid[0].lng, lng: centroid[0].lat});
+    apigClient.suburbAdjacentSuburbsGet({
+      id_col: this.props.zoneID
+    }, {}, {})
+    .then((abjacentsR) => { return abjacentsR.data })
+    .then((data) => {
+      apigClient.suburbsGeojsonsGet({
+        id_cols: data.toString()
+      }, {}, {})
+      .then((suburbsGeoR) => {
+        suburbsGeoR.data.forEach((colonia, index) => {
+          if(colonia.geojson.properties.id !== this.props.zoneID) {
+            map.data.addGeoJson({
+              type: 'Feature',
+              geometry: {
+                coordinates: colonia.geojson.coordinates,
+                type: colonia.geojson.type
+              },
+              properties: colonia.geojson.properties
+            });
+          }
+        });
+      })
+    })
 
-      map.data.addGeoJson({
-        type: 'Feature',
-        geometry: actual[0],
-        properties: {
-          current: true
-        }
-      });
-      _this.highlightFeature();
-      adjacent[0].geojsons.map(function(suburb, index) {
-        suburb.properties = {
-          id: index
-        };
-        map.data.addGeoJson(suburb);
-      });
+    map.data.addListener('mouseover', (event) => {
+      this.highlightFeature(event.feature.getProperty('id'));
+      this.props.onMouseoverFeature(event.feature.getProperty('id'));
+    });
+    map.data.addListener('mouseout', (event) => {
+      this.highlightFeature();
+      this.props.onMouseoverFeature(event.feature.getProperty('id'));
+    });
+    map.data.addListener('click', (event) => {
+      var templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+        .replace(':colonia:', event.feature.getProperty('id'))
+        .replace(':reportType:', 'Colonia');
 
-      map.data.addListener('mouseover', (event) => {
-        _this.highlightFeature(event.feature.getProperty('id'));
-        _this.props.onMouseoverFeature(event.feature.getProperty('id'));
-      });
-      map.data.addListener('mouseout', (event) => {
-        _this.highlightFeature();
-        _this.props.onMouseoverFeature(event.feature.getProperty('id'));
-      });
-    }
+      window.open(templateUrl);
+    });
 
-    var failure = function() {
-      console.log('Error');
-    };
-    */
+    this.highlightFeature();
   }
   render() {
     var googleMap;
@@ -104,7 +108,7 @@ class FormatGoogleMaps extends React.Component {
       <GoogleMap
         latitud={19.2837698}
         longitud={-99.1839327}
-        zoom={[15, 5, 21]}
+        zoom={[14, 5, 21]}
         style={{
           width: '100%',
           height: '400px'

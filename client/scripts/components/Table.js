@@ -20,19 +20,19 @@ class Table extends React.Component {
     }
   }
   render () {
-    var _this = this;
-    var data = this.props.data;
-    var keys = Object.keys(data[0]);
-    var tdArray;
-    var limit = this.state.limit;
-    var verMasControl;
+    let _this = this;
+    let data = this.props.data;
+    let keys = Object.keys(data[0]);
+    let tdArray;
+    let limit = this.state.limit;
+    let verMasControl;
 
     if (this.props.sortBy) {
       data = __sortBy(data, this.props.sortBy.field);
       data = this.props.sortBy.reverse ? data.reverse() : data;
     }
 
-    var titles = keys.map(function(element, index) {
+    let titles = keys.map(function(element, index) {
       if (element !== 'empty' && (_this.props.idField !== element || _this.props.idFieldVisible)) {
         return (<th key={'title-' + element}>{element}</th>);
       } else {
@@ -40,22 +40,43 @@ class Table extends React.Component {
       }
     });
 
-    var rows = data.map(function(element, index) {
+    let rows = data.map(function(element, index) {
       tdArray = [];
+      let style;
+
+
       for (let k in element) {
         if ((k !== _this.props.idField || _this.props.idFieldVisible)) {
           tdArray.push(<td key={'td-' + (element[k] +  k)}>{element[k]}</td>);
         }
       }
+      if (_this.props.remarcableRow && ($.inArray(index, _this.props.remarcableRow) !== -1)) {
+        style = {
+          fontWeight: 'bold',
+          backgroundColor: '#f5f5f5'
+        };
+      }
 
       if (!limit || index < limit) {
         if (_this.props.onMouseoverRow) {
           return (
-            <tr data-id={element[_this.props.idField]} donMouseOut={_this.props.onMouseoverRow.bind(_this, {id: null})} onMouseOver={_this.props.onMouseoverRow.bind(_this, element)} key={'row-' + index}>{tdArray}</tr>
+            <tr
+              style={style}
+              data-id={element[_this.props.idField]}
+              onMouseOut={_this.props.onMouseoverRow.bind(_this, {id: null})}
+              onMouseOver={_this.props.onMouseoverRow.bind(_this, element)}
+              key={'row-' + index}>
+              {tdArray}
+            </tr>
           );
         } else {
           return (
-            <tr data-id={element[_this.props.idField]} dkey={'row-' + index} key={'row-' + index}>{tdArray}</tr>
+            <tr
+              data-id={element[_this.props.idField]}
+              dkey={'row-' + index}
+              key={'row-' + index}>
+              {tdArray}
+            </tr>
           );
         }
       }

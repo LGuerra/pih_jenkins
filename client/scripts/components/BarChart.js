@@ -32,12 +32,13 @@ class BarChart extends React.Component {
 
     this.conf.svgContainer = d3.select('#' + this.props.idContainer)
       .append('svg')
+      .attr('id', props.id)
       .attr('class', props.svgClass)
       .attr('height', this.conf.height)
       .attr('width', this.conf.width);
 
     if (props.xTitleUnit) {
-      this.conf.svgContainer.append('text')
+      this.conf.xTitleUnit = this.conf.svgContainer.append('text')
         .attr('y', this.conf.height - 5)
         .attr('x', (this.conf.width / 2))
         .style('fill', 'rgb(130, 130, 130)')
@@ -230,6 +231,10 @@ class BarChart extends React.Component {
         return (this.conf.xScale(d.label));
       })
       .attr('width', this.conf.xScale.rangeBand());
+
+
+    this.conf.xTitleUnit
+      .attr('x', (this.conf.width / 2));
   }
   componentDidMount () {
     window.addEventListener('resize', this._updateDimensions.bind(this));

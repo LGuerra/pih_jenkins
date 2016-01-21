@@ -55,8 +55,7 @@ class OfertaDisponible extends React.Component {
           marginTop: '20px',
           marginBottom: '25px',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'}}
+          justifyContent: 'space-around'}}
           className={'listados'}>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
             <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.monthlyListing))}</p>

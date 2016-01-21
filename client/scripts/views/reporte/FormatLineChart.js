@@ -39,12 +39,13 @@ class FormatLineChart extends React.Component {
     var dateObj = new Date(d.data0.value.xVariable);
     var dateFormatted = months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate()) + 1) + ' del ' + dateObj.getFullYear();
 
-    var html = '<div class="tooltip-container">';
-      html += '<div class="tooltip-row">';
-        html += '<p class="tooltip-title">' + dateFormatted + ' - </p>';
-        html += '<p class="tooltip-value">' + Helpers.formatAsPrice(d.data0.value.value) + '</p>';
-      html += '</div>';
-    html += '</div>';
+    var html = `<div class="tooltip-container">
+      <div class="tooltip-row">
+        <p class="tooltip-title">${dateFormatted} - </p>
+        <p class="tooltip-value">${Helpers.formatAsPrice(d.data0.value.value)}</p>
+      </div>
+    </div>`;
+
     return (html);
   }
   _formatData(data) {
@@ -81,6 +82,7 @@ class FormatLineChart extends React.Component {
     if (this.state.data) {
       content = (
         <LineChart
+          id={this.props.id}
           svgClass={'printable-chart'}
           showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
           data={this.state.data}
