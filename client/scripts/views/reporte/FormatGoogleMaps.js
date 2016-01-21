@@ -14,7 +14,7 @@ class FormatGoogleMaps extends React.Component {
     let map = this.refs.map.mapRef;
     if (id) {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? 'red' : 'blue';
+        let fillColor = feature.getProperty('current') ? '#828282' : 'blue';
         if (feature.getProperty('id') === id) {
           return {
             fillColor: 'green',
@@ -29,7 +29,7 @@ class FormatGoogleMaps extends React.Component {
       });
     } else {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? 'red' : 'blue';
+        let fillColor = feature.getProperty('current') ? '#828282' : 'blue';
         return {
           fillColor: fillColor,
           strokeWeight: 1
