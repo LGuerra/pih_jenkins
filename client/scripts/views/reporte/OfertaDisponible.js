@@ -18,19 +18,19 @@ class OfertaDisponible extends React.Component {
     let averageTimeDefer = $.Deferred();
 
     apigClient.suburbMonthlyListingGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((monthlyListingR) => {
       monthlyListingDefer.resolve(monthlyListingR.data);
     });
 
     apigClient.suburbSemesterListingGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((semesterListingR) => {
       semesterListingDefer.resolve(semesterListingR.data);
     });
 
     apigClient.suburbAverageTimeGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((averageTimeR) => {
       averageTimeDefer.resolve(averageTimeR.data);
     });

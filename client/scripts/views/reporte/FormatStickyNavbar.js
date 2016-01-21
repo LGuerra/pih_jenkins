@@ -55,7 +55,7 @@ class FormatStickyNavbar extends React.Component{
           </div>
           <div style={{marginTop: '17px', marginBottom: '0px'}}>
             <div style={{textAlign: 'center'}}>
-              <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' precio promedio por m²'}</p>
+              <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
             </div>
           </div>
         </div>);

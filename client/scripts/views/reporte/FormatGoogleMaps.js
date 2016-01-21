@@ -42,8 +42,9 @@ class FormatGoogleMaps extends React.Component {
     let apigClient = apigClientFactory.newClient();
 
     apigClient.suburbGeojsonGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((geojsonR) => {
+      console.log(geojsonR);
       map.data.addGeoJson({
         type: 'Feature',
         geometry: geojsonR.data,
@@ -54,7 +55,7 @@ class FormatGoogleMaps extends React.Component {
     });
 
     apigClient.suburbCentroidGet({
-      suburb: this.props.zoneID
+      id_col: this.props.zoneID
     }, {}, {}).then((suburbCentroidR) => {
       map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
     });
