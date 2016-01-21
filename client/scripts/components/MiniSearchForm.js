@@ -75,7 +75,13 @@ class MiniSearchForm extends React.Component {
   }
 
   _requestVivienda () {
-    console.log("_requestVivienda");
+    let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+      .replace(':colonia:', this.refs.searchInput.state.selectedID)
+      .replace(':reportType:', this.state.searchType);
+
+    window.open(templateUrl, '_self');
+    this.setState({inputClass: ""});
+    console.log("_requestVivienda", this.refs.searchInput.state.selectedID);
   }
 
   _sendRequest () {
@@ -83,27 +89,39 @@ class MiniSearchForm extends React.Component {
     if (!searchInput) {
       this.setState({inputClass: "input-error"});
       console.log("Request not sent");
-      searchInput = "Ingresa la dirección de una vivienda";
     } else {
-      if (this.state.searchType === "Vivienda") {
-        this.setState({searchInput: searchInput, inputClass: ""},
-          ()=>this._showFormModal(this.state.searchInput,
-                                  this._modalChange,
-                                  this.state.modaldd,
-                                  this._modalDD,
-                                  this._requestVivienda,
-                                  this.state.habitaciones,
-                                  this.state.banos,
-                                  this.state.cajones,
-                                  this.state.vivienda,
-                                  this.state.operacion,
-                                  this.state.areaConstruida,
-                                  this.state.edad
-                                  ));
-        console.log("Send request with parameter...", this.refs.searchInput.getValue());
-      } else {
-        this.setState({searchInput: searchInput, inputClass: ""});
-        console.log("Send request with parameter...", this.refs.searchInput.getValue());
+      if (searchInput.length >= 3) {
+        if (searchInput === this.state.suggestions[0].content) {
+          $('[data-toggle="popover"]').popover('show');
+          setTimeout(()=> $('[data-toggle="popover"]').popover('hide'), 2000);
+        } else {
+          if (this.state.searchType === "Vivienda") {
+            this.setState({searchInput: searchInput, inputClass: ""},
+              ()=>this._showFormModal(this.state.searchInput,
+                                      this._modalChange,
+                                      this.state.modaldd,
+                                      this._modalDD,
+                                      this._requestVivienda,
+                                      this.state.habitaciones,
+                                      this.state.banos,
+                                      this.state.cajones,
+                                      this.state.vivienda,
+                                      this.state.operacion,
+                                      this.state.areaConstruida,
+                                      this.state.edad
+                                      ));
+            console.log("Send request with parameter...", this.refs.searchInput.getValue());
+          } else {
+            this.setState({searchInput: searchInput, inputClass: ""});
+            let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+              .replace(':colonia:', this.refs.searchInput.state.selectedID)
+              .replace(':reportType:', this.state.searchType);
+            
+            window.open(templateUrl, '_self');
+            this.setState({inputClass: ""});
+            console.log("Send request with parameter...", this.refs.searchInput.getValue());
+          }
+        }
       }
     }
   }
@@ -127,6 +145,8 @@ class MiniSearchForm extends React.Component {
     let ans = {};
     if (sType !== this.state.searchType) {
       ans.searchType = sType;
+      ans.suggestions = [];
+      document.getElementById("landing-input").value = "";
     }
     ans.placeholder = "Ingresa una Colonia";
     if (sType === "Vivienda") {
@@ -135,6 +155,7 @@ class MiniSearchForm extends React.Component {
     } else ddmShown.modal = false;
     ans.ddmodalShown = ddmShown;
     ans.inputClass = "";
+    ans.suggestions = [];
     this.setState(ans);
   }
 
@@ -191,6 +212,7 @@ class MiniSearchForm extends React.Component {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             //console.log(predictions);
             suggests = parseSuggestionsGoogle(predictions);
+            suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
             //console.log("SEARCH IN GOOGLE");
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""});
           }
@@ -215,6 +237,7 @@ class MiniSearchForm extends React.Component {
             //Desirable - IF response.isEmpty tell the user there is no data
             //console.log(response.hits.hit);
             suggests = parseSuggestions(response.hits.hit);
+            suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
             //console.log(suggests);
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""});
           });
@@ -296,6 +319,7 @@ class MiniSearchForm extends React.Component {
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
                                  className={this.state.inputClass}
+                                 dropdownClass={"mini-search-input-dropdown"}
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
                                  showSuggestions={ddmodalShown.ddInput}

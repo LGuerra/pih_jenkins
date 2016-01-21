@@ -123,15 +123,6 @@
   }
 }
 
-.im-input-dropdown{
-  .im-dropdown{
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    left: 8px;
-  }
-}
-
 .search-button-modal {
   background-color: #35c0be;
   height: 30px;
@@ -142,6 +133,10 @@
   &:focus {
     outline: 0;
   }
+}
+
+.mini-search-input-dropdown {
+
 }
 
 .modal-div {

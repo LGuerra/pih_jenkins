@@ -117,6 +117,7 @@ class SearchForm extends React.Component {
     } else ddmShown.modal = false;
     ans.ddmodalShown = ddmShown;
     ans.inputClass = "";
+    ans.suggestions = [];
     this.setState(ans);
   }
 
@@ -215,7 +216,7 @@ class SearchForm extends React.Component {
     let ddmShown   = this._closeAllddModalShown();
     ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
     //console.log("click outside");
-    this.setState({ddmodalShown: ddmShown, suggestions: [], modaldd: false});
+    this.setState({ddmodalShown: ddmShown, modaldd: false});
     //this._focusOnInput();
   }
 
@@ -227,6 +228,10 @@ class SearchForm extends React.Component {
 
   _stopPropagation (e) {
     e.stopPropagation();
+  }
+
+  componentDidMount () {
+    document.getElementById("landing-input").focus();
   }
 
   render() {
