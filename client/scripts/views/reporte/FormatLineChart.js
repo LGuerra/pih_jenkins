@@ -88,7 +88,7 @@ class FormatLineChart extends React.Component {
           data={this.state.data}
           tooltipFormat={this._tooltipLineFormat}
           yTitleUnit={'Precio promedio'}
-          height={180}
+          height={220}
           xtickFormat={this._xTickFormat}
           ytickFormat={this._yTickFormat}
           margin={{

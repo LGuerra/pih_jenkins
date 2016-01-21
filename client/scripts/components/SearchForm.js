@@ -108,9 +108,19 @@ class SearchForm extends React.Component {
               if (status == google.maps.places.PlacesServiceStatus.OK) {
                 let latitude  = place.geometry.location.G;
                 let longitude = place.geometry.location.K;
-                templateUrl.replace(':longitud:', longitude)
-                           .replace(':latitud:',  latitude);
-                window.open(templateUrl, '_self');
+
+                let apigClient = apigClientFactory.newClient();
+
+                apigClient.suburbFromCoordsGet({
+                  lat: latitude,
+                  lng: longitude
+                }, {}, {})
+                .then((suburbFromCoordsR) => {
+                  templateUrl = templateUrl.replace(':longitud:', longitude)
+                             .replace(':latitud:',  latitude)
+                             .replace(':colonia:', suburbFromCoordsR.data[0]);
+                  window.open(templateUrl, '_self');
+                });
               }
             });
             /**

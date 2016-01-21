@@ -76,6 +76,12 @@ class ColoniaInfo extends React.Component {
             </p>
             <p className={'subtitle'}>Precio SHF por m²</p>
           </div>
+          <div style={{textAlign: 'center'}}>
+            <p className={'secondary-price'}>
+              {'+ 5.3%'}
+            </p>
+            <p className={'subtitle'}>Apreciación anual</p>
+          </div>
         </div>
       </div>);
     } else {

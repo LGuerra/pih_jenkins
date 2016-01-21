@@ -47,16 +47,16 @@ class Reporte extends React.Component{
       //Get initial State
       this.state = {
         viviendaParams: {
-          longitud:-99.16188119999998,
-          latitud:19.4284917,
-          recamaras: 1,
-          banos: 3,
-          estacionamientos: 2,
-          edad: 5,
-          id_tipo_propiedad: 2,
-          area_construida: 300,
-          address:'Paseo de la Reforma 222, Cuauhtémoc, Juárez, 06600 Ciudad de México, D.F., México',
-          tipo_operacion: 0
+          longitud: getURLParameter('longitud'),
+          latitud: getURLParameter('latitud'),
+          recamaras: getURLParameter('recamaras'),
+          banos: getURLParameter('banos'),
+          estacionamientos: getURLParameter('estacionamientos'),
+          edad: getURLParameter('edad'),
+          id_tipo_propiedad: getURLParameter('id_tipo_vivienda'),
+          area_construida: getURLParameter('area_construida'),
+          address: getURLParameter('address'),
+          tipo_operacion: getURLParameter('tipo_operacion')
         }
       }
     }
@@ -375,12 +375,6 @@ class Reporte extends React.Component{
                   <FormatLineChart
                     id={'precio_historico'}
                     zoneID={this.state.coloniaID} />
-                </div>
-              </div>
-              <div className={'row'}>
-                <div className={'col-sm-12'} style={{marginTop: '10px'}}>
-                  <p className={'secondary-price'}>{'+ 5.3%'}</p>
-                  <p className={'subtitle'}>Apreciación anual</p>
                 </div>
               </div>
             </div>

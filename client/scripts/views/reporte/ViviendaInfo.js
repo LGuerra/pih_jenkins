@@ -3,6 +3,21 @@ import _ from 'lodash';
 
 import Helpers from '../../helpers';
 
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre'
+];
+
 class ViviendaInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -47,12 +62,12 @@ class ViviendaInfo extends React.Component {
           alignItems: 'center'}}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>{Helpers.formatAsPrice(this.state.data.valuacion)}</p>
-            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio promedio total enero 2016</p>
+            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio estimado</p>
             <p className={'subtitle'}>{stars} Confianza</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.precioM2)}</p>
-            <p className={'subtitle'}>Precio por m²</p>
+            <p className={'subtitle'}>Precio estimado por m²</p>
           </div>
         </div>
       </div>

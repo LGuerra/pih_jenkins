@@ -6,7 +6,6 @@ class SecondaryNavbar extends React.Component{
   }
   render() {
     let props = this.props;
-    console.log(props);
     let image;
 
     if (props.data.id_tipo_propiedad === 2) {
