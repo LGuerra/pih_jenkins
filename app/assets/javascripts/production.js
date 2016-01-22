@@ -1,4 +1,4 @@
-//= require images_paths
+//= require images
 //= require ./api/lib/axios/dist/axios.standalone/
 //= require ./api/lib/CryptoJS/rollups/hmac-sha256
 //= require ./api/lib/CryptoJS/rollups/sha256
