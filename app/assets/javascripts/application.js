@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require turbolinks
 //= require ./build/vendor.js
 //= require ./api/lib/axios/dist/axios.standalone/
 //= require ./api/lib/CryptoJS/rollups/hmac-sha256
