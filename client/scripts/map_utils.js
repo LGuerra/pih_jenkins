@@ -69,6 +69,14 @@ var MapUtils = {
         "visibility": "simplified"
       }]
     }, {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+          {
+              "color": "#ffffff"
+          }
+      ]
+    }, {
       "featureType": "road.arterial",
       "elementType": "all",
       "stylers": [{
