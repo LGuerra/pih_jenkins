@@ -58,17 +58,32 @@ class OfertaDisponible extends React.Component {
           justifyContent: 'space-around'}}
           className={'listados'}>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
-            <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.monthlyListing))}</p>
-            <p className={'subtitle'}>Listados en el último mes</p>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <img height={'50px'} src={IMAGES.houses}/>
+              <div style={{width: '100px'}}>
+                <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.monthlyListing))}</p>
+                <p className={'subtitle'}>Listados en el último mes</p>
+              </div>
+            </div>
           </div>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
-            <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.semesterListing))}</p>
-            <p className={'subtitle'}>Listados en los últimos 6 meses</p>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <img height={'55px'} src={IMAGES.calendar_houses}/>
+              <div style={{width: '100px'}}>
+                <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.semesterListing))}</p>
+                <p className={'subtitle'}>Listados en los últimos 6 meses</p>
+              </div>
+            </div>
           </div>
           <div style={{textAlign: 'center', padding: '12px 0px'}}>
             <div className={'tiempo-container'}>
-              <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.averageTime)) + ' días'}</p>
-              <p className={'subtitle'}>Tiempo promedio en el mercado</p>
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                <img height={'50px'} src={IMAGES.calendar}/>
+                <div style={{width: '100px'}}>
+                  <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.averageTime)) + ' días'}</p>
+                  <p className={'subtitle'}>Tiempo promedio en el mercado</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

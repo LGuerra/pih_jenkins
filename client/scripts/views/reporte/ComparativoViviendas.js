@@ -10,6 +10,7 @@ class ComparativoViviendas extends React.Component {
     this.state = {};
   }
   _formatData(data) {
+    console.log(data);
     let formattedData = data.similar_houses.map((element, index) => {
       return ({
         'Precio por m²': Helpers.formatAsPrice(element.precio / element.m2) || '-',
@@ -28,7 +29,6 @@ class ComparativoViviendas extends React.Component {
     let apigClient = apigClientFactory.newClient();
 
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
-
     apigClient.similarsPost({}, params, {})
       .then((similarsR) => {
         this.setState({

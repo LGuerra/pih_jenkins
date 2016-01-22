@@ -47,16 +47,16 @@ class Reporte extends React.Component{
       //Get initial State
       this.state = {
         viviendaParams: {
-          longitud: getURLParameter('longitud'),
-          latitud: getURLParameter('latitud'),
-          recamaras: getURLParameter('recamaras'),
-          banos: getURLParameter('banos'),
-          estacionamientos: getURLParameter('estacionamientos'),
-          edad: getURLParameter('edad'),
-          id_tipo_propiedad: getURLParameter('id_tipo_vivienda'),
-          area_construida: getURLParameter('area_construida'),
+          longitud: Number(getURLParameter('longitud')),
+          latitud: Number(getURLParameter('latitud')),
+          recamaras: Number(getURLParameter('recamaras')),
+          banos: Number(getURLParameter('banos')),
+          estacionamientos: Number(getURLParameter('estacionamientos')),
+          edad: Number(getURLParameter('edad')),
+          id_tipo_propiedad: Number(getURLParameter('id_tipo_vivienda')),
+          area_construida: Number(getURLParameter('area_construida')),
           address: getURLParameter('address'),
-          tipo_operacion: getURLParameter('tipo_operacion')
+          tipo_operacion: Number(getURLParameter('tipo_operacion'))
         }
       }
     }
@@ -139,6 +139,8 @@ class Reporte extends React.Component{
   _generateInfo(url) {
     let allPromises = [];
     let viviendaInfo = {};
+    let viviendasComparables = [];
+    let coloniasComparables = [];
     this._getImages().forEach((element) => {
       allPromises.push(
         this._buildPromises(
@@ -147,14 +149,23 @@ class Reporte extends React.Component{
       );
     });
 
-    if (this.refs.viviendaInfo) {
+    if (this.state.type === 'Vivienda') {
       viviendaInfo = _.merge(this.refs.viviendaInfo.state.data, this.refs.viviendaInfo.props.params);
+      viviendasComparables = this.refs.comparativoViviendas.state.data;
+    } else {
+      coloniasComparables = this.refs.comparativoColonias.state.data;
     }
 
     let coloniaInfo = this.refs.coloniaInfo.state.data;
     let ofertaDisponible = this.refs.ofertaDisponible.state.data;
     let distribucionPrecio = this.refs.distribucionPrecio.state.data;
 
+    allPromises.push(this._buildPromises(
+      'viviendas_comparables.json', 'json', viviendasComparables
+    ));
+    allPromises.push(this._buildPromises(
+      'colonias_comparables.json', 'json', coloniasComparables
+    ));
     allPromises.push(this._buildPromises(
       'info_colonia.json', 'json', coloniaInfo
     ));
@@ -299,6 +310,7 @@ class Reporte extends React.Component{
       );
       compareTables = (
         <ComparativoViviendas
+          ref={'comparativoViviendas'}
           params={this.state.viviendaParams}/>
       );
     } else {
@@ -315,7 +327,7 @@ class Reporte extends React.Component{
       );
       compareTables = (
         <ComparativoColonias
-          ref={'comparativo_colonias'}
+          ref={'comparativoColonias'}
           zoneID={this.state.coloniaID}
           onMouseout={this._onMouseoverColoniaTable.bind(this)}
           onMouseover={this._onMouseoverColoniaTable.bind(this)} />
@@ -323,7 +335,7 @@ class Reporte extends React.Component{
     }
 
     return (
-      <div className={'noselect'}>
+      <div>
         <header>
           <MainNavbar
             type={this.state.type}
@@ -348,10 +360,9 @@ class Reporte extends React.Component{
           {infoBlocks}
         </div>
         <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
-          {loadingFrame}
           {this.state.type === 'Vivienda' ? (
             <div>
-              <h3 className={'section-title'}>{'Información de la colonia Anzures'}</h3>
+              <h3 className={'section-title'}>{'Información de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
               <div className={'line-divider'}></div>
             </div>)
             : ''

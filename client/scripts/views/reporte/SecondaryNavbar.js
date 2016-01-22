@@ -8,12 +8,12 @@ class SecondaryNavbar extends React.Component{
     let props = this.props;
     let image;
 
-    if (props.data.id_tipo_propiedad === 2) {
+    if (props.data.id_tipo_propiedad == 2) {
       image = (<div className={'navbar-icon'}>
         <img width={'15px'} src={IMAGES.house} />
         <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{'Casa'}</p>
       </div>);
-    } else if (props.data.id_tipo_propiedad === 2) {
+    } else if (props.data.id_tipo_propiedad == 4) {
       image = (<div className={'navbar-icon'}>
         <img width={'15px'} src={IMAGES.apartment} />
         <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{'Departamento'}</p>
@@ -24,7 +24,7 @@ class SecondaryNavbar extends React.Component{
       <div className={'secondary-nav'} style={{
         width: this.props.width
       }}>
-        <h3 className={'section-title'}>{'Información de la vivienda'}</h3>
+        <h3 className={'section-title'}>{'Información del inmueble'}</h3>
         <div className={'line-divider'}></div>
         <div className={'row'}>
           <div className={'col-md-4 col-sm-12'}>
