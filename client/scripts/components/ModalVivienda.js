@@ -110,7 +110,7 @@ class ModalVivienda extends React.Component {
 
     return (
       <div className="modal-box">
-        <div className="modal-row modal-icons-row">
+        <div className="modal-row modal-icons-row" style={{padding: '15px 0 10px 0'}}>
           <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.habitaciones}
