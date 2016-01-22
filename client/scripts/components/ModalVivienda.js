@@ -154,7 +154,7 @@ class ModalVivienda extends React.Component {
           <div className="col-md-3 col-sm-3 col-xs-7">
             Tipo de operación
           </div>
-          <div className="col-md-3 col-sm-3 col-xs-5">
+          <div className="col-md-3 col-sm-3 col-xs-5 disabled-modal-dropdown-button">
             <IMDropdownButton reference={"tipoOperacion"}
                               items={["Compra"]}
                               className="modal-dropdown-button"

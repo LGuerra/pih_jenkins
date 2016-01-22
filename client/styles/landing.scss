@@ -69,6 +69,16 @@
   }
 }
 
+.disabled-modal-dropdown-button{
+  .modal-dropdown-button{
+    cursor:no-drop;
+    color: #b5b5b5;
+  }
+  .im-dropdown{
+    display: none;
+  }
+}
+
 .modal-row {
   padding-top: 20px;
   font-size: 13px;
