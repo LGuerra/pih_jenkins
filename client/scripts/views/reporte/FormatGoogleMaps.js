@@ -14,25 +14,25 @@ class FormatGoogleMaps extends React.Component {
     let map = this.refs.map.mapRef;
     if (id) {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? '#353535' : '#c7c7c7';
+        let fillColor = feature.getProperty('current') ? '#353535' : '#9a9a9a';
         if (feature.getProperty('id') === id) {
           return {
             fillColor: '#2a9998',
-            strokeWeight: 2
+            strokeWeight: 1.5
           };
         } else {
           return {
             fillColor: fillColor,
-            strokeWeight: 2
+            strokeWeight: 1.5
           };
         }
       });
     } else {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? '#353535' : '#c7c7c7';
+        let fillColor = feature.getProperty('current') ? '#353535' : '#9a9a9a';
         return {
           fillColor: fillColor,
-          strokeWeight: 2
+          strokeWeight: 1.5
         };
       });
     }
