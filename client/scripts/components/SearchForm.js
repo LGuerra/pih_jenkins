@@ -35,8 +35,8 @@ class SearchForm extends React.Component {
                    placeholder:        "Ingresa una dirección",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
-                   areaConstruida:     '100 m²',
-                   edad:               '5 años',
+                   areaConstruida:     100,
+                   edad:               0,
                    habitaciones:       2,
                    banos:              1,
                    cajones:            1,
@@ -94,8 +94,8 @@ class SearchForm extends React.Component {
                 templateUrl += '&banos=' + this.state.banos;
                 templateUrl += '&estacionamientos=' + this.state.cajones;
                 templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
-                templateUrl += '&edad=' + (this.state.edad).replace(" años","");
-                templateUrl += '&area_construida=' + (this.state.areaConstruida).replace(" m²","");
+                templateUrl += '&edad=' + this.state.edad;
+                templateUrl += '&area_construida=' + this.state.areaConstruida;
                 templateUrl += '&address=' + searchInput;
                 templateUrl += '&tipo_operacion=0';
             /**
