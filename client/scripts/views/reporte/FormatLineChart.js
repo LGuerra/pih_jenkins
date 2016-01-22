@@ -2,6 +2,7 @@ import React from 'react';
 import random from 'lodash/number/random';
 
 import LineChart from '../../components/LineChart';
+import NoChart from '../../components/NoChart';
 
 import Helpers from '../../helpers';
 
@@ -80,25 +81,35 @@ class FormatLineChart extends React.Component {
     let content;
 
     if (this.state.data) {
-      content = (
-        <LineChart
-          id={this.props.id}
-          svgClass={'printable-chart'}
-          showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
-          data={this.state.data}
-          tooltipFormat={this._tooltipLineFormat}
-          yTitleUnit={'Precio promedio'}
-          height={220}
-          xtickFormat={this._xTickFormat}
-          ytickFormat={this._yTickFormat}
-          margin={{
-            left: 70,
-            right: 30,
-            top: 25,
-            bottom: 25
-          }}
-          idContainer={'line-chart'} />
-      )
+      if (this.state.data[0].data[0]) {
+        content = (
+          <LineChart
+            id={this.props.id}
+            svgClass={'printable-chart'}
+            showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
+            data={this.state.data}
+            tooltipFormat={this._tooltipLineFormat}
+            yTitleUnit={'Precio promedio'}
+            height={220}
+            xtickFormat={this._xTickFormat}
+            ytickFormat={this._yTickFormat}
+            margin={{
+              left: 70,
+              right: 30,
+              top: 25,
+              bottom: 25
+            }}
+            idContainer={'line-chart'} />
+        )
+      } else {
+        content = (
+          <NoChart
+            message={'No hay datos disponibles'}
+            height={239}
+            width={'100%'}
+            id={this.props.id}
+            specificClass={'printable-chart'}/>)
+      }
     } else {
       content = (<div></div>);
     }

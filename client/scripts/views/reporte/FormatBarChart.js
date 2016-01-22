@@ -2,6 +2,7 @@ import React from 'react';
 import random from 'lodash/number/random';
 
 import BarChart from '../../components/BarChart';
+import NoChart from '../../components/NoChart';
 
 import Helpers from '../../helpers';
 
@@ -47,22 +48,27 @@ class FormatBarChart extends React.Component {
     return (html);
   }
   _formatData(data) {
-    var formattedData = data.price_distribution.map((element, index) => {
-      let label;
-      if (element.lim_inf === 'limite_inf') {
-        label = '<' + Helpers.formatAsNumber(element.lim_sup / 1000);
-      } else if (element.lim_sup === 'limite_sup') {
-        label = '>' + Helpers.formatAsNumber(element.lim_inf / 1000);
-      } else {
-        label = Helpers.formatAsNumber(element.lim_inf / 1000) + ' a ' + Helpers.formatAsNumber(element.lim_sup / 1000);
-      }
-      return({
-        lim_inf: element.lim_inf,
-        lim_sup: element.lim_sup,
-        label: label,
-        value: element.value
-      })
-    });
+    let formattedData;
+    if (data.price_distribution) {
+      formattedData= data.price_distribution.map((element, index) => {
+        let label;
+        if (element.lim_inf === 'limite_inf') {
+          label = '<' + Helpers.formatAsNumber(element.lim_sup / 1000);
+        } else if (element.lim_sup === 'limite_sup') {
+          label = '>' + Helpers.formatAsNumber(element.lim_inf / 1000);
+        } else {
+          label = Helpers.formatAsNumber(element.lim_inf / 1000) + ' a ' + Helpers.formatAsNumber(element.lim_sup / 1000);
+        }
+        return({
+          lim_inf: element.lim_inf,
+          lim_sup: element.lim_sup,
+          label: label,
+          value: element.value
+        })
+      });
+    } else {
+      formattedData = [];
+    }
 
     return (formattedData);
   }
@@ -82,23 +88,33 @@ class FormatBarChart extends React.Component {
     let content;
 
     if (this.state.data) {
-      content = (<BarChart
-        id={this.props.id}
-        svgClass={'printable-chart'}
-        showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
-        data={this.state.data}
-        tooltipFormat={this._tooltipBarFormat}
-        color={'#35C0BE'}
-        hoverColor={'#2a9998'}
-        height={239}
-        xTitleUnit={'Miles de pesos'}
-        margin={{
-          left: 40,
-          right: 35,
-          top: 25,
-          bottom: 25
-        }}
-        idContainer={'bar-chart'} /> );
+      if (this.state.data[0]) {
+        content = (<BarChart
+          id={this.props.id}
+          svgClass={'printable-chart'}
+          showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
+          data={this.state.data}
+          tooltipFormat={this._tooltipBarFormat}
+          color={'#35C0BE'}
+          hoverColor={'#2a9998'}
+          height={239}
+          xTitleUnit={'Miles de pesos'}
+          margin={{
+            left: 40,
+            right: 35,
+            top: 40,
+            bottom: 35
+          }}
+          idContainer={'bar-chart'} /> );
+      } else {
+        content = (
+          <NoChart
+            message={'No hay datos disponibles'}
+            height={239}
+            width={'100%'}
+            id={this.props.id}
+            specificClass={'printable-chart'}/>);
+      }
     } else {
       content = (<div></div>);
     }

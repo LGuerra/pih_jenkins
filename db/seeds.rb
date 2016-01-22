@@ -7,8 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'set'
 
-admin_user = AdminUser.create!(email: "admin@example.com", password: "password",
-                               password_confirmation: "password")
+unless AdminUser.find_by_email("admin@example.com")
+  admin_user = AdminUser.create!(email: "admin@example.com", password: "password",
+                                 password_confirmation: "password")
+end
 
 
 group_names     = Set.new Group.all.map(&:name)
@@ -19,8 +21,10 @@ missing_groups.each do |group_name|
   Group.create!(name: group_name)
 end
 
-testuser = User.new(email: "testuser@intelimetrica.com", password: "password",
-                    password_confirmation: "password", area: "QA", puesto: "test",
-                    name: "John", last_name: "Doe", phone: "123123123")
-testuser.group_ids = [1,2]
-testuser.save
+unless User.find_by_email("testuser@intelimetrica.com")
+  testuser = User.new(email: "testuser@intelimetrica.com", password: "password",
+                      password_confirmation: "password", area: "QA", puesto: "test",
+                      name: "John", last_name: "Doe", phone: "123123123")
+  testuser.group_ids = [1,2]
+  testuser.save
+end

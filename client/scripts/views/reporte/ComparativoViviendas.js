@@ -10,7 +10,6 @@ class ComparativoViviendas extends React.Component {
     this.state = {};
   }
   _formatData(data) {
-    console.log(data);
     let formattedData = data.similar_houses.map((element, index) => {
       return ({
         'Precio por m²': Helpers.formatAsPrice(element.precio / element.m2) || '-',

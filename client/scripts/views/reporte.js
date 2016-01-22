@@ -179,7 +179,6 @@ class Reporte extends React.Component{
       'distribucion_precio.json', 'json', distribucionPrecio
     ));
 
-
     $.when.apply($, allPromises)
       .then(() => {
         this._generateReport(url);
@@ -187,7 +186,6 @@ class Reporte extends React.Component{
       .fail((error, msg) => {
         console.log('FAIL', error, msg);
       });
-
   }
   _downloadReport() {
     var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
@@ -247,8 +245,8 @@ class Reporte extends React.Component{
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
-    if (this.refs.comparativo_colonias) {
-      this.refs.comparativo_colonias.highlightRow(data);
+    if (this.refs.comparativoColonias) {
+      this.refs.comparativoColonias.highlightRow(data);
     }
   }
   _onGetColoniaInfo(info) {
@@ -406,6 +404,12 @@ class Reporte extends React.Component{
         <div className={'row'}>
           <div className={'col-sm-12'}>
             <FormatGoogleMaps
+              viewType={this.state.type}
+              viviendaInfo={this.state.viviendaParams ?
+                {
+                  lat: this.state.viviendaParams.latitud,
+                  lng: this.state.viviendaParams.longitud
+                } : {}}
               zoneID={this.state.coloniaID}
               onMouseoverFeature={this._onMouseoverFeature.bind(this)}
               ref={'format_googlemap'}/>

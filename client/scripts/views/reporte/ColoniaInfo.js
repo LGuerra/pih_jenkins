@@ -12,6 +12,7 @@ class ColoniaInfo extends React.Component {
     let avergageOfferDefer = $.Deferred();
     let averageM2Defer = $.Deferred();
     let coloniaInfoDef = $.Deferred();
+    let suburbAppreciationDef = $.Deferred();
 
     apigClient.suburbAverageOfferGet({
       id_col: this.props.zoneID
@@ -29,14 +30,21 @@ class ColoniaInfo extends React.Component {
       id_col: this.props.zoneID
     }, {}, {}).then((suburbInfoR) => {
       coloniaInfoDef.resolve(suburbInfoR.data);
-    })
+    });
 
-    $.when(avergageOfferDefer.promise(), averageM2Defer.promise(), coloniaInfoDef.promise())
-      .done((avergageOfferR, averageM2R, coloniaInfoR) => {
+    apigClient.suburbAppreciationGet({
+      id_col: this.props.zoneID
+    }, {}, {}).then((suburbAppreciationR) => {
+      suburbAppreciationDef.resolve(suburbAppreciationR.data);
+    });
+
+    $.when(avergageOfferDefer.promise(), averageM2Defer.promise(), coloniaInfoDef.promise(), suburbAppreciationDef.promise())
+      .done((avergageOfferR, averageM2R, coloniaInfoR, suburbAppreciationR) => {
         this.setState({
           data: {
             averageOffer: avergageOfferR.avg,
             averageM2: averageM2R.avg,
+            apreciacion: suburbAppreciationR ? suburbAppreciationR.apreciacion_anualizada : null,
             coloniaInfo: {
               nombre: coloniaInfoR.nombre,
               SHF: coloniaInfoR.precio_m2_shf
@@ -54,6 +62,20 @@ class ColoniaInfo extends React.Component {
       let colName = this.props.viewType === 'Vivienda' ?
         (<h4 className={'subsection-title'}>{Helpers.toTitleCase(this.props.coloniaName)}</h4>)
         : '';
+      let apreciacion;
+      let averageOffer  = this.state.data.averageOffer ? Helpers.formatAsPrice(this.state.data.averageOffer) : 'No disponible';
+      let averageM2     = this.state.data.averageM2 ? Helpers.formatAsPrice(this.state.data.averageM2) : 'No disponible';
+      let SHF           = this.state.data.coloniaInfo.SHF ? Helpers.formatAsPrice(this.state.data.coloniaInfo.SHF) : 'No disponible';
+
+      if (typeof(this.state.data.apreciacion) == 'number') {
+        apreciacion = (this.state.data.apreciacion * 100).toFixed(1) + '%';
+        apreciacion = this.state.data.apreciacion > 0
+          ? '+' + apreciacion
+          : '-' + apreciacion;
+      } else {
+        apreciacion = 'No disponible';
+      }
+
       content = (<div className={'oferta-disponible'}>
         {colName}
         <div style={{
@@ -63,22 +85,22 @@ class ColoniaInfo extends React.Component {
           alignItems: 'center'
         }}>
           <div style={{textAlign: 'center'}}>
-            <p className={'green-price'}>{Helpers.formatAsPrice(this.state.data.averageOffer)}</p>
+            <p className={'green-price'}>{averageOffer}</p>
             <p className={'subtitle'}>Precio promedio total enero 2016</p>
           </div>
           <div style={{textAlign: 'center'}}>
-            <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.averageM2)}</p>
+            <p className={'secondary-price'}>{averageM2}</p>
             <p className={'subtitle'}>Precio promedio por m²</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>
-              {this.state.data.coloniaInfo.SHF ? Helpers.formatAsPrice(this.state.data.coloniaInfo.SHF) : 'No disponible'}
+              {SHF}
             </p>
             <p className={'subtitle'}>Precio SHF por m²</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>
-              {'+ 5.3%'}
+              {apreciacion}
             </p>
             <p className={'subtitle'}>Apreciación anual</p>
           </div>

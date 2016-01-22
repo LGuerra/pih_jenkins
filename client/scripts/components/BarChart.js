@@ -25,7 +25,7 @@ class BarChart extends React.Component {
       width: props.width || $('#' + props.idContainer).outerWidth()
     };
 
-    this.conf.tooltip = d3.select('body')
+    this.conf.tooltip = d3.select('#' + this.props.idContainer)
       .append('div')
       .attr('class', 'tooltip')
       .style('display', 'none');
@@ -47,7 +47,6 @@ class BarChart extends React.Component {
         .style('font', '10px sans-serif')
         .text(props.xTitleUnit);
     }
-
     this._appendAxis();
     this._appendBars();
   }
@@ -63,8 +62,8 @@ class BarChart extends React.Component {
       .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.4);
 
     this.conf.yScale = d3.scale.linear()
-      .domain([(minMaxY[0] - minMaxY[0] * 0.1), minMaxY[1]])
-      .range([this.conf.height - props.margin.top, props.margin.bottom]);
+      .domain([(minMaxY[0] - minMaxY[0] * 0.1), (minMaxY[1] + (minMaxY[1] * 0.1))])
+      .range([this.conf.height - props.margin.bottom, props.margin.top]);
 
     //Define axis configuration
     this.conf.xAxis = d3.svg.axis()
@@ -77,14 +76,14 @@ class BarChart extends React.Component {
       .tickFormat(function(d) {
         return (d * 100).toFixed(0) + '%';
       })
-      .ticks(5)
+      .ticks(7)
       .orient('left');
 
     //Append graphic container
     this.conf.gContent = this.conf.svgContainer
       .append('g')
       .attr('id', 'g-content')
-      .attr('transform', 'translate(' + (props.margin.left) + ', -10)');
+      .attr('transform', 'translate(' + (props.margin.left) + ', 0)');
 
     //Append axis to graphic content
     this.conf.xaxisLine = this.conf.gContent.append('g')
@@ -156,7 +155,7 @@ class BarChart extends React.Component {
       })
       .style('cursor', 'pointer')
       .attr('y',(d) => {
-        return _this.conf.yScale(d.value);
+        return (_this.conf.yScale(d.value));
       })
       .attr('height',(d) => {
         return (_this.conf.height - _this.conf.yScale(d.value) - _this.props.margin.bottom);
@@ -170,17 +169,30 @@ class BarChart extends React.Component {
         let tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         let tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        let posx = (d3.mouse(this)[0] > ((_this.conf.width) / 2))
-          ? d3.event.pageX - tooltipWidth - 10
-          : d3.event.pageX + 10;
-
-        let posy = (d3.mouse(this)[1] > ((_this.conf.height) / 2))
-          ? d3.event.pageY - tooltipHeigth - 10
-          : d3.event.pageY + 10;
-
+        let posx = _this.conf.xScale(d.label) + (tooltipWidth / 3) - 3;
+        let posy = _this.props.margin.top + 10;
         _this.conf.tooltip
           .style('left', (posx) + 'px')
           .style('top',  (posy) + 'px');
+
+
+        _this.conf.gContent.append('line')
+          .attr('x1', (_this.conf.xScale(d.label)) + (_this.conf.xScale.rangeBand() / 2))
+          .attr('y1', _this.props.margin.top)
+          .attr('x2', (_this.conf.xScale(d.label)) + (_this.conf.xScale.rangeBand() / 2))
+          .attr('y2', _this.props.margin.top)
+          .attr('class', 'mark-line')
+          .style('stroke', '#c3c3c3')
+          .style('fill', 'none')
+          .style('stroke-width', 2)
+          .style('stroke-dasharray', ('3, 3'))
+          .style('opacity', 0)
+          .transition()
+          .duration(375)
+          .ease('linear')
+          .style('opacity', 1)
+          .attr('y2', _this.conf.yScale(d.value));
+
 
         d3.select(this)
           .transition()
@@ -190,6 +202,10 @@ class BarChart extends React.Component {
       .on('mouseout', function(d, i) {
         _this.conf.tooltip
           .style('display', 'none');
+
+        _this.conf.gContent
+          .selectAll('.mark-line')
+          .remove();
 
         d3.select(this)
           .transition()
