@@ -40,7 +40,7 @@ class MiniSearchForm extends React.Component {
                    placeholder:        (this.props.searchType === "Vivienda") ? "Ingresa una dirección" : "Ingresa una Colonia",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
-                   areaConstruida:     '100m²',
+                   areaConstruida:     '100 m²',
                    edad:               '5 años',
                    habitaciones:       2,
                    banos:              1,
@@ -75,13 +75,58 @@ class MiniSearchForm extends React.Component {
   }
 
   _requestVivienda () {
-    let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
-      .replace(':colonia:', this.refs.searchInput.state.selectedID)
-      .replace(':reportType:', this.state.searchType);
+//Desde aqui
+    let searchInput = this.refs.searchInput.getValue();
+    let tipoVivienda = (this.state.vivienda === "Departamento") ? 4 : 2;
+    let templateUrl = ('reporte?colonia=:colonia:');
+       templateUrl += '&tipo=Vivienda';
+       templateUrl += '&longitud=:longitud:';
+       templateUrl += '&latitud=:latitud:';
+       templateUrl += '&recamaras=' + this.state.habitaciones;
+       templateUrl += '&banos=' + this.state.banos;
+       templateUrl += '&estacionamientos=' + this.state.cajones;
+       templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
+       templateUrl += '&edad=' + (this.state.edad).replace(" años","");
+       templateUrl += '&area_construida=' + (this.state.areaConstruida).replace(" m²","");
+       templateUrl += '&address=' + searchInput;
+       templateUrl += '&tipo_operacion=0';
+    /**
+    * Use Google's API to get Latitude and Longitude via a PlacesService Request
+    */
+    let request = {placeId: this.refs.searchInput.state.selectedID};
+    let map = new google.maps.Map(document.createElement('div'));
+    let service = new google.maps.places.PlacesService(map);
 
-    window.open(templateUrl, '_self');
-    this.setState({inputClass: ""});
-    console.log("_requestVivienda", this.refs.searchInput.state.selectedID);
+    service.getDetails(request, (place, status) => {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        let latitude  = place.geometry.location.G;
+        let longitude = place.geometry.location.K;
+        let apigClient = apigClientFactory.newClient();
+        apigClient.suburbTrustedGet({
+          lat: latitude,
+          lng: longitude
+        }, {}, {})
+        .then((suburbFromCoordsR) => {
+          if (suburbFromCoordsR.data.trusted) {
+            templateUrl = templateUrl.replace(':longitud:', longitude)
+            .replace(':latitud:',  latitude)
+            .replace(':colonia:', suburbFromCoordsR.data.id);
+            window.open(templateUrl, '_self');
+          } else {
+            let coloniaArr = searchInput.split(",");
+            let colonia = (coloniaArr.length > 3) ? coloniaArr[1] : coloniaArr[0];
+            $('[data-toggle="popover"]').popover({content: `Lo sentimos, estamos trabajando por tener valuaciones en ${colonia}`, placement: 'left'});
+            $('[data-toggle="popover"]').popover('show');
+            setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 3000);
+          }
+          console.log("sububTrustedGet",suburbFromCoordsR);
+        });
+      }
+    });
+    /**
+    *              * Send request to Reporte's view inside callback
+    *                           */
+//Hasta aqui
   }
 
   _sendRequest () {
@@ -119,7 +164,6 @@ class MiniSearchForm extends React.Component {
                                       this.state.areaConstruida,
                                       this.state.edad
                                       ));
-            console.log("Open Modal");
           } else {
             this.setState({searchInput: searchInput, inputClass: ""});
             let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
@@ -127,8 +171,6 @@ class MiniSearchForm extends React.Component {
               .replace(':reportType:', this.state.searchType);
 
             window.open(templateUrl, '_self');
-            this.setState({inputClass: ""});
-            console.log("Send request with parameter...", this.refs.searchInput.getValue());
           }
         }
       }
@@ -230,14 +272,14 @@ class MiniSearchForm extends React.Component {
         // Create service to use googleapi autocompletion
         let service = new google.maps.places.AutocompleteService();
         // Build Request
-        let request = { input: searchInput, types: ['geocode'] , componentRestrictions: {country: 'mx'}};
+        let request = { input: searchInput, types: ['address'] , componentRestrictions: {country: 'mx'}};
         // Execute service and print result in callback
         service.getPlacePredictions(request, displaySuggestions);
       } else {
         ddmShown.modal = false;
         let arr    = searchInput.split(" ");
         let prefix = arr.pop();
-        let b      = arr.map( e => "'"+e+"'").join(", ");
+        let b      = arr.map( e => "'"+e+"'").join(" ");
         API.landing({"q": "(or(and"+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
                      "return": "name",
                      "q.parser": "structured",

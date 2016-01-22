@@ -111,15 +111,26 @@ class SearchForm extends React.Component {
 
                 let apigClient = apigClientFactory.newClient();
 
-                apigClient.suburbFromCoordsGet({
+                apigClient.suburbTrustedGet({
                   lat: latitude,
                   lng: longitude
                 }, {}, {})
                 .then((suburbFromCoordsR) => {
-                  templateUrl = templateUrl.replace(':longitud:', longitude)
-                             .replace(':latitud:',  latitude)
-                             .replace(':colonia:', suburbFromCoordsR.data[0]);
-                  window.open(templateUrl, '_self');
+                  if (suburbFromCoordsR.data.trusted) {
+                    templateUrl = templateUrl.replace(':longitud:', longitude)
+                               .replace(':latitud:',  latitude)
+                               .replace(':colonia:', suburbFromCoordsR.data.id);
+                    window.open(templateUrl, '_self');
+                  } else {
+                    let coloniaArr = searchInput.split(",");
+                    let colonia = (coloniaArr.length > 2) ? coloniaArr[1] : coloniaArr[0];
+                    console.log("'la colonia'", colonia);
+                    $('[data-toggle="popover"]').popover({content: `Lo sentimos, estamos trabajando por tener valuaciones en ${colonia}`, placement: 'top'});
+                    $('[data-toggle="popover"]').popover('show');
+                    setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 3000);
+
+                  }
+                  console.log("sububTrustedGet",suburbFromCoordsR);
                 });
               }
             });
@@ -133,7 +144,6 @@ class SearchForm extends React.Component {
               .replace(':reportType:', this.state.searchType);
 
             window.open(templateUrl, '_self');
-            this.setState({inputClass: ""});
           }
         }
       }
@@ -224,9 +234,9 @@ class SearchForm extends React.Component {
         // Callback to set suggestions into state. Will recieve suggestions in prediction variable
         let displaySuggestions = (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
-            console.log("predictions", predictions);
             suggests = parseSuggestionsGoogle(predictions);
-            console.log("suggests",suggests);
+
+            console.log(predictions, suggests);
 
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
 
@@ -238,15 +248,15 @@ class SearchForm extends React.Component {
         // Create service to use googleapi autocompletion
         let service = new google.maps.places.AutocompleteService();
         // Build Request
-        let request = { input: searchInput, types: ['geocode'] , componentRestrictions: {country: 'mx'}};
+        let request = { input: searchInput, types: ['address'] , componentRestrictions: {country: 'mx'}};
         // Execute service and print result in callback
         service.getPlacePredictions(request, displaySuggestions);
       } else {
         ddmShown.modal = false;
         let arr    = searchInput.split(" ");
         let prefix = arr.pop();
-        let b      = arr.map( e => "'"+e+"'").join(", ");
-        API.landing({"q": "(or(and"+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
+        let b      = arr.map( e => "'"+e+"'").join(" ");
+        API.landing({"q": "(or(and "+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
                      "return": "name",
                      "q.parser": "structured",
                      "highlight.name": "{}"})
