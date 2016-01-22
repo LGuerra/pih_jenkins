@@ -24,11 +24,13 @@ class MiniModalVivienda extends React.Component {
     let btn_bar;
 
     if (this.state.myVariable !== "Ingresa la dirección de una vivienda") {
-      btn_bar = ( <div className="row">
-                    <p className="col-md-10 text-right" style={{display: 'inline-block', color: '#35C0BE'}}>
-                      {this.state.myVariable}
-                    </p>
-                    <div className="col-md-2" style={{display: 'inline-block'}}>
+      btn_bar = ( <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '5px'}}>
+                    <div>
+                      <p className="text-right" style={{fontSize: '12px', margin: '0 15px', fontWeight: 'bold'}}>
+                        {this.state.myVariable}
+                      </p>
+                    </div>
+                    <div>
                       <button className="search-button-modal" onClick={this._sendRequest}>
                         <img width="20px" height="20px" src={IMAGES.lupa}></img>
                       </button>
@@ -51,7 +53,8 @@ class MiniModalVivienda extends React.Component {
                                        vivienda       ={this.props.vivienda}
                                        operacion      ={this.props.operacion}
                                        areaConstruida ={this.props.areaConstruida}
-                                       edad           ={this.props.edad} />;
+                                       edad           ={this.props.edad} 
+                                       className      ={'mini-modal-box'}/>;
 
     return (
       <Modal ref='modal' top={150} >

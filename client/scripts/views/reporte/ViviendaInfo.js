@@ -73,7 +73,7 @@ class ViviendaInfo extends React.Component {
 
       content = (
       <div className={'oferta-disponible'}>
-        <h4 className={'subsection-title'} style={{marginLeft: '12px'}}>Vivienda valuada</h4>
+        <h4 className={'subsection-title'} style={{marginLeft: '0px'}}>Vivienda valuada</h4>
         <div style={{
           marginTop: '20px',
           display: 'flex',
