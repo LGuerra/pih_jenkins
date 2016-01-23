@@ -188,7 +188,7 @@ class Reporte extends React.Component{
       });
   }
   _downloadReport() {
-    var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+    var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1;

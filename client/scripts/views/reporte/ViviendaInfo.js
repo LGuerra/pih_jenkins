@@ -30,11 +30,12 @@ class ViviendaInfo extends React.Component {
 
     apigClient.modelValuationPost({}, params, {})
       .then((modelValuationR) => {
+        console.log(modelValuationR);
         this.setState({
           data: {
-            confianza: modelValuationR.data.confianza,
-            precioM2: modelValuationR.data.valuacion / params.area_construida,
-            valuacion: modelValuationR.data.valuacion
+            confianza: modelValuationR.data.confianza || 1,
+            precioM2: modelValuationR.data.valuacion ? (modelValuationR.data.valuacion / params.area_construida) : 0,
+            valuacion: modelValuationR.data.valuacion || 0
           }
         }, () => {
           this.props.onGetViviendaInfo(_.merge(this.state.data, this.props.params));
