@@ -16,7 +16,7 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV['RDS_DATABASE'] || 'pih_banca_production' %>
+  database: <%= ENV['RDS_DATABASE'] || 'postgres' %>
   pool: 10
   username: <%= ENV['RDS_USERNAME'] || 'postgres' %>
   password: <%= ENV['RDS_PASSWORD'] || '' %>
