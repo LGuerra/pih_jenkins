@@ -8,6 +8,7 @@
 
   <% if Rails.env.production? %>
     <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/main.min.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
   <% else %>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
   <% end %>
