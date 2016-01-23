@@ -40,8 +40,8 @@ class MiniSearchForm extends React.Component {
                    placeholder:        (this.props.searchType === "Vivienda") ? "Ingresa una dirección" : "Ingresa una Colonia",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
-                   areaConstruida:     '100 m²',
-                   edad:               '5 años',
+                   areaConstruida:     100,
+                   edad:               0,
                    habitaciones:       2,
                    banos:              1,
                    cajones:            1,
@@ -86,8 +86,8 @@ class MiniSearchForm extends React.Component {
        templateUrl += '&banos=' + this.state.banos;
        templateUrl += '&estacionamientos=' + this.state.cajones;
        templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
-       templateUrl += '&edad=' + (this.state.edad).replace(" años","");
-       templateUrl += '&area_construida=' + (this.state.areaConstruida).replace(" m²","");
+       templateUrl += '&edad=' + this.state.edad;
+       templateUrl += '&area_construida=' + this.state.areaConstruida;
        templateUrl += '&address=' + searchInput;
        templateUrl += '&tipo_operacion=0';
     /**
@@ -178,7 +178,6 @@ class MiniSearchForm extends React.Component {
   }
 
   _modalChange(modalData) {
-    console.log("_modalChange");
     this.setState(modalData);
   }
 

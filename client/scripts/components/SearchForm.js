@@ -35,8 +35,8 @@ class SearchForm extends React.Component {
                    placeholder:        "Ingresa una dirección",
                    vivienda:           'Departamento',
                    operacion:          'Compra',
-                   areaConstruida:     '100 m²',
-                   edad:               '5 años',
+                   areaConstruida:     100,
+                   edad:               0,
                    habitaciones:       2,
                    banos:              1,
                    cajones:            1,
@@ -55,10 +55,18 @@ class SearchForm extends React.Component {
     this._stopPropagation       = this._stopPropagation.bind(this);
     this._focusOnInput          = this._focusOnInput.bind(this);
     this._modalDD               = this._modalDD.bind(this);
+    this._handleClick           = this._handleClick.bind(this);
   }
 
   _closeAllddModalShown () {
     return {modal: false, ddSearchType: false, ddInput: false};
+  }
+
+  _handleClick () {
+    if (!this.state.ddmodalShown.ddInput)
+      this._sendRequest(this.refs.searchInput.state.selectedID, "Go");
+    else
+      this._sendRequest(this.refs.searchInput.state.selectedID, -1);
   }
 
   _focusOnInput () {
@@ -66,8 +74,10 @@ class SearchForm extends React.Component {
     //this.refs.searchInput.focus();
   }
 
-  _sendRequest () {
+  _sendRequest (selectedID, lastKeyPressed) {
     let searchInput = this.refs.searchInput.getValue();
+    console.log("---> lastKeyPressed: ", lastKeyPressed);
+
     if (!searchInput) {
       //this.setState({inputClass: "input-error"});
       let contentError = (this.state.searchType === 'Vivienda') ? "Ingresa una dirección" : "Ingresa una Colonia";
@@ -78,7 +88,8 @@ class SearchForm extends React.Component {
       console.log("Request not sent");
     } else {
       if (searchInput.length >= 3) {
-        if (this.refs.searchInput.state.selectedID === -1) {
+        //if (this.refs.searchInput.state.selectedID === -1) {
+        if (selectedID === -1) {
           $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: 'top'});
           $('[data-toggle="popover"]').popover('show');
           setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
@@ -94,14 +105,14 @@ class SearchForm extends React.Component {
                 templateUrl += '&banos=' + this.state.banos;
                 templateUrl += '&estacionamientos=' + this.state.cajones;
                 templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
-                templateUrl += '&edad=' + (this.state.edad).replace(" años","");
-                templateUrl += '&area_construida=' + (this.state.areaConstruida).replace(" m²","");
+                templateUrl += '&edad=' + this.state.edad;
+                templateUrl += '&area_construida=' + this.state.areaConstruida;
                 templateUrl += '&address=' + searchInput;
                 templateUrl += '&tipo_operacion=0';
             /**
              * Use Google's API to get Latitude and Longitude via a PlacesService Request
              */
-            let request = {placeId: this.refs.searchInput.state.selectedID};
+            let request = {placeId: selectedID};
             let map = new google.maps.Map(document.createElement('div'));
             let service = new google.maps.places.PlacesService(map);
             service.getDetails(request, (place, status) => {
@@ -120,7 +131,12 @@ class SearchForm extends React.Component {
                     templateUrl = templateUrl.replace(':longitud:', longitude)
                                .replace(':latitud:',  latitude)
                                .replace(':colonia:', suburbFromCoordsR.data.id);
-                    window.open(templateUrl, '_self');
+                    if (lastKeyPressed === "Go" ) window.open(templateUrl, '_self');
+                    if (lastKeyPressed === 13) {
+                      let ddShown = this._closeAllddModalShown();
+                      ddShown.modal = true;
+                      this.setState({ddmodalShown: ddShown});
+                    }
                   } else {
                     let coloniaArr = searchInput.split(",");
                     let colonia = (coloniaArr.length > 2) ? coloniaArr[1] : coloniaArr[0];
@@ -140,7 +156,7 @@ class SearchForm extends React.Component {
 
           } else {
             let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
-              .replace(':colonia:', this.refs.searchInput.state.selectedID)
+              .replace(':colonia:', selectedID)
               .replace(':reportType:', this.state.searchType);
 
             window.open(templateUrl, '_self');
@@ -230,17 +246,11 @@ class SearchForm extends React.Component {
       ddmShown.modal   = true;
 
       if (this.state.searchType === "Vivienda") {
-
         // Callback to set suggestions into state. Will recieve suggestions in prediction variable
         let displaySuggestions = (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             suggests = parseSuggestionsGoogle(predictions);
-
-            console.log(predictions, suggests);
-
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-
-            //console.log("SEARCH IN GOOGLE");
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""});
           }
         };
@@ -262,10 +272,8 @@ class SearchForm extends React.Component {
                      "highlight.name": "{}"})
           .done(function(response) {
             //Desirable - IF response.isEmpty tell the user there is no data
-            //console.log(response.hits.hit);
             suggests = parseSuggestions(response.hits.hit);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-            //console.log(suggests);
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""});
           });
       }
@@ -340,7 +348,7 @@ class SearchForm extends React.Component {
                                  changeHandler={this._inputChangeHandler}/>
               </div>
               <div className={'sarch-button'}>
-                <button className="search-button" onClick={this._sendRequest}>
+                <button className="search-button" onClick={this._handleClick}>
                   <img src={IMAGES.lupa}></img>
                 </button>
               </div>
