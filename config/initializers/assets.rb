@@ -11,5 +11,5 @@ Rails.application.config.assets.version = '1.0'
 if ENV['RAILS_ENV'] == 'production' or ENV['RAILS_ENV'] == 'staging'
   Rails.application.config.assets.precompile += %w( production.js )
 else
-  Rails.application.config.assets.precompile += %w( application.js application.css )
+  Rails.application.config.assets.precompile += %w( development.js development.css )
 end
