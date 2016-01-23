@@ -69,6 +69,9 @@ class BarChart extends React.Component {
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
       .ticks(1)
+      .tickFormat(function(d) {
+        return (d + ' mil');
+      })
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
@@ -169,12 +172,11 @@ class BarChart extends React.Component {
         let tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         let tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        let posx = _this.conf.xScale(d.label) + (tooltipWidth / 3) - 3;
+        let posx = _this.conf.xScale(d.label) + _this.props.margin.left;
         let posy = _this.props.margin.top + 10;
         _this.conf.tooltip
           .style('left', (posx) + 'px')
           .style('top',  (posy) + 'px');
-
 
         _this.conf.gContent.append('line')
           .attr('x1', (_this.conf.xScale(d.label)) + (_this.conf.xScale.rangeBand() / 2))

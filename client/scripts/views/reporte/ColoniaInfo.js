@@ -68,10 +68,14 @@ class ColoniaInfo extends React.Component {
       let SHF           = this.state.data.coloniaInfo.SHF ? Helpers.formatAsPrice(this.state.data.coloniaInfo.SHF) : 'No disponible';
 
       if (typeof(this.state.data.apreciacion) == 'number') {
-        apreciacion = (this.state.data.apreciacion * 100).toFixed(1) + '%';
-        apreciacion = this.state.data.apreciacion > 0
-          ? '+' + apreciacion
-          : '-' + apreciacion;
+        if (this.state.data.apreciacion * 100 > 20) {
+          apreciacion = 'No disponible'
+        } else {
+          apreciacion = (this.state.data.apreciacion * 100).toFixed(1) + '%';
+          apreciacion = this.state.data.apreciacion > 0
+            ? '+' + apreciacion
+            : apreciacion;
+        }
       } else {
         apreciacion = 'No disponible';
       }
@@ -86,11 +90,11 @@ class ColoniaInfo extends React.Component {
         }}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>{averageOffer}</p>
-            <p className={'subtitle'}>Precio promedio total enero 2016</p>
+            <p className={'subtitle'}>Precio promedio total*</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>{averageM2}</p>
-            <p className={'subtitle'}>Precio promedio por m²</p>
+            <p className={'subtitle'}>Precio promedio por m²*</p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>

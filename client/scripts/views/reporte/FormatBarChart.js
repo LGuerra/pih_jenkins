@@ -22,7 +22,9 @@ class FormatBarChart extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      isAvailable: true
+    };
   }
   _tooltipBarFormat(d, i) {
     let title
@@ -72,6 +74,13 @@ class FormatBarChart extends React.Component {
 
     return (formattedData);
   }
+  _checkoutAvailability(apreciacion) {
+    if (apreciacion > 20 || apreciacion == null) {
+      this.setState({
+        isAvailable: false
+      });
+    }
+  }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
@@ -88,7 +97,7 @@ class FormatBarChart extends React.Component {
     let content;
 
     if (this.state.data) {
-      if (this.state.data[0]) {
+      if (this.state.data[0] && this.state.isAvailable) {
         content = (<BarChart
           id={this.props.id}
           svgClass={'printable-chart'}

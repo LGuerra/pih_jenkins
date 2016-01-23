@@ -128,7 +128,7 @@ class Reporte extends React.Component{
   _generateReport(url) {
     $.post(url)
       .done(() => {
-        this._askForPDF(1000, 5, function() {
+        this._askForPDF(5000, 10, function() {
           return ($.get(url));
         })
         .then(() => {
@@ -201,7 +201,7 @@ class Reporte extends React.Component{
 
     if (this.state.type === 'Vivienda') {
       let randomText = Math.random().toString(36).substr(2, 10);
-      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + randomText + '/' + date;
+      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '-' + randomText + '/' + date;
     } else {
       this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '/' + date;
     }
@@ -250,6 +250,9 @@ class Reporte extends React.Component{
     }
   }
   _onGetColoniaInfo(info) {
+    this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
+    this.refs.distribucionPrecio._checkoutAvailability(info.apreciacion);
+
     this.setState({
       coloniaInfo: info
     });
@@ -290,7 +293,7 @@ class Reporte extends React.Component{
       );
       infoBlocks = (
         <div className={'row block-container'}>
-          <div style={borderRight} className={'col-sm-4'} style={{paddingLeft: '6px'}}>
+          <div style={_.merge(borderRight, {paddingLeft: '6px'})} className={'col-sm-4'}>
             <ViviendaInfo
               ref={'viviendaInfo'}
               onGetViviendaInfo={this._onGetViviendaInfo}
@@ -374,24 +377,25 @@ class Reporte extends React.Component{
                 zoneID={this.state.coloniaID} />
             </div>
             <div>
-              <h4 className={'subsection-title'}>Distribución de Tipología</h4>
+              <h4 className={'subsection-title'}>Distribución de Tipología*</h4>
               <FormatStackedBarChart
                 id={'distribucion_tipologia'}
                 zoneID={this.state.coloniaID}/>
             </div>
             <div className={'row block-container'}>
-              <div style={borderRight} className={'col-sm-6'} style={{paddingLeft: '0px'}}>
-                <h4 className={'subsection-title'}>Precio Histórico por m² Enero 2010 - Enero 2015</h4>
+              <div style={_.merge(borderRight, {paddingLeft: '0px'})} className={'col-sm-6'}>
+                <h4 className={'subsection-title'}>Precio Histórico por m²</h4>
                 <div className={'row'}>
                   <div className={'col-sm-12'} style={{marginTop: '15px'}}>
                     <FormatLineChart
+                      ref={'precioHistorico'}
                       id={'precio_historico'}
                       zoneID={this.state.coloniaID} />
                   </div>
                 </div>
               </div>
               <div className={'col-sm-6'}>
-                <h4 className={'subsection-title'}>Distribución de Precio por m² - Enero 2016</h4>
+                <h4 className={'subsection-title'}>Distribución de Precio por m²*</h4>
                 <FormatBarChart
                   ref={'distribucionPrecio'}
                   id={'distribucion_precio'}
@@ -404,6 +408,7 @@ class Reporte extends React.Component{
           <div className={'max-width-container'}>
             <div className={'col-sm-12'}>
               {compareTables}
+              <p style={{textAlign: 'right'}}>*Información calculada con datos de los últimos 6 meses</p>
             </div>
           </div>
         </div>

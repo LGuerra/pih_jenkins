@@ -40,9 +40,8 @@ class ComparativoViviendas extends React.Component {
     if (this.state.data) {
       content = (
         <div>
-          <h3 className={'section-title'}>{'Departamentos comparables'}</h3>
+          <h3 className={'section-title'}>{'Inmuebles comparables*'}</h3>
           <div className={'line-divider'}></div>
-          <p className={'subtitle'}> en los últimos 6 meses</p>
           <Table
             limit={5}
             specificClass={'mercado-table table-hover'}

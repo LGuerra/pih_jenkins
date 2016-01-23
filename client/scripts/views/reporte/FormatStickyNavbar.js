@@ -11,9 +11,15 @@ class FormatStickyNavbar extends React.Component{
   render() {
     let props = this.props;
     let content;
+    let image;
 
     if (props.viewType === 'Vivienda') {
       if (props.viviendaInfo) {
+        if (props.viviendaInfo.id_tipo_propiedad == 2) {
+          image = (<img width={'15px'} src={IMAGES.house} />);
+        } else if (props.viviendaInfo.id_tipo_propiedad == 4) {
+          image = (<img width={'15px'} src={IMAGES.apartment} />);
+        }
         content = (
           <div className={'max-width-container'}>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: '10px 0px'}}>
@@ -22,6 +28,9 @@ class FormatStickyNavbar extends React.Component{
               </div>
               <div className={'navbar-icon'}>
                 <p className={'green-price'}>{Helpers.formatAsPrice(props.viviendaInfo.valuacion)}</p>
+              </div>
+              <div className={'navbar-icon'}>
+                {image}
               </div>
               <div className={'navbar-icon'}>
                 <img width={'15px'} src={IMAGES.bed} />
