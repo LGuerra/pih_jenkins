@@ -30,6 +30,24 @@ class ModalVivienda extends React.Component {
     this._keyDownOperacion      = this._keyDownOperacion.bind(this);
     this._keyDownAreaConstruida = this._keyDownAreaConstruida.bind(this);
     this._keyDownEdad           = this._keyDownEdad.bind(this);
+    this.getValueArea           = this.getValueArea.bind(this);
+    this.getValueEdad           = this.getValueEdad.bind(this);
+  }
+
+  getValueArea() {
+    let areaConstruida = this.refs.inputAreaConst.value;
+    if (isNaN(parseInt(areaConstruida,10))) areaConstruida = 100;
+    else areaConstruida = parseInt(areaConstruida, 10);
+    this.setState({showingDropdowns: this.closeShowingDropdowns()});
+    this.props.modalChange({areaConstruida: areaConstruida});
+  }
+
+  getValueEdad() {
+    let edad = this.refs.inputEdad.value;
+    if (isNaN(parseInt(edad,10))) edad = 0;
+    else edad = parseInt(edad, 10);
+    this.setState({showingDropdowns: this.closeShowingDropdowns()});
+    this.props.modalChange({edad: edad});
   }
 
   closeShowingDropdowns () {
@@ -37,6 +55,8 @@ class ModalVivienda extends React.Component {
   }
 
   _selectVivienda (a) {
+    console.log("getValueArea", this.getValueArea());
+    console.log("getValueEdad", this.getValueEdad());
     if (a !== this.state.vivienda) this.setState({vivienda: a, showingDropdowns: this.closeShowingDropdowns()});
     else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({vivienda: a});
@@ -110,7 +130,7 @@ class ModalVivienda extends React.Component {
 
     return (
       <div className="modal-box">
-        <div className="modal-row modal-icons-row">
+        <div className="modal-row modal-icons-row" style={{padding: '15px 0 10px 0'}}>
           <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.habitaciones}
@@ -171,7 +191,18 @@ class ModalVivienda extends React.Component {
             Área de construcción
           </div>
           <div className="col-md-3 col-sm-3 col-xs-5">
-            <IMDropdownButton reference={"areaConstruida"}
+            <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
+              <input id="area-construida"
+                     type="text"
+                     ref="inputAreaConst"
+                     className={"input-modal"}
+                     maxLength="3"
+                     onChange={this.getValueArea}
+                     placeholder={"100"} >
+              </input>
+              <span style={{position: "absolute", top: 0, right: 20}}> m²</span>
+            </div>
+          {/*<IMDropdownButton reference={"areaConstruida"}
                               items={["100 m²", "200 m²", "300 m²", "+ 350 m²"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
@@ -179,13 +210,24 @@ class ModalVivienda extends React.Component {
                               onClick={this.clicked}
                               handleKey13={this._keyDownAreaConstruida}
                               selectedItem={this.state.areaConstruida}
-                              selectMItem={this._selectAreaConstruida} />
+                              selectMItem={this._selectAreaConstruida} />*/}
           </div>
           <div className="col-md-3 col-sm-3 col-xs-7">
             Edad
           </div>
           <div className="col-md-3 col-sm-3 col-xs-5">
-            <IMDropdownButton reference={"edad"}
+            <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
+              <input id="edad"
+                     type="text"
+                     ref="inputEdad"
+                     className={"input-modal"}
+                     maxLength="3"
+                     onChange={this.getValueEdad}
+                     placeholder={"0"} >
+              </input>
+              <span style={{position: "absolute", top: 0, right: 20}}> años</span>
+            </div>
+            {/*<IMDropdownButton reference={"edad"}
                               items={["5 años","10 años","20 años","30 años","+ 40 años"]}
                               className="modal-dropdown-button"
                               outerButtonClassName="pull-right modal-button-container"
@@ -193,7 +235,7 @@ class ModalVivienda extends React.Component {
                               onClick={this.clicked}
                               handleKey13={this._keyDownEdad}
                               selectedItem={this.state.edad}
-                              selectMItem={this._selectEdad} />
+                              selectMItem={this._selectEdad} />*/}
           </div>
         </div>
       </div>

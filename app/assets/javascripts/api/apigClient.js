@@ -289,6 +289,42 @@ apigClientFactory.newClient = function (config) {
     };
     
     
+    apigClient.suburbAppreciationGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['id_col'], ['body']);
+        
+        var suburbAppreciationGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/appreciation').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['id_col']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbAppreciationGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.suburbAppreciationOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var suburbAppreciationOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/suburb/appreciation').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(suburbAppreciationOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.suburbAverageM2Get = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         

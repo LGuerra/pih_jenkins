@@ -128,7 +128,7 @@ class Reporte extends React.Component{
   _generateReport(url) {
     $.post(url)
       .done(() => {
-        this._askForPDF(1000, 5, function() {
+        this._askForPDF(5000, 10, function() {
           return ($.get(url));
         })
         .then(() => {
@@ -179,7 +179,6 @@ class Reporte extends React.Component{
       'distribucion_precio.json', 'json', distribucionPrecio
     ));
 
-
     $.when.apply($, allPromises)
       .then(() => {
         this._generateReport(url);
@@ -187,10 +186,9 @@ class Reporte extends React.Component{
       .fail((error, msg) => {
         console.log('FAIL', error, msg);
       });
-
   }
   _downloadReport() {
-    var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+    var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1;
@@ -203,7 +201,7 @@ class Reporte extends React.Component{
 
     if (this.state.type === 'Vivienda') {
       let randomText = Math.random().toString(36).substr(2, 10);
-      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + randomText + '/' + date;
+      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '-' + randomText + '/' + date;
     } else {
       this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '/' + date;
     }
@@ -247,11 +245,14 @@ class Reporte extends React.Component{
     this.refs.format_googlemap.highlightFeature(data.id);
   }
   _onMouseoverFeature(data) {
-    if (this.refs.comparativo_colonias) {
-      this.refs.comparativo_colonias.highlightRow(data);
+    if (this.refs.comparativoColonias) {
+      this.refs.comparativoColonias.highlightRow(data);
     }
   }
   _onGetColoniaInfo(info) {
+    this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
+    this.refs.distribucionPrecio._checkoutAvailability(info.apreciacion);
+
     this.setState({
       coloniaInfo: info
     });
@@ -292,7 +293,7 @@ class Reporte extends React.Component{
       );
       infoBlocks = (
         <div className={'row block-container'}>
-          <div style={borderRight} className={'col-sm-4'}>
+          <div style={_.merge(borderRight, {paddingLeft: '6px'})} className={'col-sm-4'}>
             <ViviendaInfo
               ref={'viviendaInfo'}
               onGetViviendaInfo={this._onGetViviendaInfo}
@@ -349,63 +350,77 @@ class Reporte extends React.Component{
             viewType={this.state.type}/>
         </header>
         <div className={'header-section'}>
-          {secondaryNavbar}
-          {this.state.type === 'Colonia' ? (
-            <div>
-              <h3 className={'section-title'}>{'Datos de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
-              <div className={'line-divider'}></div>
-            </div>)
-            : ''
-          }
-          {infoBlocks}
+          <div className={'max-width-container'}>
+            {secondaryNavbar}
+            {this.state.type === 'Colonia' ? (
+              <div>
+                <h3 className={'section-title'}>{'Datos de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <div className={'line-divider'}></div>
+              </div>)
+              : ''
+            }
+            {infoBlocks}
+          </div>
         </div>
         <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
-          {this.state.type === 'Vivienda' ? (
+          <div className={'max-width-container'}>
+            {this.state.type === 'Vivienda' ? (
+              <div>
+                <h3 className={'section-title'}>{'Información de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <div className={'line-divider'}></div>
+              </div>)
+              : ''
+            }
             <div>
-              <h3 className={'section-title'}>{'Información de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
-              <div className={'line-divider'}></div>
-            </div>)
-            : ''
-          }
-          <div>
-            <OfertaDisponible
-              ref={'ofertaDisponible'}
-              zoneID={this.state.coloniaID} />
-          </div>
-          <div>
-            <h4 className={'subsection-title'}>Distribución de Tipología</h4>
-            <FormatStackedBarChart
-              id={'distribucion_tipologia'}
-              zoneID={this.state.coloniaID}/>
-          </div>
-          <div className={'row block-container'}>
-            <div style={borderRight} className={'col-sm-6'}>
-              <h4 className={'subsection-title'}>Precio Histórico por m² Enero 2010 - Enero 2015</h4>
-              <div className={'row'}>
-                <div className={'col-sm-12'} style={{marginTop: '15px'}}>
-                  <FormatLineChart
-                    id={'precio_historico'}
-                    zoneID={this.state.coloniaID} />
+              <OfertaDisponible
+                ref={'ofertaDisponible'}
+                zoneID={this.state.coloniaID} />
+            </div>
+            <div>
+              <h4 className={'subsection-title'}>Distribución de Tipología*</h4>
+              <FormatStackedBarChart
+                id={'distribucion_tipologia'}
+                zoneID={this.state.coloniaID}/>
+            </div>
+            <div className={'row block-container'}>
+              <div style={_.merge(borderRight, {paddingLeft: '0px'})} className={'col-sm-6'}>
+                <h4 className={'subsection-title'}>Precio Histórico por m²</h4>
+                <div className={'row'}>
+                  <div className={'col-sm-12'} style={{marginTop: '15px'}}>
+                    <FormatLineChart
+                      ref={'precioHistorico'}
+                      id={'precio_historico'}
+                      zoneID={this.state.coloniaID} />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={'col-sm-6'}>
-              <h4 className={'subsection-title'}>Distribución de Precio por m² - Enero 2016</h4>
-              <FormatBarChart
-                ref={'distribucionPrecio'}
-                id={'distribucion_precio'}
-                zoneID={this.state.coloniaID}/>
+              <div className={'col-sm-6'}>
+                <h4 className={'subsection-title'}>Distribución de Precio por m²*</h4>
+                <FormatBarChart
+                  ref={'distribucionPrecio'}
+                  id={'distribucion_precio'}
+                  zoneID={this.state.coloniaID}/>
+              </div>
             </div>
           </div>
         </div>
         <div className={'row block-container comparables-section'} style={{marginTop: '10px'}}>
-          <div className={'col-sm-12'}>
-            {compareTables}
+          <div className={'max-width-container'}>
+            <div className={'col-sm-12'}>
+              {compareTables}
+              <p style={{textAlign: 'right'}}>*Información calculada con datos de los últimos 6 meses</p>
+            </div>
           </div>
         </div>
         <div className={'row'}>
           <div className={'col-sm-12'}>
             <FormatGoogleMaps
+              viewType={this.state.type}
+              viviendaInfo={this.state.viviendaParams ?
+                {
+                  lat: this.state.viviendaParams.latitud,
+                  lng: this.state.viviendaParams.longitud
+                } : {}}
               zoneID={this.state.coloniaID}
               onMouseoverFeature={this._onMouseoverFeature.bind(this)}
               ref={'format_googlemap'}/>

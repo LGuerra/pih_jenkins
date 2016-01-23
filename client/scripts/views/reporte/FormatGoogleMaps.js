@@ -1,5 +1,6 @@
 import React from 'react';
 import GoogleMap from '../../components/GoogleMap';
+import Marker from '../../components/Marker';
 
 import config from '../../config';
 class FormatGoogleMaps extends React.Component {
@@ -9,33 +10,37 @@ class FormatGoogleMaps extends React.Component {
       latlon: null
     };
     this.highlightFeature = this.highlightFeature.bind(this);
+    this._getMap = this._getMap.bind(this);
   }
   highlightFeature(id) {
     let map = this.refs.map.mapRef;
     if (id) {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? '#353535' : '#c7c7c7';
+        let fillColor = feature.getProperty('current') ? '#353535' : '#9a9a9a';
         if (feature.getProperty('id') === id) {
           return {
             fillColor: '#2a9998',
-            strokeWeight: 2
+            strokeWeight: 1.5
           };
         } else {
           return {
             fillColor: fillColor,
-            strokeWeight: 2
+            strokeWeight: 1.5
           };
         }
       });
     } else {
       map.data.setStyle(function(feature) {
-        let fillColor = feature.getProperty('current') ? '#353535' : '#c7c7c7';
+        let fillColor = feature.getProperty('current') ? '#353535' : '#9a9a9a';
         return {
           fillColor: fillColor,
-          strokeWeight: 2
+          strokeWeight: 1.5
         };
       });
     }
+  }
+  _getMap() {
+    return (this.refs.map);
   }
   componentDidMount() {
     let map = this.refs.map.mapRef;
@@ -103,18 +108,26 @@ class FormatGoogleMaps extends React.Component {
     this.highlightFeature();
   }
   render() {
-    var googleMap;
+    let marker;
+    if (this.props.viewType === 'Vivienda') {
+      marker = (
+        <Marker latitud={this.props.viviendaInfo.lat} longitud={this.props.viviendaInfo.lng}
+        getMap={this._getMap} color={'red'}/>);
+    }
     return (
-      <GoogleMap
-        latitud={19.2837698}
-        longitud={-99.1839327}
-        zoom={[14, 5, 21]}
-        style={{
-          width: '100%',
-          height: '400px'
-        }}
-        ref='map'
-        zoomTop={10} />
+      <div>
+        <GoogleMap
+          latitud={19.2837698}
+          longitud={-99.1839327}
+          zoom={[14, 5, 21]}
+          style={{
+            width: '100%',
+            height: '400px'
+          }}
+          ref='map'
+          zoomTop={10} />
+        {marker}
+      </div>
     );
   }
 }

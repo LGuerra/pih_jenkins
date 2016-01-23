@@ -52,7 +52,7 @@
 .modal-box {
   background-color: white;
   margin-top: 15px;
-  padding-bottom: 35px;
+  padding-bottom: 25px;
   border-radius: 8px;
 }
 .modal-dropdown-button {
@@ -158,6 +158,22 @@
   box-shadow: none;
   color: #FE696B;
   margin-top: -15px !important;
+}
+
+.input-modal {
+  display: inline-block;
+  background-color: rgba(1, 1, 1, 0);
+  border: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #C3C3C3;
+  color: black;
+  font-weight: 500;
+  margin: 0 15px;
+  padding: 0 0 0 30%;
+  width: 80%;
+  &:focus {
+    outline: 0;
+  }
 }
 
 @media screen and (max-width: 1000px) {

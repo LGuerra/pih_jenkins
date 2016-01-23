@@ -19,6 +19,13 @@ body {
   min-width: 350px;
 }
 
+.max-width-container{
+  max-width: 1280px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
