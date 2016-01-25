@@ -176,6 +176,12 @@
   }
 }
 
+.metric {
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
+
 @media screen and (max-width: 1000px) {
   .modal-div {
     width: 80%;
@@ -196,3 +202,11 @@
   }
 }
 
+@media screen and (max-width: 440px) {
+  .metric {
+    right: 0px;
+  }
+  .input-modal {
+    padding: 0 0 0 15%;
+  }
+}
