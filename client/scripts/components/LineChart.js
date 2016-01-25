@@ -82,7 +82,7 @@ class LineChart extends React.Component {
         .text(this.props.yTitleUnit);
     }
 
-    this.conf.tooltip = d3.select('body')
+    this.conf.tooltip = d3.select('#' + this.props.idContainer)
       .append('div')
       .attr('class', 'tooltip')
       .style('display', 'none');
@@ -103,19 +103,19 @@ class LineChart extends React.Component {
     });
 
     //Set scales
-    this.conf.xScale = d3.scale.linear()
+    this.conf.xScale = d3.time.scale()
       .domain([horizontalLowerLimit, horizontalUpperLimit])
       .range([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
 
     this.conf.yScale = d3.scale.linear()
-      .domain([minMaxY[0] - (minMaxY[0] * 0.05), minMaxY[1]])
+      .domain([minMaxY[0] - (minMaxY[0] * 0.05), minMaxY[1] + (minMaxY[1] * 0.02)])
       .range([this.conf.height - props.margin.top, props.margin.bottom]);
 
     //Define axis configuration
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
       .tickFormat(props.xtickFormat)
-      .ticks(9)
+      .ticks(d3.time.months, 4)
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
@@ -241,13 +241,14 @@ class LineChart extends React.Component {
         var tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         var tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        var posx = (d3.mouse(this)[0] > ((_this.conf.width) / 2))
-          ? d3.event.pageX - tooltipWidth - 10
-          : d3.event.pageX + 10;
+        var posx = (_this.conf.xScale(d.data0.value.xVariable));
+        var posy = 0;
 
-        var posy = (d3.mouse(this)[1] > ((_this.conf.height) / 2))
-          ? d3.event.pageY - tooltipHeigth - 10
-          : d3.event.pageY + 10;
+        if (posx > _this.conf.width / 2) {
+          posx = posx - (tooltipWidth / 2); 
+        } else {
+          posx = posx + (tooltipWidth / 2);
+        }
 
         _this.conf.tooltip
           .style('left', (posx) + 'px')

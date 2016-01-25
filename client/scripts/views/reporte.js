@@ -159,6 +159,13 @@ class Reporte extends React.Component{
     let coloniaInfo = this.refs.coloniaInfo.state.data;
     let ofertaDisponible = this.refs.ofertaDisponible.state.data;
     let distribucionPrecio = this.refs.distribucionPrecio.state.data;
+    let precioHistorico = this.refs.precioHistorico.state.data;
+
+    let distribucionTipologia = this.refs.distribucionTipologia.state.data;
+
+    console.log(JSON.stringify(distribucionTipologia));
+    console.log(JSON.stringify(precioHistorico));
+    console.log(JSON.stringify(distribucionPrecio));
 
     allPromises.push(this._buildPromises(
       'viviendas_comparables.json', 'json', viviendasComparables
@@ -379,6 +386,7 @@ class Reporte extends React.Component{
             <div>
               <h4 className={'subsection-title'}>Distribución de Tipología*</h4>
               <FormatStackedBarChart
+                ref={'distribucionTipologia'}
                 id={'distribucion_tipologia'}
                 zoneID={this.state.coloniaID}/>
             </div>

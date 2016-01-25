@@ -30,7 +30,6 @@ class ViviendaInfo extends React.Component {
 
     apigClient.modelValuationPost({}, params, {})
       .then((modelValuationR) => {
-        console.log(modelValuationR);
         this.setState({
           data: {
             confianza: modelValuationR.data.confianza || 1,
