@@ -100,7 +100,7 @@
 .header-section {
   @include transition(all, 0.75s, ease);
   background-color: #fff;
-  padding: 1px 0px 10px 0px;
+  padding: 10px;
   &:hover{
     background-color: rgba(242, 245, 245, 0.55);
   }
