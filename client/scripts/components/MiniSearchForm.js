@@ -63,6 +63,7 @@ class MiniSearchForm extends React.Component {
     this._modalDD               = this._modalDD.bind(this);
     this._showFormModal         = this._showFormModal.bind(this);
     this._requestVivienda       = this._requestVivienda.bind(this);
+    this._ddChange              = this._ddChange.bind(this);
   }
 
   _closeAllddModalShown () {
@@ -177,6 +178,10 @@ class MiniSearchForm extends React.Component {
     this.setState(modalData);
   }
 
+  _ddChange(dd) {
+    this.props.ddChange(dd);
+  }
+
   _searchTypeSelected (sType) {
     // A searchType is selected (sType)
     // close dropdowns and modals
@@ -202,7 +207,7 @@ class MiniSearchForm extends React.Component {
     ans.ddmodalShown = ddmShown;
     ans.inputClass = "";
     ans.suggestions = [];
-    this.setState(ans);
+    this.setState(ans, this._ddChange(true));
   }
 
   _clickSearchTypeButton(a,b,c) {
@@ -223,7 +228,7 @@ class MiniSearchForm extends React.Component {
       if (this.state.searchType === "Vivienda") ddmodalShown.modal = true;
       ddmodalShown.ddSearchType = true;
     }
-    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false, inputClass: ""});
+    this.setState({ddmodalShown: ddmodalShown, searchType: c, modaldd: false, inputClass: ""}, this._ddChange(true));
   }
 
   _keyDownSearchType(sType) {
@@ -258,7 +263,7 @@ class MiniSearchForm extends React.Component {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             suggests = parseSuggestionsGoogle(predictions);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""});
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""},_this._ddChange(true));
           }
         };
 
@@ -281,13 +286,14 @@ class MiniSearchForm extends React.Component {
             //Desirable - IF response.isEmpty tell the user there is no data
             suggests = parseSuggestions(response.hits.hit);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""});
+            _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""},_this._ddChange(true));
           });
       }
     } else {
       ddmShown.ddInput = false;
       ddmShown.modal   = (this.state.searchType === "Vivienda") ? true : false;
-      _this.setState({suggestions: suggests, ddmodalShown: ddmShown});
+      let ddChange = (ddmShown.modal || ddmShown.ddInput || ddmShown.ddSearchType);
+      _this.setState({suggestions: suggests, ddmodalShown: ddmShown},_this._ddChange(ddChange));
     }
   }
 
@@ -301,7 +307,7 @@ class MiniSearchForm extends React.Component {
   _modalDD (e) {
     let ddmShown = this._closeAllddModalShown();
     ddmShown.modal = true;
-    this.setState({modaldd: e, ddmodalShown: ddmShown});
+    this.setState({modaldd: e, ddmodalShown: ddmShown}, this._ddChange(true));
   }
 
   _stopPropagation (e) {
@@ -312,6 +318,13 @@ class MiniSearchForm extends React.Component {
                  banos, cajones, vivienda, operacion, areaConstruida, edad) {
     this.showFormModal(searchInput, modalChange, ddshown, hideDropdowns, requestVivienda, habitaciones,
                        banos, cajones, vivienda, operacion, areaConstruida, edad);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.ddSearchBar !== nextProps.ddSearchBar && nextProps.ddSearchBar === false) {
+      this.setState({ddmodalShown: this._closeAllddModalShown()});
+    }
+
   }
 
   componentDidMount() {
