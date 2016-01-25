@@ -312,11 +312,17 @@ class Reporte extends React.Component{
           </div>
         </div>
       );
-      compareTables = (
-        <ComparativoViviendas
-          ref={'comparativoViviendas'}
-          params={this.state.viviendaParams}/>
-      );
+      if (this.state.viviendaInfo) {
+        compareTables = (
+          <ComparativoViviendas
+            ref={'comparativoViviendas'}
+            coloniaName={coloniaName}
+            viviendaInfo={this.state.viviendaInfo}
+            params={this.state.viviendaParams}/>
+        );
+      } else {
+        compareTables = (<div></div>);
+      }
     } else {
       infoBlocks = (
         <div className={'row block-container'}>
@@ -357,7 +363,7 @@ class Reporte extends React.Component{
             {secondaryNavbar}
             {this.state.type === 'Colonia' ? (
               <div>
-                <h3 className={'section-title'}>{'Datos de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <h3 className={'section-title'}>{'Datos de la colonia ' + coloniaName}</h3>
                 <div className={'line-divider'}></div>
               </div>)
               : ''
@@ -369,7 +375,7 @@ class Reporte extends React.Component{
           <div className={'max-width-container'}>
             {this.state.type === 'Vivienda' ? (
               <div>
-                <h3 className={'section-title'}>{'Información de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <h3 className={'section-title'}>{'Información de la colonia ' + coloniaName}</h3>
                 <div className={'line-divider'}></div>
               </div>)
               : ''

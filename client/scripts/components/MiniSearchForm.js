@@ -338,7 +338,7 @@ class MiniSearchForm extends React.Component {
     let ddmodalShown = this.state.ddmodalShown;
 
     return (
-          <div className={'mini-search-div'} style={{paddingTop: 8}}>
+          <div className={'mini-search-div'}>
             <div id="id-search-container" onClick={this._stopPropagation} className={'mini-search-container'}>
               <div className={'mini-sarch-dropdown'}>
                 <div>

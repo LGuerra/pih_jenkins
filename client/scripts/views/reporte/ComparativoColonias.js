@@ -31,7 +31,7 @@ class ComparativoColonias extends React.Component {
         currentIndex = index;
       }
       return ({
-        'Colonia': Helpers.toTitleCase(element.nombre),
+        'Colonia': element.nombre,
         'Precio m²*': Helpers.formatAsPrice(element.average),
         'Viviendas ofertadas*': element.count,
         'id': element.colonia

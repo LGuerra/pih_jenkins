@@ -32,7 +32,7 @@ class MainNavbar extends React.Component{
             </a>
             </div>
             <div className={'col-md-8 col-sm-9 col-xs-12'}>
-              <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end'}}>
+              <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
                 {miniSearchForm}
                 {downloadReport}
                 <div className="collapse navbar-collapse navbar-ex1-collapse" style={{marginTop: '-2px'}}>
