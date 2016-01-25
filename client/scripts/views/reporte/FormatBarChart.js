@@ -86,7 +86,11 @@ class FormatBarChart extends React.Component {
 
     apigClient.stadisticsPriceDistributionPost({}, {
       id_col: this.props.zoneID
-    }, {}).then((stadisticsPriceDistributionR) => {
+    }, {
+        headers: { 
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+      }).then((stadisticsPriceDistributionR) => {
       let data = this._formatData(stadisticsPriceDistributionR.data);
       this.setState({
         data: data

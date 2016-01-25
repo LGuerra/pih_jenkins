@@ -1,6 +1,8 @@
 require 'open-uri'
 require 'net/http'
+require 'net/https'
 require 'singleton'
+require 'uri'
 
 module ApiHelper
   class Accessor
@@ -10,8 +12,22 @@ module ApiHelper
       @api_root = ENV['API_V1_ADDRESS']
     end
 
-    def post url, params
-
+    def post url, params, request
+      urlp = URI.parse("#{@api_root}#{url}")
+      begin
+        http = Net::HTTP.new(urlp.host, urlp.port)
+        http.use_ssl = true
+        req = Net::HTTP::Post.new(urlp.path)
+        req.body = request.raw_post
+        req['Content-Type'] = request.headers['Content-Type']
+        resp = http.request(req)
+        puts resp.body
+        [resp.body, resp.code]
+      rescue => e
+        puts e
+        puts e.backtrace
+        e
+      end
     end
 
     def get url

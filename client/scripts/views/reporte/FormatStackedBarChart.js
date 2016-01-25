@@ -71,7 +71,11 @@ class FormatStackedBarChart extends React.Component {
 
     apigClient.stadisticsTypologyDistributionPost({}, {
       id_col: this.props.zoneID
-    }, {}).then((stadisticsTypologyDistributionR) => {
+    },  {
+        headers: { 
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+      }).then((stadisticsTypologyDistributionR) => {
       let data = this._formatData(stadisticsTypologyDistributionR.data);
 
       this.setState({

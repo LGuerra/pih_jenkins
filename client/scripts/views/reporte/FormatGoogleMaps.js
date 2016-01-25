@@ -48,7 +48,11 @@ class FormatGoogleMaps extends React.Component {
 
     apigClient.suburbGeojsonGet({
       id_col: this.props.zoneID
-    }, {}, {}).then((geojsonR) => {
+    }, {},  {
+        headers: { 
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+      }).then((geojsonR) => {
       map.data.addGeoJson({
         type: 'Feature',
         geometry: geojsonR.data,
