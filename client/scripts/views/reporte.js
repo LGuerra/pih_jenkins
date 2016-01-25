@@ -190,7 +190,8 @@ class Reporte extends React.Component{
       });
   }
   _downloadReport() {
-    var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+    //var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+    var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1;
@@ -295,7 +296,7 @@ class Reporte extends React.Component{
       );
       infoBlocks = (
         <div className={'row block-container'}>
-          <div style={_.merge(borderRight, {paddingLeft: '6px'})} className={'col-sm-4'}>
+          <div style={borderRight} className={'col-sm-4'}>
             <ViviendaInfo
               ref={'viviendaInfo'}
               onGetViviendaInfo={this._onGetViviendaInfo}

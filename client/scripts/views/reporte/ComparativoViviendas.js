@@ -27,9 +27,14 @@ class ComparativoViviendas extends React.Component {
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
-    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
+
+    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion', 'area_construida');
+    params['precio_m2'] = params.area_construida;
+
+    console.log(params);
     apigClient.similarsPost({}, params, {})
       .then((similarsR) => {
+        console.log(similarsR.data);
         this.setState({
           data: this._formatData(similarsR.data)
         });
