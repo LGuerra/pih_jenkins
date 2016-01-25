@@ -32,7 +32,8 @@ class FormatLineChart extends React.Component {
   }
   _xTickFormat(d, i) {
     let dateObj = new Date(d);
-    let date = months[dateObj.getMonth()] + ' ' + dateObj.getDate();
+    dateObj.setDate(dateObj.getDate() - 2);
+    let date = months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
     return (date);
   }
   _yTickFormat(d, i) {
@@ -40,7 +41,7 @@ class FormatLineChart extends React.Component {
   }
   _tooltipLineFormat(d) {
     var dateObj = new Date(d.data0.value.xVariable);
-    var dateFormatted = months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate()) + 1) + ' del ' + dateObj.getFullYear();
+    var dateFormatted = months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
 
     var html = `<div class="tooltip-container">
       <div class="tooltip-row">
@@ -98,7 +99,7 @@ class FormatLineChart extends React.Component {
             showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
             data={this.state.data}
             tooltipFormat={this._tooltipLineFormat}
-            yTitleUnit={'Precio promedio'}
+            yTitleUnit={'Precio promedio m²'}
             height={220}
             xtickFormat={this._xTickFormat}
             ytickFormat={this._yTickFormat}

@@ -139,7 +139,7 @@ class StackedBarChart extends React.Component {
         let isOneSmaller = false;
 
         data.bars.forEach((element, index) => {
-          if ((element.value * 100) / totals[element.group] < 5) {
+          if ((element.value * 100) / totals[element.group] < 7) {
             isOneSmaller = true;
           }
         });
@@ -170,7 +170,7 @@ class StackedBarChart extends React.Component {
           .transition()
           .duration(300)
           .style('opacity', (d, i) => {
-              if ((d.value * 100) / totals[d.group] < 5) {
+              if ((d.value * 100) / totals[d.group] < 7) {
                 return (0);
               } else {
                 return (1);
@@ -224,14 +224,14 @@ class StackedBarChart extends React.Component {
           .transition()
           .duration(300)
           .style('opacity', (d, i) => {
-            if ((actualData.value * 100) / totals[actualData.group] < 5) {
+            if ((actualData.value * 100) / totals[actualData.group] < 7) {
               if (d.label === actualData.label) {
                 return (1);
               } else {
                 return (0);
               }
             } else {
-              if ((d.value * 100) / totals[d.group] < 5) {
+              if ((d.value * 100) / totals[d.group] < 7) {
                 return (0);
               } else {
                 return (1);
@@ -323,7 +323,7 @@ class StackedBarChart extends React.Component {
         return (_this.conf.xScale(d.group) + 23);
       })
       .style('opacity', (d, i) => {
-        if ((d.value * 100) / totals[d.group] < 5) {
+        if ((d.value * 100) / totals[d.group] < 7) {
           return (0);
         } else {
           return (1);
