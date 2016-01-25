@@ -97,6 +97,9 @@ class ViviendaInfo extends React.Component {
           src={IMAGES.question}
           style={{marginBottom: '3px'}}/></p>
       )
+
+      let valuacion = Math.floor(this.state.data.valuacion / 1000)
+
       content = (
       <div className={'oferta-disponible'}>
         <h4 className={'subsection-title'} style={{marginLeft: '5px'}}>Vivienda valuada</h4>
@@ -106,7 +109,7 @@ class ViviendaInfo extends React.Component {
           justifyContent: 'space-around',
           alignItems: 'center'}}>
           <div style={{textAlign: 'center'}}>
-            <p className={'green-price'}>{Helpers.formatAsPrice(this.state.data.valuacion)}</p>
+            <p className={'green-price'}>{Helpers.formatAsPrice(valuacion * 1000)}</p>
             <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio estimado</p>
             {reputacionComponent}
           </div>
