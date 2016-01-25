@@ -20,7 +20,9 @@ class MainNavbar extends React.Component{
       </div>)
     : '';
 
-    let miniSearchForm = (this.props.type) ? <MiniSearchForm searchType={this.props.type}/> : "" ;
+    let miniSearchForm = (this.props.type) ? <MiniSearchForm ddSearchBar={this.props.ddSearchBar}
+                                                             ddChange={this.props.ddChange}
+                                                             searchType={this.props.type}/> : "" ;
 
     return (
       <nav className={'navbar navbar-default'} style={{minHeight: '40px'}} >
