@@ -72,6 +72,7 @@ class Table extends React.Component {
         } else {
           return (
             <tr
+              style={style}
               data-id={element[_this.props.idField]}
               dkey={'row-' + index}
               key={'row-' + index}>

@@ -60,7 +60,7 @@ class ColoniaInfo extends React.Component {
 
     if (this.state.data) {
       let colName = this.props.viewType === 'Vivienda' ?
-        (<h4 className={'subsection-title'}>{Helpers.toTitleCase(this.props.coloniaName)}</h4>)
+        (<h4 className={'subsection-title'}>{this.props.coloniaName}</h4>)
         : '';
       let apreciacion;
       let averageOffer  = this.state.data.averageOffer ? Helpers.formatAsPrice(this.state.data.averageOffer) : 'No disponible';

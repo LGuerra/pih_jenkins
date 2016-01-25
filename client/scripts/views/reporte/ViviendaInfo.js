@@ -2,50 +2,72 @@ import React from 'react';
 import _ from 'lodash';
 
 import Helpers from '../../helpers';
-
-const months = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre'
-];
+import helper_properties from '../../helper_properties';
 
 class ViviendaInfo extends React.Component {
   constructor(props) {
     super(props);
+
+    this._togglePopOver = this._togglePopOver.bind(this);
+
     this.state = {};
   }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
-    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
+    let params = _.pick(this.props.params,
+      'longitud',
+      'latitud',
+      'id_tipo_propiedad',
+      'area_construida',
+      'recamaras',
+      'banos',
+      'estacionamientos',
+      'edad',
+      'tipo_operacion');
 
     apigClient.modelValuationPost({}, params, {})
       .then((modelValuationR) => {
         this.setState({
           data: {
-            confianza: modelValuationR.data.confianza || 1,
-            precioM2: modelValuationR.data.valuacion ? (modelValuationR.data.valuacion / params.area_construida) : 0,
-            valuacion: modelValuationR.data.valuacion || 0
+            confianza:  modelValuationR.data.confianza || 1,
+            precioM2:   modelValuationR.data.valuacion_m2 || 0,
+            valuacion:  modelValuationR.data.valuacion || 0
           }
         }, () => {
           this.props.onGetViviendaInfo(_.merge(this.state.data, this.props.params));
         });
       });
 
-    $('#confianza').tooltip({
-      html: true,
-      placement: 'top',
-      title: '<h1><strong>HTML</strong> inside <code>the</code> <em>tooltip</em></h1>'
-    });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.data && this.state.data) {
+      let descriptions = ['más de 40%', 'entre 30% y 40% ', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
+
+      let title = `
+        <div class="popover popover-confianza" role="tooltip">
+          <div class="arrow"></div>
+          <p>La mitad o más de los inmuebles en esta colonia tienen un error en 
+          la estimación de ${descriptions[this.state.data.confianza - 1]} error absoluto en la estimación de 
+          valores dentro de esta colonia.</p>
+        </div>
+      `;
+
+      $('#confianza').popover({
+        container: 'body',
+        content: "Elige una de las sugerencias",
+        template: title,
+        placement: 'right'
+      });
+    }
+
+  }
+  _togglePopOver(show) {
+    if (show) {
+      $('#confianza').popover('show');
+    } else {
+      $('#confianza').popover('hide');
+    }
   }
   render() {
     let content;
@@ -55,20 +77,11 @@ class ViviendaInfo extends React.Component {
       let reputacion = this.state.data.confianza > 5 ? 5 : this.state.data.confianza;
       let reputacionComponent;
 
-      if (reputacion < 2) {
-        reputacionComponent = (
-          <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}><img height={'12px'} src={IMAGES.star} style={{marginBottom: '3px'}}/> {'Confianza baja'}</p>
+      for (let i = 0; i < reputacion; i++) {
+        stars.push(
+          <img key={'star-' + i} height={'12px'} src={IMAGES.star} style={{marginBottom: '3px'}}/>
         );
-      } else {
-        for (let i = 0; i < reputacion; i++) {
-          stars.push(
-            <img key={'star-' + i} height={'12px'} src={IMAGES.star} style={{marginBottom: '3px'}}/>
-          );
 
-        }
-        reputacionComponent = (
-          <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>{stars} Confianza</p>
-        )
       }
 
       for (let i = stars.length; i < 5; i++) {
@@ -76,7 +89,14 @@ class ViviendaInfo extends React.Component {
           <img key={'star_2-' + i} height={'12px'} src={IMAGES.star_2} style={{marginBottom: '3px'}}/>
         );
       }
-
+      reputacionComponent = (
+        <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>{stars} Confianza <img
+          onMouseEnter={this._togglePopOver.bind(this, true)}
+          onMouseOut={this._togglePopOver.bind(this, false)}
+          height={'10px'}
+          src={IMAGES.question}
+          style={{marginBottom: '3px'}}/></p>
+      )
       content = (
       <div className={'oferta-disponible'}>
         <h4 className={'subsection-title'} style={{marginLeft: '15px'}}>Vivienda valuada</h4>

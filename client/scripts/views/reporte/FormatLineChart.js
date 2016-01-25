@@ -6,21 +6,8 @@ import LineChart from '../../components/LineChart';
 import NoChart from '../../components/NoChart';
 
 import Helpers from '../../helpers';
+import helper_properties from '../../helper_properties';
 
-const months = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre'
-];
 
 class FormatLineChart extends React.Component {
   constructor(props) {
@@ -33,7 +20,7 @@ class FormatLineChart extends React.Component {
   }
   _xTickFormat(d, i) {
     let dateObj = new Date(d);
-    let date = months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
+    let date = helper_properties.months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
     return (date);
   }
   _yTickFormat(d, i) {
@@ -41,7 +28,7 @@ class FormatLineChart extends React.Component {
   }
   _tooltipLineFormat(d) {
     var dateObj = new Date(d.data0.value.xVariable);
-    var dateFormatted = months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
+    var dateFormatted = helper_properties.months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
 
     var html = `<div class="tooltip-container">
       <div class="tooltip-row">
