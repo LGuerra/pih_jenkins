@@ -416,7 +416,7 @@ class Reporte extends React.Component{
           <div className={'max-width-container'}>
             <div className={'col-sm-12'}>
               {compareTables}
-              <p style={{textAlign: 'right'}}>*Información calculada con datos de los últimos 6 meses</p>
+              <p style={{textAlign: 'right'}} className={'footnote'}>*Información de mercado con base en datos de los últimos 6 meses.</p>
             </div>
           </div>
         </div>

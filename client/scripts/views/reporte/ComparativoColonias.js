@@ -32,8 +32,8 @@ class ComparativoColonias extends React.Component {
       }
       return ({
         'Colonia': Helpers.toTitleCase(element.nombre),
-        'Precio m²': Helpers.formatAsPrice(element.average),
-        'Viviendas ofertadas': element.count,
+        'Precio m²*': Helpers.formatAsPrice(element.average),
+        'Viviendas ofertadas*': element.count,
         'id': element.colonia
       });
     });
