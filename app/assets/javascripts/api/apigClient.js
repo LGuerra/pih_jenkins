@@ -52,7 +52,7 @@ apigClientFactory.newClient = function (config) {
     }
 
     
-    var endpoint = 'https://pih-api.intelimetrica.com/v1/dev';
+    var endpoint = '/v1/dev';
     var parser = document.createElement('a');
     parser.href = endpoint;
 

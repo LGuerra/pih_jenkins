@@ -6,13 +6,16 @@ module ApiHelper
     include Singleton
 
     def initialize
-      @api_root = ENV['API_ADDRESS']
+      @api_root = ENV['API_V1_ADDRESS']
     end
 
     def get url
+      puts url
       attempts = 0
       begin
         puts "APIROOT ---------------------------> #{@api_root}"
+        puts "URL #{url}"
+        puts "#{@api_root}#{url}"
          open("#{@api_root}#{url}") do |response|
           response.set_encoding('UTF-8')
           [response.read, response.status[0]]
@@ -30,4 +33,3 @@ module ApiHelper
     end
   end
 end
-
