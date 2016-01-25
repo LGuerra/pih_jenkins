@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get 'reporte' => 'pages#reporte', as: :reporte
   get '/2013-01-01/*url', to: 'api#tunnel_request'
   get '/v1/dev/*url', to: 'api#tunnel_request'
+  post '/v1/dev/*url', to: 'api#tunnel_request'
 end
