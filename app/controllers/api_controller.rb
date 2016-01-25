@@ -11,8 +11,9 @@ class ApiController < ApplicationController
   end
   def tunnel_request_post 
     @accessor ||= ApiHelper::Accessor.instance
-    response, status = @accessor.get(
-      request.env['ORIGINAL_FULLPATH']
+    response, status = @accessor.post(
+      request.env['ORIGINAL_FULLPATH'],
+      request.params[:api]
     )
     render :json => response, status: status
 

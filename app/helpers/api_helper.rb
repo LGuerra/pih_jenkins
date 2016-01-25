@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'net/http'
 require 'singleton'
 
 module ApiHelper
@@ -9,14 +10,12 @@ module ApiHelper
       @api_root = ENV['API_V1_ADDRESS']
     end
 
-    def post url
-      puts "this is a post request"
+    def post url, params
     end
 
     def get url
       attempts = 0
       begin
-        puts "#{@api_root}#{url}"
          open("#{@api_root}#{url}") do |response|
           response.set_encoding('UTF-8')
           [response.read, response.status[0]]

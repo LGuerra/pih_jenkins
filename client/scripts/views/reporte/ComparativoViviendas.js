@@ -26,14 +26,18 @@ class ComparativoViviendas extends React.Component {
   }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
-
+    console.log($('meta[name="csrf-token"]'));
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
-    apigClient.similarsPost({}, params, {})
-      .then((similarsR) => {
-        this.setState({
-          data: this._formatData(similarsR.data)
-        });
+    apigClient.similarsPost({}, params,{
+      headers: { 
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      }
+    })
+    .then((similarsR) => {
+      this.setState({
+        data: this._formatData(similarsR.data)
       });
+    });
   }
   render() {
     let content;
