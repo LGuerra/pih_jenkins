@@ -67,13 +67,19 @@ class ViviendaInfo extends React.Component {
 
         }
         reputacionComponent = (
-          <p style={{cursor: 'pointer'}} id={'confianza'} title={'HURRA!'} className={'subtitle'}>{stars} Confianza</p>
+          <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>{stars} Confianza</p>
         )
+      }
+
+      for (let i = stars.length; i < 5; i++) {
+        stars.push(
+          <img key={'star_2-' + i} height={'12px'} src={IMAGES.star_2} style={{marginBottom: '3px'}}/>
+        );
       }
 
       content = (
       <div className={'oferta-disponible'}>
-        <h4 className={'subsection-title'} style={{marginLeft: '0px'}}>Vivienda valuada</h4>
+        <h4 className={'subsection-title'} style={{marginLeft: '15px'}}>Vivienda valuada</h4>
         <div style={{
           marginTop: '20px',
           display: 'flex',

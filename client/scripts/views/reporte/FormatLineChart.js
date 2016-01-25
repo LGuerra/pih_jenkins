@@ -1,5 +1,6 @@
 import React from 'react';
 import random from 'lodash/number/random';
+import _ from 'lodash';
 
 import LineChart from '../../components/LineChart';
 import NoChart from '../../components/NoChart';
@@ -32,7 +33,6 @@ class FormatLineChart extends React.Component {
   }
   _xTickFormat(d, i) {
     let dateObj = new Date(d);
-    dateObj.setDate(dateObj.getDate() - 2);
     let date = months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
     return (date);
   }
@@ -69,7 +69,7 @@ class FormatLineChart extends React.Component {
     }];
   }
   _checkoutAvailability(apreciacion) {
-    if (apreciacion > 20 || apreciacion == null) {
+    if (apreciacion > 0.20 || apreciacion == null) {
       this.setState({
         isAvailable: false
       });
@@ -105,7 +105,7 @@ class FormatLineChart extends React.Component {
             ytickFormat={this._yTickFormat}
             margin={{
               left: 70,
-              right: 30,
+              right: 35,
               top: 25,
               bottom: 25
             }}

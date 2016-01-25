@@ -92,6 +92,8 @@ class FormatGoogleMaps extends React.Component {
     map.data.addListener('mouseover', (event) => {
       this.highlightFeature(event.feature.getProperty('id'));
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
+      let x = event.clientX;
+      let y = event.clientY;
     });
     map.data.addListener('mouseout', (event) => {
       this.highlightFeature();

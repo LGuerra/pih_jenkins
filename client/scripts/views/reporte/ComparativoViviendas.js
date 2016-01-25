@@ -27,9 +27,14 @@ class ComparativoViviendas extends React.Component {
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
-    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
+
+    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion', 'area_construida');
+    params['precio_m2'] = params.area_construida;
+
+    console.log(params);
     apigClient.similarsPost({}, params, {})
       .then((similarsR) => {
+        console.log(similarsR.data);
         this.setState({
           data: this._formatData(similarsR.data)
         });
@@ -37,10 +42,14 @@ class ComparativoViviendas extends React.Component {
   }
   render() {
     let content;
+    let label = this.props.params.id_tipo_propiedad == 2
+      ? 'Casas comparables'
+      : 'Departamentos comparables';
+
     if (this.state.data) {
       content = (
         <div>
-          <h3 className={'section-title'}>{'Inmuebles comparables*'}</h3>
+          <h3 className={'section-title'}>{label + '*'}</h3>
           <div className={'line-divider'}></div>
           <Table
             limit={5}

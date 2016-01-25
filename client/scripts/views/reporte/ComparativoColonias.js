@@ -90,7 +90,7 @@ class ComparativoColonias extends React.Component {
         content = <h4 style={{textAlign: 'center'}}>{'No hay viviendas de confianza aledañas a la colonia'}</h4>
       }
     } else {
-      content = (<div></div>);
+      content = (<h4 style={{textAlign: 'center'}}>{'No hay viviendas de confianza aledañas a la colonia'}</h4>);
     }
     return (
       content

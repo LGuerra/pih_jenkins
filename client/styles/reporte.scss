@@ -181,11 +181,20 @@
   margin-left: 0px !important;
 }
 
+@media screen and (max-width: 1000px) {
+  #landing-input {
+    font-size: 12px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .block-container {
     div {
       border: none !important;
     }
+  }
+  #landing-input {
+    font-size: 11px;
   }
 }
 
