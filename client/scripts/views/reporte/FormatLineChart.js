@@ -1,25 +1,13 @@
 import React from 'react';
 import random from 'lodash/number/random';
+import _ from 'lodash';
 
 import LineChart from '../../components/LineChart';
 import NoChart from '../../components/NoChart';
 
 import Helpers from '../../helpers';
+import helper_properties from '../../helper_properties';
 
-const months = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre'
-];
 
 class FormatLineChart extends React.Component {
   constructor(props) {
@@ -32,8 +20,7 @@ class FormatLineChart extends React.Component {
   }
   _xTickFormat(d, i) {
     let dateObj = new Date(d);
-    dateObj.setDate(dateObj.getDate() - 2);
-    let date = months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
+    let date = helper_properties.months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
     return (date);
   }
   _yTickFormat(d, i) {
@@ -41,7 +28,7 @@ class FormatLineChart extends React.Component {
   }
   _tooltipLineFormat(d) {
     var dateObj = new Date(d.data0.value.xVariable);
-    var dateFormatted = months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
+    var dateFormatted = helper_properties.months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
 
     var html = `<div class="tooltip-container">
       <div class="tooltip-row">
@@ -69,7 +56,7 @@ class FormatLineChart extends React.Component {
     }];
   }
   _checkoutAvailability(apreciacion) {
-    if (apreciacion > 20 || apreciacion == null) {
+    if (apreciacion > 0.20 || apreciacion == null) {
       this.setState({
         isAvailable: false
       });
@@ -105,7 +92,7 @@ class FormatLineChart extends React.Component {
             ytickFormat={this._yTickFormat}
             margin={{
               left: 70,
-              right: 30,
+              right: 35,
               top: 25,
               bottom: 25
             }}

@@ -55,8 +55,6 @@ class ModalVivienda extends React.Component {
   }
 
   _selectVivienda (a) {
-    console.log("getValueArea", this.getValueArea());
-    console.log("getValueEdad", this.getValueEdad());
     if (a !== this.state.vivienda) this.setState({vivienda: a, showingDropdowns: this.closeShowingDropdowns()});
     else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({vivienda: a});
@@ -150,8 +148,8 @@ class ModalVivienda extends React.Component {
           <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
                                 startingPoint={this.state.cajones}
-                                lowerLimit={1}
-                                upperLimit={5}
+                                lowerLimit={0}
+                                upperLimit={10}
                                 quantityChange={this._selectCajones}/>
             <span> <img src={IMAGES.blue_car} width="20"></img> </span>
           </div>
@@ -200,7 +198,7 @@ class ModalVivienda extends React.Component {
                      onChange={this.getValueArea}
                      placeholder={"100"} >
               </input>
-              <span style={{position: "absolute", top: 0, right: 20}}> m²</span>
+              <span className={"metric"}> m²</span>
             </div>
           {/*<IMDropdownButton reference={"areaConstruida"}
                               items={["100 m²", "200 m²", "300 m²", "+ 350 m²"]}
@@ -225,7 +223,7 @@ class ModalVivienda extends React.Component {
                      onChange={this.getValueEdad}
                      placeholder={"0"} >
               </input>
-              <span style={{position: "absolute", top: 0, right: 20}}> años</span>
+              <span className={"metric"}> años</span>
             </div>
             {/*<IMDropdownButton reference={"edad"}
                               items={["5 años","10 años","20 años","30 años","+ 40 años"]}

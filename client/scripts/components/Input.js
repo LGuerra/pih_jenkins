@@ -26,7 +26,6 @@ class IMInputDropdown extends React.Component {
   }
 
   selectMenuItem(a) {
-    console.log("This is item selected",a);
     if (!a) this.props.crOnSearch();
     else {
       let selectedItem;
@@ -40,9 +39,7 @@ class IMInputDropdown extends React.Component {
         selectedID   = this.state.ids[this.state.items.indexOf(a)]
       }
       this.refs.input.value = selectedItem;
-      console.log("selectMenuItem("+a+")", selectedItem, selectedID);
       if (selectedID === -1) {
-        console.log("No can do. Please select one of the suggestions above");
 
         $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias",
                                               placement: this.props.popoverPlacement});

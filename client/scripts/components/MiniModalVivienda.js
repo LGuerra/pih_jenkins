@@ -20,7 +20,6 @@ class MiniModalVivienda extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     let btn_bar;
 
     if (this.state.myVariable !== "Ingresa la dirección de una vivienda") {

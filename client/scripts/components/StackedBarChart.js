@@ -1,27 +1,5 @@
 import React from 'react';
 import d3 from 'd3';
-import random from 'lodash/number/random';
-
-function getDummyStackedData(numGroups, numBarsByGroup) {
-  var data = new Array();
-  var group = {};
-  for (var i = 0; i < numGroups; i++) {
-    group.label = 'group-' + i;
-    group.bars = [];
-    for (var j = 0; j < numBarsByGroup; j++) {
-      group.bars.push({
-        label: 'bar-' + j,
-        value: random(0, 100),
-        color: '#1394BC',
-        hoverColor: '#848484'
-      });
-    }
-    data.push(group);
-    group = {};
-  }
-
-  return (data);
-}
 
 class StackedBarChart extends React.Component {
   constructor(props) {
@@ -133,60 +111,6 @@ class StackedBarChart extends React.Component {
       totalOpacity[group.label] = 1;
     });
 
-    this.conf.groups
-      .on('mouseover', function(d, i) {
-        let data = d;
-        let isOneSmaller = false;
-
-        data.bars.forEach((element, index) => {
-          if ((element.value * 100) / totals[element.group] < 7) {
-            isOneSmaller = true;
-          }
-        });
-
-        d3.select(this)
-          .selectAll('text.value')
-          .transition()
-          .duration(300)
-          .style('opacity', 1);
-
-        d3.select(this)
-          .selectAll('rect')
-          .transition()
-          .duration(300)
-          .attr('fill', function(d, i) {
-            return (d.hoverColor);
-          });
-      })
-      .on('mouseout', function(d, i) {
-        d3.select(this)
-          .selectAll('text.value')
-          .transition()
-          .duration(300)
-          .style('opacity', 0);
-
-        d3.select(this)
-          .selectAll('text.title')
-          .transition()
-          .duration(300)
-          .style('opacity', (d, i) => {
-              if ((d.value * 100) / totals[d.group] < 7) {
-                return (0);
-              } else {
-                return (1);
-              }
-          });
-
-        d3.select(this)
-          .selectAll('rect')
-          .transition()
-          .duration(300)
-          .attr('fill', function(d, i) {
-            return (d.color);
-          });
-      });
-
-
     this.conf.bars = this.conf.groups
       .selectAll('rect')
       .data(function(d) {
@@ -224,21 +148,77 @@ class StackedBarChart extends React.Component {
           .transition()
           .duration(300)
           .style('opacity', (d, i) => {
-            if ((actualData.value * 100) / totals[actualData.group] < 7) {
+            if ((actualData.value * 100) / totals[actualData.group] < 10) {
               if (d.label === actualData.label) {
                 return (1);
               } else {
                 return (0);
               }
             } else {
-              if ((d.value * 100) / totals[d.group] < 7) {
+              if ((d.value * 100) / totals[d.group] < 10) {
                 return (0);
               } else {
                 return (1);
               }
             }
           });
-      });
+
+        d3.select(this.parentNode)
+          .selectAll('text.value')
+          .transition()
+          .duration(300)
+          .style('opacity', (d, i) => {
+            if ((actualData.value * 100) / totals[actualData.group] < 10) {
+              if (d.label === actualData.label) {
+                return (1);
+              } else {
+                return (0);
+              }
+            } else {
+              if ((d.value * 100) / totals[d.group] < 10) {
+                return (0);
+              } else {
+                return (1);
+              }
+            }
+          });
+
+        d3.select(this.parentNode)
+          .selectAll('rect')
+          .transition()
+          .duration(300)
+          .attr('fill', function(d, i) {
+            return (d.hoverColor);
+          });
+      })
+      .on('mouseout', function(d, i) {
+        d3.select(this.parentNode)
+          .selectAll('text.value')
+          .transition()
+          .duration(300)
+          .style('opacity', 0);
+
+
+        d3.select(this.parentNode)
+          .selectAll('text.title')
+          .transition()
+          .duration(300)
+          .style('opacity', (d, i) => {
+              if ((d.value * 100) / totals[d.group] < 10) {
+                return (0);
+              } else {
+                return (1);
+              }
+          });
+
+        d3.select(this.parentNode)
+          .selectAll('rect')
+          .transition()
+          .duration(300)
+          .attr('fill', function(d, i) {
+            return (d.color);
+          });
+      })
 
     this._appendValues();
   }
@@ -323,7 +303,7 @@ class StackedBarChart extends React.Component {
         return (_this.conf.xScale(d.group) + 23);
       })
       .style('opacity', (d, i) => {
-        if ((d.value * 100) / totals[d.group] < 7) {
+        if ((d.value * 100) / totals[d.group] < 10) {
           return (0);
         } else {
           return (1);

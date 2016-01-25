@@ -26,13 +26,13 @@ class MainNavbar extends React.Component{
       <nav className={'navbar navbar-default'} style={{minHeight: '40px'}} >
         <div className={'max-width-container'}>
           <div className={'row'}>
-          <div className={'col-md-6 col-sm-6 col-xs-12'}>
+          <div className={'col-md-4 col-sm-3 col-xs-12'}>
             <a href={'/'}>
                 <img height={'26px'} style={{margin: '10px'}} src={IMAGES.intelimetrica} />
             </a>
             </div>
-            <div className={'col-md-6 col-sm-6 col-xs-12'}>
-              <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end'}}>
+            <div className={'col-md-8 col-sm-9 col-xs-12'}>
+              <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
                 {miniSearchForm}
                 {downloadReport}
                 <div className="collapse navbar-collapse navbar-ex1-collapse" style={{marginTop: '-2px'}}>

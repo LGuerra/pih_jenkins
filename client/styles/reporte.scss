@@ -100,7 +100,7 @@
 .header-section {
   @include transition(all, 0.75s, ease);
   background-color: #fff;
-  padding: 1px 0px 10px 0px;
+  padding: 10px;
   &:hover{
     background-color: rgba(242, 245, 245, 0.55);
   }
@@ -181,11 +181,20 @@
   margin-left: 0px !important;
 }
 
+@media screen and (max-width: 1000px) {
+  #landing-input {
+    font-size: 12px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .block-container {
     div {
       border: none !important;
     }
+  }
+  #landing-input {
+    font-size: 11px;
   }
 }
 
@@ -240,4 +249,30 @@
 .footnote{
   font-size: 11px;
   margin-top: 10px;
+}
+
+.tooltip-arrow {
+  border-right-color: #c9c9c9 !important;
+}
+.tooltip {
+  .tooltip-inner{
+    background-color: white !important;
+    border: 1px solid #c9c9c9 !important;
+    border-radius: 5px !important;
+    p {
+      color: black !important;
+    }
+  }
+}
+
+
+.popover-confianza {
+  box-shadow: none;
+  padding: 10px;
+  width: 190px;
+  p {
+    text-align: justify;
+    font-size: 12px;
+    margin: 0px !important;
+  }
 }

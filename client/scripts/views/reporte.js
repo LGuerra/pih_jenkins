@@ -162,11 +162,6 @@ class Reporte extends React.Component{
     let precioHistorico = this.refs.precioHistorico.state.data;
 
     let distribucionTipologia = this.refs.distribucionTipologia.state.data;
-
-    console.log(JSON.stringify(distribucionTipologia));
-    console.log(JSON.stringify(precioHistorico));
-    console.log(JSON.stringify(distribucionPrecio));
-
     allPromises.push(this._buildPromises(
       'viviendas_comparables.json', 'json', viviendasComparables
     ));
@@ -196,6 +191,7 @@ class Reporte extends React.Component{
   }
   _downloadReport() {
     var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+    //var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1;
@@ -300,7 +296,7 @@ class Reporte extends React.Component{
       );
       infoBlocks = (
         <div className={'row block-container'}>
-          <div style={_.merge(borderRight, {paddingLeft: '6px'})} className={'col-sm-4'}>
+          <div style={borderRight} className={'col-sm-4'}>
             <ViviendaInfo
               ref={'viviendaInfo'}
               onGetViviendaInfo={this._onGetViviendaInfo}
@@ -316,11 +312,17 @@ class Reporte extends React.Component{
           </div>
         </div>
       );
-      compareTables = (
-        <ComparativoViviendas
-          ref={'comparativoViviendas'}
-          params={this.state.viviendaParams}/>
-      );
+      if (this.state.viviendaInfo) {
+        compareTables = (
+          <ComparativoViviendas
+            ref={'comparativoViviendas'}
+            coloniaName={coloniaName}
+            viviendaInfo={this.state.viviendaInfo}
+            params={this.state.viviendaParams}/>
+        );
+      } else {
+        compareTables = (<div></div>);
+      }
     } else {
       infoBlocks = (
         <div className={'row block-container'}>
@@ -361,7 +363,7 @@ class Reporte extends React.Component{
             {secondaryNavbar}
             {this.state.type === 'Colonia' ? (
               <div>
-                <h3 className={'section-title'}>{'Datos de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <h3 className={'section-title'}>{'Datos de la colonia ' + coloniaName}</h3>
                 <div className={'line-divider'}></div>
               </div>)
               : ''
@@ -373,7 +375,7 @@ class Reporte extends React.Component{
           <div className={'max-width-container'}>
             {this.state.type === 'Vivienda' ? (
               <div>
-                <h3 className={'section-title'}>{'Información de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <h3 className={'section-title'}>{'Información de la colonia ' + coloniaName}</h3>
                 <div className={'line-divider'}></div>
               </div>)
               : ''

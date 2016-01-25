@@ -5,7 +5,6 @@ class BackToTop extends React.Component {
     super(props);
   }
   componentDidMount() {
-    var offset = 250;
     var duration = 300;
     $('.back-to-top').click(function(event) {
       event.preventDefault();

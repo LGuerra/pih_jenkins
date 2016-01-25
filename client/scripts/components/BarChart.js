@@ -172,7 +172,7 @@ class BarChart extends React.Component {
         let tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         let tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        let posx = _this.conf.xScale(d.label) + _this.props.margin.left;
+        let posx = (_this.conf.xScale(d.label) + _this.props.margin.left + 15) - (tooltipWidth / 2) + (_this.conf.xScale.rangeBand() / 2);
         let posy = _this.props.margin.top + 10;
         _this.conf.tooltip
           .style('left', (posx) + 'px')
@@ -225,7 +225,7 @@ class BarChart extends React.Component {
 
     //Set scales
     this.conf.xScale
-      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
+      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.4);
 
     this.conf.xAxis
       .scale(this.conf.xScale)
