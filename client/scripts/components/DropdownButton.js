@@ -48,8 +48,6 @@ class IMDropdownButton extends React.Component {
     }
     if ( e.keyCode === 13 ) {
       this.setState({lastKeyPressed: 13});
-      //console.log("Pressed 13");
-      //console.log("selectedItem: ", this.state.selectedItem);
       this.props.handleKey13(arr[i]);
       this._closeDropdown()
     }

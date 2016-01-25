@@ -76,7 +76,6 @@ class SearchForm extends React.Component {
 
   _sendRequest (selectedID, lastKeyPressed) {
     let searchInput = this.refs.searchInput.getValue();
-    console.log("---> lastKeyPressed: ", lastKeyPressed);
 
     if (!searchInput) {
       //this.setState({inputClass: "input-error"});
@@ -85,7 +84,6 @@ class SearchForm extends React.Component {
       $('[data-toggle="popover"]').popover('show');
       setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
 
-      console.log("Request not sent");
     } else {
       if (searchInput.length >= 3) {
         //if (this.refs.searchInput.state.selectedID === -1) {
@@ -140,13 +138,11 @@ class SearchForm extends React.Component {
                   } else {
                     let coloniaArr = searchInput.split(",");
                     let colonia = (coloniaArr.length > 2) ? coloniaArr[1] : coloniaArr[0];
-                    console.log("'la colonia'", colonia);
                     $('[data-toggle="popover"]').popover({content: `Lo sentimos, estamos trabajando por tener valuaciones en ${colonia}`, placement: 'top'});
                     $('[data-toggle="popover"]').popover('show');
                     setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 3000);
 
                   }
-                  console.log("sububTrustedGet",suburbFromCoordsR);
                 });
               }
             });
@@ -180,7 +176,6 @@ class SearchForm extends React.Component {
     //   [Done before this question]close dropdowns and modals
     // IF now selected is Vivienda
     //   open modal
-    console.log("_searchTypeSelected", sType);
     let ddmShown = this._closeAllddModalShown();
     let ans = {};
     if (sType !== this.state.searchType) {

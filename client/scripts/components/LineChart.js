@@ -94,17 +94,17 @@ class LineChart extends React.Component {
     var props = this.props;
     var minMaxY = this._getMinMaxY();
 
-    var horizontalLowerLimit = d3.min(this.conf.data[0].data, function(d) {
+    this.conf.horizontalLowerLimit = d3.min(this.conf.data[0].data, function(d) {
       return d.xVariable;
     });
 
-    var horizontalUpperLimit = d3.max(this.conf.data[0].data, function(d) {
+    this.conf.horizontalUpperLimit = d3.max(this.conf.data[0].data, function(d) {
       return d.xVariable;
     });
 
     //Set scales
     this.conf.xScale = d3.time.scale()
-      .domain([horizontalLowerLimit, horizontalUpperLimit])
+      .domain([this.conf.horizontalLowerLimit, this.conf.horizontalUpperLimit])
       .range([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
 
     this.conf.yScale = d3.scale.linear()
@@ -115,7 +115,22 @@ class LineChart extends React.Component {
     this.conf.xAxis = d3.svg.axis()
       .scale(this.conf.xScale)
       .tickFormat(props.xtickFormat)
-      .ticks(d3.time.months, 4)
+      .tickValues((d) => {
+        let currentDate = new Date(this.conf.horizontalLowerLimit);
+        let dateArray = [new Date(currentDate)];
+
+        while (currentDate <= this.conf.horizontalUpperLimit) {
+          let toPushDate;
+          if (this.conf.width < 480) {
+            toPushDate = currentDate.setMonth(currentDate.getMonth() + 8);
+          } else {
+            toPushDate = currentDate.setMonth(currentDate.getMonth() + 4);
+          }
+          dateArray.push(new Date(toPushDate));
+        }
+
+        return (dateArray);
+      })
       .orient('bottom');
 
     this.conf.yAxis = d3.svg.axis()
@@ -245,7 +260,7 @@ class LineChart extends React.Component {
         var posy = 0;
 
         if (posx > _this.conf.width / 2) {
-          posx = posx - (tooltipWidth / 2); 
+          posx = posx - (tooltipWidth / 2);
         } else {
           posx = posx + (tooltipWidth / 2);
         }
@@ -361,7 +376,22 @@ class LineChart extends React.Component {
       .range([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
 
     this.conf.xAxis
-      .ticks(Math.floor(this.conf.width / 120))
+      .tickValues((d) => {
+        let currentDate = new Date(this.conf.horizontalLowerLimit);
+        let dateArray = [new Date(currentDate)];
+
+        while (currentDate <= this.conf.horizontalUpperLimit) {
+          let toPushDate;
+          if (this.conf.width < 480) {
+            toPushDate = currentDate.setMonth(currentDate.getMonth() + 8);
+          } else {
+            toPushDate = currentDate.setMonth(currentDate.getMonth() + 4);
+          }
+          dateArray.push(new Date(toPushDate));
+        }
+
+        return (dateArray);
+      })
       .scale(this.conf.xScale)
 
     //Append axis to graphic content

@@ -67,7 +67,7 @@ class ViviendaInfo extends React.Component {
 
         }
         reputacionComponent = (
-          <p style={{cursor: 'pointer'}} id={'confianza'} title={'HURRA!'} className={'subtitle'}>{stars} Confianza</p>
+          <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>{stars} Confianza</p>
         )
       }
 

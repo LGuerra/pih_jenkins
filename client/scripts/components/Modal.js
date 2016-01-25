@@ -29,7 +29,6 @@ class Modal extends React.Component{
         showArgs = _.initial(args);
       }
 
-      console.log(modal);
 
       if (modal === undefined) {
         modal = renderFunction.apply(null, showArgs);

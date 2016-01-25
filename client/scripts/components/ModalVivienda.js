@@ -55,8 +55,6 @@ class ModalVivienda extends React.Component {
   }
 
   _selectVivienda (a) {
-    console.log("getValueArea", this.getValueArea());
-    console.log("getValueEdad", this.getValueEdad());
     if (a !== this.state.vivienda) this.setState({vivienda: a, showingDropdowns: this.closeShowingDropdowns()});
     else this.setState({showingDropdowns: this.closeShowingDropdowns()});
     this.props.modalChange({vivienda: a});

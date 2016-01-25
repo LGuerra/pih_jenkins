@@ -119,7 +119,6 @@ class MiniSearchForm extends React.Component {
             $('[data-toggle="popover"]').popover('show');
             setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 3000);
           }
-          console.log("sububTrustedGet",suburbFromCoordsR);
         });
       }
     });
@@ -140,7 +139,6 @@ class MiniSearchForm extends React.Component {
 
     } else {
       if (searchInput.length >= 3) {
-        console.log("selectedITemID", this.refs.searchInput.state.selectedID );
         if (searchInput === this.state.suggestions[0].content) {
 
           $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: 'left'});
@@ -260,10 +258,8 @@ class MiniSearchForm extends React.Component {
         // Callback to set suggestions into state. Will recieve suggestions in prediction variable
         let displaySuggestions = (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
-            //console.log(predictions);
             suggests = parseSuggestionsGoogle(predictions);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-            //console.log("SEARCH IN GOOGLE");
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, modaldd: false, inputClass: ""});
           }
         };
@@ -285,10 +281,8 @@ class MiniSearchForm extends React.Component {
                      "highlight.name": "{}"})
           .done(function(response) {
             //Desirable - IF response.isEmpty tell the user there is no data
-            //console.log(response.hits.hit);
             suggests = parseSuggestions(response.hits.hit);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-            //console.log(suggests);
             _this.setState({suggestions: suggests, ddmodalShown: ddmShown, inputClass: ""});
           });
       }
@@ -302,13 +296,11 @@ class MiniSearchForm extends React.Component {
   _clickOutside (e) {
     let ddmShown   = this._closeAllddModalShown();
     ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
-    //console.log("click outside");
     this.setState({ddmodalShown: ddmShown, suggestions: [], modaldd: false});
     //this._focusOnInput();
   }
 
   _modalDD (e) {
-    console.log("called");
     let ddmShown = this._closeAllddModalShown();
     ddmShown.modal = true;
     this.setState({modaldd: e, ddmodalShown: ddmShown});

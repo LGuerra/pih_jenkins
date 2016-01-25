@@ -162,11 +162,6 @@ class Reporte extends React.Component{
     let precioHistorico = this.refs.precioHistorico.state.data;
 
     let distribucionTipologia = this.refs.distribucionTipologia.state.data;
-
-    console.log(JSON.stringify(distribucionTipologia));
-    console.log(JSON.stringify(precioHistorico));
-    console.log(JSON.stringify(distribucionPrecio));
-
     allPromises.push(this._buildPromises(
       'viviendas_comparables.json', 'json', viviendasComparables
     ));

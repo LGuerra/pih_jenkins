@@ -225,7 +225,7 @@ class BarChart extends React.Component {
 
     //Set scales
     this.conf.xScale
-      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.2);
+      .rangeRoundBands([0, this.conf.width - props.margin.left - props.margin.right], 0.4);
 
     this.conf.xAxis
       .scale(this.conf.xScale)
