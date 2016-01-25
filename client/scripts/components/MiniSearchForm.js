@@ -75,7 +75,6 @@ class MiniSearchForm extends React.Component {
   }
 
   _requestVivienda () {
-//Desde aqui
     let searchInput = this.refs.searchInput.getValue();
     let tipoVivienda = (this.state.vivienda === "Departamento") ? 4 : 2;
     let templateUrl = ('reporte?colonia=:colonia:');
@@ -125,7 +124,6 @@ class MiniSearchForm extends React.Component {
     /**
     *              * Send request to Reporte's view inside callback
     *                           */
-//Hasta aqui
   }
 
   _sendRequest () {
