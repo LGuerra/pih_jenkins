@@ -13,7 +13,8 @@ class ApiController < ApplicationController
     @accessor ||= ApiHelper::Accessor.instance
     response, status = @accessor.post(
       request.env['ORIGINAL_FULLPATH'],
-      request.params[:api]
+      request.params[:api],
+      request
     )
     render :json => response, status: status
 
