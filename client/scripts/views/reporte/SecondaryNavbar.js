@@ -27,7 +27,7 @@ class SecondaryNavbar extends React.Component{
         <h3 className={'section-title'}>{'Información del inmueble'}</h3>
         <div className={'line-divider'}></div>
         <div className={'row'}>
-          <div className={'col-md-4 col-sm-12'}>
+          <div className={'col-md-4 col-sm-12'} style={{paddingLeft: '4px'}}>
             <p style={{marginTop: '8px', fontSize: '12px'}}>{props.data.address}</p>
           </div>
           <div className={'col-md-8 col-sm-12'}>
