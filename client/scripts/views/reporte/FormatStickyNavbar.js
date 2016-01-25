@@ -24,7 +24,7 @@ class FormatStickyNavbar extends React.Component{
           <div className={'max-width-container'}>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: '10px 0px'}}>
               <div style={{maxWidth: '33.3%'}}>
-                <p style={{marginTop: '12px', marginBottom: '0px', fontSize: '12px'}}>{props.viviendaInfo.address}</p>
+                <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.viviendaInfo.address}</p>
               </div>
               <div className={'navbar-icon'}>
                 <p className={'green-price'}>{Helpers.formatAsPrice(props.viviendaInfo.valuacion)}</p>
@@ -64,9 +64,9 @@ class FormatStickyNavbar extends React.Component{
                 <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}>{'Colonia ' + Helpers.toTitleCase(props.coloniaInfo.coloniaInfo.nombre)}</p>
               </div>
               <div>
-                <p style={{marginTop: '10px', marginBottom: '10px'}}><span className={'green-price'}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</span> Precio promedio</p>
+                <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}><span style={{color: '#35c079', fontSize: '17px'}}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</span> Precio promedio</p>
               </div>
-              <div style={{marginTop: '17px', marginBottom: '0px'}}>
+              <div style={{marginTop: '10px', marginBottom: '0px', fontSize: '15px'}}>
                 <div style={{textAlign: 'center'}}>
                   <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
                 </div>
