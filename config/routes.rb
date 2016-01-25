@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   root 'pages#index'
   get 'reporte' => 'pages#reporte', as: :reporte
   get '/2013-01-01/*url', to: 'api#tunnel_request'
-  get   '/v1/dev/*url', to: 'api#tunnel_request'
-  post  '/v1/dev/*url', to: 'api#tunnel_request_post'
+  get   "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request'
+  post  "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request_post'
 end

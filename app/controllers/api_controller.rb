@@ -1,11 +1,13 @@
 require 'open-uri'
 
 class ApiController < ApplicationController
+  before_action :authenticate_user!
 
   def tunnel_request
     @accessor ||= ApiHelper::Accessor.instance
     response, status = @accessor.get(
-      request.env['ORIGINAL_FULLPATH']
+      request.env['ORIGINAL_FULLPATH'],
+      current_user
     )
     render :json => response, status: status
   end
@@ -14,7 +16,8 @@ class ApiController < ApplicationController
     response, status = @accessor.post(
       request.env['ORIGINAL_FULLPATH'],
       request.params[:api],
-      request
+      request,
+      current_user
     )
     render :json => response, status: status
 
