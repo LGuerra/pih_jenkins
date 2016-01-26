@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   get '/2013-01-01/*url', to: 'api#tunnel_request_cloud'
   get   "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request'
   post  "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request_post'
+  get 'condiciones' => 'pages#condiciones', as: :condiciones
 end

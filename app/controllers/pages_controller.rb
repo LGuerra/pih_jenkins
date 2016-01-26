@@ -4,4 +4,6 @@ class PagesController < ApplicationController
   end
   def reporte
   end
+  def condiciones
+  end
 end
