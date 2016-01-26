@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'health_check' => 'health_check#index'
   root 'pages#index'
   get 'reporte' => 'pages#reporte', as: :reporte
-  get '/2013-01-01/*url', to: 'api#tunnel_request'
+  get '/2013-01-01/*url', to: 'api#tunnel_request_cloud'
   get   "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request'
   post  "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request_post'
 end

@@ -11,6 +11,14 @@ class ApiController < ApplicationController
     )
     render :json => response, status: status
   end
+  def tunnel_request_cloud
+    @accessor ||= ApiHelper::Accessor.instance
+    response, status = @accessor.cloud(
+      request.env['ORIGINAL_FULLPATH'],
+      current_user
+    )
+    render :json => response, status: status
+  end
   def tunnel_request_post 
     @accessor ||= ApiHelper::Accessor.instance
     response, status = @accessor.post(
@@ -20,6 +28,5 @@ class ApiController < ApplicationController
       current_user
     )
     render :json => response, status: status
-
   end
 end
