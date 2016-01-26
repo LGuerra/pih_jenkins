@@ -1,8 +1,12 @@
-import React from 'react';
-import _ from 'lodash';
-import Helpers from '../../helpers';
+// Vendor
+import React from   'react';
+import _ from       'lodash';
 
+// Components
 import Table from '../../components/Table';
+
+// Helpers
+import Helpers from '../../helpers';
 
 class ComparativoViviendas extends React.Component {
   constructor(props) {
@@ -52,13 +56,13 @@ class ComparativoViviendas extends React.Component {
   render() {
     let content;
     let label = this.props.params.id_tipo_propiedad == 2
-      ? 'Casas comparables'
-      : 'Departamentos comparables';
+      ? 'Casas comparables*'
+      : 'Departamentos comparables*';
 
     if (this.state.data) {
       content = (
         <div>
-          <h3 className={'section-title'}>{label + '*'}</h3>
+          <h3 className={'section-title'}>{label}</h3>
           <div className={'line-divider'}></div>
           <Table
             remarcableRow={[0]}

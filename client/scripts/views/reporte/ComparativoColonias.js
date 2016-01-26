@@ -11,8 +11,9 @@ class ComparativoColonias extends React.Component {
 
     this.state = {};
   }
+
   highlightRow(id) {
-    var rows = $(ReactDOM.findDOMNode(this)).find('tr');
+    let rows = $(ReactDOM.findDOMNode(this)).find('tr');
 
     rows.each(function(index) {
       if ($(this).data('id') == id) {
@@ -24,6 +25,7 @@ class ComparativoColonias extends React.Component {
       }
     });
   }
+
   _formatData(data) {
     let currentIndex;
     let formattedData = data.map((element, index) => {
@@ -43,6 +45,7 @@ class ComparativoColonias extends React.Component {
 
     return (formattedData);
   }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
@@ -68,29 +71,41 @@ class ComparativoColonias extends React.Component {
       });
     });
   }
+
   render() {
     let content;
+
     if (this.state.data) {
       if (this.state.data[0]) {
-        content = (<div>
-          <h3 className={'section-title'}>Colonias colindantes</h3>
-          <div className={'line-divider'}></div>
-          <div className={'row'}>
-            <div className={'col-md-12 col-sm-12'}>
-              <Table
-                remarcableRow={[0]}
-                idField={'id'}
-                onMouseoverRow={this.props.onMouseover}
-                specificClass={'mercado-table table-hover'}
-                data={this.state.data} />
+        content = (
+          <div>
+            <h3 className={'section-title'}>Colonias colindantes</h3>
+            <div className={'line-divider'}></div>
+            <div className={'row'}>
+              <div className={'col-md-12 col-sm-12'}>
+                <Table
+                  remarcableRow={[0]}
+                  idField={'id'}
+                  onMouseoverRow={this.props.onMouseover}
+                  specificClass={'mercado-table table-hover'}
+                  data={this.state.data} />
+              </div>
             </div>
           </div>
-        </div>);
+        );
       } else {
-        content = <h4 style={{textAlign: 'center'}}>{'No hay viviendas de confianza aledañas a la colonia'}</h4>
+        content = (
+          <h4 style={{textAlign: 'center'}}>
+            {'No hay viviendas de confianza aledañas a la colonia'}
+          </h4>
+        );
       }
     } else {
-      content = (<h4 style={{textAlign: 'center'}}>{'No hay viviendas de confianza aledañas a la colonia'}</h4>);
+      content = (
+        <h4 style={{textAlign: 'center'}}>
+          {'No hay viviendas de confianza aledañas a la colonia'}
+        </h4>
+      );
     }
     return (
       content

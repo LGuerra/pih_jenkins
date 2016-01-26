@@ -1,19 +1,25 @@
+// Vendor
 import React from 'react';
-import GoogleMap from '../../components/GoogleMap';
-import Marker from '../../components/Marker';
 
-import config from '../../config';
+// Components
+import GoogleMap from   '../../components/GoogleMap';
+import Marker from      '../../components/Marker';
+
 class FormatGoogleMaps extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       latlon: null
     };
+
     this.highlightFeature = this.highlightFeature.bind(this);
     this._getMap = this._getMap.bind(this);
   }
+
   highlightFeature(id) {
     let map = this.refs.map.mapRef;
+
     if (id) {
       map.data.setStyle(function(feature) {
         let fillColor = feature.getProperty('current') ? '#353535' : '#9a9a9a';
@@ -39,13 +45,16 @@ class FormatGoogleMaps extends React.Component {
       });
     }
   }
+
   _getMap() {
     return (this.refs.map);
   }
+
   componentDidMount() {
     let map = this.refs.map.mapRef;
     let apigClient = apigClientFactory.newClient();
 
+    // Get actual Geojson polygon
     apigClient.suburbGeojsonGet({
       id_col: this.props.zoneID
     }, {}, {}).then((geojsonR) => {
@@ -59,12 +68,14 @@ class FormatGoogleMaps extends React.Component {
       });
     });
 
+    // Get centroid
     apigClient.suburbCentroidGet({
       id_col: this.props.zoneID
     }, {}, {}).then((suburbCentroidR) => {
       map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
     });
 
+    // Get adjacet Geojson polygon
     apigClient.suburbAdjacentSuburbsGet({
       id_col: this.props.zoneID
     }, {}, {})
@@ -86,8 +97,8 @@ class FormatGoogleMaps extends React.Component {
             });
           }
         });
-      })
-    })
+      });
+    });
 
     map.data.addListener('mouseover', (event) => {
       this.highlightFeature(event.feature.getProperty('id'));
@@ -95,10 +106,12 @@ class FormatGoogleMaps extends React.Component {
       let x = event.clientX;
       let y = event.clientY;
     });
+
     map.data.addListener('mouseout', (event) => {
       this.highlightFeature();
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
     });
+
     map.data.addListener('click', (event) => {
       var templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
         .replace(':colonia:', event.feature.getProperty('id'))
@@ -109,13 +122,20 @@ class FormatGoogleMaps extends React.Component {
 
     this.highlightFeature();
   }
+
   render() {
     let marker;
+
     if (this.props.viewType === 'Vivienda') {
       marker = (
-        <Marker latitud={this.props.viviendaInfo.lat} longitud={this.props.viviendaInfo.lng}
-        getMap={this._getMap} color={'red'}/>);
+        <Marker
+          latitud={this.props.viviendaInfo.lat}
+          longitud={this.props.viviendaInfo.lng}
+          getMap={this._getMap}
+          color={'red'}/>
+      );
     }
+
     return (
       <div>
         <GoogleMap

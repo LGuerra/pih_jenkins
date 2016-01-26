@@ -1,17 +1,19 @@
+// Vendor
 import React from 'react';
 import _ from 'lodash';
 
+// Helpers
 import Helpers from '../../helpers';
-import helper_properties from '../../helper_properties';
 
 class ViviendaInfo extends React.Component {
   constructor(props) {
     super(props);
 
-    this._togglePopOver = this._togglePopOver.bind(this);
-
     this.state = {};
+
+    this._togglePopOver = this._togglePopOver.bind(this);
   }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
@@ -40,6 +42,7 @@ class ViviendaInfo extends React.Component {
       });
 
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.data && this.state.data) {
       let descriptions = ['más de 40%', 'entre 30% y 40% ', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
@@ -62,6 +65,7 @@ class ViviendaInfo extends React.Component {
     }
 
   }
+
   _togglePopOver(show) {
     if (show) {
       $('#confianza').popover('show');
@@ -69,6 +73,7 @@ class ViviendaInfo extends React.Component {
       $('#confianza').popover('hide');
     }
   }
+
   render() {
     let content;
 
@@ -76,6 +81,7 @@ class ViviendaInfo extends React.Component {
       let stars = new Array();
       let reputacion = this.state.data.confianza > 5 ? 5 : this.state.data.confianza;
       let reputacionComponent;
+      let valuacion = Math.floor(this.state.data.valuacion / 1000);
 
       for (let i = 0; i < reputacion; i++) {
         stars.push(
@@ -90,35 +96,37 @@ class ViviendaInfo extends React.Component {
         );
       }
       reputacionComponent = (
-        <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>{stars} Confianza <img
-          onMouseEnter={this._togglePopOver.bind(this, true)}
-          onMouseOut={this._togglePopOver.bind(this, false)}
-          height={'10px'}
-          src={IMAGES.question}
-          style={{marginBottom: '3px'}}/></p>
+        <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>
+          {stars} Confianza
+          <img
+            onMouseEnter={this._togglePopOver.bind(this, true)}
+            onMouseOut={this._togglePopOver.bind(this, false)}
+            height={'10px'}
+            src={IMAGES.question}
+            style={{marginBottom: '3px'}}/>
+        </p>
       )
 
-      let valuacion = Math.floor(this.state.data.valuacion / 1000)
 
       content = (
-      <div className={'oferta-disponible'}>
-        <h4 className={'subsection-title'} style={{marginLeft: '5px'}}>Vivienda valuada</h4>
-        <div style={{
-          marginTop: '20px',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center'}}>
-          <div style={{textAlign: 'center'}}>
-            <p className={'green-price'}>{Helpers.formatAsPrice(valuacion * 1000)}</p>
-            <p className={'subtitle'} style={{marginBottom: '0px'}}>Precio estimado</p>
-            {reputacionComponent}
-          </div>
-          <div style={{textAlign: 'center'}}>
-            <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.precioM2)}</p>
-            <p className={'subtitle'}>Precio estimado por m²</p>
+        <div className={'oferta-disponible'}>
+          <h4 className={'subsection-title'} style={{marginLeft: '5px'}}>{'Vivienda valuada'}</h4>
+          <div style={{
+            marginTop: '20px',
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center'}}>
+            <div style={{textAlign: 'center'}}>
+              <p className={'green-price'}>{Helpers.formatAsPrice(valuacion * 1000)}</p>
+              <p className={'subtitle'} style={{marginBottom: '0px'}}>{'Precio estimado'}</p>
+              {reputacionComponent}
+            </div>
+            <div style={{textAlign: 'center'}}>
+              <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.precioM2)}</p>
+              <p className={'subtitle'}>{'Precio estimado por m²'}</p>
+            </div>
           </div>
         </div>
-      </div>
       );
     } else {
       content = <div></div>;
