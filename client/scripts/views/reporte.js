@@ -259,7 +259,6 @@ class Reporte extends React.Component{
 
   _onGetColoniaInfo(info) {
     this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
-    this.refs.distribucionPrecio._checkoutAvailability(info.apreciacion);
 
     this.setState({
       coloniaInfo: info

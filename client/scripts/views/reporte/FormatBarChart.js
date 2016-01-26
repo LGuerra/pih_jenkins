@@ -67,14 +67,6 @@ class FormatBarChart extends React.Component {
     return (formattedData);
   }
 
-  _checkoutAvailability(apreciacion) {
-    if (apreciacion > 0.20 || apreciacion == null) {
-      this.setState({
-        isAvailable: false
-      });
-    }
-  }
-
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
