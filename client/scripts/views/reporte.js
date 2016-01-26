@@ -440,7 +440,7 @@ class Reporte extends React.Component{
             </div>
           </div>
         </div>
-        <div className={'row'}>
+        <div className={'row'} style={{margin: '10px 0px'}}>
           <div className={'col-sm-12'}>
             <FormatGoogleMaps
               viewType={this.state.type}
