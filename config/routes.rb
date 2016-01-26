@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'health_check' => 'health_check#index'
   root 'pages#index'
   get 'reporte' => 'pages#reporte', as: :reporte
+  get 'condiciones' => 'pages#condiciones', as: :condiciones
   get '/2013-01-01/*url', to: 'api#tunnel_request'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

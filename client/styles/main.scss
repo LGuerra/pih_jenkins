@@ -71,6 +71,12 @@ body {
   }
 }
 
+.terms{
+  height: calc(100vh - 112px);
+  max-width: 600px;
+  padding: 22px;
+}
+
 .nav > li > a{
   padding: 10px 0px;
 }
