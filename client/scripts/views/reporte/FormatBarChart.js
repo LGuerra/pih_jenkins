@@ -55,9 +55,9 @@ class FormatBarChart extends React.Component {
       formattedData= data.price_distribution.map((element, index) => {
         let label;
         if (element.lim_inf === 'limite_inf') {
-          label = '<' + Helpers.formatAsNumber(element.lim_sup / 1000);
+          label = '< ' + Helpers.formatAsNumber(element.lim_sup / 1000);
         } else if (element.lim_sup === 'limite_sup') {
-          label = '>' + Helpers.formatAsNumber(element.lim_inf / 1000);
+          label = '> ' + Helpers.formatAsNumber(element.lim_inf / 1000);
         } else {
           label = Helpers.formatAsNumber(element.lim_inf / 1000) + ' a ' + Helpers.formatAsNumber(element.lim_sup / 1000);
         }

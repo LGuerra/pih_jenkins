@@ -25,19 +25,19 @@ class MainNavbar extends React.Component{
                                                              searchType={this.props.type}/> : "" ;
 
     return (
-      <nav className={'navbar navbar-default'} style={{minHeight: '40px'}} >
+      <nav className={'navbar navbar-default'} style={{minHeight: '40px', padding: '0px 12px'}} >
         <div className={'max-width-container'}>
           <div className={'row'}>
-          <div className={'col-md-4 col-sm-3 col-xs-12'}>
+          <div className={'col-md-4 col-sm-3 col-xs-12'} style={{paddingLeft: '0px'}}>
             <a href={'/'}>
-                <img height={'26px'} style={{margin: '10px'}} src={IMAGES.intelimetrica} />
+                <img height={'26px'} style={{margin: '10px', marginLeft: '0px'}} src={IMAGES.intelimetrica} />
             </a>
             </div>
             <div className={'col-md-8 col-sm-9 col-xs-12'}>
               <div style={{cursor: 'pointer', paddingTop: '0px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
                 {miniSearchForm}
                 {downloadReport}
-                <div className="collapse navbar-collapse navbar-ex1-collapse" style={{marginTop: '-2px'}}>
+                <div className="collapse navbar-collapse navbar-ex1-collapse" style={{marginTop: '-2px', paddingRight: '0px'}}>
                   <ul className="nav navbar-nav">
                     <li className="dropdown">
                       <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
