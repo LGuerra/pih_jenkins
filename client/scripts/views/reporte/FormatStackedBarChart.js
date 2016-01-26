@@ -1,21 +1,24 @@
+// Vendor
 import React from 'react'
 import random from 'lodash/number/random';
-
 import _ from 'lodash';
 
+// Components
 import StackedBarChart from '../../components/StackedBarChart';
-import NoChart from '../../components/NoChart';
+import NoChart from         '../../components/NoChart';
 
 class FormatStackedBarChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
   _formatData(data) {
     if (data.typology_distribution) {
       var formattedData = data.typology_distribution.map(function(element, index) {
         let label = Object.keys(element)[0];
         let bars = element[label];
+
         bars.forEach(function(bar) {
           bar.color = '#35C0BE';
           bar.hoverColor = '#2a9998';
@@ -24,7 +27,8 @@ class FormatStackedBarChart extends React.Component {
         if (label === 'Recamaras') {
           bars = _.sortBy(bars, function(element) {
             return (element.label);
-          })
+          });
+          label = 'Recámaras';
         }
 
         if (label === 'Superficie construida') {
@@ -50,7 +54,6 @@ class FormatStackedBarChart extends React.Component {
           let htC = bars.splice(indexes.ht_c - 1, 1);
 
           bars.reverse();
-
           bars.unshift(ltC[0]);
           bars.push(htC[0]);
         }
@@ -61,11 +64,12 @@ class FormatStackedBarChart extends React.Component {
         });
       });
     } else {
-      return ([])
+      return ([]);
     }
 
     return (formattedData);
   }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
@@ -83,6 +87,7 @@ class FormatStackedBarChart extends React.Component {
       });
     });
   }
+
   render() {
     let content;
 
