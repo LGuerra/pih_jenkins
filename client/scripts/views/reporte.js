@@ -64,6 +64,7 @@ class Reporte extends React.Component{
     this.loadingReport = false;
     this.state.type = getURLParameter('tipo');
     this.state.coloniaID = getURLParameter('colonia');
+    this.state.ddSearchBar = false;
 
     //Methods instances
     this._downloadReport = this._downloadReport.bind(this);
@@ -76,6 +77,8 @@ class Reporte extends React.Component{
     this._downloadReport = this._downloadReport.bind(this);
     this._getImages = this._getImages.bind(this);
     this._onGetViviendaInfo = this._onGetViviendaInfo.bind(this);
+    this._clickOutside = this._clickOutside.bind(this);
+    this._ddChange = this._ddChange.bind(this);
   }
 
   _printInfo(url) {
@@ -265,6 +268,12 @@ class Reporte extends React.Component{
       viviendaInfo: info
     });
   }
+  _clickOutside() {
+    this.setState({ddSearchBar: false});
+  }
+  _ddChange(dd) {
+    this.setState({ddSearchBar: dd});
+  }
   render() {
     var loadingFrame;
     var borderRight = {
@@ -312,11 +321,17 @@ class Reporte extends React.Component{
           </div>
         </div>
       );
-      compareTables = (
-        <ComparativoViviendas
-          ref={'comparativoViviendas'}
-          params={this.state.viviendaParams}/>
-      );
+      if (this.state.viviendaInfo) {
+        compareTables = (
+          <ComparativoViviendas
+            ref={'comparativoViviendas'}
+            coloniaName={coloniaName}
+            viviendaInfo={this.state.viviendaInfo}
+            params={this.state.viviendaParams}/>
+        );
+      } else {
+        compareTables = (<div></div>);
+      }
     } else {
       infoBlocks = (
         <div className={'row block-container'}>
@@ -339,11 +354,13 @@ class Reporte extends React.Component{
     }
 
     return (
-      <div>
+      <div onClick={this._clickOutside}>
         <header>
           <MainNavbar
             type={this.state.type}
             onOpenForm={this._openForm}
+            ddSearchBar={this.state.ddSearchBar}
+            ddChange={this._ddChange}
             onDownloadReport={this._downloadReport}>
           </MainNavbar>
             {loadingFrame}
@@ -357,7 +374,7 @@ class Reporte extends React.Component{
             {secondaryNavbar}
             {this.state.type === 'Colonia' ? (
               <div>
-                <h3 className={'section-title'}>{'Datos de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <h3 className={'section-title'}>{'Datos de la colonia ' + coloniaName}</h3>
                 <div className={'line-divider'}></div>
               </div>)
               : ''
@@ -369,7 +386,7 @@ class Reporte extends React.Component{
           <div className={'max-width-container'}>
             {this.state.type === 'Vivienda' ? (
               <div>
-                <h3 className={'section-title'}>{'Información de la colonia ' + Helpers.toTitleCase(coloniaName)}</h3>
+                <h3 className={'section-title'}>{'Información de la colonia ' + coloniaName}</h3>
                 <div className={'line-divider'}></div>
               </div>)
               : ''

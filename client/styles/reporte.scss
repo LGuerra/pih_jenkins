@@ -250,3 +250,29 @@
   font-size: 11px;
   margin-top: 10px;
 }
+
+.tooltip-arrow {
+  border-right-color: #c9c9c9 !important;
+}
+.tooltip {
+  .tooltip-inner{
+    background-color: white !important;
+    border: 1px solid #c9c9c9 !important;
+    border-radius: 5px !important;
+    p {
+      color: black !important;
+    }
+  }
+}
+
+
+.popover-confianza {
+  box-shadow: none;
+  padding: 10px;
+  width: 190px;
+  p {
+    text-align: justify;
+    font-size: 12px;
+    margin: 0px !important;
+  }
+}

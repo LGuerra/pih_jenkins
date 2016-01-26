@@ -10,15 +10,27 @@ class ComparativoViviendas extends React.Component {
     this.state = {};
   }
   _formatData(data) {
-    let formattedData = data.similar_houses.map((element, index) => {
-      return ({
+    let formattedData = [{
+        'Precio por m²': Helpers.formatAsPrice(this.props.viviendaInfo.precioM2) || '-',
+        'Precio de oferta': Helpers.formatAsPrice(this.props.viviendaInfo.valuacion) || '-',
+        'Recámaras': this.props.viviendaInfo.recamaras || '-',
+        'Baños': this.props.viviendaInfo.banos || '-',
+        'Estacionamientos': this.props.viviendaInfo.estacionamientos || '-',
+        'Área construida': this.props.viviendaInfo.area_construida || '-',
+        'Edad': this.props.viviendaInfo.edad || '-',
+        'Colonia': this.props.coloniaName || '-'
+    }];
+
+    data.similar_houses.forEach((element, index) => {
+      formattedData.push({
         'Precio por m²': Helpers.formatAsPrice(element.precio / element.m2) || '-',
         'Precio de oferta': Helpers.formatAsPrice(element.precio) || '-',
         'Recámaras': element.recamaras || '-',
         'Baños': element.banos || '-',
         'Estacionamientos': element.estacionamientos || '-',
         'Área construida': element.m2 || '-',
-        'Edad': element.edad || '-'
+        'Edad': element.edad || '-',
+        'Colonia': element.nombre_colonia || '-'
       });
     });
 
@@ -27,14 +39,11 @@ class ComparativoViviendas extends React.Component {
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
+    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
+    params['precio_m2'] = this.props.viviendaInfo.precioM2;
 
-    let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion', 'area_construida');
-    params['precio_m2'] = params.area_construida;
-
-    console.log(params);
     apigClient.similarsPost({}, params, {})
       .then((similarsR) => {
-        console.log(similarsR.data);
         this.setState({
           data: this._formatData(similarsR.data)
         });
@@ -52,6 +61,7 @@ class ComparativoViviendas extends React.Component {
           <h3 className={'section-title'}>{label + '*'}</h3>
           <div className={'line-divider'}></div>
           <Table
+            remarcableRow={[0]}
             limit={5}
             specificClass={'mercado-table table-hover'}
             data={this.state.data} />
