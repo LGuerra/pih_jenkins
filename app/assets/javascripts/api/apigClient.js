@@ -51,7 +51,7 @@ apigClientFactory.newClient = function (config) {
         config.defaultAcceptType = 'application/json';
     }
 
-    var stageAPI = 'prod';
+    var stageAPI = 'dev';
     var endpoint = '/v1/' +  stageAPI;
     var parser = document.createElement('a');
     parser.href = endpoint;
