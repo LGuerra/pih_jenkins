@@ -23,7 +23,6 @@ module ApiHelper
         req.add_field("GUI-User", user.email)
         req['Content-Type'] = request.headers['Content-Type']
         resp = http.request(req)
-        puts resp.body
         [resp.body, resp.code]
       rescue => e
         puts e
