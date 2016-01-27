@@ -81,7 +81,7 @@ class OfertaDisponible extends React.Component {
                 <img height={'50px'} src={IMAGES.calendar}/>
                 <div style={{width: '100px'}}>
                   <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.averageTime)) + ' días'}</p>
-                  <p className={'subtitle'}>Tiempo promedio en el mercado*</p>
+                  <p className={'subtitle'}>Tiempo promedio en el mercado<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
                 </div>
               </div>
             </div>

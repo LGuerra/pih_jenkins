@@ -90,11 +90,11 @@ class ColoniaInfo extends React.Component {
         }}>
           <div style={{textAlign: 'center'}}>
             <p className={'green-price'}>{averageOffer}</p>
-            <p className={'subtitle'}>Precio promedio total*</p>
+            <p className={'subtitle'}>Precio promedio total<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>{averageM2}</p>
-            <p className={'subtitle'}>Precio promedio por m²*</p>
+            <p className={'subtitle'}>Precio promedio por m²<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
           </div>
           <div style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>

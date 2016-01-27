@@ -397,7 +397,7 @@ class Reporte extends React.Component{
                 zoneID={this.state.coloniaID} />
             </div>
             <div>
-              <h4 className={'subsection-title'}>Distribución de Tipología*</h4>
+              <h4 className={'subsection-title'}>Distribución de Tipología<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
               <FormatStackedBarChart
                 ref={'distribucionTipologia'}
                 id={'distribucion_tipologia'}
@@ -416,7 +416,7 @@ class Reporte extends React.Component{
                 </div>
               </div>
               <div className={'col-sm-6'}>
-                <h4 className={'subsection-title'}>Distribución de Precio por m²*</h4>
+                <h4 className={'subsection-title'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
                 <FormatBarChart
                   ref={'distribucionPrecio'}
                   id={'distribucion_precio'}
@@ -429,7 +429,10 @@ class Reporte extends React.Component{
           <div className={'max-width-container'}>
             <div className={'col-sm-12'}>
               {compareTables}
-              <p style={{textAlign: 'right'}} className={'footnote'}>*Información de mercado con base en datos de los últimos 6 meses.</p>
+              <div className={'footnote'}>
+                <img width={'7px'} src={IMAGES.asterisk} />
+                <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>Información de mercado con base en datos de los últimos 6 meses.</p>
+              </div>
             </div>
           </div>
         </div>
