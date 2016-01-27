@@ -42,7 +42,6 @@ class ComparativoViviendas extends React.Component {
   }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
-    console.log($('meta[name="csrf-token"]'));
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
     params['precio_m2'] = this.props.viviendaInfo.precioM2;
     apigClient.similarsPost({}, params,{

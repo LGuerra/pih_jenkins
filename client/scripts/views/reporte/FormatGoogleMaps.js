@@ -107,13 +107,45 @@ class FormatGoogleMaps extends React.Component {
     map.data.addListener('mouseover', (event) => {
       this.highlightFeature(event.feature.getProperty('id'));
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
-      let x = event.clientX;
-      let y = event.clientY;
+    });
+
+    map.data.addListener('mousemove', (event) => {
+      if (!event.feature.getProperty('current')) {
+        let html = `
+          <div class="tooltip-container">
+            <p class="tooltip-title">${event.feature.getProperty('name')}</p>
+          </div>
+        `;
+
+        $('#map-tooltip').css({
+          display: 'block',
+          left: event.rb.offsetX + 25,
+          top: event.rb.offsetY + 15
+        })
+        .html(html);
+      } else {
+        let html = `
+          <div class="tooltip-container">
+            <p class="tooltip-title">${this.props.coloniaName}</p>
+          </div>
+        `;
+
+        $('#map-tooltip').css({
+          display: 'block',
+          left: event.rb.offsetX + 25,
+          top: event.rb.offsetY + 15
+        })
+        .html(html);
+      }
     });
 
     map.data.addListener('mouseout', (event) => {
       this.highlightFeature();
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
+
+        $('#map-tooltip').css({
+          display: 'none'
+        })
     });
 
     map.data.addListener('click', (event) => {
@@ -153,6 +185,8 @@ class FormatGoogleMaps extends React.Component {
           ref='map'
           zoomTop={10} />
         {marker}
+        <div id={'map-tooltip'}>
+        </div>
       </div>
     );
   }

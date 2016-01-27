@@ -29,7 +29,7 @@ class ViviendaInfo extends React.Component {
       'tipo_operacion');
 
       apigClient.modelValuationPost({}, params, {
-        headers: { 
+        headers: {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
       })
@@ -107,7 +107,7 @@ class ViviendaInfo extends React.Component {
             onMouseOut={this._togglePopOver.bind(this, false)}
             height={'10px'}
             src={IMAGES.question}
-            style={{marginBottom: '3px'}}/>
+            style={{marginBottom: '1px', marginLeft: '5px'}}/>
         </p>
       )
 

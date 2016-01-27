@@ -265,6 +265,12 @@
   }
 }
 
+#map-tooltip {
+  position: absolute;
+  background-color: white;
+  display: none;
+}
+
 .popover-confianza {
   box-shadow: none;
   padding: 10px 10px 10px 12px;

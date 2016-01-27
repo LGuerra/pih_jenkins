@@ -442,6 +442,7 @@ class Reporte extends React.Component{
         <div className={'row'} style={{margin: '10px 0px'}}>
           <div className={'col-sm-12'}>
             <FormatGoogleMaps
+              coloniaName={coloniaName}
               viewType={this.state.type}
               viviendaInfo={this.state.viviendaParams ?
                 {
