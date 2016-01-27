@@ -249,6 +249,8 @@
 .footnote{
   font-size: 11px;
   margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .tooltip-arrow {
