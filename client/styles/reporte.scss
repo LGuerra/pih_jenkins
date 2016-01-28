@@ -22,11 +22,11 @@
   font-size: 13px;
   th {
     text-align: center;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 0px;
   }
   td {
     text-align: center;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 0px;
     border-bottom: 1px solid #E6E6E6;
     cursor: pointer;
   }
@@ -124,7 +124,7 @@
 
 .tooltip-container {
   background-color: #FFF;
-  border: 1px solid #000;
+  border: 1px solid #888888;
   border-radius: 2px;
   padding: 5px;
   p {

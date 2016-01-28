@@ -82,7 +82,7 @@ class ComparativoColonias extends React.Component {
             <h3 className={'section-title'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
             <div className={'line-divider'}></div>
             <div className={'row'}>
-              <div className={'col-md-12 col-sm-12'}>
+              <div className={'col-md-12 col-sm-12'} style={{padding: '0px'}}>
                 <Table
                   remarcableRow={[0]}
                   idField={'id'}

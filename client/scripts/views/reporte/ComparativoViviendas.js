@@ -58,8 +58,8 @@ class ComparativoViviendas extends React.Component {
   render() {
     let content;
     let label = this.props.params.id_tipo_propiedad == 2
-      ? 'Casas comparables*'
-      : 'Departamentos comparables*';
+      ? 'Casas comparables'
+      : 'Departamentos comparables';
 
     if (this.state.data) {
       content = (
