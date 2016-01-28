@@ -87,18 +87,24 @@ class ViviendaInfo extends React.Component {
       let reputacionComponent;
       let valuacion = Math.floor(this.state.data.valuacion / 1000);
 
-      for (let i = 0; i < reputacion; i++) {
+      if (reputacion < 2) {
         stars.push(
-          <img key={'star-' + i} height={'12px'} src={IMAGES.star} style={{marginBottom: '3px'}}/>
+          <img height={'12px'} src={IMAGES.alert} style={{marginBottom: '3px'}}/>
         );
+      } else {
+        for (let i = 0; i < reputacion; i++) {
+          stars.push(
+            <img key={'star-' + i} height={'12px'} src={IMAGES.star} style={{marginBottom: '3px'}}/>
+          );
+        }
 
+        for (let i = stars.length; i < 5; i++) {
+          stars.push(
+            <img key={'star_2-' + i} height={'12px'} src={IMAGES.star_2} style={{marginBottom: '3px'}}/>
+          );
+        }
       }
 
-      for (let i = stars.length; i < 5; i++) {
-        stars.push(
-          <img key={'star_2-' + i} height={'12px'} src={IMAGES.star_2} style={{marginBottom: '3px'}}/>
-        );
-      }
       reputacionComponent = (
         <p style={{cursor: 'pointer'}} id={'confianza'} className={'subtitle'}>
           {stars} Confianza
@@ -109,8 +115,7 @@ class ViviendaInfo extends React.Component {
             src={IMAGES.question}
             style={{marginBottom: '1px', marginLeft: '5px'}}/>
         </p>
-      )
-
+      );
 
       content = (
         <div className={'oferta-disponible'}>

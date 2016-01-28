@@ -109,51 +109,53 @@ class FormatGoogleMaps extends React.Component {
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
     });
 
-    map.data.addListener('mousemove', (event) => {
-      if (!event.feature.getProperty('current')) {
-        let html = `
-          <div class="tooltip-container">
-            <p class="tooltip-title">${event.feature.getProperty('name')}</p>
-          </div>
-        `;
-
-        $('#map-tooltip').css({
-          display: 'block',
-          left: event.rb.offsetX + 25,
-          top: event.rb.offsetY + 15
-        })
-        .html(html);
-      } else {
-        let html = `
-          <div class="tooltip-container">
-            <p class="tooltip-title">${this.props.coloniaName}</p>
-          </div>
-        `;
-
-        $('#map-tooltip').css({
-          display: 'block',
-          left: event.rb.offsetX + 25,
-          top: event.rb.offsetY + 15
-        })
-        .html(html);
-      }
-    });
-
     map.data.addListener('mouseout', (event) => {
       this.highlightFeature();
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
 
-        $('#map-tooltip').css({
-          display: 'none'
-        })
     });
 
     map.data.addListener('click', (event) => {
-      var templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+      let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
         .replace(':colonia:', event.feature.getProperty('id'))
         .replace(':reportType:', 'Colonia');
 
-      window.open(templateUrl);
+      let html;
+
+      if (!event.feature.getProperty('current')) {
+        html = `
+          <div class="tooltip-container">
+            <p class="tooltip-title">${event.feature.getProperty('name')}</p>
+            <a class="tooltip-value" href=${templateUrl}>Ver detalle</a>
+          </div>
+        `;
+      } else {
+        html = `
+          <div class="tooltip-container">
+            <p class="tooltip-title">${this.props.coloniaName}</p>
+          </div>
+        `;
+      }
+
+      $('#map-tooltip').css({
+        display: 'block',
+        left: event.rb.offsetX + 15,
+        top: event.rb.offsetY + 5
+      })
+      .html(html);
+
+    });
+
+    map.addListener('drag', () => {
+      $('#map-tooltip').css({
+        display: 'none'
+      });
+    });
+
+    map.addListener('click', () => {
+      $('#map-tooltip').css({
+        display: 'none'
+      });
     });
 
     this.highlightFeature();

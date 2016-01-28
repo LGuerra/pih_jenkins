@@ -130,6 +130,13 @@
   p {
     margin-bottom: 0px !important;
   }
+  a {
+    text-decoration: none;
+    padding-left: 0px !important;
+    &:hover {
+      text-decoration: none;
+    }
+  }
   .tooltip-title{
     font-weight: bold;
     font-size: 10px;
