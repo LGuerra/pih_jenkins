@@ -1,22 +1,12 @@
+// Vendor
 import React from 'react';
-import random from 'lodash/number/random';
 
+// Components
 import BarChart from '../../components/BarChart';
 import NoChart from '../../components/NoChart';
 
+// Helpers
 import Helpers from '../../helpers';
-
-function getDummyBarData(numBars) {
-  var data = new Array();
-
-  for (var i = 0; i < numBars; i++) {
-    data.push({
-      value: random(0, 100),
-      label: 'nombre lar bar' + i
-    });
-  }
-  return (data);
-}
 
 class FormatBarChart extends React.Component {
   constructor(props) {
@@ -26,6 +16,7 @@ class FormatBarChart extends React.Component {
       isAvailable: true
     };
   }
+
   _tooltipBarFormat(d, i) {
     let title
 
@@ -43,12 +34,13 @@ class FormatBarChart extends React.Component {
       </div>
       <div class="tooltip-row">
         <p class="tooltip-value">${(d.value * 100).toFixed(1)}%</p>
-        <p class="tooltip-unit">${'&nbsp;Viviendas'}</p>
+        <p class="tooltip-unit">&nbsp;${'Viviendas'}</p>
       </div>
     </div>`;
 
     return (html);
   }
+
   _formatData(data) {
     let formattedData;
     if (data.price_distribution) {
@@ -74,25 +66,24 @@ class FormatBarChart extends React.Component {
 
     return (formattedData);
   }
-  _checkoutAvailability(apreciacion) {
-    if (apreciacion > 20 || apreciacion == null) {
-      this.setState({
-        isAvailable: false
-      });
-    }
-  }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
     apigClient.stadisticsPriceDistributionPost({}, {
       id_col: this.props.zoneID
-    }, {}).then((stadisticsPriceDistributionR) => {
+    }, {
+        headers: { 
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+      }).then((stadisticsPriceDistributionR) => {
       let data = this._formatData(stadisticsPriceDistributionR.data);
       this.setState({
         data: data
       });
     });
   }
+
   render() {
     let content;
 

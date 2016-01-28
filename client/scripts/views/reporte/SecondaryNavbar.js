@@ -1,9 +1,11 @@
+// Vendor
 import React from 'react';
 
 class SecondaryNavbar extends React.Component{
   constructor(props) {
     super(props);
   }
+
   render() {
     let props = this.props;
     let image;
@@ -22,7 +24,7 @@ class SecondaryNavbar extends React.Component{
 
     return (
       <div className={'secondary-nav'} style={{
-        width: this.props.width
+        width: props.width
       }}>
         <h3 className={'section-title'}>{'Información del inmueble'}</h3>
         <div className={'line-divider'}></div>

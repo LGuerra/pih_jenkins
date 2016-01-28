@@ -1,8 +1,12 @@
-import React from 'react';
-import _ from 'lodash';
-import Helpers from '../../helpers';
+// Vendor
+import React from   'react';
+import _ from       'lodash';
 
+// Components
 import Table from '../../components/Table';
+
+// Helpers
+import Helpers from '../../helpers';
 
 class ComparativoViviendas extends React.Component {
   constructor(props) {
@@ -38,22 +42,24 @@ class ComparativoViviendas extends React.Component {
   }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
-
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
     params['precio_m2'] = this.props.viviendaInfo.precioM2;
-
-    apigClient.similarsPost({}, params, {})
-      .then((similarsR) => {
-        this.setState({
-          data: this._formatData(similarsR.data)
-        });
+    apigClient.similarsPost({}, params,{
+      headers: { 
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      }
+    })
+    .then((similarsR) => {
+      this.setState({
+        data: this._formatData(similarsR.data)
       });
+    });
   }
   render() {
     let content;
     let label = this.props.params.id_tipo_propiedad == 2
-      ? 'Casas comparables'
-      : 'Departamentos comparables';
+      ? 'Casas comparables*'
+      : 'Departamentos comparables*';
 
     if (this.state.data) {
       content = (

@@ -1,13 +1,10 @@
 // Vendor
 import React from 'react';
-import ReactDOM from 'react-dom';
-import _ from 'lodash';
+import _ from     'lodash';
 
 // Components
 import BackToTop from   '../components/BackToTop';
-//import Modal from       '../components/Modal';
 import MainNavbar from  '../components/MainNavbar';
-//import Modal from       '../components/Modal';
 import SearchForm from  '../components/SearchForm';
 import Spinner from     '../components/Spinner';
 
@@ -21,68 +18,58 @@ import FormatLineChart from       './reporte/FormatLineChart';
 import FormatStackedBarChart from './reporte/FormatStackedBarChart';
 import FormatStickyNavbar from    './reporte/FormatStickyNavbar';
 import OfertaDisponible from      './reporte/OfertaDisponible';
-import PrecioDistribucion from    './reporte/PrecioDistribucion';
 import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ViviendaInfo from          './reporte/ViviendaInfo';
 
+// Helpers
 import Helpers from '../helpers';
-
-function getURLParameter(name) {
-  /**
-   * Disabling eslint to avoid regex ERROR*/
-  /*eslint-disable*/
-  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
-  /*eslint-enable*/
-}
 
 class Reporte extends React.Component{
   constructor(props) {
     super(props);
 
-    var type = getURLParameter('tipo') === 'Colonia' ? 'colonia' : 'Vivienda';
+    this.state = {
+      type: Helpers.getURLParameter('tipo'),
+      coloniaID: Helpers.getURLParameter('colonia'),
+      ddSearchBar: false,
+      loadingReport: false
+    };
 
-    this.state = {};
-
-    if (type === 'Vivienda') {
+    if (Helpers.getURLParameter('tipo') == 'Vivienda') {
       //Get initial State
-      this.state = {
-        viviendaParams: {
-          longitud: Number(getURLParameter('longitud')),
-          latitud: Number(getURLParameter('latitud')),
-          recamaras: Number(getURLParameter('recamaras')),
-          banos: Number(getURLParameter('banos')),
-          estacionamientos: Number(getURLParameter('estacionamientos')),
-          edad: Number(getURLParameter('edad')),
-          id_tipo_propiedad: Number(getURLParameter('id_tipo_vivienda')),
-          area_construida: Number(getURLParameter('area_construida')),
-          address: getURLParameter('address'),
-          tipo_operacion: Number(getURLParameter('tipo_operacion'))
-        }
+      this.state.viviendaParams =  {
+        longitud: Number(Helpers.getURLParameter('longitud')),
+        latitud: Number(Helpers.getURLParameter('latitud')),
+        recamaras: Number(Helpers.getURLParameter('recamaras')),
+        banos: Number(Helpers.getURLParameter('banos')),
+        estacionamientos: Number(Helpers.getURLParameter('estacionamientos')),
+        edad: Number(Helpers.getURLParameter('edad')),
+        id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_vivienda')),
+        area_construida: Number(Helpers.getURLParameter('area_construida')),
+        address: Helpers.getURLParameter('address'),
+        tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion'))
       }
     }
 
-    this.loadingReport = false;
-    this.state.type = getURLParameter('tipo');
-    this.state.coloniaID = getURLParameter('colonia');
-    this.state.ddSearchBar = false;
-
     //Methods instances
-    this._downloadReport = this._downloadReport.bind(this);
-    this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
-    this._printInfo = this._printInfo.bind(this);
-    this._buildPromises = this._buildPromises.bind(this);
     this._askForPDF = this._askForPDF.bind(this);
-    this._generateReport = this._generateReport.bind(this);
-    this._generateInfo = this._generateInfo.bind(this);
-    this._downloadReport = this._downloadReport.bind(this);
-    this._getImages = this._getImages.bind(this);
-    this._onGetViviendaInfo = this._onGetViviendaInfo.bind(this);
+    this._buildPromises = this._buildPromises.bind(this);
     this._clickOutside = this._clickOutside.bind(this);
     this._ddChange = this._ddChange.bind(this);
+    this._downloadReport = this._downloadReport.bind(this);
+    this._downloadReport = this._downloadReport.bind(this);
+    this._generateInfo = this._generateInfo.bind(this);
+    this._generateReport = this._generateReport.bind(this);
+    this._getImages = this._getImages.bind(this);
+    this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
+    this._onGetViviendaInfo = this._onGetViviendaInfo.bind(this);
+    this._onMouseoverColoniaTable = this._onMouseoverColoniaTable.bind(this);
+    this._onMouseoverFeature = this._onMouseoverFeature.bind(this)
+    this._printInfo = this._printInfo.bind(this);
   }
 
   _printInfo(url) {
-    var link = document.createElement('a');
+    let link = document.createElement('a');
     link.href = url;
     link.click();
 
@@ -90,6 +77,7 @@ class Reporte extends React.Component{
       loadingReport: false
     });
   }
+
   _buildPromises(identifier, dataType, data) {
     let url = this.reportUrl + '/' + identifier;
     let promise;
@@ -110,28 +98,33 @@ class Reporte extends React.Component{
 
     return (promise);
   }
+
   _askForPDF(miliseconds, attempt, callback) {
-    var deferred = $.Deferred();
+    let deferred = $.Deferred();
     (function autoCallable() {
       setTimeout(function() {
         callback()
-          .then(deferred.resolve(), function() {
+          .then(function(response) {
+            deferred.resolve();
+          })
+          .fail(function(response) {
             if (attempt > 0) {
               attempt -= 1;
               autoCallable();
             } else {
               deferred.reject();
             }
-          });
+          })
       }, miliseconds);
     })();
 
     return deferred.promise();
   }
+
   _generateReport(url) {
     $.post(url)
       .done(() => {
-        this._askForPDF(5000, 10, function() {
+        this._askForPDF(1000, 10, function() {
           return ($.get(url));
         })
         .then(() => {
@@ -139,11 +132,21 @@ class Reporte extends React.Component{
         });
       });
   }
+
   _generateInfo(url) {
+    //Initial variables
     let allPromises = [];
     let viviendaInfo = {};
     let viviendasComparables = [];
     let coloniasComparables = [];
+
+    //Getting data from refered components
+    let coloniaInfo = this.refs.coloniaInfo.state.data;
+    let distribucionPrecio = this.refs.distribucionPrecio.state.data;
+    let distribucionTipologia = this.refs.distribucionTipologia.state.data;
+    let ofertaDisponible = this.refs.ofertaDisponible.state.data;
+    let precioHistorico = this.refs.precioHistorico.state.data;
+
     this._getImages().forEach((element) => {
       allPromises.push(
         this._buildPromises(
@@ -159,12 +162,6 @@ class Reporte extends React.Component{
       coloniasComparables = this.refs.comparativoColonias.state.data;
     }
 
-    let coloniaInfo = this.refs.coloniaInfo.state.data;
-    let ofertaDisponible = this.refs.ofertaDisponible.state.data;
-    let distribucionPrecio = this.refs.distribucionPrecio.state.data;
-    let precioHistorico = this.refs.precioHistorico.state.data;
-
-    let distribucionTipologia = this.refs.distribucionTipologia.state.data;
     allPromises.push(this._buildPromises(
       'viviendas_comparables.json', 'json', viviendasComparables
     ));
@@ -192,6 +189,7 @@ class Reporte extends React.Component{
         console.log('FAIL', error, msg);
       });
   }
+
   _downloadReport() {
     var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
     //var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
@@ -224,6 +222,7 @@ class Reporte extends React.Component{
         });
     });
   }
+
   _getImages() {
     var images = [];
     var svgs = $('svg.printable-chart');
@@ -247,43 +246,48 @@ class Reporte extends React.Component{
 
     return (images);
   }
+
   _onMouseoverColoniaTable(data) {
-    this.refs.format_googlemap.highlightFeature(data.id);
+    this.refs.formatGoogleMaps.highlightFeature(data.id);
   }
+
   _onMouseoverFeature(data) {
     if (this.refs.comparativoColonias) {
       this.refs.comparativoColonias.highlightRow(data);
     }
   }
+
   _onGetColoniaInfo(info) {
     this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
-    this.refs.distribucionPrecio._checkoutAvailability(info.apreciacion);
 
     this.setState({
       coloniaInfo: info
     });
   }
+
   _onGetViviendaInfo(info) {
     this.setState({
       viviendaInfo: info
     });
   }
+
   _clickOutside() {
     this.setState({ddSearchBar: false});
   }
+
   _ddChange(dd) {
     this.setState({ddSearchBar: dd});
   }
+
   render() {
-    var loadingFrame;
-    var borderRight = {
+    let loadingFrame;
+    let secondaryNavbar;
+    let infoBlocks;
+    let compareTables;
+    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
+    let borderRight = {
       borderRight: '1px solid #c9c9c9'
     };
-    var secondaryNavbar;
-    var infoBlocks;
-    var compareTables;
-    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
-
 
     if (this.state.loadingReport) {
       loadingFrame =
@@ -348,8 +352,8 @@ class Reporte extends React.Component{
         <ComparativoColonias
           ref={'comparativoColonias'}
           zoneID={this.state.coloniaID}
-          onMouseout={this._onMouseoverColoniaTable.bind(this)}
-          onMouseover={this._onMouseoverColoniaTable.bind(this)} />
+          onMouseout={this._onMouseoverColoniaTable}
+          onMouseover={this._onMouseoverColoniaTable} />
       );
     }
 
@@ -397,7 +401,7 @@ class Reporte extends React.Component{
                 zoneID={this.state.coloniaID} />
             </div>
             <div>
-              <h4 className={'subsection-title'}>Distribución de Tipología<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+              <h4 className={'subsection-title'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
               <FormatStackedBarChart
                 ref={'distribucionTipologia'}
                 id={'distribucion_tipologia'}
@@ -431,7 +435,7 @@ class Reporte extends React.Component{
               {compareTables}
               <div className={'footnote'}>
                 <img width={'7px'} src={IMAGES.asterisk} />
-                <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>Información de mercado con base en datos de los últimos 6 meses.</p>
+                <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
               </div>
             </div>
           </div>
@@ -439,6 +443,7 @@ class Reporte extends React.Component{
         <div className={'row'} style={{margin: '10px 0px'}}>
           <div className={'col-sm-12'}>
             <FormatGoogleMaps
+              coloniaName={coloniaName}
               viewType={this.state.type}
               viviendaInfo={this.state.viviendaParams ?
                 {
@@ -446,8 +451,8 @@ class Reporte extends React.Component{
                   lng: this.state.viviendaParams.longitud
                 } : {}}
               zoneID={this.state.coloniaID}
-              onMouseoverFeature={this._onMouseoverFeature.bind(this)}
-              ref={'format_googlemap'}/>
+              onMouseoverFeature={this._onMouseoverFeature}
+              ref={'formatGoogleMaps'}/>
           </div>
         </div>
         <div>

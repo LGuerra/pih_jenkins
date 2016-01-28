@@ -1,16 +1,16 @@
+// Vendor
 import React from 'react';
 
-import config from '../../config';
+// Helpers
 import Helpers from '../../helpers';
 
 class OfertaDisponible extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-
-    };
+    this.state = {};
   }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
     let monthlyListingDefer = $.Deferred();
@@ -46,8 +46,10 @@ class OfertaDisponible extends React.Component {
         });
       });
   }
+
   render() {
     let content;
+
     if (this.state.data) {
       content = (<div className={'oferta-disponible'}>
         <h4 className={'subsection-title'}>Oferta Disponible</h4>
@@ -62,7 +64,7 @@ class OfertaDisponible extends React.Component {
               <img height={'50px'} src={IMAGES.houses}/>
               <div style={{width: '100px'}}>
                 <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.monthlyListing))}</p>
-                <p className={'subtitle'}>Listados en el último mes</p>
+                <p className={'subtitle'}>{'Listados en el último mes'}</p>
               </div>
             </div>
           </div>
@@ -71,7 +73,7 @@ class OfertaDisponible extends React.Component {
               <img height={'55px'} src={IMAGES.calendar_houses}/>
               <div style={{width: '100px'}}>
                 <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.semesterListing))}</p>
-                <p className={'subtitle'}>Listados en los últimos 6 meses</p>
+                <p className={'subtitle'}>{'Listados en los últimos 6 meses'}</p>
               </div>
             </div>
           </div>
@@ -81,7 +83,7 @@ class OfertaDisponible extends React.Component {
                 <img height={'50px'} src={IMAGES.calendar}/>
                 <div style={{width: '100px'}}>
                   <p className={'oferta-disponible-price'}>{Helpers.formatAsNumber(Number(this.state.data.averageTime)) + ' días'}</p>
-                  <p className={'subtitle'}>Tiempo promedio en el mercado<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
+                  <p className={'subtitle'}>{'Tiempo promedio en el mercado'}<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
                 </div>
               </div>
             </div>

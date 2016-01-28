@@ -1,3 +1,4 @@
+// Vendor
 import React from 'react';
 import d3 from 'd3';
 
@@ -256,13 +257,12 @@ class LineChart extends React.Component {
         var tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         var tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        var posx = (_this.conf.xScale(d.data0.value.xVariable));
-        var posy = 0;
+        var posx = (_this.conf.xScale(d.data0.value.xVariable)) + _this.props.margin.left + 15;
+        var posy = (_this.conf.yScale(d.data0.value.value)) - tooltipHeigth - 20;
 
-        if (posx > _this.conf.width / 2) {
-          posx = posx - (tooltipWidth / 2);
-        } else {
-          posx = posx + (tooltipWidth / 2);
+
+        if (posx > (_this.conf.width / 2)) {
+          posx = posx - tooltipWidth;
         }
 
         _this.conf.tooltip

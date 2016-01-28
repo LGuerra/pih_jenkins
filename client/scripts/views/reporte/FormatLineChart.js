@@ -1,31 +1,35 @@
+// Vendor
 import React from 'react';
-import random from 'lodash/number/random';
-import _ from 'lodash';
 
+// Components
 import LineChart from '../../components/LineChart';
 import NoChart from '../../components/NoChart';
 
+// Helpers
 import Helpers from '../../helpers';
 import helper_properties from '../../helper_properties';
-
 
 class FormatLineChart extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isAvailable: true
     };
 
     this._xTickFormat = this._xTickFormat.bind(this);
   }
+
   _xTickFormat(d, i) {
     let dateObj = new Date(d);
     let date = helper_properties.months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
     return (date);
   }
+
   _yTickFormat(d, i) {
     return (Helpers.formatAsPrice(d));
   }
+
   _tooltipLineFormat(d) {
     var dateObj = new Date(d.data0.value.xVariable);
     var dateFormatted = helper_properties.months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
@@ -39,10 +43,9 @@ class FormatLineChart extends React.Component {
 
     return (html);
   }
-  _formatData(data) {
-    let arrayPoints = [];
 
-    arrayPoints = data.map((element, index) => {
+  _formatData(data) {
+    let arrayPoints = data.map((element, index) => {
       return ({
         value: element.promedio_venta,
         xVariable: new Date(element.fecha)
@@ -55,6 +58,7 @@ class FormatLineChart extends React.Component {
       data: arrayPoints
     }];
   }
+
   _checkoutAvailability(apreciacion) {
     if (apreciacion > 0.20 || apreciacion == null) {
       this.setState({
@@ -62,6 +66,7 @@ class FormatLineChart extends React.Component {
       });
     }
   }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
 
@@ -74,6 +79,7 @@ class FormatLineChart extends React.Component {
       });
     });
   }
+
   render() {
     let content;
 

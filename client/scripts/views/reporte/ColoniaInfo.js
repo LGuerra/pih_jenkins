@@ -7,6 +7,7 @@ class ColoniaInfo extends React.Component {
     super(props)
     this.state = {};
   }
+
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
     let avergageOfferDefer = $.Deferred();
@@ -62,13 +63,13 @@ class ColoniaInfo extends React.Component {
       let colName = this.props.viewType === 'Vivienda' ?
         (<h4 className={'subsection-title'}>{this.props.coloniaName}</h4>)
         : '';
-      let apreciacion;
       let averageOffer  = this.state.data.averageOffer ? Helpers.formatAsPrice(this.state.data.averageOffer) : 'No disponible';
       let averageM2     = this.state.data.averageM2 ? Helpers.formatAsPrice(this.state.data.averageM2) : 'No disponible';
       let SHF           = this.state.data.coloniaInfo.SHF ? Helpers.formatAsPrice(this.state.data.coloniaInfo.SHF) : 'No disponible';
+      let apreciacion;
 
       if (typeof(this.state.data.apreciacion) == 'number') {
-        if (this.state.data.apreciacion * 100 > 20) {
+        if (this.state.data.apreciacion > 0.20) {
           apreciacion = 'No disponible'
         } else {
           apreciacion = (this.state.data.apreciacion * 100).toFixed(1) + '%';

@@ -21,12 +21,21 @@ function formatAsNumber(value) {
 
 function toTitleCase(str)
 {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+function getURLParameter(name) {
+  /**
+   * Disabling eslint to avoid regex ERROR*/
+  /*eslint-disable*/
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+  /*eslint-enable*/
 }
 
 module.exports = {
   formatAsPrice: formatAsPrice,
   formatAsBigPrice: formatAsBigPrice,
   formatAsNumber: formatAsNumber,
-  toTitleCase: toTitleCase
+  toTitleCase: toTitleCase,
+  getURLParameter: getURLParameter
 };

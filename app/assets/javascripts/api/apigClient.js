@@ -51,8 +51,8 @@ apigClientFactory.newClient = function (config) {
         config.defaultAcceptType = 'application/json';
     }
 
-    
-    var endpoint = 'https://pih-api.intelimetrica.com/v1/dev';
+    var stageAPI = 'dev';
+    var endpoint = '/v1/' +  stageAPI;
     var parser = document.createElement('a');
     parser.href = endpoint;
 

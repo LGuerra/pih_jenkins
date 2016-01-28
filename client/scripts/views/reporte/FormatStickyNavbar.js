@@ -1,8 +1,11 @@
+// Vendor
 import React from 'react';
 
-import Helpers from '../../helpers';
-
+// Components
 import StickyNavbar from '../../components/StickyNavbar';
+
+// Helpers
+import Helpers from '../../helpers';
 
 class FormatStickyNavbar extends React.Component{
   constructor(props) {
