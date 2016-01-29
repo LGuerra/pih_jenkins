@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+es-MX:
+  devise:
+    failure:
+      user:
+        session_limited: "Tienes otra sesión abierta. Por favor, inicia nuevamente."
