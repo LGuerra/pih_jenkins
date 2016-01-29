@@ -172,3 +172,17 @@ $new_password_form_height: 205px;
   height: 30px;
   width:100%;
 }
+.sign-in-notice {
+  width: 100%;
+  position: fixed;
+  top: 50px;
+  z-index: 1;
+  text-align: center;
+  @include transition(all, 0.75s, ease);
+}
+.fadeOutUp {
+  opacity: 0;
+  top: 0px;
+  z-index: -1;
+  @include transition(all, 0.75s, ease);
+}
