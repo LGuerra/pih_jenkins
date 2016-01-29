@@ -38,14 +38,19 @@ class ComparativoViviendas extends React.Component {
       });
     });
 
-    return (formattedData);
+    let headers = Object.keys(formattedData[0]);
+
+    return ({
+      headers: Object.keys(formattedData[0]),
+      rows: formattedData
+    });
   }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
     params['precio_m2'] = this.props.viviendaInfo.precioM2;
     apigClient.similarsPost({}, params,{
-      headers: { 
+      headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
       }
     })
@@ -70,7 +75,7 @@ class ComparativoViviendas extends React.Component {
             remarcableRow={[0]}
             limit={5}
             specificClass={'mercado-table table-hover'}
-            data={this.state.data} />
+            data={this.state.data.rows} />
         </div>
       )
     } else {

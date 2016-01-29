@@ -141,11 +141,11 @@ class Reporte extends React.Component{
     let coloniasComparables = [];
 
     //Getting data from refered components
-    let coloniaInfo = this.refs.coloniaInfo.state.data;
+    let coloniaInfo = _.pick(this.refs.coloniaInfo.state, 'averageOffer', 'averageM2', 'coloniaInfo', 'apreciacion');
     let distribucionPrecio = this.refs.distribucionPrecio.state.data;
     let distribucionTipologia = this.refs.distribucionTipologia.state.data;
-    let ofertaDisponible = this.refs.ofertaDisponible.state.data;
     let precioHistorico = this.refs.precioHistorico.state.data;
+    let ofertaDisponible = _.pick(this.refs.ofertaDisponible.state, 'monthlyListing', 'semesterListing', 'averageTime');
 
     this._getImages().forEach((element) => {
       allPromises.push(
@@ -191,8 +191,8 @@ class Reporte extends React.Component{
   }
 
   _downloadReport() {
-    var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
-    //var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+    //var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+    var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1;

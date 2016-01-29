@@ -43,7 +43,13 @@ class ComparativoColonias extends React.Component {
     let current = formattedData.splice(currentIndex, 1)[0];
     formattedData.unshift(current);
 
-    return (formattedData);
+    let headers = Object.keys(formattedData[0]);
+    headers.pop();
+
+    return ({
+      headers: headers,
+      rows: formattedData
+    });
   }
 
   componentDidMount() {
@@ -59,13 +65,15 @@ class ComparativoColonias extends React.Component {
       }, {}, {})
       .then((suburbsInfoR) => {
         let data = this._formatData(suburbsInfoR.data);
-        if (data[0]) {
+        if (data.rows[0]) {
           this.setState({
             data: data
           });
         } else {
           this.setState({
-            data: []
+            data: {
+              rows: []
+            }
           });
         }
       });
@@ -76,7 +84,7 @@ class ComparativoColonias extends React.Component {
     let content;
 
     if (this.state.data) {
-      if (this.state.data[0]) {
+      if (this.state.data.rows[0]) {
         content = (
           <div>
             <h3 className={'section-title'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
@@ -88,7 +96,7 @@ class ComparativoColonias extends React.Component {
                   idField={'id'}
                   onMouseoverRow={this.props.onMouseover}
                   specificClass={'mercado-table table-hover'}
-                  data={this.state.data} />
+                  data={this.state.data.rows} />
               </div>
             </div>
           </div>
