@@ -175,3 +175,7 @@
     width: 720px;
   }
 }
+
+#edad::-webkit-input-placeholder, #area-construida::-webkit-input-placeholder{
+  color: #000000;
+}

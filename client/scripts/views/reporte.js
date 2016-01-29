@@ -419,7 +419,7 @@ class Reporte extends React.Component{
                   </div>
                 </div>
               </div>
-              <div className={'col-sm-6'}>
+              <div className={'col-sm-6 barchart-section'}>
                 <h4 className={'subsection-title'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
                 <FormatBarChart
                   ref={'distribucionPrecio'}
