@@ -9,4 +9,9 @@ require('./../styles/main.scss');
 registerRoute('', () => require('./views/landing'));
 registerRoute('reporte', () => require('./views/reporte'));
 
-$(document).ready(() => { dispatch(); });
+$(document).ready(() => {
+  dispatch();
+  setTimeout(function() {
+    $('.sign-in-notice').addClass('fadeOutUp');
+  }, 3000);
+});
