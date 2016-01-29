@@ -25,7 +25,7 @@ class FormatStickyNavbar extends React.Component{
         }
         content = (
           <div className={'max-width-container'}>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: '10px 0px'}}>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '10px 0px'}}>
               <div style={{maxWidth: '33.3%'}}>
                 <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.viviendaInfo.address}</p>
               </div>
@@ -62,7 +62,7 @@ class FormatStickyNavbar extends React.Component{
       if (props.coloniaInfo) {
         content = (
           <div className={'max-width-container'}>
-            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               <div>
                 <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}>{'Colonia ' + Helpers.toTitleCase(props.coloniaInfo.coloniaInfo.nombre)}</p>
               </div>

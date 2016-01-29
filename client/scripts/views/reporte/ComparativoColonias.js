@@ -34,8 +34,8 @@ class ComparativoColonias extends React.Component {
       }
       return ({
         'Colonia': element.nombre,
-        'Precio m²*': Helpers.formatAsPrice(element.average),
-        'Viviendas ofertadas*': element.count,
+        'Precio m²': Helpers.formatAsPrice(element.average),
+        'Viviendas ofertadas': element.count,
         'id': element.colonia
       });
     });
@@ -43,7 +43,13 @@ class ComparativoColonias extends React.Component {
     let current = formattedData.splice(currentIndex, 1)[0];
     formattedData.unshift(current);
 
-    return (formattedData);
+    let headers = Object.keys(formattedData[0]);
+    headers.pop();
+
+    return ({
+      headers: headers,
+      rows: formattedData
+    });
   }
 
   componentDidMount() {
@@ -59,13 +65,15 @@ class ComparativoColonias extends React.Component {
       }, {}, {})
       .then((suburbsInfoR) => {
         let data = this._formatData(suburbsInfoR.data);
-        if (data[0]) {
+        if (data.rows[0]) {
           this.setState({
             data: data
           });
         } else {
           this.setState({
-            data: []
+            data: {
+              rows: []
+            }
           });
         }
       });
@@ -76,19 +84,19 @@ class ComparativoColonias extends React.Component {
     let content;
 
     if (this.state.data) {
-      if (this.state.data[0]) {
+      if (this.state.data.rows[0]) {
         content = (
           <div>
-            <h3 className={'section-title'}>Colonias colindantes</h3>
+            <h3 className={'section-title'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
             <div className={'line-divider'}></div>
             <div className={'row'}>
-              <div className={'col-md-12 col-sm-12'}>
+              <div className={'col-md-12 col-sm-12'} style={{padding: '0px'}}>
                 <Table
                   remarcableRow={[0]}
                   idField={'id'}
                   onMouseoverRow={this.props.onMouseover}
                   specificClass={'mercado-table table-hover'}
-                  data={this.state.data} />
+                  data={this.state.data.rows} />
               </div>
             </div>
           </div>

@@ -41,7 +41,8 @@ class StickyNavbar extends React.Component{
         top: '0',
         zIndex: '1100',
         borderTop: '0',
-        backgroundColor: '#F8F8F8'
+        backgroundColor: '#F8F8F8',
+        padding: '0px 15px'
       }}>
       {this.props.children}
       </div>

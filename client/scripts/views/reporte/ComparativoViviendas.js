@@ -38,15 +38,19 @@ class ComparativoViviendas extends React.Component {
       });
     });
 
-    return (formattedData);
+    let headers = Object.keys(formattedData[0]);
+
+    return ({
+      headers: Object.keys(formattedData[0]),
+      rows: formattedData
+    });
   }
   componentDidMount() {
     let apigClient = apigClientFactory.newClient();
-    console.log($('meta[name="csrf-token"]'));
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
     params['precio_m2'] = this.props.viviendaInfo.precioM2;
     apigClient.similarsPost({}, params,{
-      headers: { 
+      headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
       }
     })
@@ -59,19 +63,19 @@ class ComparativoViviendas extends React.Component {
   render() {
     let content;
     let label = this.props.params.id_tipo_propiedad == 2
-      ? 'Casas comparables*'
-      : 'Departamentos comparables*';
+      ? 'Casas comparables'
+      : 'Departamentos comparables';
 
     if (this.state.data) {
       content = (
         <div>
-          <h3 className={'section-title'}>{label}</h3>
+          <h3 className={'section-title'}>{label}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
           <div className={'line-divider'}></div>
           <Table
             remarcableRow={[0]}
             limit={5}
             specificClass={'mercado-table table-hover'}
-            data={this.state.data} />
+            data={this.state.data.rows} />
         </div>
       )
     } else {

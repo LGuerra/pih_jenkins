@@ -1,7 +1,8 @@
 .landing-page {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 101px);
   background: url('./../images/dante.jpg') no-repeat center center fixed;
   padding-top: 10%;
+  background-size: cover;
 }
 
 .row {
@@ -210,4 +211,8 @@
   .input-modal {
     padding: 0 0 0 15%;
   }
+}
+
+#edad::-webkit-input-placeholder, #area-construida::-webkit-input-placeholder{
+  color: #000000;
 }

@@ -22,11 +22,11 @@
   font-size: 13px;
   th {
     text-align: center;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 0px;
   }
   td {
     text-align: center;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 0px;
     border-bottom: 1px solid #E6E6E6;
     cursor: pointer;
   }
@@ -124,11 +124,18 @@
 
 .tooltip-container {
   background-color: #FFF;
-  border: 1px solid #000;
+  border: 1px solid #888888;
   border-radius: 2px;
   padding: 5px;
   p {
     margin-bottom: 0px !important;
+  }
+  a {
+    text-decoration: none;
+    padding-left: 0px !important;
+    &:hover {
+      text-decoration: none;
+    }
   }
   .tooltip-title{
     font-weight: bold;
@@ -192,6 +199,9 @@
     div {
       border: none !important;
     }
+    .barchart-section{
+      padding: 0;
+    }
   }
   #landing-input {
     font-size: 11px;
@@ -249,6 +259,8 @@
 .footnote{
   font-size: 11px;
   margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .tooltip-arrow {
@@ -263,6 +275,12 @@
       color: black !important;
     }
   }
+}
+
+#map-tooltip {
+  position: absolute;
+  background-color: white;
+  display: none;
 }
 
 .popover-confianza {
