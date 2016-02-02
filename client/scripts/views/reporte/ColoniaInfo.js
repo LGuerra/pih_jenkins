@@ -62,7 +62,7 @@ class ColoniaInfo extends React.Component {
     let apreciacion;
     let shf;
     let colName = this.props.viewType === 'Vivienda' ?
-      (<h4 className={'subsection-title'}>{this.state.coloniaInfo ? this.state.coloniaInfo.name : ''}</h4>)
+      (<h4 className={'subsection-title'}>{this.state.coloniaInfo ? this.state.coloniaInfo.nombre : ''}</h4>)
       : '';
 
     if (this.state.coloniaInfo) {
