@@ -198,9 +198,9 @@ class Reporte extends React.Component{
     var mm = today.getMonth()+1;
     var yyyy = today.getFullYear();
 
-    if (mm < 10) {
-      mm = '0' + mm;
-    }
+    if (mm < 10) mm = '0' + mm;
+    if (dd < 10) dd = '0' + dd;
+
     var date = dd + '-' + mm + '-' + yyyy;
 
     if (this.state.type === 'Vivienda') {
@@ -308,7 +308,7 @@ class Reporte extends React.Component{
           width={'100%'} />
       );
       infoBlocks = (
-        <div className={'row block-container'}>
+        <div className={'BlockContainer row'}>
           <div style={borderRight} className={'col-sm-4'}>
             <ViviendaInfo
               ref={'viviendaInfo'}
@@ -338,7 +338,7 @@ class Reporte extends React.Component{
       }
     } else {
       infoBlocks = (
-        <div className={'row block-container'}>
+        <div className={'BlockContainer row'}>
           <div className={'col-sm-12'}>
             <ColoniaInfo
               ref={'coloniaInfo'}
@@ -373,25 +373,25 @@ class Reporte extends React.Component{
             viviendaInfo={this.state.viviendaInfo}
             viewType={this.state.type}/>
         </header>
-        <div className={'header-section'}>
+        <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             {secondaryNavbar}
             {this.state.type === 'Colonia' ? (
               <div>
-                <h3 className={'section-title'}>{'Datos de la colonia ' + coloniaName}</h3>
-                <div className={'line-divider'}></div>
+                <h3 className={'SectionTitle'}>{'Datos de la colonia ' + coloniaName}</h3>
+                <div className={'LineDivider'}></div>
               </div>)
               : ''
             }
             {infoBlocks}
           </div>
         </div>
-        <div style={{padding: '10px'}} className={'info-colonia info-colonia-section'}>
+        <div style={{padding: '10px'}} className={'info-colonia MainSection'}>
           <div className={'max-width-container'}>
             {this.state.type === 'Vivienda' ? (
               <div>
-                <h3 className={'section-title'}>{'Información de la colonia ' + coloniaName}</h3>
-                <div className={'line-divider'}></div>
+                <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
+                <div className={'LineDivider'}></div>
               </div>)
               : ''
             }
@@ -401,15 +401,15 @@ class Reporte extends React.Component{
                 zoneID={this.state.coloniaID} />
             </div>
             <div>
-              <h4 className={'subsection-title'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+              <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
               <FormatStackedBarChart
                 ref={'distribucionTipologia'}
                 id={'distribucion_tipologia'}
                 zoneID={this.state.coloniaID}/>
             </div>
-            <div className={'row block-container'}>
+            <div className={'BlockContainer row'}>
               <div style={_.merge(borderRight, {paddingLeft: '0px'})} className={'col-sm-6'}>
-                <h4 className={'subsection-title'}>Precio Histórico por m²</h4>
+                <h4 className={'SubsectionTitle'}>Precio Histórico por m²</h4>
                 <div className={'row'}>
                   <div className={'col-sm-12'} style={{marginTop: '15px'}}>
                     <FormatLineChart
@@ -420,7 +420,7 @@ class Reporte extends React.Component{
                 </div>
               </div>
               <div className={'col-sm-6 barchart-section'}>
-                <h4 className={'subsection-title'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+                <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
                 <FormatBarChart
                   ref={'distribucionPrecio'}
                   id={'distribucion_precio'}
@@ -429,11 +429,11 @@ class Reporte extends React.Component{
             </div>
           </div>
         </div>
-        <div className={'row block-container comparables-section'} style={{marginTop: '10px'}}>
+        <div className={'BlockContainer row MainSection'} style={{marginTop: '10px'}}>
           <div className={'max-width-container'}>
             <div className={'col-sm-12'}>
               {compareTables}
-              <div className={'footnote'}>
+              <div className={'Footnote'}>
                 <img width={'7px'} src={IMAGES.asterisk} />
                 <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
               </div>

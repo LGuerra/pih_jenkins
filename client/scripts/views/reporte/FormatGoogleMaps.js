@@ -58,7 +58,7 @@ class FormatGoogleMaps extends React.Component {
     apigClient.suburbGeojsonGet({
       id_col: this.props.zoneID
     }, {},  {
-        headers: { 
+        headers: {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
       }).then((geojsonR) => {
@@ -124,15 +124,17 @@ class FormatGoogleMaps extends React.Component {
 
       if (!event.feature.getProperty('current')) {
         html = `
-          <div class="tooltip-container">
-            <p class="tooltip-title">${event.feature.getProperty('name')}</p>
-            <a class="tooltip-value" href=${templateUrl}>Ver detalle</a>
+          <div class="TooltipContainer">
+            <p class="Tooltip-title">${event.feature.getProperty('name')}</p>
+            <a style="display: block; text-align: right;" class="Tooltip-value" href=${templateUrl}>
+              Ver detalle
+            </a>
           </div>
         `;
       } else {
         html = `
-          <div class="tooltip-container">
-            <p class="tooltip-title">${this.props.coloniaName}</p>
+          <div class="TooltipContainer">
+            <p class="Tooltip-title">${this.props.coloniaName}</p>
           </div>
         `;
       }
@@ -187,7 +189,7 @@ class FormatGoogleMaps extends React.Component {
           ref='map'
           zoomTop={10} />
         {marker}
-        <div id={'map-tooltip'}>
+        <div className={'MapTooltip'} id={'map-tooltip'}>
         </div>
       </div>
     );

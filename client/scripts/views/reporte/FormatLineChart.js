@@ -32,12 +32,12 @@ class FormatLineChart extends React.Component {
 
   _tooltipLineFormat(d) {
     var dateObj = new Date(d.data0.value.xVariable);
-    var dateFormatted = helper_properties.months[dateObj.getMonth()] + ' de ' + (Number(dateObj.getDate())) + ' del ' + dateObj.getFullYear();
+    var dateFormatted = helper_properties.months[dateObj.getMonth()] + ' del ' + dateObj.getFullYear();
 
-    var html = `<div class="tooltip-container">
-      <div class="tooltip-row">
-        <p class="tooltip-title">${dateFormatted} - </p>
-        <p class="tooltip-value">${Helpers.formatAsPrice(d.data0.value.value)}</p>
+    var html = `<div class="TooltipContainer">
+      <div class="Tooltip-row">
+        <p class="Tooltip-title">${dateFormatted} - </p>
+        <p class="Tooltip-value">${Helpers.formatAsPrice(d.data0.value.value)}</p>
       </div>
     </div>`;
 

@@ -17,6 +17,7 @@
 
 body {
   min-width: 350px;
+  font-weight: 300;
 }
 
 .max-width-container{
@@ -85,5 +86,34 @@ body {
   color: #2a9998;
   a{
     color: #2a9998;
+  }
+}
+
+.navbar {
+  margin-bottom: 0px;
+  .dropdown-menu {
+    right: 0;
+    left: auto !important;
+  }
+  .navbar-logos-div {
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
+  }
+}
+
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.gmnoprint {
+  display: none;
+}
+
+
+.modal-content {
+  .modal-body {
+    padding: 10px !important;
   }
 }

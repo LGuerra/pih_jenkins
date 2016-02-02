@@ -96,7 +96,7 @@ class Table extends React.Component {
     }
 
     return (
-    <div className={'table-container'}>
+    <div className={'TableContainer'}>
       <table className={this.props.specificClass}>
         <thead>
           <tr>

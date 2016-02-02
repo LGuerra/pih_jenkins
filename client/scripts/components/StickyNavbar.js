@@ -34,7 +34,7 @@ class StickyNavbar extends React.Component{
   }
   render() {
     return (
-      <div id={'sticky-nav'} style={{
+      <div className={'box-shadow'} id={'sticky-nav'} style={{
         position: 'fixed',
         width: '100%',
         left: '0',

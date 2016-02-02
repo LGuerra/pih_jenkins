@@ -69,12 +69,12 @@ class ComparativoViviendas extends React.Component {
     if (this.state.data) {
       content = (
         <div>
-          <h3 className={'section-title'}>{label}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
-          <div className={'line-divider'}></div>
+          <h3 className={'SectionTitle'}>{label}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
+          <div className={'LineDivider'}></div>
           <Table
             remarcableRow={[0]}
             limit={5}
-            specificClass={'mercado-table table-hover'}
+            specificClass={'ReporteTable table-hover'}
             data={this.state.data.rows} />
         </div>
       )

@@ -162,6 +162,7 @@ class IMInputDropdown extends React.Component {
            data-template='<div class="popover popover-alert" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
            data-trigger="manual" >
         <input id="landing-input"
+               className={'LandingInput'}
                type="text"
                ref="input"
                className={this.props.className}

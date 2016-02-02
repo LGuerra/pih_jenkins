@@ -315,7 +315,7 @@ class SearchForm extends React.Component {
                                                                edad={this.state.edad} />) : "";
 
     return (
-        <div className="landing-page" onClick={this._clickOutside} >
+        <div className="SearchForm" onClick={this._clickOutside} >
           <div className={'search-div'}>
             <div id="id-search-container" onClick={this._stopPropagation} className={'search-container'}>
               <div className={'sarch-dropdown'}>

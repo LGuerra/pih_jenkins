@@ -87,15 +87,15 @@ class ComparativoColonias extends React.Component {
       if (this.state.data.rows[0]) {
         content = (
           <div>
-            <h3 className={'section-title'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
-            <div className={'line-divider'}></div>
+            <h3 className={'SectionTitle'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
+            <div className={'LineDivider'}></div>
             <div className={'row'}>
               <div className={'col-md-12 col-sm-12'} style={{padding: '0px'}}>
                 <Table
                   remarcableRow={[0]}
                   idField={'id'}
                   onMouseoverRow={this.props.onMouseover}
-                  specificClass={'mercado-table table-hover'}
+                  specificClass={'ReporteTable table-hover'}
                   data={this.state.data.rows} />
               </div>
             </div>

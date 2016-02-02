@@ -52,7 +52,7 @@ class ViviendaInfo extends React.Component {
       let descriptions = ['más de 40%', 'entre 30% y 40% ', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
 
       let title = `
-        <div class="popover popover-confianza" role="tooltip">
+        <div class="popover PopoverConfianza" role="tooltip">
           <div class="arrow"></div>
           <p>La mitad o más de los inmuebles en esta colonia tienen un error en 
           la estimación de ${descriptions[this.state.data.confianza - 1]} error absoluto en la estimación de 
@@ -119,7 +119,7 @@ class ViviendaInfo extends React.Component {
 
       content = (
         <div className={'oferta-disponible'}>
-          <h4 className={'subsection-title'} style={{marginLeft: '5px'}}>{'Vivienda valuada'}</h4>
+          <h4 className={'SubsectionTitle'} style={{marginLeft: '5px'}}>{'Vivienda valuada'}</h4>
           <div style={{
             marginTop: '20px',
             display: 'flex',

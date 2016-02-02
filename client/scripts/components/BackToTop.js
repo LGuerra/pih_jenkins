@@ -6,7 +6,7 @@ class BackToTop extends React.Component {
   }
   componentDidMount() {
     var duration = 300;
-    $('.back-to-top').click(function(event) {
+    $('.BackToTop').click(function(event) {
       event.preventDefault();
       $('html, body').animate({scrollTop: 0}, duration);
       return false;
@@ -17,7 +17,7 @@ class BackToTop extends React.Component {
     var stickyButtom = function(){
       var scrollTop = $(window).scrollTop();
       if (scrollTop > stickyButtonTop) {
-        $('.back-to-top').css({
+        $('.BackToTop').css({
           opacity: 1,
           WebkitTransition : 'opacity 0.5s ease-in-out',
           MozTransition    : 'opacity 0.5s ease-in-out',
@@ -26,7 +26,7 @@ class BackToTop extends React.Component {
           transition       : 'opacity 0.5s ease-in-out'
         });
       } else {
-        $('.back-to-top').css({
+        $('.BackToTop').css({
           opacity: 0
         });
       }
@@ -38,7 +38,7 @@ class BackToTop extends React.Component {
   }
   render() {
     return (
-      <a className={'back-to-top'} href={'#'}>
+      <a className={'BackToTop'} href={'#'}>
         <img height={'40px'} src={IMAGES.go_to_top}/>
       </a>
     );

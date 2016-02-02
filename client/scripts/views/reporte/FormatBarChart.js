@@ -28,13 +28,13 @@ class FormatBarChart extends React.Component {
       title = Helpers.formatAsPrice(d.lim_inf) + ' a ' +  Helpers.formatAsPrice(d.lim_sup);
     }
 
-    let html = `<div class="tooltip-container">
-      <div class="tooltip-row">
-        <p class="tooltip-title">${title}</p>
+    let html = `<div class="TooltipContainer">
+      <div class="Tooltip-row">
+        <p class="Tooltip-title">${title}</p>
       </div>
-      <div class="tooltip-row">
-        <p class="tooltip-value">${(d.value * 100).toFixed(1)}%</p>
-        <p class="tooltip-unit">&nbsp;${'Viviendas'}</p>
+      <div class="Tooltip-row">
+        <p class="Tooltip-value">${(d.value * 100).toFixed(1)}%</p>
+        <p class="Tooltip-unit">&nbsp;${'Viviendas'}</p>
       </div>
     </div>`;
 

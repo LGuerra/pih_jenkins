@@ -45,7 +45,7 @@ class OfertaDisponible extends React.Component {
         <div style={{display: 'flex', alignItems: 'center'}}>
           <img height={'50px'} src={IMAGES.houses}/>
           <div style={{width: '100px'}}>
-            <p className={'oferta-disponible-price'}>
+            <p className={'OfertaDisponible-price'}>
               {this.state.monthlyListing ? Helpers.formatAsNumber(Number(this.state.monthlyListing)) : 'N.D.'}</p>
             <p className={'subtitle'}>{'Listados en el último mes'}</p>
           </div>
@@ -58,7 +58,7 @@ class OfertaDisponible extends React.Component {
         <div style={{display: 'flex', alignItems: 'center'}}>
           <img height={'55px'} src={IMAGES.calendar_houses}/>
           <div style={{width: '100px'}}>
-            <p className={'oferta-disponible-price'}>
+            <p className={'OfertaDisponible-price'}>
               {this.state.semesterListing ? Helpers.formatAsNumber(Number(this.state.semesterListing)) : 'N.D.'}</p>
             <p className={'subtitle'}>{'Listados en los últimos 6 meses'}</p>
           </div>
@@ -72,7 +72,7 @@ class OfertaDisponible extends React.Component {
           <div style={{display: 'flex', alignItems: 'center'}}>
             <img height={'50px'} src={IMAGES.calendar}/>
             <div style={{width: '100px'}}>
-              <p className={'oferta-disponible-price'}>
+              <p className={'OfertaDisponible-price'}>
                 {this.state.averageTime ? Helpers.formatAsNumber(Number(this.state.averageTime)) + ' días' : 'N.D.'}</p>
               <p className={'subtitle'}>{'Tiempo promedio en el mercado'}<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
             </div>
@@ -82,8 +82,8 @@ class OfertaDisponible extends React.Component {
     );
 
     return (
-      <div className={'oferta-disponible'}>
-        <h4 className={'subsection-title'}>Oferta Disponible</h4>
+      <div className={'OfertaDisponible BlockContainer'}>
+        <h4 className={'SubsectionTitle'}>Oferta Disponible</h4>
         <div style={{
           marginTop: '20px',
           marginBottom: '25px',
