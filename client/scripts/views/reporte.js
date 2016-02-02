@@ -5,7 +5,6 @@ import _ from     'lodash';
 // Components
 import BackToTop from   '../components/BackToTop';
 import MainNavbar from  '../components/MainNavbar';
-import SearchForm from  '../components/SearchForm';
 import Spinner from     '../components/Spinner';
 
 // View's Components

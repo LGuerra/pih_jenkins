@@ -1,13 +1,9 @@
-.landing-page {
+.LandingPage {
+  padding-bottom: 20px;
   height: calc(100vh - 101px);
   background: url('./../images/dante.jpg') no-repeat center center fixed;
   padding-top: 10%;
   background-size: cover;
-}
-
-.row {
-  margin-right: 0px !important;
-  margin-left: 0px !important;
 }
 
 .search-button {
@@ -56,6 +52,7 @@
   padding-bottom: 25px;
   border-radius: 8px;
 }
+
 .modal-dropdown-button {
   display: inline-block;
   background-color: rgba(1,1,1,0);
