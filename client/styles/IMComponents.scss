@@ -5,7 +5,7 @@
   .im-dropdown-button-text {
     display: inline-block;
     vertical-align: middle;
-    font-weight: normal;
+    font-weight: 300;
     font-size: 13px;
   }
   &:focus {
@@ -54,7 +54,7 @@
     &:hover {
       color: #35C0BE;
       background-color: #f7f7f7;
-      font-weight: normal;
+      border-radius: 3px;
     }
   }
 }

@@ -43,7 +43,7 @@ class OfertaDisponible extends React.Component {
     let monthlyListing = (
       <div style={{textAlign: 'center', padding: '12px 0px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
-          <img height={'50px'} src={IMAGES.houses}/>
+          <img height={'50px'} src={IMAGES.houses} style={{margin: '0px 10px'}}/>
           <div style={{width: '100px'}}>
             <p className={'OfertaDisponible-price'}>
               {this.state.monthlyListing ? Helpers.formatAsNumber(Number(this.state.monthlyListing)) : 'N.D.'}</p>
@@ -56,7 +56,7 @@ class OfertaDisponible extends React.Component {
     let semesterListing = (
       <div style={{textAlign: 'center', padding: '12px 0px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
-          <img height={'55px'} src={IMAGES.calendar_houses}/>
+          <img height={'55px'} src={IMAGES.calendar_houses} style={{margin: '0px 10px'}}/>
           <div style={{width: '100px'}}>
             <p className={'OfertaDisponible-price'}>
               {this.state.semesterListing ? Helpers.formatAsNumber(Number(this.state.semesterListing)) : 'N.D.'}</p>
@@ -70,7 +70,7 @@ class OfertaDisponible extends React.Component {
       <div style={{textAlign: 'center', padding: '12px 0px'}}>
         <div className={'tiempo-container'}>
           <div style={{display: 'flex', alignItems: 'center'}}>
-            <img height={'50px'} src={IMAGES.calendar}/>
+            <img height={'50px'} src={IMAGES.calendar} style={{margin: '0px 10px'}}/>
             <div style={{width: '100px'}}>
               <p className={'OfertaDisponible-price'}>
                 {this.state.averageTime ? Helpers.formatAsNumber(Number(this.state.averageTime)) + ' días' : 'N.D.'}</p>
