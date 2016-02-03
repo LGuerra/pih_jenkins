@@ -50,6 +50,23 @@ class FormatGoogleMaps extends React.Component {
     return (this.refs.map);
   }
 
+  _getXYFromCentroid(lat, lon) {
+    let map = this.refs.map.mapRef;
+
+    // Projection variables.
+    let projection = map.getProjection();
+    let topRight = projection.fromLatLngToPoint(map.getBounds().getNorthEast());
+    let bottomLeft = projection.fromLatLngToPoint(map.getBounds().getSouthWest());
+    let scale = Math.pow(2, map.getZoom());
+
+    let point = projection.fromLatLngToPoint(new google.maps.LatLng(lat, lon))
+
+    return {
+      x: (point.x - bottomLeft.x) * scale,
+      y: (point.y - topRight.y) * scale
+    };
+  }
+
   componentDidMount() {
     let map = this.refs.map.mapRef;
     let apigClient = apigClientFactory.newClient();
@@ -76,7 +93,11 @@ class FormatGoogleMaps extends React.Component {
     apigClient.suburbCentroidGet({
       id_col: this.props.zoneID
     }, {}, {}).then((suburbCentroidR) => {
-      map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
+      this.setState({
+        centroid: {lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat}
+      }, () => {
+        map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
+      })
     });
 
     // Get adjacet Geojson polygon
@@ -107,54 +128,63 @@ class FormatGoogleMaps extends React.Component {
     map.data.addListener('mouseover', (event) => {
       this.highlightFeature(event.feature.getProperty('id'));
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
+
+      let html;
+      let getHTML = (value) => {
+        return (
+        `<div class="TooltipContainer">
+            <p class="Tooltip-title">${value}</p>
+          </div>
+        `);
+      }
+
+      let positionTooltip = (lat, lng) => {
+        let centroid = this._getXYFromCentroid(lat, lng);
+
+        $('#map-tooltip').css({
+          left: centroid.x + 15 - ($('#map-tooltip').width() / 2),
+          top: centroid.y - ($('#map-tooltip').height() / 2)
+        });
+      }
+
+      if (!event.feature.getProperty('current')) {
+        html = getHTML(event.feature.getProperty('name'));
+      } else {
+        html = getHTML(this.props.coloniaName);
+      }
+
+      $('#map-tooltip').css({
+        display: 'block'
+      })
+      .html(html);
+
+      if (event.feature.getProperty('current')) {
+        positionTooltip(this.state.centroid.lat, this.state.centroid.lng)
+      } else {
+        positionTooltip(event.feature.getProperty('lat'), event.feature.getProperty('lng'))
+      }
     });
 
     map.data.addListener('mouseout', (event) => {
       this.highlightFeature();
       this.props.onMouseoverFeature(event.feature.getProperty('id'));
-
     });
 
     map.data.addListener('click', (event) => {
-      let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
-        .replace(':colonia:', event.feature.getProperty('id'))
-        .replace(':reportType:', 'Colonia');
-
-      let html;
-
       if (!event.feature.getProperty('current')) {
-        html = `
-          <div class="TooltipContainer">
-            <p class="Tooltip-title">${event.feature.getProperty('name')}</p>
-            <a style="display: block; text-align: right;" class="Tooltip-value" href=${templateUrl}>
-              Ver detalle
-            </a>
-          </div>
-        `;
-      } else {
-        html = `
-          <div class="TooltipContainer">
-            <p class="Tooltip-title">${this.props.coloniaName}</p>
-          </div>
-        `;
+        let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
+          .replace(':colonia:', event.feature.getProperty('id'))
+          .replace(':reportType:', 'Colonia');
+        window.open(templateUrl, '_self')
       }
-
-      $('#map-tooltip').css({
-        display: 'block',
-        left: event.rb.offsetX + 15,
-        top: event.rb.offsetY + 5
-      })
-      .html(html);
-
     });
 
-    map.addListener('drag', () => {
+    map.addListener('mousemove', () => {
       $('#map-tooltip').css({
         display: 'none'
       });
     });
-
-    map.addListener('click', () => {
+    map.addListener('drag', () => {
       $('#map-tooltip').css({
         display: 'none'
       });
@@ -189,7 +219,7 @@ class FormatGoogleMaps extends React.Component {
           ref='map'
           zoomTop={10} />
         {marker}
-        <div className={'MapTooltip'} id={'map-tooltip'}>
+        <div className={'MapTooltip noselect'} id={'map-tooltip'}>
         </div>
       </div>
     );

@@ -21,7 +21,8 @@ import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ViviendaInfo from          './reporte/ViviendaInfo';
 
 // Helpers
-import Helpers from '../helpers';
+import Helpers    from '../helpers';
+import PDFReport  from '../PDFReport';
 
 class Reporte extends React.Component{
   constructor(props) {
@@ -51,90 +52,20 @@ class Reporte extends React.Component{
     }
 
     //Methods instances
-    this._askForPDF = this._askForPDF.bind(this);
-    this._buildPromises = this._buildPromises.bind(this);
     this._clickOutside = this._clickOutside.bind(this);
     this._ddChange = this._ddChange.bind(this);
     this._downloadReport = this._downloadReport.bind(this);
     this._downloadReport = this._downloadReport.bind(this);
     this._generateInfo = this._generateInfo.bind(this);
-    this._generateReport = this._generateReport.bind(this);
     this._getImages = this._getImages.bind(this);
     this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
     this._onGetViviendaInfo = this._onGetViviendaInfo.bind(this);
     this._onMouseoverColoniaTable = this._onMouseoverColoniaTable.bind(this);
-    this._onMouseoverFeature = this._onMouseoverFeature.bind(this)
-    this._printInfo = this._printInfo.bind(this);
-  }
-
-  _printInfo(url) {
-    let link = document.createElement('a');
-    link.href = url;
-    link.click();
-
-    this.setState({
-      loadingReport: false
-    });
-  }
-
-  _buildPromises(identifier, dataType, data) {
-    let url = this.reportUrl + '/' + identifier;
-    let promise;
-    if (dataType === 'json') {
-      promise = $.ajax({
-        url: url,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data)
-      });
-    } else {
-      promise = $.ajax({
-        url: url,
-        type: 'POST',
-        data: data
-      });
-    }
-
-    return (promise);
-  }
-
-  _askForPDF(miliseconds, attempt, callback) {
-    let deferred = $.Deferred();
-    (function autoCallable() {
-      setTimeout(function() {
-        callback()
-          .then(function(response) {
-            deferred.resolve();
-          })
-          .fail(function(response) {
-            if (attempt > 0) {
-              attempt -= 1;
-              autoCallable();
-            } else {
-              deferred.reject();
-            }
-          })
-      }, miliseconds);
-    })();
-
-    return deferred.promise();
-  }
-
-  _generateReport(url) {
-    $.post(url)
-      .done(() => {
-        this._askForPDF(1000, 10, function() {
-          return ($.get(url));
-        })
-        .then(() => {
-          this._printInfo(url);
-        });
-      });
+    this._onMouseoverFeature = this._onMouseoverFeature.bind(this);
   }
 
   _generateInfo(url) {
     //Initial variables
-    let allPromises = [];
     let viviendaInfo = {};
     let viviendasComparables = [];
     let coloniasComparables = [];
@@ -146,12 +77,12 @@ class Reporte extends React.Component{
     let precioHistorico = this.refs.precioHistorico.state.data;
     let ofertaDisponible = _.pick(this.refs.ofertaDisponible.state, 'monthlyListing', 'semesterListing', 'averageTime');
 
-    this._getImages().forEach((element) => {
-      allPromises.push(
-        this._buildPromises(
-          element.nombre + '.png', 'image', element.image
-        )
-      );
+    let dataTokens = this._getImages().map((element) => {
+      return ({
+        identifier: element.nombre + '.png',
+        dataType: 'image',
+        data: element.image
+      });
     });
 
     if (this.state.type === 'Vivienda') {
@@ -161,46 +92,59 @@ class Reporte extends React.Component{
       coloniasComparables = this.refs.comparativoColonias.state.data;
     }
 
-    allPromises.push(this._buildPromises(
-      'viviendas_comparables.json', 'json', viviendasComparables
-    ));
-    allPromises.push(this._buildPromises(
-      'colonias_comparables.json', 'json', coloniasComparables
-    ));
-    allPromises.push(this._buildPromises(
-      'info_colonia.json', 'json', coloniaInfo
-    ));
-    allPromises.push(this._buildPromises(
-      'oferta_disponible.json', 'json', ofertaDisponible
-    ));
-    allPromises.push(this._buildPromises(
-      'info_vivienda.json', 'json', viviendaInfo
-    ));
-    allPromises.push(this._buildPromises(
-      'distribucion_precio.json', 'json', distribucionPrecio
-    ));
+    dataTokens = dataTokens.concat([
+      {
+        identifier: 'viviendas_comparables.json',
+        dataType: 'json',
+        data: viviendasComparables
+      },
+      {
+        identifier: 'colonias_comparables.json',
+        dataType: 'json',
+        data: coloniasComparables
+      },
+      {
+        identifier: 'info_colonia.json',
+        dataType: 'json',
+        data: coloniaInfo
+      },
+      {
+        identifier: 'oferta_disponible.json',
+        dataType: 'json',
+        data: ofertaDisponible
+      },
+      {
+        identifier: 'info_vivienda.json',
+        dataType: 'json',
+        data: viviendaInfo
+      },
+      {
+        identifier: 'distribucion_precio.json',
+        dataType: 'json',
+        data: distribucionPrecio
+      }
+    ]);
 
-    $.when.apply($, allPromises)
+    PDFReport.downloadPDFReport(url, dataTokens)
       .then(() => {
-        this._generateReport(url);
-      })
-      .fail((error, msg) => {
-        console.log('FAIL', error, msg);
+        this.setState({
+          loadingReport: false
+        });
       });
   }
 
   _downloadReport() {
-    var host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
-    //var host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;
-    var yyyy = today.getFullYear();
+    let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+    //let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1;
+    let yyyy = today.getFullYear();
 
     if (mm < 10) mm = '0' + mm;
     if (dd < 10) dd = '0' + dd;
 
-    var date = dd + '-' + mm + '-' + yyyy;
+    let date = dd + '-' + mm + '-' + yyyy;
 
     if (this.state.type === 'Vivienda') {
       let randomText = Math.random().toString(36).substr(2, 10);
@@ -214,7 +158,10 @@ class Reporte extends React.Component{
     }, () => {
       $.get(this.reportUrl)
         .done(() => {
-          this._printInfo(this.reportUrl);
+          PDFReport.printInfo(this.reportUrl);
+          this.setState({
+            loadingReport: false
+          });
         })
         .fail(() => {
           this._generateInfo(this.reportUrl);
@@ -223,16 +170,16 @@ class Reporte extends React.Component{
   }
 
   _getImages() {
-    var images = [];
-    var svgs = $('svg.printable-chart');
-    var svgXml;
+    let images = [];
+    let svgs = $('svg.printable-chart');
+    let svgXml;
 
-    for (var i = 0; i < svgs.length; i++) {
+    for (let i = 0; i < svgs.length; i++) {
       svgXml = (new XMLSerializer).serializeToString(svgs[i]);
       canvg('canvas', svgXml);
 
       // the canvas calls to output a png
-      var canvas = document.getElementById('canvas');
+      let canvas = document.getElementById('canvas');
 
       images.push({
         nombre: $(svgs[i]).attr('id'),
