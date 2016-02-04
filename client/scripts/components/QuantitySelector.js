@@ -28,7 +28,7 @@ class IMQuantitySelector extends React.Component {
     return (
       <div className="im-quantity-selector" style={this.props.styles}>
         <button className="im-quantity-selector-button" type="button" onClick={this._handleClickDiff}>-</button>
-        {this.state.quantity}
+        <div style={{width: '20px', display: 'inline-block'}}>{this.state.quantity}</div>
         <button className="im-quantity-selector-button" type="button" onClick={this._handleClickSum}>+</button>
       </div>
     );
