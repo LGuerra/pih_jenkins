@@ -5,12 +5,12 @@
   <%= favicon_link_tag 'favicon.ico' %>
   <title>PIH Banca</title>
   <%= csrf_meta_tags %>
-  <% if Rails.env.production? %>
+  <% if ENV['RAILS_ENV'] == 'staging' %>
     <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/main.min.css">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
-  <% elsif  %>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
+  <% elsif ENV['RAILS_ENV'] == 'staging' %>
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/assets-pih-banca/staging/main.min.css">
   <% end %>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
   <script src="https://use.typekit.net/gpa7idw.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
