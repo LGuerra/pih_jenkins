@@ -13,8 +13,8 @@ var extractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   entry: {
     main: path.resolve(__dirname, './client/scripts/main.js'),
-    vendor: ['jquery', 'bootstrap'],
-    api: path.resolve(__dirname, './app/assets/javascripts/api/apigClient.js')
+    vendor: ['jquery', 'bootstrap']
+    // api: path.resolve(__dirname, './app/assets/javascripts/api/apigClient.js')
   },
   plugins: [
     function()
