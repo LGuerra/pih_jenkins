@@ -22,3 +22,14 @@ webproduction:
   environment:
     - RACK_ENV=production
     - RAILS_ENV=production
+
+webstaging:
+  build: .
+  ports:
+    - "3000:80"
+  links:
+    - db
+  env_file: .env
+  environment:
+    - RACK_ENV=production
+    - RAILS_ENV=staging

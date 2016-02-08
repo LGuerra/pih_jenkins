@@ -4,7 +4,13 @@
   <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/api.min.js"></script>
   <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/main.min.js"></script>
 <% elsif ENV['RAILS_ENV'] == 'staging' %>
+  <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/assets-pih-banca/staging/vendor.js"></script>
+  <%= javascript_include_tag 'production' %>
+  <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/assets-pih-banca/staging/api.min.js"></script>
+  <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/assets-pih-banca/staging/main.min.js"></script>
 <% else %>
   <%= stylesheet_link_tag    'development', media: 'all' %>
   <%= javascript_include_tag 'development' %>
 <% end %>
+<script type="text/javascript" src="https://gabelerner.github.io/canvg/rgbcolor.js"></script>
+<script type="text/javascript" src="https://gabelerner.github.io/canvg/canvg.js"></script>

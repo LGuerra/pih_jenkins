@@ -5,11 +5,10 @@
   <%= favicon_link_tag 'favicon.ico' %>
   <title>PIH Banca</title>
   <%= csrf_meta_tags %>
-
   <% if Rails.env.production? %>
     <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/main.min.css">
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
-  <% else %>
+  <% elsif  %>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.15&libraries=places,drawing&sensor=true"></script>
   <% end %>
   <script src="https://use.typekit.net/gpa7idw.js"></script>
@@ -19,18 +18,7 @@
 <div id="modal-reserved-area"></div>
 <%= render 'layouts/alert_notice'%>
 <%= yield %>
+<%= render 'layouts/footer' %>
 <%= render 'layouts/asset_configuration' %>
-<footer class="footer">
-  <div class="max-width-container" style="padding: 10px 0px">
-    <div style="display: inline-block; margin-right: 10px;">
-      <p>© 2016 Intelimétrica S.A.P.I. de C.V.</p>
-    </div>
-    <div style="display: inline-block; margin-left: 10px;">
-        <p class="link-to"><%= link_to "Condiciones de uso", condiciones_path %></p>
-    </div>
-  </div>
-</footer>
-<script type="text/javascript" src="https://gabelerner.github.io/canvg/rgbcolor.js"></script>
-<script type="text/javascript" src="https://gabelerner.github.io/canvg/canvg.js"></script>
 </body>
 </html>
