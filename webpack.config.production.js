@@ -81,6 +81,9 @@ module.exports = {
     ]
   },
   devtool: 'source-map',
+  externals: {
+    "apiGateway":"apiGateway"
+  },
   stats: {
     colors: true
   },

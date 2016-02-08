@@ -15,7 +15,9 @@
     "google": true,
     "canvg": true,
     "apigClient": true,
-    "apigClientFactory": true
+    "apigClientFactory": true,
+    "apiGateway": true,
+    "uritemplate": true
   },
   "ecmaFeatures": {
     "modules": true,
