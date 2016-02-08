@@ -16,6 +16,20 @@ module.exports = {
     vendor: ['jquery', 'bootstrap']
   },
   plugins: [
+    function()
+    {
+      this.plugin("done", function(stats)
+                  {
+                    if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1)
+                      {
+                        // console.log('---ss-s-s-s-', stats.compilation.errors);
+                        stats.compilation.errors.map(function(error, index) {
+                          console.log(error.message);
+                        });
+                        process.exit(1); // or throw new Error('webpack build failed.');
+                      }
+                  });
+    },
     new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js'),
     new webpack.ProvidePlugin({
       $: "jquery",
@@ -72,5 +86,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.es6']
+  },
+  externals: {
+    apigClient: "apigClient",
+    apigClientFactory: "apigClientFactory" 
   }
 };

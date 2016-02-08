@@ -14,6 +14,7 @@
     "IMAGES": true,
     "google": true,
     "canvg": true,
+    "apigClient": true,
     "apigClientFactory": true
   },
   "ecmaFeatures": {
