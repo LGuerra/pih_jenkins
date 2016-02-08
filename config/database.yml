@@ -13,6 +13,15 @@ development: &default
 test:
   <<: *default
   database: pih_banca_test
+    
+staging:
+  <<: *default
+  database: <%= ENV['RDS_DATABASE'] || 'postgres' %>
+  pool: 10
+  username: <%= ENV['RDS_USERNAME'] || 'postgres' %>
+  password: <%= ENV['RDS_PASSWORD'] || '' %>
+  port: <%= ENV['RDS_PORT'] || 5432 %>
+  host: <%= ENV['RDS_HOSTNAME'] || 'db' %>
 
 production:
   <<: *default
