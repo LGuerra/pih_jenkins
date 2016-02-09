@@ -16,7 +16,9 @@
   .modal-content{
     margin: 0px 5px;
   }
-
+  .modal-div-triangle{
+    left: 6%;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -63,5 +65,7 @@
   .im-dropdown{
     right: 4%;
   }
-
+  .modal-div-triangle{
+    left: 9%;
+  }
 }
