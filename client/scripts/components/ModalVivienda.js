@@ -32,6 +32,8 @@ class ModalVivienda extends React.Component {
     this._keyDownEdad           = this._keyDownEdad.bind(this);
     this.getValueArea           = this.getValueArea.bind(this);
     this.getValueEdad           = this.getValueEdad.bind(this);
+    this._clickOutside           = this._clickOutside.bind(this);
+    this._stopPropagation       = this._stopPropagation.bind(this);
   }
 
   getValueArea() {
@@ -94,6 +96,7 @@ class ModalVivienda extends React.Component {
   }
 
   clicked (which, state) {
+    console.log(which, state);
     let dropdowns = this.closeShowingDropdowns();
     dropdowns[which] = state;
     this.props.hideDropdowns(state);
@@ -116,18 +119,27 @@ class ModalVivienda extends React.Component {
     this._selectEdad(a);
   }
 
+  _clickOutside(e) {
+    console.log("Holi, cerrar. Pliki");
+    const dropdowns = this.closeShowingDropdowns();
+    this.setState({showingDropdowns: dropdowns});
+  }
+
+  _stopPropagation (e) {
+    e.stopPropagation();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.ddshown !== nextProps.ddshown && nextProps.ddshown === false) {
       this.setState({showingDropdowns: this.closeShowingDropdowns()});
     }
-
   }
 
   render () {
     let showing = this.state.showingDropdowns;
 
     return (
-      <div className="modal-box">
+      <div className="modal-box" onClick={this._clickOutside}>
         <div className="modal-row modal-icons-row" style={{padding: '15px 0 10px 0'}}>
           <div style={{textAlign: 'center'}}>
             <IMQuantitySelector styles={{display: "inline-block"}}
@@ -158,7 +170,7 @@ class ModalVivienda extends React.Component {
           <div className="col-md-3 col-sm-3 col-xs-7">
             Tipo de vivienda
           </div>
-          <div className="col-md-3 col-sm-3 col-xs-5">
+          <div className="col-md-3 col-sm-3 col-xs-5" onClick={this._stopPropagation}>
             <IMDropdownButton reference={"tipoVivienda"}
                               items={["Departamento", "Casa"]}
                               className="modal-dropdown-button"
