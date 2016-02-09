@@ -3,6 +3,7 @@ import IMDropdownButton from './DropdownButton';
 import IMInputDropdown from './Input'
 import ModalVivienda from './ModalVivienda';
 import API from '../api';
+import _ from 'lodash';
 
 function parseSuggestions(hit) {
   let ans = [];
@@ -340,7 +341,7 @@ class SearchForm extends React.Component {
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
                                  showSuggestions={ddmodalShown.ddInput}
-                                 changeHandler={this._inputChangeHandler}/>
+                                 changeHandler={_.debounce(this._inputChangeHandler, 100)}/>
               </div>
               <div className={'sarch-button'}>
                 <button className="search-button" onClick={this._handleClick}>
