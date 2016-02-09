@@ -129,9 +129,6 @@
       width: 75px;
     }
   }
-  @media screen and (max-width: 1000px) {
-    width: 80%;
-  }
 }
 
 .im-input-dropdown{
@@ -179,30 +176,6 @@
   position: absolute;
   top: 0;
   right: 20px;
-}
-
-@media screen and (max-width: 1000px) {
-  .modal-div {
-    width: 80%;
-    .modal-row {
-      .col-md-4 {
-        padding-right: 0px;
-        padding-left: 0px
-      }
-      .im-quantity-selector-button {
-        padding: 0px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 440px) {
-  .metric {
-    right: 0px;
-  }
-  .input-modal {
-    padding: 0 0 0 15%;
-  }
 }
 
 #edad::-webkit-input-placeholder, #area-construida::-webkit-input-placeholder{

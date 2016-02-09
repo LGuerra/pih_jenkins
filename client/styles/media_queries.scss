@@ -1,11 +1,35 @@
-@media screen and (max-width: 920px) and (min-width: 768px) {
+@mixin modalDiv() {
+  .search-div {
+    width: 80%;
+  }
+  .modal-div {
+    width: 80%;
+    .modal-row {
+      .col-md-4 {
+        padding-right: 0px;
+        padding-left: 0px
+      }
+      .im-quantity-selector-button {
+        padding: 0px;
+      }
+    }
+  }
+}
 
+@media screen and (max-width: 920px) and (min-width: 768px) {
+  @include modalDiv();
 }
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
-
+  @include modalDiv();
 }
 
 @media screen and (max-width: 480px) {
-
+  @include modalDiv();
+  .metric {
+    right: 10px;
+  }
+  .input-modal {
+    padding: 0 0 0 15%;
+  }
 }
