@@ -351,6 +351,7 @@ class SearchForm extends React.Component {
           </div>
           <div className="row">
             <div className={'modal-div'} onClick={this._stopPropagation}>
+              <div className={'modal-div-triangle'}></div>
               {modalVivienda}
             </div>
           </div>
