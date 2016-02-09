@@ -42,7 +42,7 @@ class OfertaDisponible extends React.Component {
   render() {
     let monthlyListing = (
       <div style={{textAlign: 'center', padding: '12px 0px'}}>
-        <div style={{display: 'flex', alignItems: 'center'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <img height={'50px'} src={IMAGES.houses} style={{margin: '0px 10px'}}/>
           <div style={{width: '100px'}}>
             <p className={'OfertaDisponible-price'}>
@@ -55,7 +55,7 @@ class OfertaDisponible extends React.Component {
 
     let semesterListing = (
       <div style={{textAlign: 'center', padding: '12px 0px'}}>
-        <div style={{display: 'flex', alignItems: 'center'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <img height={'55px'} src={IMAGES.calendar_houses} style={{margin: '0px 10px'}}/>
           <div style={{width: '100px'}}>
             <p className={'OfertaDisponible-price'}>
@@ -69,7 +69,7 @@ class OfertaDisponible extends React.Component {
     let averageTime = (
       <div style={{textAlign: 'center', padding: '12px 0px'}}>
         <div className={'tiempo-container'}>
-          <div style={{display: 'flex', alignItems: 'center'}}>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
             <img height={'50px'} src={IMAGES.calendar} style={{margin: '0px 10px'}}/>
             <div style={{width: '100px'}}>
               <p className={'OfertaDisponible-price'}>
@@ -84,12 +84,7 @@ class OfertaDisponible extends React.Component {
     return (
       <div className={'OfertaDisponible BlockContainer'}>
         <h4 className={'SubsectionTitle'}>Oferta Disponible</h4>
-        <div style={{
-          marginTop: '20px',
-          marginBottom: '25px',
-          display: 'flex',
-          justifyContent: 'space-around'}}
-          className={'listados'}>
+        <div className={'listados'}>
           {monthlyListing}
           {semesterListing}
           {averageTime}
