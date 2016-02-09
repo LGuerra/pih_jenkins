@@ -155,85 +155,93 @@ class ModalVivienda extends React.Component {
           </div>
         </div>
         <div className="row modal-row">
-          <div className="col-md-3 col-sm-3 col-xs-7">
-            Tipo de vivienda
+          <div className="form-input-container col-sm-6 col-md-6 row">
+            <div className="col-sm-6 col-xs-6 label-form-input">
+              Tipo de vivienda
+            </div>
+            <div className="col-sm-6 col-xs-6 form-input">
+              <IMDropdownButton reference={"tipoVivienda"}
+                                items={["Departamento", "Casa"]}
+                                className="modal-dropdown-button"
+                                outerButtonClassName="pull-right modal-button-container"
+                                showDropdown={showing.tipoVivienda}
+                                onClick={this.clicked}
+                                handleKey13={this._keyDownVivienda}
+                                selectedItem={this.state.vivienda}
+                                selectMItem={this._selectVivienda} />
+            </div>
           </div>
-          <div className="col-md-3 col-sm-3 col-xs-5">
-            <IMDropdownButton reference={"tipoVivienda"}
-                              items={["Departamento", "Casa"]}
-                              className="modal-dropdown-button"
-                              outerButtonClassName="pull-right modal-button-container"
-                              showDropdown={showing.tipoVivienda}
-                              onClick={this.clicked}
-                              handleKey13={this._keyDownVivienda}
-                              selectedItem={this.state.vivienda}
-                              selectMItem={this._selectVivienda} />
-          </div>
-          <div className="col-md-3 col-sm-3 col-xs-7">
-            Tipo de operación
-          </div>
-          <div className="col-md-3 col-sm-3 col-xs-5 disabled-modal-dropdown-button">
-            <IMDropdownButton reference={"tipoOperacion"}
-                              items={["Compra"]}
-                              className="modal-dropdown-button"
-                              outerButtonClassName="pull-right modal-button-container"
-                              showDropdown={showing.tipoOperacion}
-                              onClick={this.clicked}
-                              handleKey13={this._keyDownOperacion}
-                              selectedItem={this.state.operacion}
-                              selectMItem={this._selectOperacion} />
+          <div className="form-input-container col-sm-6 col-md-6 row">
+            <div className="col-sm-6 col-xs-6 label-form-input">
+              Tipo de operación
+            </div>
+            <div className="col-sm-6 col-xs-6 disabled-modal-dropdown-button form-input">
+              <IMDropdownButton reference={"tipoOperacion"}
+                                items={["Compra"]}
+                                className="modal-dropdown-button"
+                                outerButtonClassName="pull-right modal-button-container"
+                                showDropdown={showing.tipoOperacion}
+                                onClick={this.clicked}
+                                handleKey13={this._keyDownOperacion}
+                                selectedItem={this.state.operacion}
+                                selectMItem={this._selectOperacion} />
+            </div>
           </div>
         </div>
         <div className="row modal-row">
-          <div className="col-md-3 col-sm-3 col-xs-7">
-            Área de construcción
-          </div>
-          <div className="col-md-3 col-sm-3 col-xs-5">
-            <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
-              <input id="area-construida"
-                     type="text"
-                     ref="inputAreaConst"
-                     className={"input-modal"}
-                     maxLength="3"
-                     onChange={this.getValueArea}
-                     placeholder={"100"} >
-              </input>
-              <span className={"metric"}> m²</span>
+          <div className="form-input-container col-sm-6 col-md-6 row">
+            <div className="col-sm-6 col-xs-6 label-form-input">
+              Área de construcción
             </div>
-          {/*<IMDropdownButton reference={"areaConstruida"}
-                              items={["100 m²", "200 m²", "300 m²", "+ 350 m²"]}
-                              className="modal-dropdown-button"
-                              outerButtonClassName="pull-right modal-button-container"
-                              showDropdown={showing.areaConstruida}
-                              onClick={this.clicked}
-                              handleKey13={this._keyDownAreaConstruida}
-                              selectedItem={this.state.areaConstruida}
-                              selectMItem={this._selectAreaConstruida} />*/}
-          </div>
-          <div className="col-md-3 col-sm-3 col-xs-7">
-            Edad
-          </div>
-          <div className="col-md-3 col-sm-3 col-xs-5">
-            <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
-              <input id="edad"
-                     type="text"
-                     ref="inputEdad"
-                     className={"input-modal"}
-                     maxLength="3"
-                     onChange={this.getValueEdad}
-                     placeholder={"0"} >
-              </input>
-              <span className={"metric"}> años</span>
+            <div className="col-sm-6 col-xs-6 form-input">
+              <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
+                <input id="area-construida"
+                       type="text"
+                       ref="inputAreaConst"
+                       className={"input-modal"}
+                       maxLength="3"
+                       onChange={this.getValueArea}
+                       placeholder={"100"} >
+                </input>
+                <span className={"metric"}> m²</span>
+              </div>
+            {/*<IMDropdownButton reference={"areaConstruida"}
+                                items={["100 m²", "200 m²", "300 m²", "+ 350 m²"]}
+                                className="modal-dropdown-button"
+                                outerButtonClassName="pull-right modal-button-container"
+                                showDropdown={showing.areaConstruida}
+                                onClick={this.clicked}
+                                handleKey13={this._keyDownAreaConstruida}
+                                selectedItem={this.state.areaConstruida}
+                                selectMItem={this._selectAreaConstruida} />*/}
             </div>
-            {/*<IMDropdownButton reference={"edad"}
-                              items={["5 años","10 años","20 años","30 años","+ 40 años"]}
-                              className="modal-dropdown-button"
-                              outerButtonClassName="pull-right modal-button-container"
-                              showDropdown={showing.edad}
-                              onClick={this.clicked}
-                              handleKey13={this._keyDownEdad}
-                              selectedItem={this.state.edad}
-                              selectMItem={this._selectEdad} />*/}
+          </div>
+          <div className="form-input-container col-sm-6 col-md-6 row">
+            <div className="col-sm-6 col-xs-6 label-form-input">
+              Edad
+            </div>
+            <div className="col-sm-6 col-xs-6 form-input">
+              <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
+                <input id="edad"
+                       type="text"
+                       ref="inputEdad"
+                       className={"input-modal"}
+                       maxLength="3"
+                       onChange={this.getValueEdad}
+                       placeholder={"0"} >
+                </input>
+                <span className={"metric"}> años</span>
+              </div>
+              {/*<IMDropdownButton reference={"edad"}
+                                items={["5 años","10 años","20 años","30 años","+ 40 años"]}
+                                className="modal-dropdown-button"
+                                outerButtonClassName="pull-right modal-button-container"
+                                showDropdown={showing.edad}
+                                onClick={this.clicked}
+                                handleKey13={this._keyDownEdad}
+                                selectedItem={this.state.edad}
+                                selectMItem={this._selectEdad} />*/}
+            </div>
           </div>
         </div>
       </div>

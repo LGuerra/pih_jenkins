@@ -16,12 +16,27 @@
   }
 }
 
-@media screen and (max-width: 920px) and (min-width: 768px) {
+@media screen and (max-width: 920px) and (min-width: 768px) {	
   @include modalDiv();
 }
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
   @include modalDiv();
+  .modal-row{
+    padding-top: 0;
+  }
+  .form-input-container{
+    margin-top: 6px;
+    height: 25px;
+    padding-right: 0;
+  }
+  .modal-box{
+    padding-bottom: 20px;
+  }
+  .modal-content{
+    margin: 0px 5px;
+  }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -31,5 +46,48 @@
   }
   .input-modal {
     padding: 0 0 0 15%;
+  }
+  .modal-div, .search-div{
+    width: 90%;
+  }
+  .modal-row{
+    padding-top: 0;
+  }
+  .form-input-container{
+    margin-top: 6px;
+    height: 25px;
+    padding: 0;
+    .form-input{
+      padding: 0;
+    }
+  }
+  .modal-box{
+    padding: 0px 10px 15px 10px;
+  }
+  .listados{
+    flex-direction: column;
+    justify-content: center;
+  }
+  .modal-content{
+    margin: 0px 5px;
+  }
+  .label-form-input{
+    padding-left: 3px;
+  }
+  .modal-icons-row{
+    justify-content: space-between;
+    margin-right: 8px;
+    margin-left: -8px;
+  }
+  .modal-dropdown-button, .input-modal{
+    margin-right: 8px;
+  }
+  .modal-body{
+    .modal-box{
+      padding: 0px 0px 15px 0px;
+    }
+  }
+  .im-dropdown{
+    right: 4%;
   }
 }
