@@ -1,13 +1,13 @@
-import React            from 'react';
-import ReactDOM         from 'react-dom';
+import React             from 'react';
+import ReactDOM          from 'react-dom';
 
-import IMDropdownButton from './DropdownButton';
-import IMInputDropdown  from './Input'
-import ModalVivienda    from './ModalVivienda';
-import Modal            from './Modal'
+import IMDropdownButton  from './DropdownButton';
+import IMInputDropdown   from './Input'
+import ModalVivienda     from './ModalVivienda';
+import Modal             from './Modal'
 import MiniModalVivienda from './MiniModalVivienda';
 
-import API              from '../api';
+import API               from '../api';
 
 function parseSuggestions(hit) {
   let ans = [];
