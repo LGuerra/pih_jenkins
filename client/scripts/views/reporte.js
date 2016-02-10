@@ -264,7 +264,7 @@ class Reporte extends React.Component{
             onGetViviendaInfo={this._onGetViviendaInfo}
             params={this.state.viviendaParams}/>
         </div>
-        <div className={'col-sm-8'}>
+        <div className={'col-sm-8'} style={{padding: '0px'}}>
           <ColoniaInfo
             coloniaName={coloniaName}
             ref={'coloniaInfo'}
