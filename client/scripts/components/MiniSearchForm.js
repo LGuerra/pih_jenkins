@@ -76,6 +76,7 @@ class MiniSearchForm extends React.Component {
   }
 
   _requestVivienda () {
+    const placement = (window.matchMedia("(max-width: 768px)").matches) ? 'top' : 'left';
     let searchInput = this.refs.searchInput.getValue();
     let tipoVivienda = (this.state.vivienda === "Departamento") ? 4 : 2;
     let templateUrl = ('reporte?colonia=:colonia:');
@@ -115,7 +116,7 @@ class MiniSearchForm extends React.Component {
           } else {
             let coloniaArr = searchInput.split(",");
             let colonia = (coloniaArr.length > 3) ? coloniaArr[1] : coloniaArr[0];
-            $('[data-toggle="popover"]').popover({content: `Lo sentimos, estamos trabajando por tener valuaciones en ${colonia}`, placement: 'left'});
+            $('[data-toggle="popover"]').popover({content: `Lo sentimos, estamos trabajando por tener valuaciones en ${colonia}`, placement: placement});
             $('[data-toggle="popover"]').popover('show');
             setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 3000);
           }
@@ -128,11 +129,12 @@ class MiniSearchForm extends React.Component {
   }
 
   _sendRequest () {
+    const placement = (window.matchMedia("(max-width: 768px)").matches) ? 'top' : 'left';
     let searchInput = this.refs.searchInput.getValue();
     if (!searchInput) {
-
+      console.log("holi");
       let contentError = (this.state.searchType === 'Vivienda') ? "Ingresa una dirección" : "Ingresa una Colonia";
-      $('[data-toggle="popover"]').popover({content: contentError, placement: 'left'});
+      $('[data-toggle="popover"]').popover({content: contentError, placement: placement});
       $('[data-toggle="popover"]').popover('show');
       setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
 
@@ -140,7 +142,7 @@ class MiniSearchForm extends React.Component {
       if (searchInput.length >= 3) {
         if (searchInput === this.state.suggestions[0].content) {
 
-          $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: 'left'});
+          $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: placement});
           $('[data-toggle="popover"]').popover('show');
           setTimeout(()=> $('[data-toggle="popover"]').popover('destroy'), 2000);
 
@@ -349,6 +351,7 @@ class MiniSearchForm extends React.Component {
 
   render() {
     let ddmodalShown = this.state.ddmodalShown;
+    const placement = (window.matchMedia("(max-width: 768px)").matches) ? 'top' : 'left';
 
     return (
           <div className={'mini-search-div'}>
@@ -372,7 +375,7 @@ class MiniSearchForm extends React.Component {
                 <IMInputDropdown ref={"searchInput"}
                                  items={this.state.suggestions}
                                  className={this.state.inputClass}
-                                 popoverPlacement={"left"}
+                                 popoverPlacement={placement}
                                  dropdownClass={"mini-search-input-dropdown"}
                                  placeholder={this.state.placeholder}
                                  crOnSearch={this._sendRequest}
