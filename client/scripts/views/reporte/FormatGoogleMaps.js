@@ -59,11 +59,16 @@ class FormatGoogleMaps extends React.Component {
     let bottomLeft = projection.fromLatLngToPoint(map.getBounds().getSouthWest());
     let scale = Math.pow(2, map.getZoom());
 
-    let point = projection.fromLatLngToPoint(new google.maps.LatLng(lat, lon))
+    let point = projection.fromLatLngToPoint(new google.maps.LatLng(lat, lon));
+    let isInside = {
+      x: (point.x <= topRight.x) && (point.x >= bottomLeft.x),
+      y: (point.y >= topRight.y) && (point.y <= bottomLeft.y)
+    };
 
     return {
       x: (point.x - bottomLeft.x) * scale,
-      y: (point.y - topRight.y) * scale
+      y: (point.y - topRight.y) * scale,
+      isInside: (isInside.x) && (isInside.y)
     };
   }
 
@@ -145,7 +150,8 @@ class FormatGoogleMaps extends React.Component {
 
         $('#map-tooltip').css({
           left: centroid.x + 15 - ($('#map-tooltip').width() / 2),
-          top: (centroid.y - ($('#map-tooltip').height() / 2) - 21)
+          top: (centroid.y - ($('#map-tooltip').height() / 2) - 21),
+          display: centroid.isInside ? 'block': 'none'
         });
       }
 
@@ -155,10 +161,8 @@ class FormatGoogleMaps extends React.Component {
         html = getHTML(this.props.coloniaName);
       }
 
-      $('#map-tooltip').css({
-        display: 'block'
-      })
-      .html(html);
+      $('#map-tooltip')
+        .html(html);
 
       if (event.feature.getProperty('current')) {
         positionTooltip(this.state.centroid.lat, this.state.centroid.lng)
