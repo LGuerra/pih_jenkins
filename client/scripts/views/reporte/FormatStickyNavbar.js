@@ -29,7 +29,7 @@ class FormatStickyNavbar extends React.Component{
               <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.viviendaInfo.address}</p>
             </div>
             <div className={'NavbarIcon'}>
-              <p className={'green-price'}>{Helpers.formatAsPrice(props.viviendaInfo.valuacion)}</p>
+              <p style={{color: '#35C079'}}>{Helpers.formatAsPrice(props.viviendaInfo.valuacion)}</p>
             </div>
             <div className={'NavbarIcon'}>
               {image}

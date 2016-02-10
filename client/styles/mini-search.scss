@@ -49,6 +49,12 @@
     padding-bottom: 25px;
     border-radius: 8px;
   }
+  .form-input-container{
+    padding: 0;
+  }
+  .form-input{
+    padding: 0;
+  }
 }
 
 .modal-dropdown-button {
@@ -144,25 +150,6 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-@media screen and (max-width: 1000px) {
-  .modal-div {
-    width: 80%;
-    .modal-row {
-      .col-md-4 {
-        padding-right: 0px;
-        padding-left: 0px
-      }
-      .im-quantity-selector-button {
-        padding: 0px;
-      }
-    }
-    .im-dropdown-button {
-      img {
-        display: none;
-      }
-    }
-  }
 }
 
 @media screen and (min-width: 768px) {

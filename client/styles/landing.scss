@@ -129,9 +129,6 @@
       width: 75px;
     }
   }
-  @media screen and (max-width: 1000px) {
-    width: 80%;
-  }
 }
 
 .im-input-dropdown{
@@ -149,6 +146,20 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+}
+
+.modal-div-triangle{
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0 12px 10px;
+  border-color: #FFFFFF transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  top: -9px;
+  left: 5%;
 }
 
 .popover-alert{
@@ -158,55 +169,45 @@
   margin-top: -15px !important;
 }
 
-.input-modal {
-  display: inline-block;
-  background-color: rgba(1, 1, 1, 0);
-  border: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #C3C3C3;
-  color: #000;
-  font-weight: 300;
-  margin: 0 15px;
-  padding: 0 0 0 30%;
+.input-modal-container {
   width: 80%;
-  &:focus {
-    outline: 0;
-    border-bottom-color: #35c0be;
-  }
+  display: flex;
+  justify-content: center;
 }
 
 .metric {
-  position: absolute;
-  top: 0;
-  right: 20px;
+  margin-left: 5px;
 }
 
-@media screen and (max-width: 1000px) {
-  .modal-div {
-    width: 80%;
-    .modal-row {
-      .col-md-4 {
-        padding-right: 0px;
-        padding-left: 0px
-      }
-      .im-quantity-selector-button {
-        padding: 0px;
-      }
-    }
-    .im-dropdown-button {
-      img {
-        display: none;
-      }
-    }
-  }
+.input-modal-outer-container {
+  display: inline-block;
+  width: 80%;
+  border: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #C3C3C3;
+  margin-right: 15px;
 }
-
-@media screen and (max-width: 440px) {
-  .metric {
-    right: 0px;
-  }
-  .input-modal {
-    padding: 0 0 0 15%;
+.input-modal {
+  //display: inline-block;
+  //background-color: rgba(1, 1, 1, 0);
+  //border: 1px;
+  //border-bottom-style: solid;
+  //border-bottom-color: #C3C3C3;
+  //color: #000;
+  //font-weight: 300;
+  //margin: 0 15px;
+  //padding: 0 0 0 30%;
+  //width: 80%;
+  //&:focus //{
+  //outline: 0;
+  //border-bottom-color: #35c0be;
+  //}
+  border: 1px;
+  width: 50%;
+  text-align: right;
+  color: #000;
+  &:focus {
+    outline: 0;
   }
 }
 
