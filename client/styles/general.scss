@@ -96,9 +96,13 @@ body {
   display: none;
 }
 
-
 .modal-content {
   .modal-body {
     padding: 10px !important;
   }
+}
+
+.col-xs-6, .col-sm-6 {
+  padding-left: 6px;
+  padding-right: 6px;
 }

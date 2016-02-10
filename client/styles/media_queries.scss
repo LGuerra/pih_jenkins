@@ -1,14 +1,32 @@
-@media screen and (max-width: 920px) and (min-width: 768px) {	
+@mixin modalDiv() {
+  .search-div {
+    width: 80%;
+  }
+  .modal-div {
+    width: 80%;
+    .modal-row {
+      .col-md-4 {
+        padding-right: 0px;
+        padding-left: 0px
+      }
+      .im-quantity-selector-button {
+        padding: 0px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 920px) and (min-width: 768px) {
+  @include modalDiv();
+  .input-modal-outer-container {
+    margin-right: 13px;
+  }
 }
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
+  @include modalDiv();
   .modal-row{
-      padding-top: 0;
-  }
-  .form-input-container{
-      margin-top: 6px;
-      height: 25px;
-      padding-right: 0;
+    padding-top: 0;
   }
   .modal-body{
     .modal-box{
@@ -18,28 +36,27 @@
   .modal-content{
     margin: 0px 5px;
   }
+  .input-modal-outer-container {
+    margin-right: 15px;
+  }
   .modal-div-triangle{
     left: 6%;
   }
 }
 
 @media screen and (max-width: 480px) {
+  @include modalDiv();
   .modal-div, .search-div{
-      width: 90%;
+    width: 90%;
   }
   .modal-row{
-      padding-top: 0;
+    padding-top: 0;
   }
-  .form-input-container{
-      margin-top: 6px;
-      height: 25px;
-      padding: 0;
-      .form-input{
-          padding: 0;
-      }
+  .input-modal-outer-container {
+    margin-right: 8px;
   }
   .modal-box{
-      padding: 0px 10px 15px 10px;
+    padding: 0px 10px 15px 10px;
   }
   .listados{
     flex-direction: column;

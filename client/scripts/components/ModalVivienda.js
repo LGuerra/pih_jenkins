@@ -194,16 +194,18 @@ class ModalVivienda extends React.Component {
               Área de construcción
             </div>
             <div className="col-sm-6 col-xs-6 form-input">
-              <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
-                <input id="area-construida"
-                       type="text"
-                       ref="inputAreaConst"
-                       className={"input-modal"}
-                       maxLength="3"
-                       onChange={this.getValueArea}
-                       placeholder={"100"} >
-                </input>
-                <span className={"metric"}> m²</span>
+              <div className='pull-right input-modal-outer-container' >
+                <div className='input-modal-container' >
+                  <input id="area-construida"
+                         type="text"
+                         ref="inputAreaConst"
+                         className={"input-modal"}
+                         maxLength="3"
+                         onChange={this.getValueArea}
+                         placeholder={"100"} >
+                  </input>
+                  <span className={"metric"}> m²</span>
+                </div>
               </div>
             {/*<IMDropdownButton reference={"areaConstruida"}
                                 items={["100 m²", "200 m²", "300 m²", "+ 350 m²"]}
@@ -221,16 +223,18 @@ class ModalVivienda extends React.Component {
               Edad
             </div>
             <div className="col-sm-6 col-xs-6 form-input">
-              <div style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
-                <input id="edad"
-                       type="text"
-                       ref="inputEdad"
-                       className={"input-modal"}
-                       maxLength="3"
-                       onChange={this.getValueEdad}
-                       placeholder={"0"} >
-                </input>
-                <span className={"metric"}> años</span>
+              <div className='pull-right input-modal-outer-container'>
+                <div className='input-modal-container'>
+                  <input id="edad"
+                         type="text"
+                         ref="inputEdad"
+                         className={"input-modal"}
+                         maxLength="3"
+                         onChange={this.getValueEdad}
+                         placeholder={"0"} >
+                  </input>
+                  <span className={"metric"}> años</span>
+                </div>
               </div>
               {/*<IMDropdownButton reference={"edad"}
                                 items={["5 años","10 años","20 años","30 años","+ 40 años"]}
