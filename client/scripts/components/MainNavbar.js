@@ -21,9 +21,11 @@ class MainNavbar extends React.Component{
             </a>
           </div>
             {this.props.children}
-          <div style={{marginLeft: 'auto'}} className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className="dropdown">
+              <li className={'hiddenLinks'} ><a href="/users/edit">Cambiar contraseña</a></li>
+              <li className={'hiddenLinks'} ><a href="/helpers/logout">Salir</a></li>
+              <li className="dropdown shownLinks">
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <img height={'20px'} style={{margin: '3px 10px'}} src={IMAGES.user} />
                 </a>
