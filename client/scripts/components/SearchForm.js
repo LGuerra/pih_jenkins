@@ -304,7 +304,8 @@ class SearchForm extends React.Component {
 
   render() {
     let ddmodalShown = this.state.ddmodalShown;
-    let modalVivienda = (ddmodalShown.modal) ? (<ModalVivienda modalChange={this._modalChange}
+    let modalVivienda = (ddmodalShown.modal) ? (<div><div className={'modal-div-triangle'}></div>
+                                                <ModalVivienda modalChange={this._modalChange}
                                                                ddshown={this.state.modaldd}
                                                                hideDropdowns={this._modalDD}
                                                                habitaciones={this.state.habitaciones}
@@ -313,7 +314,7 @@ class SearchForm extends React.Component {
                                                                vivienda={this.state.vivienda}
                                                                operacion={this.state.operacion}
                                                                areaConstruida={this.state.areaConstruida}
-                                                               edad={this.state.edad} />) : "";
+                                                               edad={this.state.edad} /></div>) : "";
 
     return (
         <div className="LandingPage" onClick={this._clickOutside} >
@@ -352,7 +353,6 @@ class SearchForm extends React.Component {
           </div>
           <div className="row">
             <div className={'modal-div'} onClick={this._stopPropagation}>
-              <div className={'modal-div-triangle'}></div>
               {modalVivienda}
             </div>
           </div>

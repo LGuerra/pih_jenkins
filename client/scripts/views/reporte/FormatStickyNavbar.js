@@ -61,13 +61,13 @@ class FormatStickyNavbar extends React.Component{
         content = (
           <div className={'NavbarIcons'} style={{height: '35px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: '0px'}}>
             <div className={'sticky-address NavbarIcon'}>
-              <p style={{marginBottom: '10px', fontSize: '15px'}}>{'Colonia ' + props.coloniaInfo.coloniaInfo.nombre}</p>
+              <p style={{marginBottom: '10px', fontSize: '14px'}}>{'Colonia ' + props.coloniaInfo.coloniaInfo.nombre}</p>
             </div>
             <div className={'NavbarIcon'}>
               <p style={{color: '#35c079', fontSize: '17px'}}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</p>
-              <p className={'navbar-desc'} style={{marginTop: '4px', marginBottom: '10px', fontSize: '15px'}}>Precio promedio</p>
+              <p className={'navbar-desc'} style={{marginTop: '4px', marginBottom: '10px', fontSize: '14px'}}>Precio promedio</p>
             </div>
-            <div  className={'NavbarIcon'} style={{marginBottom: '0px', fontSize: '15px'}}>
+            <div  className={'NavbarIcon'} style={{marginBottom: '0px', fontSize: '14px'}}>
               <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
             </div>
           </div>

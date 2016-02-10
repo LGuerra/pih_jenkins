@@ -257,12 +257,12 @@ class LineChart extends React.Component {
         var tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         var tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        var posx = (_this.conf.xScale(d.data0.value.xVariable)) + _this.props.margin.left + 15;
-        var posy = (_this.conf.yScale(d.data0.value.value)) - tooltipHeigth - 20;
+        var posx = (_this.conf.xScale(d.data0.value.xVariable)) + _this.props.margin.left + 5;
+        var posy = (_this.conf.yScale(d.data0.value.value)) - tooltipHeigth - 15;
 
 
         if (posx > (_this.conf.width / 2)) {
-          posx = posx - tooltipWidth;
+          posx = posx - tooltipWidth - 10;
         }
 
         _this.conf.tooltip
@@ -442,7 +442,7 @@ class LineChart extends React.Component {
   }
   render() {
     return (
-      <div id={this.props.idContainer}>
+      <div style={{position: 'relative'}} id={this.props.idContainer}>
       </div>
     );
   }

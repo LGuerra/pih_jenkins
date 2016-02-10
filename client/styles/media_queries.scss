@@ -115,6 +115,12 @@
   .mini-search-dropdown{
     right: 0;
   }
+  .hiddenLinks {
+    display: block !important;
+  }
+  .shownLinks {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -205,5 +211,11 @@
   }
   .mini-search-div {
     width: 100%;
+  }
+  .hiddenLinks {
+    display: block !important;
+  }
+  .shownLinks {
+    display: none !important;
   }
 }
