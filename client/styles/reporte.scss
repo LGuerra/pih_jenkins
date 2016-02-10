@@ -34,7 +34,6 @@
   }
 }
 
-
 .NavbarIcons {
   margin-top: 12px;
   margin-bottom: 12px;
@@ -50,6 +49,14 @@
       margin-left: 10px;
     }
   }
+}
+
+.HiddenButtons {
+  display: none;
+}
+
+.shownButtons {
+  display: none;
 }
 
 .BlockContainer {
@@ -153,6 +160,12 @@
     margin-bottom: 0px !important;
     font-weight: 500;
   }
+  .listados {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-around;
+  }
 }
 
 .BackToTop {
@@ -187,6 +200,20 @@
   display: none;
 }
 
+.ColoniaInfo, .ViviendaInfo {
+  .InfoContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+.container-fluid {
+  display: flex !important;
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 1000px) {
   .LandingInput {
     font-size: 12px;
@@ -195,7 +222,7 @@
 
 @media screen and (max-width: 768px) {
   .BlockContainer {
-    div {
+    & > div {
       border: none !important;
     }
     .barchart-section{
@@ -204,8 +231,5 @@
   }
   .LandingInput {
     font-size: 11px;
-  }
-  .NavbarDescription {
-    display: none;
   }
 }

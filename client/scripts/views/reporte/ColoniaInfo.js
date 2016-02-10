@@ -83,7 +83,7 @@ class ColoniaInfo extends React.Component {
     }
 
     let averageOffer = (
-      <div style={{textAlign: 'center'}}>
+      <div className={'InfoElement'} style={{textAlign: 'center'}}>
         <p className={'green-price'}>
           {this.state.averageOffer ? Helpers.formatAsPrice(this.state.averageOffer) : 'No disponible'}
         </p>
@@ -94,7 +94,7 @@ class ColoniaInfo extends React.Component {
     );
 
     let averageM2 = (
-      <div style={{textAlign: 'center'}}>
+      <div className={'InfoElement'} style={{textAlign: 'center'}}>
         <p className={'secondary-price'}>
           {this.state.averageM2 ? Helpers.formatAsPrice(this.state.averageM2) : 'No disponible'}
         </p>
@@ -105,7 +105,7 @@ class ColoniaInfo extends React.Component {
     );
 
     let SHFComponent = (
-      <div style={{textAlign: 'center'}}>
+      <div className={'InfoElement'} style={{textAlign: 'center'}}>
         <p className={'secondary-price'}>
           {shf}
         </p>
@@ -114,7 +114,7 @@ class ColoniaInfo extends React.Component {
     );
 
     let apreciacionComponent = (
-      <div style={{textAlign: 'center'}}>
+      <div className={'InfoElement'} style={{textAlign: 'center'}}>
         <p className={'secondary-price'}>
           {apreciacion}
         </p>
@@ -123,14 +123,9 @@ class ColoniaInfo extends React.Component {
     );
 
     return (
-      <div className={'oferta-disponible'}>
+      <div className={'ColoniaInfo'}>
         {colName}
-        <div style={{
-          marginTop: '20px',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center'
-        }}>
+        <div className={'InfoContainer'}>
           {averageOffer}
           {averageM2}
           {SHFComponent}

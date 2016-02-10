@@ -15,8 +15,9 @@
   -webkit-transform: $effect;
   -ms-transform: $effect;
   -o-transform: $effect;
-  transform: $effect;  
-} 
+  transform: $effect;
+}
+
 @mixin custom-button($bg-color,$border-bottom,$hover-color,$font-color){
   @include transition(all, 0.2s, ease-in-out);
   @include border-radius(3px);

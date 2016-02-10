@@ -50,12 +50,12 @@ class ViviendaInfo extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.data && this.state.data) {
       let descriptions = ['más de 40%', 'entre 30% y 40% ', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
-
+      let popoverPosition = window.innerWidth < 550 ? 'bottom' : 'right';
       let title = `
         <div class="popover PopoverConfianza" role="tooltip">
           <div class="arrow"></div>
-          <p>La mitad o más de los inmuebles en esta colonia tienen un error en 
-          la estimación de ${descriptions[this.state.data.confianza - 1]} error absoluto en la estimación de 
+          <p>La mitad o más de los inmuebles en esta colonia tienen un error en
+          la estimación de ${descriptions[this.state.data.confianza - 1]} error absoluto en la estimación de
           valores dentro de esta colonia.</p>
         </div>
       `;
@@ -64,10 +64,9 @@ class ViviendaInfo extends React.Component {
         container: 'body',
         content: "Elige una de las sugerencias",
         template: title,
-        placement: 'right'
+        placement: popoverPosition
       });
     }
-
   }
 
   _togglePopOver(show) {
@@ -118,19 +117,15 @@ class ViviendaInfo extends React.Component {
       );
 
       content = (
-        <div className={'oferta-disponible'}>
+        <div className={'ViviendaInfo'}>
           <h4 className={'SubsectionTitle'} style={{marginLeft: '5px'}}>{'Vivienda valuada'}</h4>
-          <div style={{
-            marginTop: '20px',
-            display: 'flex',
-            justifyContent: 'space-around',
-            alignItems: 'center'}}>
-            <div style={{textAlign: 'center'}}>
+          <div className={'InfoContainer'}>
+            <div className={'InfoElement'} style={{textAlign: 'center'}}>
               <p className={'green-price'}>{Helpers.formatAsPrice(valuacion * 1000)}</p>
               <p className={'subtitle'} style={{marginBottom: '0px'}}>{'Precio estimado'}</p>
               {reputacionComponent}
             </div>
-            <div style={{textAlign: 'center'}}>
+            <div className={'InfoElement'} style={{textAlign: 'center'}}>
               <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.precioM2)}</p>
               <p className={'subtitle'}>{'Precio estimado por m²'}</p>
             </div>

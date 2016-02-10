@@ -84,12 +84,7 @@ class OfertaDisponible extends React.Component {
     return (
       <div className={'OfertaDisponible BlockContainer'}>
         <h4 className={'SubsectionTitle'}>Oferta Disponible</h4>
-        <div style={{
-          marginTop: '20px',
-          marginBottom: '25px',
-          display: 'flex',
-          justifyContent: 'space-around'}}
-          className={'listados'}>
+        <div className={'listados'}>
           {monthlyListing}
           {semesterListing}
           {averageTime}

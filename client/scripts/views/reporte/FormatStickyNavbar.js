@@ -25,7 +25,7 @@ class FormatStickyNavbar extends React.Component{
         }
         content = (
           <div className={'NavbarIcons'} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            <div style={{maxWidth: '33.3%'}}>
+            <div className={'sticky-address'} style={{maxWidth: '33.3%'}}>
               <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.viviendaInfo.address}</p>
             </div>
             <div className={'NavbarIcon'}>
@@ -59,17 +59,16 @@ class FormatStickyNavbar extends React.Component{
     } else {
       if (props.coloniaInfo) {
         content = (
-          <div className={'NavbarIcons'} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0px'}}>
-            <div>
-              <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}>{'Colonia ' + Helpers.toTitleCase(props.coloniaInfo.coloniaInfo.nombre)}</p>
+          <div className={'NavbarIcons'} style={{height: '35px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', margin: '0px'}}>
+            <div className={'sticky-address NavbarIcon'}>
+              <p style={{marginBottom: '10px', fontSize: '15px'}}>{'Colonia ' + props.coloniaInfo.coloniaInfo.nombre}</p>
             </div>
-            <div>
-              <p style={{marginTop: '10px', marginBottom: '10px', fontSize: '15px'}}><span style={{color: '#35c079', fontSize: '17px'}}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</span> Precio promedio</p>
+            <div className={'NavbarIcon'}>
+              <p style={{color: '#35c079', fontSize: '17px'}}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</p>
+              <p className={'navbar-desc'} style={{marginTop: '4px', marginBottom: '10px', fontSize: '15px'}}>Precio promedio</p>
             </div>
-            <div style={{marginTop: '10px', marginBottom: '0px', fontSize: '15px'}}>
-              <div style={{textAlign: 'center'}}>
-                <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
-              </div>
+            <div  className={'NavbarIcon'} style={{marginBottom: '0px', fontSize: '15px'}}>
+              <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
             </div>
           </div>
           );

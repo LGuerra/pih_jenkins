@@ -3,9 +3,10 @@ import React from 'react';
 import _ from     'lodash';
 
 // Components
-import BackToTop from   '../components/BackToTop';
-import MainNavbar from  '../components/MainNavbar';
-import Spinner from     '../components/Spinner';
+import BackToTop from       '../components/BackToTop';
+import MainNavbar from      '../components/MainNavbar';
+import Spinner from         '../components/Spinner';
+import MiniSearchForm from  '../components/MiniSearchForm'
 
 // View's Components
 import ColoniaInfo from           './reporte/ColoniaInfo';
@@ -312,6 +313,15 @@ class Reporte extends React.Component{
             ddSearchBar={this.state.ddSearchBar}
             ddChange={this._ddChange}
             onDownloadReport={this._downloadReport}>
+            <div style={{display: 'flex', width: '100%'}}>
+              <MiniSearchForm
+                ddSearchBar={this.state.ddSearchBar}
+                ddChange={this._ddChange}
+                searchType={this.state.type} />
+              <div style={{margin: '0px'}} onClick={this._downloadReport}>
+                <img height={'15px'} style={{margin: '20px 10px'}} src={IMAGES.descarga} />
+              </div>
+            </div>
           </MainNavbar>
             {loadingFrame}
           <FormatStickyNavbar

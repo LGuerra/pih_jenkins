@@ -1,11 +1,97 @@
 @media screen and (max-width: 920px) and (min-width: 768px) {
-
+  .sticky-address {
+    display: none;
+  }
+  .ColoniaInfo {
+    .InfoContainer {
+      display: flex;
+      flex-wrap: wrap;
+      .InfoElement {
+        width: 50% !important;
+      }
+    }
+  }
+  .ViviendaInfo {
+    .InfoContainer {
+      display: flex;
+      flex-wrap: wrap;
+      .InfoElement {
+        width: 100% !important;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px) and (min-width: 480px) {
-
+  #sticky-nav {
+    .NavbarIcon {
+      .navbar-desc {
+        display: none;
+      }
+    }
+    .sticky-address {
+      display: none;
+    }
+  }
+  .NavbarDescription {
+    display: none;
+  }
+  .BlockContainer {
+    margin-top: 20px;
+  }
+  .OfertaDisponible {
+    .listados {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .ColoniaInfo {
+    .InfoContainer {
+      display: flex;
+      flex-wrap: wrap;
+      .InfoElement {
+        width: 50% !important;
+      }
+    }
+  }
+  .container-fluid {
+    display: block !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
-
+  #sticky-nav {
+    .NavbarIcon {
+      .navbar-desc {
+        display: none;
+      }
+    }
+    .sticky-address {
+      display: none;
+    }
+  }
+  .NavbarDescription {
+    display: none;
+  }
+  .BlockContainer {
+    margin-top: 20px;
+  }
+  .OfertaDisponible {
+    .listados {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .ColoniaInfo {
+    .InfoContainer {
+      display: flex;
+      flex-wrap: wrap;
+      .InfoElement {
+        width: 50% !important;
+      }
+    }
+  }
+  .container-fluid {
+    display: block !important;
+  }
 }
