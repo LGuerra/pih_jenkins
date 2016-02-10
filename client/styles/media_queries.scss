@@ -70,6 +70,7 @@
     }
   }
   .ColoniaInfo {
+    padding: 0px;
     .InfoContainer {
       display: flex;
       flex-wrap: wrap;
@@ -99,6 +100,17 @@
   .modal-div-triangle {
     left: 6%;
   }
+  .sarch-dropdown{
+    .im-dropdown{
+      right: 0;
+    }
+  }
+  .im-dropdown{
+    right: 6%;
+  }
+  .mini-search-dropdown{
+    right: 0;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -126,6 +138,7 @@
     }
   }
   .ColoniaInfo {
+    padding: 0px;
     .InfoContainer {
       display: flex;
       flex-wrap: wrap;
@@ -172,8 +185,16 @@
       padding: 0px 0px 15px 0px;
     }
   }
+  .sarch-dropdown{
+    .im-dropdown{
+      right: 0;
+    }
+  }
   .im-dropdown{
     right: 4%;
+  }
+  .mini-search-dropdown{
+    right: 0;
   }
   .modal-div-triangle{
     left: 9%;
