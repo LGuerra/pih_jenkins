@@ -99,6 +99,9 @@
   .modal-div-triangle {
     left: 6%;
   }
+  .mini-search-div {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -177,5 +180,8 @@
   }
   .modal-div-triangle{
     left: 9%;
+  }
+  .mini-search-div {
+    width: 100%;
   }
 }

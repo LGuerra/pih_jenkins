@@ -56,7 +56,6 @@ class Reporte extends React.Component{
     this._clickOutside = this._clickOutside.bind(this);
     this._ddChange = this._ddChange.bind(this);
     this._downloadReport = this._downloadReport.bind(this);
-    this._downloadReport = this._downloadReport.bind(this);
     this._generateInfo = this._generateInfo.bind(this);
     this._getImages = this._getImages.bind(this);
     this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
@@ -135,61 +134,56 @@ class Reporte extends React.Component{
   }
 
   _downloadReport() {
-    let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
-    //let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
-    let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth()+1;
-    let yyyy = today.getFullYear();
+    if (!this.state.loadingReport) {
+      let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+      //let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth()+1;
+      let yyyy = today.getFullYear();
 
-    if (mm < 10) mm = '0' + mm;
-    if (dd < 10) dd = '0' + dd;
+      if (mm < 10) mm = '0' + mm;
+      if (dd < 10) dd = '0' + dd;
 
-    let date = dd + '-' + mm + '-' + yyyy;
+      let date = dd + '-' + mm + '-' + yyyy;
 
-    if (this.state.type === 'Vivienda') {
-      let randomText = Math.random().toString(36).substr(2, 10);
-      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '-' + randomText + '/' + date;
-    } else {
-      this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '/' + date;
-    }
+      if (this.state.type === 'Vivienda') {
+        let randomText = Math.random().toString(36).substr(2, 10);
+        this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '-' + randomText + '/' + date;
+      } else {
+        this.reportUrl = host + this.state.type.toLowerCase() + '/' + this.state.coloniaID + '/' + date;
+      }
 
-    this.setState({
-      loadingReport: true
-    }, () => {
-      $.get(this.reportUrl)
-        .done(() => {
-          PDFReport.printInfo(this.reportUrl);
-          this.setState({
-            loadingReport: false
+      this.setState({
+        loadingReport: true
+      }, () => {
+        $.get(this.reportUrl)
+          .done(() => {
+            PDFReport.printInfo(this.reportUrl);
+            this.setState({
+              loadingReport: false
+            });
+          })
+          .fail(() => {
+            this._generateInfo(this.reportUrl);
           });
-        })
-        .fail(() => {
-          this._generateInfo(this.reportUrl);
-        });
-    });
+      });
+    }
   }
 
   _getImages() {
     let images = [];
-    let svgs = $('svg.printable-chart');
-    let svgXml;
 
-    for (let i = 0; i < svgs.length; i++) {
-      svgXml = (new XMLSerializer).serializeToString(svgs[i]);
+    $('svg.printable-chart').each((index, svg) => {
+      let svgXml = (new XMLSerializer).serializeToString(svg);
       canvg('canvas', svgXml);
-
-      // the canvas calls to output a png
       let canvas = document.getElementById('canvas');
 
       images.push({
-        nombre: $(svgs[i]).attr('id'),
-        image: canvas.toDataURL({
-          format: 'jpeg',
-          quality: 0.3
-        })
+        nombre: $(svg).attr('id'),
+        image: canvas.toDataURL()
       });
-    }
+    });
 
     return (images);
   }
@@ -206,16 +200,11 @@ class Reporte extends React.Component{
 
   _onGetColoniaInfo(info) {
     this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
-
-    this.setState({
-      coloniaInfo: info
-    });
+    this.setState({coloniaInfo: info});
   }
 
   _onGetViviendaInfo(info) {
-    this.setState({
-      viviendaInfo: info
-    });
+    this.setState({viviendaInfo: info});
   }
 
   _clickOutside() {
@@ -226,52 +215,86 @@ class Reporte extends React.Component{
     this.setState({ddSearchBar: dd});
   }
 
-  render() {
-    let loadingFrame;
-    let secondaryNavbar;
-    let infoBlocks;
-    let compareTables;
-    let coloniaName = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
+  _getLoadingFrame(condition) {
+    let loadingFrame = condition ? (
+      <div style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.85)',
+          height: $(document).height() + 'px',
+          width: '100%',
+          zIndex: '10',
+          position: 'absolute'
+        }}>
+        <Spinner style={{height: '100vh'}}/>
+      </div>
+    ) : '';
+
+    return loadingFrame;
+  }
+
+  _getSecondaryNavBar(condition) {
+    let secondaryNavbar = condition ? (
+      <SecondaryNavbar
+        data={_.pick(this.state.viviendaParams,
+          'recamaras',
+          'banos',
+          'estacionamientos',
+          'id_tipo_propiedad',
+          'area_construida',
+          'address'
+        )}
+        width={'100%'} />
+    ) : '';
+
+    return secondaryNavbar;
+  }
+
+  _getInfoBlocks(condition) {
     let borderRight = {
       borderRight: '1px solid #c9c9c9'
     };
+    let coloniaName = this.state.coloniaInfo
+      ? this.state.coloniaInfo.coloniaInfo.nombre
+      : '';
 
-    if (this.state.loadingReport) {
-      loadingFrame =
-        <div style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.85)',
-            height: $(document).height() + 'px',
-            width: '100%',
-            zIndex: '10',
-            position: 'absolute'
-          }}>
-          <Spinner style={{height: '100vh'}}/>
-        </div>;
-    }
-    if (this.state.type === 'Vivienda') {
-      secondaryNavbar = (
-        <SecondaryNavbar
-          data={_.pick(this.state.viviendaParams, 'recamaras', 'banos', 'estacionamientos', 'id_tipo_propiedad', 'area_construida', 'address')}
-          width={'100%'} />
-      );
-      infoBlocks = (
-        <div className={'BlockContainer row'}>
-          <div style={borderRight} className={'col-sm-4'}>
-            <ViviendaInfo
-              ref={'viviendaInfo'}
-              onGetViviendaInfo={this._onGetViviendaInfo}
-              params={this.state.viviendaParams}/>
-          </div>
-          <div className={'col-sm-8'}>
-            <ColoniaInfo
-              coloniaName={coloniaName}
-              ref={'coloniaInfo'}
-              onGetColoniaInfo={this._onGetColoniaInfo}
-              zoneID={this.state.coloniaID}
-              viewType={this.state.type}/>
-          </div>
+    let infoBlocks = condition ? (
+      <div className={'BlockContainer row'}>
+        <div style={borderRight} className={'col-sm-4'}>
+          <ViviendaInfo
+            ref={'viviendaInfo'}
+            onGetViviendaInfo={this._onGetViviendaInfo}
+            params={this.state.viviendaParams}/>
         </div>
-      );
+        <div className={'col-sm-8'}>
+          <ColoniaInfo
+            coloniaName={coloniaName}
+            ref={'coloniaInfo'}
+            onGetColoniaInfo={this._onGetColoniaInfo}
+            zoneID={this.state.coloniaID}
+            viewType={this.state.type}/>
+        </div>
+      </div>
+    ) : (
+      <div className={'BlockContainer row'}>
+        <div className={'col-sm-12'}>
+          <ColoniaInfo
+            ref={'coloniaInfo'}
+            onGetColoniaInfo={this._onGetColoniaInfo}
+            zoneID={this.state.coloniaID}
+            viewType={this.state.type} />
+        </div>
+      </div>
+    );
+
+    return infoBlocks;
+  }
+
+  _getCompareTables(condition) {
+    let compareTables;
+    let coloniaName = this.state.coloniaInfo
+      ? this.state.coloniaInfo.coloniaInfo.nombre
+      : '';
+
+    if (condition) {
       if (this.state.viviendaInfo) {
         compareTables = (
           <ComparativoViviendas
@@ -284,17 +307,6 @@ class Reporte extends React.Component{
         compareTables = (<div></div>);
       }
     } else {
-      infoBlocks = (
-        <div className={'BlockContainer row'}>
-          <div className={'col-sm-12'}>
-            <ColoniaInfo
-              ref={'coloniaInfo'}
-              onGetColoniaInfo={this._onGetColoniaInfo}
-              zoneID={this.state.coloniaID}
-              viewType={this.state.type} />
-          </div>
-        </div>
-      );
       compareTables = (
         <ComparativoColonias
           ref={'comparativoColonias'}
@@ -304,6 +316,65 @@ class Reporte extends React.Component{
       );
     }
 
+    return compareTables;
+  }
+
+  _getColoniaHeader(condition) {
+    let coloniaName = this.state.coloniaInfo
+      ? this.state.coloniaInfo.coloniaInfo.nombre
+      : '';
+
+    let coloniaHedaer = condition ? (
+      <div>
+        <h3 className={'SectionTitle'}>{'Datos de la colonia ' + coloniaName}</h3>
+        <div className={'LineDivider'}></div>
+      </div>
+    ) : '';
+
+    return coloniaName;
+  }
+
+  _getViviendaHeader(condition) {
+    let coloniaName       = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
+    let viviendaHeader = condition ? (
+      <div>
+        <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
+        <div className={'LineDivider'}></div>
+      </div>
+    ) : '';
+
+    return viviendaHeader;
+  }
+
+  _getFormatMaps() {
+    let coloniaName = this.state.coloniaInfo
+      ? this.state.coloniaInfo.coloniaInfo.nombre
+      : '';
+
+    return (
+      <FormatGoogleMaps
+        coloniaName={coloniaName}
+        viewType={this.state.type}
+        viviendaInfo={this.state.viviendaParams ?
+          {
+            lat: this.state.viviendaParams.latitud,
+            lng: this.state.viviendaParams.longitud
+          } : {}}
+        zoneID={this.state.coloniaID}
+        onMouseoverFeature={this._onMouseoverFeature}
+        ref={'formatGoogleMaps'}/>
+    );
+  }
+
+  render() {
+    let loadingFrame      = this._getLoadingFrame(this.state.loadingReport);
+    let secondaryNavbar   = this._getSecondaryNavBar(this.state.type === 'Vivienda');
+    let infoBlocks        = this._getInfoBlocks(this.state.type === 'Vivienda');
+    let compareTables     = this._getCompareTables(this.state.type === 'Vivienda');
+    let coloniaHedaer     = this._getColoniaHeader(this.state.type === 'Colonia');
+    let viviendaHeader    = this._getViviendaHeader(this.state.type === 'Vivienda');
+    let formatGoogleMaps  = this._getFormatMaps();
+
     return (
       <div onClick={this._clickOutside}>
         <header>
@@ -311,14 +382,13 @@ class Reporte extends React.Component{
             type={this.state.type}
             onOpenForm={this._openForm}
             ddSearchBar={this.state.ddSearchBar}
-            ddChange={this._ddChange}
-            onDownloadReport={this._downloadReport}>
+            ddChange={this._ddChange}>
             <div style={{display: 'flex', width: '100%'}}>
               <MiniSearchForm
                 ddSearchBar={this.state.ddSearchBar}
                 ddChange={this._ddChange}
                 searchType={this.state.type} />
-              <div style={{margin: '0px'}} onClick={this._downloadReport}>
+              <div style={{margin: '0px', cursor: 'pointer'}} onClick={this._downloadReport}>
                 <img height={'15px'} style={{margin: '20px 10px'}} src={IMAGES.descarga} />
               </div>
             </div>
@@ -332,25 +402,14 @@ class Reporte extends React.Component{
         <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             {secondaryNavbar}
-            {this.state.type === 'Colonia' ? (
-              <div>
-                <h3 className={'SectionTitle'}>{'Datos de la colonia ' + coloniaName}</h3>
-                <div className={'LineDivider'}></div>
-              </div>)
-              : ''
-            }
+            {coloniaHedaer}
+
             {infoBlocks}
           </div>
         </div>
         <div style={{padding: '10px'}} className={'info-colonia MainSection'}>
           <div className={'max-width-container'}>
-            {this.state.type === 'Vivienda' ? (
-              <div>
-                <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
-                <div className={'LineDivider'}></div>
-              </div>)
-              : ''
-            }
+            {viviendaHeader}
             <div>
               <OfertaDisponible
                 ref={'ofertaDisponible'}
@@ -364,16 +423,12 @@ class Reporte extends React.Component{
                 zoneID={this.state.coloniaID}/>
             </div>
             <div className={'BlockContainer row'}>
-              <div style={_.merge(borderRight, {paddingLeft: '0px'})} className={'col-sm-6'}>
+              <div style={{paddingLeft: '0px', borderRight: '1px solid #c9c9c9'}} className={'col-sm-6'}>
                 <h4 className={'SubsectionTitle'}>Precio Histórico por m²</h4>
-                <div className={'row'}>
-                  <div className={'col-sm-12'} style={{marginTop: '15px'}}>
-                    <FormatLineChart
-                      ref={'precioHistorico'}
-                      id={'precio_historico'}
-                      zoneID={this.state.coloniaID} />
-                  </div>
-                </div>
+                <FormatLineChart
+                  ref={'precioHistorico'}
+                  id={'precio_historico'}
+                  zoneID={this.state.coloniaID} />
               </div>
               <div className={'col-sm-6 barchart-section'}>
                 <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
@@ -398,17 +453,7 @@ class Reporte extends React.Component{
         </div>
         <div className={'row'} style={{margin: '10px 0px'}}>
           <div className={'col-sm-12'}>
-            <FormatGoogleMaps
-              coloniaName={coloniaName}
-              viewType={this.state.type}
-              viviendaInfo={this.state.viviendaParams ?
-                {
-                  lat: this.state.viviendaParams.latitud,
-                  lng: this.state.viviendaParams.longitud
-                } : {}}
-              zoneID={this.state.coloniaID}
-              onMouseoverFeature={this._onMouseoverFeature}
-              ref={'formatGoogleMaps'}/>
+            {formatGoogleMaps}
           </div>
         </div>
         <div>
