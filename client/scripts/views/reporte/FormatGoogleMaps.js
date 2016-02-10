@@ -133,6 +133,8 @@ class FormatGoogleMaps extends React.Component {
       let getHTML = (value) => {
         return (
         `<div class="TooltipContainer">
+            <div class="Tooltip-triangle"></div>
+            <div class="Tooltip-triangle-border"></div>
             <p class="Tooltip-title">${value}</p>
           </div>
         `);
