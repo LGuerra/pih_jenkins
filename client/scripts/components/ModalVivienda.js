@@ -120,7 +120,6 @@ class ModalVivienda extends React.Component {
   }
 
   _clickOutside(e) {
-    console.log("Holi, cerrar. Pliki");
     const dropdowns = this.closeShowingDropdowns();
     this.setState({showingDropdowns: dropdowns});
   }
@@ -130,9 +129,7 @@ class ModalVivienda extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.ddshown !== nextProps.ddshown && nextProps.ddshown === false) {
-      this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    }
+    if (nextProps.ddshown === false) this.setState({showingDropdowns: this.closeShowingDropdowns()});
   }
 
   render () {
