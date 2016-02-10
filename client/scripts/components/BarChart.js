@@ -172,8 +172,8 @@ class BarChart extends React.Component {
         let tooltipWidth = _this.conf.tooltip[0][0].offsetWidth;
         let tooltipHeigth = _this.conf.tooltip[0][0].offsetHeight;
 
-        let posx = (_this.conf.xScale(d.label) + _this.props.margin.left + 15) - (tooltipWidth / 2) + (_this.conf.xScale.rangeBand() / 2);
-        let posy = _this.props.margin.top + 10;
+        let posx = (_this.conf.xScale(d.label) + _this.props.margin.left) - (tooltipWidth / 2) + (_this.conf.xScale.rangeBand() / 2);
+        let posy = _this.props.margin.top - tooltipHeigth;
         _this.conf.tooltip
           .style('left', (posx) + 'px')
           .style('top',  (posy) + 'px');
@@ -260,7 +260,7 @@ class BarChart extends React.Component {
   }
   render () {
     return (
-      <div id={this.props.idContainer}>
+      <div style={{position: 'relative'}} id={this.props.idContainer}>
       </div>
     );
   }
