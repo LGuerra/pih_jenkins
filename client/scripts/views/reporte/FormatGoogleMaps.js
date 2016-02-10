@@ -145,7 +145,7 @@ class FormatGoogleMaps extends React.Component {
 
         $('#map-tooltip').css({
           left: centroid.x + 15 - ($('#map-tooltip').width() / 2),
-          top: centroid.y - ($('#map-tooltip').height() / 2)
+          top: (centroid.y - ($('#map-tooltip').height() / 2) - 21)
         });
       }
 
