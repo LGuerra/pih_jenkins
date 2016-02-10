@@ -249,8 +249,8 @@ class Reporte extends React.Component{
   }
 
   _getInfoBlocks(condition) {
-    let borderRight = {
-      borderRight: '1px solid #c9c9c9'
+    let BlockContainerStyle = {
+      borderRight: '1px solid #c9c9c9', padding: '0'
     };
     let coloniaName = this.state.coloniaInfo
       ? this.state.coloniaInfo.coloniaInfo.nombre
@@ -258,7 +258,7 @@ class Reporte extends React.Component{
 
     let infoBlocks = condition ? (
       <div className={'BlockContainer row'}>
-        <div style={borderRight} className={'col-sm-4'}>
+        <div style={BlockContainerStyle} className={'col-sm-4'}>
           <ViviendaInfo
             ref={'viviendaInfo'}
             onGetViviendaInfo={this._onGetViviendaInfo}
