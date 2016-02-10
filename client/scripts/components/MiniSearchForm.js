@@ -132,7 +132,6 @@ class MiniSearchForm extends React.Component {
     const placement = (window.matchMedia("(max-width: 768px)").matches) ? 'top' : 'left';
     let searchInput = this.refs.searchInput.getValue();
     if (!searchInput) {
-      console.log("holi");
       let contentError = (this.state.searchType === 'Vivienda') ? "Ingresa una dirección" : "Ingresa una Colonia";
       $('[data-toggle="popover"]').popover({content: contentError, placement: placement});
       $('[data-toggle="popover"]').popover('show');
