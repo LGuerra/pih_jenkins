@@ -324,14 +324,14 @@ class Reporte extends React.Component{
       ? this.state.coloniaInfo.coloniaInfo.nombre
       : '';
 
-    let coloniaHedaer = condition ? (
+    let coloniaHeader = condition ? (
       <div>
-        <h3 className={'SectionTitle'}>{'Datos de la colonia ' + coloniaName}</h3>
+        <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
         <div className={'LineDivider'}></div>
       </div>
     ) : '';
 
-    return coloniaName;
+    return coloniaHeader;
   }
 
   _getViviendaHeader(condition) {
