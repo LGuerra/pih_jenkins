@@ -139,7 +139,13 @@ class MiniSearchForm extends React.Component {
 
     } else {
       if (searchInput.length >= 3) {
-        if (searchInput === this.state.suggestions[0].content) {
+        const searchInputInSuggestions = (() => {
+          for(var i = (this.state.suggestions.length - 1); i > 0; i--) {
+            if(this.state.suggestions[i].content === searchInput)
+              return i ;
+          }
+        })();
+        if (searchInputInSuggestions === 0 || searchInputInSuggestions === undefined) {
 
           $('[data-toggle="popover"]').popover({content: "Elige una de las sugerencias", placement: placement});
           $('[data-toggle="popover"]').popover('show');

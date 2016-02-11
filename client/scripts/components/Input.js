@@ -26,6 +26,9 @@ class IMInputDropdown extends React.Component {
   }
 
   selectMenuItem(a) {
+    if (this.state.items.length === 2 && this.state.contents[0] === this.state.contents[1]) {
+      a = this.state.items[1];
+    }
     if (!a) this.props.crOnSearch();
     else {
       let selectedItem;
@@ -35,8 +38,8 @@ class IMInputDropdown extends React.Component {
         selectedItem = this.state.selectedItem;
         selectedID   = this.state.selectedID;
       } else {
-        selectedItem = this.state.contents[this.state.items.indexOf(a)];
-        selectedID   = this.state.ids[this.state.items.indexOf(a)]
+        selectedItem = this.state.contents[this.state.items.lastIndexOf(a)];
+        selectedID   = this.state.ids[this.state.items.lastIndexOf(a)];
       }
       this.refs.input.value = selectedItem;
       if (selectedID === -1) {
