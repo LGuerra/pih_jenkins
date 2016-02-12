@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import boto3
+import sys
+
+def main():
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket('assets-pih-banca')
+
+    enviroment = sys.argv[1]
+    ignore_list = ["{0}/api.min.js".format(enviroment), "{0}/api.min.js.map".format(enviroment)]
+
+    all_objects = list(bucket.objects.filter(Marker="{0}/".format(enviroment)))
+    filtered_objects = filter(lambda x: x.key not in ignore_list, all_objects)
+
+    for o in filtered_objects:
+        obj = o.Object()
+        latest_version_id = obj.version_id
+        obj.delete(VersionId=latest_version_id)
+    
+    print "Rollback finished"
+
+if __name__ == '__main__':
+    main()
