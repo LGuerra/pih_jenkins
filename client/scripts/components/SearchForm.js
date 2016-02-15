@@ -116,8 +116,8 @@ class SearchForm extends React.Component {
             let service = new google.maps.places.PlacesService(map);
             service.getDetails(request, (place, status) => {
               if (status == google.maps.places.PlacesServiceStatus.OK) {
-                let latitude  = place.geometry.location.G;
-                let longitude = place.geometry.location.K;
+                let latitude  = place.geometry.location.lat();
+                let longitude = place.geometry.location.lng();
 
                 let apigClient = apigClientFactory.newClient();
 
