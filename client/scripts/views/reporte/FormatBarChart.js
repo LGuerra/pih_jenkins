@@ -73,7 +73,7 @@ class FormatBarChart extends React.Component {
     apigClient.stadisticsPriceDistributionPost({}, {
       id_col: this.props.zoneID
     }, {
-        headers: { 
+        headers: {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
       }).then((stadisticsPriceDistributionR) => {
@@ -91,7 +91,6 @@ class FormatBarChart extends React.Component {
       if (this.state.data[0] && this.state.isAvailable) {
         content = (<BarChart
           id={this.props.id}
-          svgClass={'printable-chart'}
           showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
           data={this.state.data}
           tooltipFormat={this._tooltipBarFormat}

@@ -122,6 +122,11 @@ class Reporte extends React.Component{
         identifier: 'distribucion_precio.json',
         dataType: 'json',
         data: distribucionPrecio
+      },
+      {
+        identifier: 'precio_historico.json',
+        dataType: 'json',
+        data: precioHistorico
       }
     ]);
 
@@ -135,8 +140,8 @@ class Reporte extends React.Component{
 
   _downloadReport() {
     if (!this.state.loadingReport) {
-      let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
-      //let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+      //let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+      let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
       let today = new Date();
       let dd = today.getDate();
       let mm = today.getMonth()+1;
