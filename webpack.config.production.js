@@ -36,7 +36,10 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery"
     }),
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
+    new webpack.DefinePlugin({
+      __DEV__: false,
+      'process.env.NODE_ENV': '"development"' 
+    }),
     new extractTextPlugin('main.min.css')
   ],
   output: {
