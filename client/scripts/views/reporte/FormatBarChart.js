@@ -1,5 +1,6 @@
 // Vendor
 import React from 'react';
+import _     from 'lodash';
 
 // Components
 import BarChart from '../../components/BarChart';
@@ -44,8 +45,9 @@ class FormatBarChart extends React.Component {
 
   _formatData(data) {
     let formattedData;
-    if (data.price_distribution) {
-      formattedData= data.price_distribution.map((element, index) => {
+    var stringElement;
+    if (data.json_precios) {
+      formattedData = _.map(data.json_precios, (element, key) => {
         let label;
         if (element.lim_inf === 'limite_inf') {
           label = '< ' + Helpers.formatAsNumber(element.lim_sup / 1000);
@@ -59,11 +61,25 @@ class FormatBarChart extends React.Component {
           lim_sup: element.lim_sup,
           label: label,
           value: element.value
-        })
+        });
       });
+
     } else {
       formattedData = [];
     }
+
+    formattedData = _.filter(formattedData, element => {
+      if (typeof element.lim_inf == 'number') {
+        return (element);
+      }
+      stringElement = element;
+    })
+
+    formattedData = _.sortBy(formattedData, element => {
+      return element.lim_inf;
+    });
+
+    formattedData.unshift(stringElement);
 
     return (formattedData);
   }
@@ -71,7 +87,6 @@ class FormatBarChart extends React.Component {
   componentDidMount() {
     suburbAPI.priceDistribution(this.props.zoneID)
     .then((stadisticsPriceDistributionR) => {
-      console.log('Chris', stadisticsPriceDistributionR);
       let data = this._formatData(stadisticsPriceDistributionR.data);
       this.setState({
         data: data
@@ -92,7 +107,7 @@ class FormatBarChart extends React.Component {
           color={'#35C0BE'}
           hoverColor={'#2a9998'}
           height={239}
-          xTitleUnit={'Miles de pesos'}
+          xTitleUnit={'Pesos'}
           margin={{
             left: 40,
             right: 35,

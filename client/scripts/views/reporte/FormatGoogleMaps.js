@@ -106,7 +106,6 @@ class FormatGoogleMaps extends React.Component {
       suburbsAPI.geojsons(data)
       .then((suburbsGeoR) => {
         suburbsGeoR.data.forEach((colonia, index) => {
-          console.log(colonia);
           if(colonia.properties.id !== this.props.zoneID) {
             map.data.addGeoJson({
               type: 'Feature',
