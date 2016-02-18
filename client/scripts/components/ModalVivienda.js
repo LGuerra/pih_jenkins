@@ -96,7 +96,6 @@ class ModalVivienda extends React.Component {
   }
 
   clicked (which, state) {
-    console.log(which, state);
     let dropdowns = this.closeShowingDropdowns();
     dropdowns[which] = state;
     this.props.hideDropdowns(state);

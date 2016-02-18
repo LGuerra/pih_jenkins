@@ -279,7 +279,6 @@ class SearchForm extends React.Component {
   _clickOutside (e) {
     let ddmShown   = this._closeAllddModalShown();
     ddmShown.modal = (this.state.searchType === "Vivienda") ? true : false;
-    //console.log("click outside");
     this.setState({ddmodalShown: ddmShown, modaldd: false});
     //this._focusOnInput();
   }

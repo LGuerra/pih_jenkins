@@ -117,7 +117,6 @@ class StackedBarChart extends React.Component {
         var data = d.bars.forEach(function(element, index) {
           element.group = d.label;
         });
-
         return (d.bars);
       })
       .enter()
@@ -139,7 +138,8 @@ class StackedBarChart extends React.Component {
       })
       .style('cursor', 'pointer')
       .style('opacity', function(d, i) {
-        return ((1 / _this.conf.data[0].bars.length) * (i + 1));
+        let length = d3.select(this.parentNode).datum().bars.length;
+        return ((1 / length) * (i + 1));
       })
       .on('mouseover', function(d, i) {
         let actualData = d;

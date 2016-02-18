@@ -9,6 +9,13 @@ import NoChart from         '../../components/NoChart';
 
 import { suburbAPI } from './../../api/api-helper.js';
 
+const labelsDictionary = {
+  area_construida: 'Superficie construida',
+  recamaras: 'Recámaras',
+  id_tipo_propiedad: 'Tipo vivienda',
+  edad: 'Edad'
+}
+
 class FormatStackedBarChart extends React.Component {
   constructor(props) {
     super(props);
@@ -16,31 +23,29 @@ class FormatStackedBarChart extends React.Component {
   }
 
   _formatData(data) {
-    if (data.typology_distribution) {
-      var formattedData = data.typology_distribution.map(function(element, index) {
-        let label = Object.keys(element)[0];
-        let bars = element[label];
+    if (data.json_tipologias) {
+      var formattedData = _.map(data.json_tipologias, (element, key) => {
+        let label = key;
 
-        bars.forEach(function(bar) {
+        element.forEach(function(bar) {
           bar.color = '#35C0BE';
           bar.hoverColor = '#2a9998';
         });
 
-        if (label === 'Recamaras') {
-          bars = _.sortBy(bars, function(element) {
-            return (element.label);
+        if (label === 'recamaras') {
+          element = _.sortBy(element, function(element) {
+            return element.label;
           });
-          label = 'Recámaras';
         }
 
-        if (label === 'Superficie construida') {
-          bars = _.sortBy(bars, function(element) {
+        if (label === 'area_construida') {
+          element = _.sortBy(element, function(element) {
             return (element.label);
           });
 
           let indexes = {};
 
-          bars.forEach(function(obj, index) {
+          element.forEach(function(obj, index) {
             if (obj.label[0] === '<') {
               obj.label = '≤ ' + obj.label.substr(2);
               indexes.lt_c = index;
@@ -52,17 +57,17 @@ class FormatStackedBarChart extends React.Component {
             obj.label = obj.label.substr(0, obj.label.length - 2) + 'm²';
           });
 
-          let ltC = bars.splice(indexes.lt_c, 1);
-          let htC = bars.splice(indexes.ht_c - 1, 1);
+          let ltC = element.splice(indexes.lt_c, 1);
+          let htC = element.splice(indexes.ht_c - 1, 1);
 
-          bars.reverse();
-          bars.unshift(ltC[0]);
-          bars.push(htC[0]);
+          element.reverse();
+          element.unshift(ltC[0]);
+          element.push(htC[0]);
         }
 
         return ({
-          label: label,
-          bars: bars
+          label: labelsDictionary[label],
+          bars: element
         });
       });
     } else {
