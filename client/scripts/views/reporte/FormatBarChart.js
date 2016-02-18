@@ -7,6 +7,7 @@ import NoChart from '../../components/NoChart';
 
 // Helpers
 import Helpers from '../../helpers';
+import { suburbAPI } from './../../api/api-helper.js';
 
 class FormatBarChart extends React.Component {
   constructor(props) {
@@ -68,15 +69,9 @@ class FormatBarChart extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
-    apigClient.stadisticsPriceDistributionPost({}, {
-      id_col: this.props.zoneID
-    }, {
-        headers: {
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        }
-      }).then((stadisticsPriceDistributionR) => {
+    suburbAPI.priceDistribution(this.props.zoneID)
+    .then((stadisticsPriceDistributionR) => {
+      console.log('Chris', stadisticsPriceDistributionR);
       let data = this._formatData(stadisticsPriceDistributionR.data);
       this.setState({
         data: data

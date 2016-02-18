@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Helpers from '../../helpers';
+import { suburbAPI } from './../../api/api-helper.js';
 
 class ColoniaInfo extends React.Component {
   constructor(props) {
@@ -9,27 +10,23 @@ class ColoniaInfo extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
-    apigClient.suburbAverageOfferGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((averageOfferR) => {
+    let id_col = this.props.zoneID;
+    suburbAPI.averageOffer(id_col)
+    .then((averageOfferR) => {
       this.setState({
         averageOffer: averageOfferR.data.avg
       });
     });
 
-    apigClient.suburbAverageM2Get({
-      id_col: this.props.zoneID
-    }, {}, {}).then((averageM2R) => {
+    suburbAPI.averageM2(id_col)
+    .then((averageM2R) => {
       this.setState({
         averageM2: averageM2R.data.avg
       });
     });
 
-    apigClient.suburbInfoGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((coloniaInfoR) => {
+    suburbAPI.information(id_col)
+    .then((coloniaInfoR) => {
       this.setState({
         coloniaInfo: {
           nombre: coloniaInfoR.data.nombre,
@@ -38,9 +35,8 @@ class ColoniaInfo extends React.Component {
       });
     });
 
-    apigClient.suburbAppreciationGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((suburbAppreciationR) => {
+    suburbAPI.appreciation(id_col)
+    .then((suburbAppreciationR) => {
       this.setState({
         apreciacion: suburbAppreciationR.data ? suburbAppreciationR.data.apreciacion_anualizada : null
       });

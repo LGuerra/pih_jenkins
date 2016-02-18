@@ -1,6 +1,7 @@
 // Vendor
 import React from   'react';
 import _ from       'lodash';
+import { viviendaAPI } from './../../api/api-helper.js';
 
 // Components
 import Table from '../../components/Table';
@@ -46,14 +47,10 @@ class ComparativoViviendas extends React.Component {
     });
   }
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
     let params = _.pick(this.props.params, 'longitud', 'latitud', 'id_tipo_propiedad', 'area_construida', 'recamaras', 'banos', 'estacionamientos', 'edad', 'tipo_operacion');
     params['precio_m2'] = this.props.viviendaInfo.precioM2;
-    apigClient.similarsPost({}, params,{
-      headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-      }
-    })
+
+    viviendaAPI.similars(params)
     .then((similarsR) => {
       this.setState({
         data: this._formatData(similarsR.data)

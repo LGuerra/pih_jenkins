@@ -5,6 +5,8 @@ import React from 'react';
 import GoogleMap from   '../../components/GoogleMap';
 import Marker from      '../../components/Marker';
 
+import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
+
 class FormatGoogleMaps extends React.Component {
   constructor(props) {
     super(props);
@@ -74,16 +76,9 @@ class FormatGoogleMaps extends React.Component {
 
   componentDidMount() {
     let map = this.refs.map.mapRef;
-    let apigClient = apigClientFactory.newClient();
-
     // Get actual Geojson polygon
-    apigClient.suburbGeojsonGet({
-      id_col: this.props.zoneID
-    }, {},  {
-        headers: {
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        }
-      }).then((geojsonR) => {
+    suburbAPI.geojson(this.props.zoneID)
+    .then((geojsonR) => {
       map.data.addGeoJson({
         type: 'Feature',
         geometry: geojsonR.data,
@@ -95,9 +90,8 @@ class FormatGoogleMaps extends React.Component {
     });
 
     // Get centroid
-    apigClient.suburbCentroidGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((suburbCentroidR) => {
+    suburbAPI.centroid(this.props.zoneID)
+    .then((suburbCentroidR) => {
       this.setState({
         centroid: {lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat}
       }, () => {
@@ -106,24 +100,21 @@ class FormatGoogleMaps extends React.Component {
     });
 
     // Get adjacet Geojson polygon
-    apigClient.suburbAdjacentSuburbsGet({
-      id_col: this.props.zoneID
-    }, {}, {})
+    suburbAPI.adjacent(this.props.zoneID)
     .then((abjacentsR) => { return abjacentsR.data })
     .then((data) => {
-      apigClient.suburbsGeojsonsGet({
-        id_cols: data.toString()
-      }, {}, {})
+      suburbsAPI.geojsons(data)
       .then((suburbsGeoR) => {
         suburbsGeoR.data.forEach((colonia, index) => {
-          if(colonia.geojson.properties.id !== this.props.zoneID) {
+          console.log(colonia);
+          if(colonia.properties.id !== this.props.zoneID) {
             map.data.addGeoJson({
               type: 'Feature',
               geometry: {
-                coordinates: colonia.geojson.coordinates,
-                type: colonia.geojson.type
+                coordinates: colonia.coordinates,
+                type: colonia.type
               },
-              properties: colonia.geojson.properties
+              properties: colonia.properties
             });
           }
         });

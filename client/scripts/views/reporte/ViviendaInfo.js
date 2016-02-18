@@ -1,6 +1,7 @@
 // Vendor
 import React from 'react';
 import _ from 'lodash';
+import { viviendaAPI } from './../../api/api-helper.js';
 
 // Helpers
 import Helpers from '../../helpers';
@@ -15,8 +16,6 @@ class ViviendaInfo extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
     let params = _.pick(this.props.params,
       'longitud',
       'latitud',
@@ -28,11 +27,7 @@ class ViviendaInfo extends React.Component {
       'edad',
       'tipo_operacion');
 
-      apigClient.modelValuationPost({}, params, {
-        headers: {
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        }
-      })
+      viviendaAPI.valuation(params)
       .then((modelValuationR) => {
         this.setState({
           data: {

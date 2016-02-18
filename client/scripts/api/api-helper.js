@@ -7,7 +7,7 @@ axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr(
 
 const viviendaAPI = (() => {
 
-  let viviendaInfo = (params) => {
+  let similars = (params) => {
     return axios.post(`${apiEndpoint}/similars`, params);
   };
 
@@ -15,7 +15,7 @@ const viviendaAPI = (() => {
     return axios.post(`${apiEndpoint}/model/valuation`, params);
   };
 
-  return { viviendaInfo, valuation }
+  return { similars, valuation }
 })();
 
 const helpersAPI = (() => {
@@ -92,8 +92,12 @@ const suburbAPI = (() => {
     return axios.get(`${apiEndpoint}/suburb/${id}/historic-price`);
   };
   
-  let listingCount = (id) => {
-    return axios.get(`${apiEndpoint}/suburb/${id}/listing-count`);
+  let listingCount = (id, months) => {
+    let params = {};
+    if(typeof months !== 'undefined') {
+      params.months = months;
+    }
+    return axios.get(`${apiEndpoint}/suburb/${id}/listing-count`, { params: params });
   };
 
   let typology = (id) => {

@@ -4,6 +4,7 @@ import IMInputDropdown from './Input'
 import ModalVivienda from './ModalVivienda';
 import API from '../api';
 import _ from 'lodash';
+import { helpersAPI } from './../api/api-helper.js';
 
 function parseSuggestions(hit) {
   let ans = [];
@@ -119,12 +120,7 @@ class SearchForm extends React.Component {
                 let latitude  = place.geometry.location.lat();
                 let longitude = place.geometry.location.lng();
 
-                let apigClient = apigClientFactory.newClient();
-
-                apigClient.suburbTrustedGet({
-                  lat: latitude,
-                  lng: longitude
-                }, {}, {})
+                helpersAPI.suburbIsTrusted(latitude, longitude)
                 .then((suburbFromCoordsR) => {
                   if (suburbFromCoordsR.data.trusted) {
                     templateUrl = templateUrl.replace(':longitud:', longitude)

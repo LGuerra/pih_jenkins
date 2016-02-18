@@ -8,6 +8,7 @@ import NoChart from '../../components/NoChart';
 // Helpers
 import Helpers from '../../helpers';
 import helper_properties from '../../helper_properties';
+import { suburbAPI } from './../../api/api-helper.js';
 
 class FormatLineChart extends React.Component {
   constructor(props) {
@@ -68,11 +69,8 @@ class FormatLineChart extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
-    apigClient.suburbHistoricGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((suburbHistoricR) => {
+      suburbAPI.historicPrice(this.props.zoneID)
+      .then((suburbHistoricR) => {
       let data = this._formatData(suburbHistoricR.data);
       this.setState({
         data: data

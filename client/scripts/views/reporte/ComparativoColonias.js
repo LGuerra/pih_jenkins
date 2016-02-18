@@ -4,6 +4,7 @@ import ReactDOM from  'react-dom';
 import Table from '../../components/Table';
 
 import Helpers from '../../helpers';
+import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
 
 class ComparativoColonias extends React.Component {
   constructor(props) {
@@ -53,16 +54,11 @@ class ComparativoColonias extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
-    apigClient.suburbAdjacentSuburbsGet({
-      id_col: this.props.zoneID
-    }, {}, {})
+    let id_col = this.props.zoneID;
+    suburbAPI.adjacent(id_col)
     .then((abjacentsR) => { return (abjacentsR.data); })
     .then((data) => {
-      apigClient.suburbsInfoGet({
-        id_cols: data.toString()
-      }, {}, {})
+      suburbsAPI.report(data)
       .then((suburbsInfoR) => {
         let data = this._formatData(suburbsInfoR.data);
         if (data.rows[0]) {

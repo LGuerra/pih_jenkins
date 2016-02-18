@@ -3,6 +3,7 @@ import React from 'react';
 
 // Helpers
 import Helpers from '../../helpers';
+import { suburbAPI } from './../../api/api-helper.js';
 
 class OfertaDisponible extends React.Component {
   constructor(props) {
@@ -12,27 +13,23 @@ class OfertaDisponible extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
-    apigClient.suburbMonthlyListingGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((monthlyListingR) => {
+    let id = this.props.zoneID;
+    suburbAPI.listingCount(id, 1)
+    .then((monthlyListingR) => {
       this.setState({
         monthlyListing: monthlyListingR.data.count
       })
     });
 
-    apigClient.suburbSemesterListingGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((semesterListingR) => {
+    suburbAPI.listingCount(id, 6)
+    .then((semesterListingR) => {
       this.setState({
         semesterListing: semesterListingR.data.count
       });
     });
 
-    apigClient.suburbAverageTimeGet({
-      id_col: this.props.zoneID
-    }, {}, {}).then((averageTimeR) => {
+    suburbAPI.averageTime(id)
+    .then((averageTimeR) => {
       this.setState({
         averageTime: averageTimeR.data.avg
       });

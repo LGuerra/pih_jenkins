@@ -7,6 +7,8 @@ import _ from 'lodash';
 import StackedBarChart from '../../components/StackedBarChart';
 import NoChart from         '../../components/NoChart';
 
+import { suburbAPI } from './../../api/api-helper.js';
+
 class FormatStackedBarChart extends React.Component {
   constructor(props) {
     super(props);
@@ -71,15 +73,8 @@ class FormatStackedBarChart extends React.Component {
   }
 
   componentDidMount() {
-    let apigClient = apigClientFactory.newClient();
-
-    apigClient.stadisticsTypologyDistributionPost({}, {
-      id_col: this.props.zoneID
-    },  {
-        headers: { 
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        }
-      }).then((stadisticsTypologyDistributionR) => {
+    suburbAPI.typology(this.props.zoneID)
+    .then((stadisticsTypologyDistributionR) => {
       let data = this._formatData(stadisticsTypologyDistributionR.data);
 
       this.setState({
