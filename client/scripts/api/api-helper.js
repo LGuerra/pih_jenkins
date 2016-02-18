@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let stage = __DEV__ ? 'dev' : 'prod';
+let stage = __API_STAGE__;
 let apiEndpoint = `/v1/${stage}`;
 
 axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');

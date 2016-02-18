@@ -22,8 +22,7 @@ module.exports = {
       jQuery: "jquery"
     }),
     new webpack.DefinePlugin({ 
-      __DEV__: true,
-      'process.env.NODE_ENV': '"development"' 
+      __API_STAGE__: 'dev'
     }),
     new extractTextPlugin('../../stylesheets/build/main.css')
   ],

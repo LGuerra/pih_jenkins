@@ -10,8 +10,7 @@
     "node": true
   },
   "globals": {
-    "__PRODUCTION__": true,
-    "__DEV__": true,
+    "__API_STAGE__": true,
     "$": true,
     "IMAGES": true,
     "google": true,
