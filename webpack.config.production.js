@@ -36,7 +36,7 @@ module.exports = {
       jQuery: "jquery"
     }),
     new webpack.DefinePlugin({
-      __API_STAGE__: 'prod'
+      'process.env.NODE_ENV': '"prod"'
     }),
     new extractTextPlugin('main.min.css')
   ],

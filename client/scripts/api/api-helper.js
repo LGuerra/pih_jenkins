@@ -1,8 +1,18 @@
 import axios from 'axios'
 
 let stage;
-if('staging' === process.env.NODE_ENV) {
-  stage = 'staging';
+switch(process.env.NODE_ENV) {
+  case 'staging':
+    stage = 'staging';
+    break;
+  case 'prod':
+    stage = 'prod';
+    break;
+  case 'dev':
+    stage = 'dev';
+    break;
+  default:
+    stage = 'dev';
 }
 let apiEndpoint = `/v1/${stage}`;
 
