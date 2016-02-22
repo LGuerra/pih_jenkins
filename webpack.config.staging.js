@@ -21,7 +21,7 @@ webpackConf.plugins = [
     jQuery: "jquery"
   }),
   new webpack.DefinePlugin({
-    __API_STAGE__: 'staging'
+    'process.env.NODE_ENV': '"staging"'
   }),
   new extractTextPlugin('main.min.css')
 ];

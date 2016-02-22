@@ -1,11 +1,1 @@
 //= require images
-//= require ./api/lib/axios/dist/axios.standalone/
-//= require ./api/lib/CryptoJS/rollups/hmac-sha256
-//= require ./api/lib/CryptoJS/rollups/sha256
-//= require ./api/lib/CryptoJS/components/hmac
-//= require ./api/lib/CryptoJS/components/enc-base64
-//= require ./api/lib/url-template/url-template
-//= require ./api/lib/apiGatewayCore/sigV4Client
-//= require ./api/lib/apiGatewayCore/apiGatewayClient
-//= require ./api/lib/apiGatewayCore/simpleHttpClient
-//= require ./api/lib/apiGatewayCore/utils

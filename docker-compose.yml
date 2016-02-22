@@ -33,3 +33,4 @@ webstaging:
   environment:
     - RACK_ENV=production
     - RAILS_ENV=staging
+    - API_STAGE=staging
