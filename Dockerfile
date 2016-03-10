@@ -7,7 +7,7 @@ ADD Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 RUN echo 'daemon off;' >> /etc/nginx/nginx.conf
 ADD . /app
-RUN echo nginx-production.conf > /app/config/nginx.conf
+RUN cat nginx-production.conf > /app/config/nginx.conf
 RUN mv /app/config/nginx.conf /etc/nginx/sites-enabled/default
 # ADD config/nginx.conf /etc/nginx/sites-enabled/default
 ADD config/supervisor.conf /etc/supervisor/conf.d/railsapp.conf
