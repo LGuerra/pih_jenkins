@@ -1,4 +1,5 @@
 web:
+  build: .
   command: bundle exec rails s -p 3000 -b '0.0.0.0'
   dockerfile: ./Dockerfile-development
   volumes:
@@ -8,6 +9,8 @@ web:
   links:
     - db
   env_file: .env
+  environment:
+    - API_STAGE=dev
 
 db:
   image: postgres
@@ -21,6 +24,7 @@ webproduction:
   env_file: .env
   environment:
     - RACK_ENV=production
+    - API_STAGE=prod
     - RAILS_ENV=production
 
 webstaging:
