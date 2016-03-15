@@ -6,6 +6,7 @@ import _ from 'lodash';
 // Components
 import StackedBarChart from '../../components/StackedBarChart';
 import NoChart from         '../../components/NoChart';
+import Spinner from         '../../components/Spinner';
 
 import { suburbAPI } from './../../api/api-helper.js';
 
@@ -89,7 +90,7 @@ class FormatStackedBarChart extends React.Component {
   }
 
   render() {
-    let content;
+    let content = <Spinner style={{height: '295px'}}/>;
 
     if (this.state.data) {
       if (this.state.data[0]) {
@@ -117,9 +118,8 @@ class FormatStackedBarChart extends React.Component {
             specificClass={'printable-chart'}/>
         );
       }
-    } else {
-      content = (<div></div>);
     }
+
     return (content);
   }
 }

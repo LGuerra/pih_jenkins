@@ -4,7 +4,8 @@ import _ from       'lodash';
 import { viviendaAPI } from './../../api/api-helper.js';
 
 // Components
-import Table from '../../components/Table';
+import Table from     '../../components/Table';
+import Spinner from   '../../components/Spinner';
 
 // Helpers
 import Helpers from '../../helpers';
@@ -58,7 +59,8 @@ class ComparativoViviendas extends React.Component {
     });
   }
   render() {
-    let content;
+    let content = <Spinner style={{height: '300px'}}/>;
+
     let label = this.props.params.id_tipo_propiedad == 2
       ? 'Casas comparables'
       : 'Departamentos comparables';
@@ -75,9 +77,8 @@ class ComparativoViviendas extends React.Component {
             data={this.state.data.rows} />
         </div>
       )
-    } else {
-      content = (<div></div>);
     }
+
     return (
       content
     );

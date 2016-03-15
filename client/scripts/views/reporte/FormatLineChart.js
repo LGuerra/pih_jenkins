@@ -2,8 +2,9 @@
 import React from 'react';
 
 // Components
-import LineChart from '../../components/LineChart';
-import NoChart from '../../components/NoChart';
+import LineChart from   '../../components/LineChart';
+import NoChart from     '../../components/NoChart';
+import Spinner from     '../../components/Spinner';
 
 // Helpers
 import Helpers from '../../helpers';
@@ -79,7 +80,7 @@ class FormatLineChart extends React.Component {
   }
 
   render() {
-    let content;
+    let content = <Spinner style={{height: '220px'}}/>;
 
     if (this.state.data) {
       if (this.state.data[0].data[0] && this.state.isAvailable) {
@@ -110,8 +111,6 @@ class FormatLineChart extends React.Component {
             id={this.props.id}
             specificClass={'printable-chart'}/>)
       }
-    } else {
-      content = (<div></div>);
     }
 
     return (

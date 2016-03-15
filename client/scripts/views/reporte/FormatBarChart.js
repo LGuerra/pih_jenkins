@@ -3,8 +3,9 @@ import React from 'react';
 import _     from 'lodash';
 
 // Components
-import BarChart from '../../components/BarChart';
-import NoChart from '../../components/NoChart';
+import BarChart from  '../../components/BarChart';
+import NoChart from   '../../components/NoChart';
+import Spinner from   '../../components/Spinner';
 
 // Helpers
 import Helpers from '../../helpers';
@@ -95,7 +96,7 @@ class FormatBarChart extends React.Component {
   }
 
   render() {
-    let content;
+    let content = <Spinner style={{height: '220px'}}/>;
 
     if (this.state.data) {
       if (this.state.data[0] && this.state.isAvailable) {
@@ -124,8 +125,6 @@ class FormatBarChart extends React.Component {
             id={this.props.id}
             specificClass={'printable-chart'}/>);
       }
-    } else {
-      content = (<div></div>);
     }
 
     return (

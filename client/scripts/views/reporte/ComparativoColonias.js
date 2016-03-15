@@ -1,7 +1,8 @@
 import React from     'react';
 import ReactDOM from  'react-dom';
 
-import Table from '../../components/Table';
+import Table from     '../../components/Table';
+import Spinner from   '../../components/Spinner';
 
 import Helpers from '../../helpers';
 import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
@@ -77,7 +78,7 @@ class ComparativoColonias extends React.Component {
   }
 
   render() {
-    let content;
+    let content = <Spinner style={{height: '300px'}}/>;
 
     if (this.state.data) {
       if (this.state.data.rows[0]) {
@@ -104,13 +105,8 @@ class ComparativoColonias extends React.Component {
           </h4>
         );
       }
-    } else {
-      content = (
-        <h4 style={{textAlign: 'center'}}>
-          {'No hay viviendas de confianza aledañas a la colonia'}
-        </h4>
-      );
     }
+
     return (
       content
     );

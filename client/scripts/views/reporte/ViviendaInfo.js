@@ -3,6 +3,8 @@ import React from 'react';
 import _ from 'lodash';
 import { viviendaAPI } from './../../api/api-helper.js';
 
+import Spinner from './../../components/Spinner'
+
 // Helpers
 import Helpers from '../../helpers';
 
@@ -73,7 +75,7 @@ class ViviendaInfo extends React.Component {
   }
 
   render() {
-    let content;
+    let content = <Spinner style={{height: '120px'}}/>;
 
     if (this.state.data) {
       let stars = new Array();
@@ -127,8 +129,6 @@ class ViviendaInfo extends React.Component {
           </div>
         </div>
       );
-    } else {
-      content = <div></div>;
     }
 
     return (

@@ -71,11 +71,11 @@ class Reporte extends React.Component{
     let coloniasComparables = [];
 
     //Getting data from refered components
-    let coloniaInfo = _.pick(this.refs.coloniaInfo.state, 'averageOffer', 'averageM2', 'coloniaInfo', 'apreciacion');
+    let coloniaInfo = _.pick(this.refs.coloniaInfo.state.data, 'averageOffer', 'averageM2', 'coloniaInfo', 'apreciacion');
     let distribucionPrecio = this.refs.distribucionPrecio.state.data;
     let distribucionTipologia = this.refs.distribucionTipologia.state.data;
     let precioHistorico = this.refs.precioHistorico.state.data;
-    let ofertaDisponible = _.pick(this.refs.ofertaDisponible.state, 'monthlyListing', 'semesterListing', 'averageTime');
+    let ofertaDisponible = _.pick(this.refs.ofertaDisponible.state.data, 'monthlyListing', 'semesterListing', 'averageTime');
 
     let dataTokens = this._getImages().map((element) => {
       return ({
@@ -372,13 +372,13 @@ class Reporte extends React.Component{
   }
 
   render() {
+    let coloniaHedaer     = this._getColoniaHeader(this.state.type === 'Colonia');
+    let compareTables     = this._getCompareTables(this.state.type === 'Vivienda');
+    let formatGoogleMaps  = this._getFormatMaps();
+    let infoBlocks        = this._getInfoBlocks(this.state.type === 'Vivienda');
     let loadingFrame      = this._getLoadingFrame(this.state.loadingReport);
     let secondaryNavbar   = this._getSecondaryNavBar(this.state.type === 'Vivienda');
-    let infoBlocks        = this._getInfoBlocks(this.state.type === 'Vivienda');
-    let compareTables     = this._getCompareTables(this.state.type === 'Vivienda');
-    let coloniaHedaer     = this._getColoniaHeader(this.state.type === 'Colonia');
     let viviendaHeader    = this._getViviendaHeader(this.state.type === 'Vivienda');
-    let formatGoogleMaps  = this._getFormatMaps();
 
     return (
       <div onClick={this._clickOutside}>
