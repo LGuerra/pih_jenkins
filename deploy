@@ -98,7 +98,7 @@ def deploy_to_staging!
       echo 'Staging environment does not exist. Cloning from production'
       use 'production'
       echo 'Cloning production environment'
-      run "clone -n #{STAGING_NAME} -c #{STAGING_NAME} --envvars RAILS_ENV=staging"
+      run "clone -n #{STAGING_NAME} -c #{STAGING_NAME} --envvars API_STAGE=staging RAILS_ENV=staging"
       sleep 10
     end
     use 'staging'
