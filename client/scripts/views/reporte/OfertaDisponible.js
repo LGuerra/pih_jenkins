@@ -18,7 +18,6 @@ class OfertaDisponible extends React.Component {
 
   componentDidMount() {
     let id = this.props.zoneID;
-
     axios.all([
       suburbAPI.listingCount(id, 1),
       suburbAPI.listingCount(id, 6),

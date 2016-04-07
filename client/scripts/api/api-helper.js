@@ -87,19 +87,19 @@ const suburbAPI = (() => {
 
   let averageM2 = (id, months) => {
     let params = {};
-    if(typeof months !== 'undefined') return params.months = months;
+    if(typeof months !== 'undefined') params.months = months;
     return axios.get(`${apiEndpoint}/suburb/${id}/average-m2`, { params: params });
   };
 
   let averageOffer = (id, months) => {
     let params = {};
-    if(typeof months !== 'undefined') return params.months = months;
+    if(typeof months !== 'undefined') params.months = months;
     return axios.get(`${apiEndpoint}/suburb/${id}/average-offer`, { params: params });
   };
 
   let averageTime = (id, months) => {
     let params = {};
-    if(typeof months !== 'undefined') return params.months = months;
+    if(typeof months !== 'undefined') params.months = months;
     return axios.get(`${apiEndpoint}/suburb/${id}/average-time`, { params: params });
   };
 
@@ -121,7 +121,7 @@ const suburbAPI = (() => {
   
   let listingCount = (id, months) => {
     let params = {};
-    if(typeof months !== 'undefined') return params.months = months;
+    if(typeof months !== 'undefined') params.months = months;
     return axios.get(`${apiEndpoint}/suburb/${id}/listing-count`, { params: params });
   };
 
