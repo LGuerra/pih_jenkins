@@ -16,8 +16,8 @@ class ColoniaInfo extends React.Component {
     let id_col = this.props.zoneID;
 
     axios.all([
-      suburbAPI.averageOffer(id_col),
-      suburbAPI.averageM2(id_col),
+      suburbAPI.averageOffer(id_col, 6),
+      suburbAPI.averageM2(id_col, 6),
       suburbAPI.information(id_col),
       suburbAPI.appreciation(id_col)
     ]).then((response) => {

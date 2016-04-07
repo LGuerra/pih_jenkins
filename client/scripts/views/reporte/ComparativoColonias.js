@@ -59,7 +59,7 @@ class ComparativoColonias extends React.Component {
     suburbAPI.adjacent(id_col)
     .then((abjacentsR) => { return (abjacentsR.data); })
     .then((data) => {
-      suburbsAPI.report(data)
+      suburbsAPI.report(data, 6)
       .then((suburbsInfoR) => {
         let data = this._formatData(suburbsInfoR.data);
         if (data.rows[0]) {

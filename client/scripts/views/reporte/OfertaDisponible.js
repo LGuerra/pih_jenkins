@@ -22,7 +22,7 @@ class OfertaDisponible extends React.Component {
     axios.all([
       suburbAPI.listingCount(id, 1),
       suburbAPI.listingCount(id, 6),
-      suburbAPI.averageTime(id)
+      suburbAPI.averageTime(id, 6)
     ]).then((response) => {
       this.setState({
         data : {
