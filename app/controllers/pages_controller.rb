@@ -1,9 +1,7 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:condiciones]
-  def index
+  before_action :authenticate_user!
+  def react 
   end
   def reporte
-  end
-  def condiciones
   end
 end
