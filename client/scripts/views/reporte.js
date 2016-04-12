@@ -16,10 +16,12 @@ import FormatBarChart from        './reporte/FormatBarChart';
 import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
 import FormatLineChart from       './reporte/FormatLineChart';
 import FormatStackedBarChart from './reporte/FormatStackedBarChart';
-import FormatStickyNavbar from    './reporte/FormatStickyNavbar';
 import OfertaDisponible from      './reporte/OfertaDisponible';
-import SecondaryNavbar from       './reporte/SecondaryNavbar';
 import ViviendaInfo from          './reporte/ViviendaInfo';
+
+
+import ReporteVivienda  from './reporte/ReporteVivienda';
+import ReporteColonia   from './reporte/ReporteColonia';
 
 // Helpers
 import Helpers    from '../helpers';
@@ -236,23 +238,6 @@ class Reporte extends React.Component{
     return loadingFrame;
   }
 
-  _getSecondaryNavBar(condition) {
-    let secondaryNavbar = condition ? (
-      <SecondaryNavbar
-        data={_.pick(this.state.viviendaParams,
-          'recamaras',
-          'banos',
-          'estacionamientos',
-          'id_tipo_propiedad',
-          'area_construida',
-          'address'
-        )}
-        width={'100%'} />
-    ) : '';
-
-    return secondaryNavbar;
-  }
-
   _getInfoBlocks(condition) {
     let BlockContainerStyle = {
       borderRight: '1px solid #c9c9c9', padding: '0'
@@ -377,8 +362,24 @@ class Reporte extends React.Component{
     let formatGoogleMaps  = this._getFormatMaps();
     let infoBlocks        = this._getInfoBlocks(this.state.type === 'Vivienda');
     let loadingFrame      = this._getLoadingFrame(this.state.loadingReport);
-    let secondaryNavbar   = this._getSecondaryNavBar(this.state.type === 'Vivienda');
     let viviendaHeader    = this._getViviendaHeader(this.state.type === 'Vivienda');
+
+    var content;
+
+    if (this.state.type === 'Colonia') {
+      content = (
+        <ReporteColonia
+          coloniaID = {this.state.coloniaID}
+          />
+      );
+    } else {
+      content = (
+        <ReporteVivienda
+          viviendaParams = {this.state.viviendaParams}
+          coloniaInfo = {this.state.coloniaInfo}
+          coloniaID = {this.state.coloniaID} />
+      );
+    }
 
     return (
       <div onClick={this._clickOutside}>
@@ -399,69 +400,9 @@ class Reporte extends React.Component{
             </div>
           </MainNavbar>
             {loadingFrame}
-          <FormatStickyNavbar
-            coloniaInfo={this.state.coloniaInfo}
-            viviendaInfo={this.state.viviendaInfo}
-            viewType={this.state.type}/>
         </header>
-        <div style={{padding: '10px'}} className={'MainSection'}>
-          <div className={'max-width-container'}>
-            {secondaryNavbar}
-            {coloniaHedaer}
-
-            {infoBlocks}
-          </div>
-        </div>
-        <div style={{padding: '10px'}} className={'info-colonia MainSection'}>
-          <div className={'max-width-container'}>
-            {viviendaHeader}
-            <div>
-              <OfertaDisponible
-                ref={'ofertaDisponible'}
-                zoneID={this.state.coloniaID} />
-            </div>
-            <div>
-              <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
-              <FormatStackedBarChart
-                ref={'distribucionTipologia'}
-                id={'distribucion_tipologia'}
-                zoneID={this.state.coloniaID}/>
-            </div>
-            <div className={'BlockContainer row'}>
-              <div style={{paddingLeft: '0px', borderRight: '1px solid #c9c9c9'}} className={'col-sm-6'}>
-                <h4 className={'SubsectionTitle'}>Precio Histórico por m²</h4>
-                <FormatLineChart
-                  ref={'precioHistorico'}
-                  id={'precio_historico'}
-                  zoneID={this.state.coloniaID} />
-              </div>
-              <div className={'col-sm-6 barchart-section'}>
-                <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
-                <FormatBarChart
-                  ref={'distribucionPrecio'}
-                  id={'distribucion_precio'}
-                  zoneID={this.state.coloniaID}/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={'BlockContainer row MainSection'} style={{marginTop: '10px'}}>
-          <div className={'max-width-container'}>
-            <div className={'col-sm-12'}>
-              {compareTables}
-              <div className={'Footnote'}>
-                <img width={'7px'} src={IMAGES.asterisk} />
-                <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={'row'} style={{margin: '10px 0px'}}>
-          <div className={'col-sm-12'}>
-            {formatGoogleMaps}
-          </div>
-        </div>
         <div>
+          {content}
         </div>
         <div>
           <BackToTop />
