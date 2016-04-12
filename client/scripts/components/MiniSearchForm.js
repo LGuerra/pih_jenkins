@@ -3,7 +3,6 @@ import ReactDOM          from 'react-dom';
 
 import IMDropdownButton  from './DropdownButton';
 import IMInputDropdown   from './Input'
-import ModalVivienda     from './ModalVivienda';
 import Modal             from './Modal'
 import MiniModalVivienda from './MiniModalVivienda';
 
@@ -73,7 +72,6 @@ class MiniSearchForm extends React.Component {
 
   _focusOnInput () {
     document.getElementById("landing-input").focus();
-    //this.refs.searchInput.focus();
   }
 
   _requestVivienda () {

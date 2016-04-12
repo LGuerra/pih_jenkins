@@ -12,87 +12,52 @@ class ModalVivienda extends React.Component {
                    habitaciones:     this.props.habitaciones,
                    banos:            this.props.banos,
                    cajones:          this.props.cajones,
-                   showingDropdowns: {tipoVivienda:  false,
-                                      tipoOperacion: false,
-                                      areaConstruida: false,
-                                      edad: false}
-                 };
-    this._selectVivienda        = this._selectVivienda.bind(this);
-    this._selectOperacion       = this._selectOperacion.bind(this);
-    this._selectAreaConstruida  = this._selectAreaConstruida.bind(this);
-    this._selectEdad            = this._selectEdad.bind(this);
-    this._selectHabitacion      = this._selectHabitacion.bind(this);
-    this._selectBanos           = this._selectBanos.bind(this);
-    this._selectCajones         = this._selectCajones.bind(this);
+                   showingDropdowns: {
+                    tipoVivienda:  false,
+                    tipoOperacion: false,
+                    areaConstruida: false,
+                    edad: false
+                  }
+                };
+
+    this._clickOutside          = this._clickOutside.bind(this);
+    this._keyDownEdad           = this._keyDownEdad.bind(this);
+    this._stopPropagation       = this._stopPropagation.bind(this);
     this.clicked                = this.clicked.bind(this);
     this.closeShowingDropdowns  = this.closeShowingDropdowns.bind(this);
-    this._keyDownVivienda       = this._keyDownVivienda.bind(this);
-    this._keyDownOperacion      = this._keyDownOperacion.bind(this);
-    this._keyDownAreaConstruida = this._keyDownAreaConstruida.bind(this);
-    this._keyDownEdad           = this._keyDownEdad.bind(this);
-    this.getValueArea           = this.getValueArea.bind(this);
-    this.getValueEdad           = this.getValueEdad.bind(this);
-    this._clickOutside           = this._clickOutside.bind(this);
-    this._stopPropagation       = this._stopPropagation.bind(this);
   }
 
-  getValueArea() {
-    let areaConstruida = this.refs.inputAreaConst.value;
-    if (isNaN(parseInt(areaConstruida,10))) areaConstruida = 100;
-    else areaConstruida = parseInt(areaConstruida, 10);
-    this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    this.props.modalChange({areaConstruida: areaConstruida});
-  }
+  _getValue(attribute, defaultVal, e) {
+    let value = e.target.value;
+    if (isNaN(parseInt(value,10))) {
+      value = defaultVal;
+    } else {
+      value = parseInt(value, 10);
+    }
 
-  getValueEdad() {
-    let edad = this.refs.inputEdad.value;
-    if (isNaN(parseInt(edad,10))) edad = 0;
-    else edad = parseInt(edad, 10);
-    this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    this.props.modalChange({edad: edad});
+    this.setState({
+      showingDropdowns: this.closeShowingDropdowns()
+    }, () => {
+      let toChange = {};
+      toChange[attribute] = value;
+      this.props.modalChange(toChange);
+    });
   }
 
   closeShowingDropdowns () {
     return {tipoVivienda:  false, tipoOperacion: false, areaConstruida: false, edad: false};
   }
 
-  _selectVivienda (a) {
-    if (a !== this.state.vivienda) this.setState({vivienda: a, showingDropdowns: this.closeShowingDropdowns()});
-    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    this.props.modalChange({vivienda: a});
-  }
-
-  _selectOperacion (a) {
-    if (a !== this.state.operacion) this.setState({operacion: a, showingDropdowns: this.closeShowingDropdowns()});
-    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    this.props.modalChange({operacion: a});
-  }
-
-  _selectAreaConstruida (a) {
-    if (a !== this.state.areaConstruida) this.setState({areaConstruida: a, showingDropdowns: this.closeShowingDropdowns()});
-    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    this.props.modalChange({areaConstruida: a});
-  }
-
-  _selectEdad (a) {
-    if (a !== this.state.edad) this.setState({edad: a, showingDropdowns: this.closeShowingDropdowns()});
-    else this.setState({showingDropdowns: this.closeShowingDropdowns()});
-    this.props.modalChange({edad: a});
-  }
-
-  _selectHabitacion (a) {
-    if (a !== this.state.habitaciones) this.setState({habitaciones: a});
-    this.props.modalChange({habitaciones: a});
-  }
-
-  _selectBanos (a) {
-    if (a !== this.state.banos) this.setState({banos: a});
-    this.props.modalChange({banos: a});
-  }
-
-  _selectCajones (a) {
-    if (a !== this.state.cajones) this.setState({cajones: a});
-    this.props.modalChange({cajones: a});
+  _updateState(attribute, value) {
+    let newState = {
+      showingDropdowns: this.closeShowingDropdowns()
+    };
+    newState[attribute] = value;
+    this.setState(newState, () => {
+      let toChange = {};
+      toChange[attribute] = value;
+      this.props.modalChange(toChange);
+    });
   }
 
   clicked (which, state) {
@@ -102,25 +67,12 @@ class ModalVivienda extends React.Component {
     this.setState({showingDropdowns: dropdowns});
   }
 
-  _keyDownVivienda(a) {
-    this._selectVivienda(a);
-  }
-
-  _keyDownOperacion(a) {
-    this._selectOperacion(a);
-  }
-
-  _keyDownAreaConstruida(a) {
-    this._selectAreaConstruida(a);
-  }
-
   _keyDownEdad(a) {
     this._selectEdad(a);
   }
 
   _clickOutside(e) {
-    const dropdowns = this.closeShowingDropdowns();
-    this.setState({showingDropdowns: dropdowns});
+    this.setState({showingDropdowns: this.closeShowingDropdowns()});
   }
 
   _stopPropagation (e) {
@@ -142,7 +94,7 @@ class ModalVivienda extends React.Component {
                                 startingPoint={this.state.habitaciones}
                                 lowerLimit={1}
                                 upperLimit={10}
-                                quantityChange={this._selectHabitacion}/>
+                                quantityChange={this._updateState.bind(this, 'habitaciones')}/>
             <span> <img src={IMAGES.blue_bed} width="20"></img> </span>
           </div>
           <div style={{textAlign: 'center'}}>
@@ -150,7 +102,7 @@ class ModalVivienda extends React.Component {
                                 startingPoint={this.state.banos}
                                 lowerLimit={1}
                                 upperLimit={10}
-                                quantityChange={this._selectBanos}/>
+                                quantityChange={this._updateState.bind(this, 'banos')}/>
             <span> <img src={IMAGES.blue_wc} width="20"></img> </span>
           </div>
           <div style={{textAlign: 'center'}}>
@@ -158,14 +110,14 @@ class ModalVivienda extends React.Component {
                                 startingPoint={this.state.cajones}
                                 lowerLimit={0}
                                 upperLimit={10}
-                                quantityChange={this._selectCajones}/>
+                                quantityChange={this._updateState.bind(this, 'cajones')}/>
             <span> <img src={IMAGES.blue_car} width="20"></img> </span>
           </div>
         </div>
         <div className="row modal-row">
           <div className="form-input-container col-sm-6 col-md-6 row">
             <div className="col-sm-6 col-xs-6 label-form-input">
-              Tipo de vivienda
+              {'Tipo de vivienda'}
             </div>
             <div className="col-sm-6 col-xs-6 form-input" onClick={this._stopPropagation}>
               <IMDropdownButton reference={"tipoVivienda"}
@@ -174,14 +126,14 @@ class ModalVivienda extends React.Component {
                                 outerButtonClassName="pull-right modal-button-container"
                                 showDropdown={showing.tipoVivienda}
                                 onClick={this.clicked}
-                                handleKey13={this._keyDownVivienda}
+                                handleKey13={this._updateState.bind(this, 'vivienda')}
                                 selectedItem={this.state.vivienda}
-                                selectMItem={this._selectVivienda} />
+                                selectMItem={this._updateState.bind(this, 'vivienda')} />
             </div>
           </div>
           <div className="form-input-container col-sm-6 col-md-6 row">
             <div className="col-sm-6 col-xs-6 label-form-input">
-              Tipo de operación
+              {'Tipo de operación'}
             </div>
             <div className="col-sm-6 col-xs-6 disabled-modal-dropdown-button form-input">
               <IMDropdownButton reference={"tipoOperacion"}
@@ -190,16 +142,16 @@ class ModalVivienda extends React.Component {
                                 outerButtonClassName="pull-right modal-button-container"
                                 showDropdown={showing.tipoOperacion}
                                 onClick={this.clicked}
-                                handleKey13={this._keyDownOperacion}
+                                handleKey13={this._updateState.bind(this, 'operacion')}
                                 selectedItem={this.state.operacion}
-                                selectMItem={this._selectOperacion} />
+                                selectMItem={this._updateState.bind(this, 'operacion')} />
             </div>
           </div>
         </div>
         <div className="row modal-row">
           <div className="form-input-container col-sm-6 col-md-6 row">
             <div className="col-sm-6 col-xs-6 label-form-input">
-              Área de construcción
+              {'Área de construcción'}
             </div>
             <div className="col-sm-6 col-xs-6 form-input">
               <div className='pull-right input-modal-outer-container' >
@@ -209,26 +161,17 @@ class ModalVivienda extends React.Component {
                          ref="inputAreaConst"
                          className={"input-modal"}
                          maxLength="3"
-                         onChange={this.getValueArea}
+                         onChange={this._getValue.bind(this, 'areaConstruida', 100)}
                          placeholder={"100"} >
                   </input>
                   <span className={"metric"}> m²</span>
                 </div>
               </div>
-            {/*<IMDropdownButton reference={"areaConstruida"}
-                                items={["100 m²", "200 m²", "300 m²", "+ 350 m²"]}
-                                className="modal-dropdown-button"
-                                outerButtonClassName="pull-right modal-button-container"
-                                showDropdown={showing.areaConstruida}
-                                onClick={this.clicked}
-                                handleKey13={this._keyDownAreaConstruida}
-                                selectedItem={this.state.areaConstruida}
-                                selectMItem={this._selectAreaConstruida} />*/}
             </div>
           </div>
           <div className="form-input-container col-sm-6 col-md-6 row">
             <div className="col-sm-6 col-xs-6 label-form-input">
-              Edad
+              {'Edad'}
             </div>
             <div className="col-sm-6 col-xs-6 form-input">
               <div className='pull-right input-modal-outer-container'>
@@ -238,21 +181,12 @@ class ModalVivienda extends React.Component {
                          ref="inputEdad"
                          className={"input-modal"}
                          maxLength="3"
-                         onChange={this.getValueEdad}
+                         onChange={this._getValue.bind(this, 'edad', 10)}
                          placeholder={"0"} >
                   </input>
                   <span className={"metric"}> años</span>
                 </div>
               </div>
-              {/*<IMDropdownButton reference={"edad"}
-                                items={["5 años","10 años","20 años","30 años","+ 40 años"]}
-                                className="modal-dropdown-button"
-                                outerButtonClassName="pull-right modal-button-container"
-                                showDropdown={showing.edad}
-                                onClick={this.clicked}
-                                handleKey13={this._keyDownEdad}
-                                selectedItem={this.state.edad}
-                                selectMItem={this._selectEdad} />*/}
             </div>
           </div>
         </div>

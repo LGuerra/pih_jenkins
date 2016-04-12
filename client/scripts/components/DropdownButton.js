@@ -36,6 +36,7 @@ class IMDropdownButton extends React.Component {
     let arr = this.props.items;
     let length = arr.length;
     let i = arr.indexOf(this.state.selectedItem);
+
     if ( e.keyCode === 40 ) {
       i += 1;
       if (i >= length) i -= length;
