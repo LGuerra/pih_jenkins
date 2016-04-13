@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import ColoniaInfo            from './ColoniaInfo';
-import ComparativoViviendas   from './ComparativoViviendas';
-import FormatBarChart         from './FormatBarChart';
-import FormatGoogleMaps       from './FormatGoogleMaps';
-import FormatLineChart        from './FormatLineChart';
-import FormatStackedBarChart  from './FormatStackedBarChart';
-import FormatStickyNavbar     from './FormatStickyNavbar';
-import OfertaDisponible       from './OfertaDisponible';
-import SecondaryNavbar        from './SecondaryNavbar';
-import ViviendaInfo           from './ViviendaInfo';
+import ColoniaInfo            from '../../containers/reporte/ColoniaInfo';
+import ComparativoViviendas   from '../../containers/reporte/ComparativoViviendas';
+import FormatBarChart         from '../../containers/reporte/FormatBarChart';
+import FormatGoogleMaps       from '../../containers/reporte/FormatGoogleMaps';
+import FormatLineChart        from '../../containers/reporte/FormatLineChart';
+import FormatStackedBarChart  from '../../containers/reporte/FormatStackedBarChart';
+import FormatStickyNavbar     from '../../containers/reporte/FormatStickyNavbar';
+import OfertaDisponible       from '../../containers/reporte/OfertaDisponible';
+import SecondaryNavbar        from '../../containers/reporte/SecondaryNavbar';
+import ViviendaInfo           from '../../containers/reporte/ViviendaInfo';
 
 class ReporteVivienda extends Component {
   constructor(props) {

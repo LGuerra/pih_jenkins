@@ -8,18 +8,7 @@ import MainNavbar from      '../components/MainNavbar';
 import Spinner from         '../components/Spinner';
 import MiniSearchForm from  '../components/MiniSearchForm'
 
-// View's Components
-import ColoniaInfo from           './reporte/ColoniaInfo';
-import ComparativoColonias from   './reporte/ComparativoColonias';
-import ComparativoViviendas from  './reporte/ComparativoViviendas';
-import FormatBarChart from        './reporte/FormatBarChart';
-import FormatGoogleMaps from      './reporte/FormatGoogleMaps';
-import FormatLineChart from       './reporte/FormatLineChart';
-import FormatStackedBarChart from './reporte/FormatStackedBarChart';
-import OfertaDisponible from      './reporte/OfertaDisponible';
-import ViviendaInfo from          './reporte/ViviendaInfo';
-
-
+// View's
 import ReporteVivienda  from './reporte/ReporteVivienda';
 import ReporteColonia   from './reporte/ReporteColonia';
 
@@ -60,10 +49,6 @@ class Reporte extends React.Component{
     this._downloadReport = this._downloadReport.bind(this);
     this._generateInfo = this._generateInfo.bind(this);
     this._getImages = this._getImages.bind(this);
-    this._onGetColoniaInfo = this._onGetColoniaInfo.bind(this);
-    this._onGetViviendaInfo = this._onGetViviendaInfo.bind(this);
-    this._onMouseoverColoniaTable = this._onMouseoverColoniaTable.bind(this);
-    this._onMouseoverFeature = this._onMouseoverFeature.bind(this);
   }
 
   _generateInfo(url) {
@@ -195,25 +180,6 @@ class Reporte extends React.Component{
     return (images);
   }
 
-  _onMouseoverColoniaTable(data) {
-    this.refs.formatGoogleMaps.highlightFeature(data.id);
-  }
-
-  _onMouseoverFeature(data) {
-    if (this.refs.comparativoColonias) {
-      this.refs.comparativoColonias.highlightRow(data);
-    }
-  }
-
-  _onGetColoniaInfo(info) {
-    this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
-    this.setState({coloniaInfo: info});
-  }
-
-  _onGetViviendaInfo(info) {
-    this.setState({viviendaInfo: info});
-  }
-
   _clickOutside() {
     this.setState({ddSearchBar: false});
   }
@@ -238,133 +204,9 @@ class Reporte extends React.Component{
     return loadingFrame;
   }
 
-  _getInfoBlocks(condition) {
-    let BlockContainerStyle = {
-      borderRight: '1px solid #c9c9c9', padding: '0'
-    };
-    let coloniaName = this.state.coloniaInfo
-      ? this.state.coloniaInfo.coloniaInfo.nombre
-      : '';
-
-    let infoBlocks = condition ? (
-      <div className={'BlockContainer row'}>
-        <div style={BlockContainerStyle} className={'col-sm-4'}>
-          <ViviendaInfo
-            ref={'viviendaInfo'}
-            onGetViviendaInfo={this._onGetViviendaInfo}
-            params={this.state.viviendaParams}/>
-        </div>
-        <div className={'col-sm-8'} style={{padding: '0px'}}>
-          <ColoniaInfo
-            coloniaName={coloniaName}
-            ref={'coloniaInfo'}
-            onGetColoniaInfo={this._onGetColoniaInfo}
-            zoneID={this.state.coloniaID}
-            viewType={this.state.type}/>
-        </div>
-      </div>
-    ) : (
-      <div className={'BlockContainer row'}>
-        <div className={'col-sm-12'}>
-          <ColoniaInfo
-            ref={'coloniaInfo'}
-            onGetColoniaInfo={this._onGetColoniaInfo}
-            zoneID={this.state.coloniaID}
-            viewType={this.state.type} />
-        </div>
-      </div>
-    );
-
-    return infoBlocks;
-  }
-
-  _getCompareTables(condition) {
-    let compareTables;
-    let coloniaName = this.state.coloniaInfo
-      ? this.state.coloniaInfo.coloniaInfo.nombre
-      : '';
-
-    if (condition) {
-      if (this.state.viviendaInfo) {
-        compareTables = (
-          <ComparativoViviendas
-            ref={'comparativoViviendas'}
-            coloniaName={coloniaName}
-            viviendaInfo={this.state.viviendaInfo}
-            params={this.state.viviendaParams}/>
-        );
-      } else {
-        compareTables = (<div></div>);
-      }
-    } else {
-      compareTables = (
-        <ComparativoColonias
-          ref={'comparativoColonias'}
-          zoneID={this.state.coloniaID}
-          onMouseout={this._onMouseoverColoniaTable}
-          onMouseover={this._onMouseoverColoniaTable} />
-      );
-    }
-
-    return compareTables;
-  }
-
-  _getColoniaHeader(condition) {
-    let coloniaName = this.state.coloniaInfo
-      ? this.state.coloniaInfo.coloniaInfo.nombre
-      : '';
-
-    let coloniaHeader = condition ? (
-      <div>
-        <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
-        <div className={'LineDivider'}></div>
-      </div>
-    ) : '';
-
-    return coloniaHeader;
-  }
-
-  _getViviendaHeader(condition) {
-    let coloniaName       = this.state.coloniaInfo ? this.state.coloniaInfo.coloniaInfo.nombre : '';
-    let viviendaHeader = condition ? (
-      <div>
-        <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
-        <div className={'LineDivider'}></div>
-      </div>
-    ) : '';
-
-    return viviendaHeader;
-  }
-
-  _getFormatMaps() {
-    let coloniaName = this.state.coloniaInfo
-      ? this.state.coloniaInfo.coloniaInfo.nombre
-      : '';
-
-    return (
-      <FormatGoogleMaps
-        coloniaName={coloniaName}
-        viewType={this.state.type}
-        viviendaInfo={this.state.viviendaParams ?
-          {
-            lat: this.state.viviendaParams.latitud,
-            lng: this.state.viviendaParams.longitud
-          } : {}}
-        zoneID={this.state.coloniaID}
-        onMouseoverFeature={this._onMouseoverFeature}
-        ref={'formatGoogleMaps'}/>
-    );
-  }
-
   render() {
-    let coloniaHedaer     = this._getColoniaHeader(this.state.type === 'Colonia');
-    let compareTables     = this._getCompareTables(this.state.type === 'Vivienda');
-    let formatGoogleMaps  = this._getFormatMaps();
-    let infoBlocks        = this._getInfoBlocks(this.state.type === 'Vivienda');
     let loadingFrame      = this._getLoadingFrame(this.state.loadingReport);
-    let viviendaHeader    = this._getViviendaHeader(this.state.type === 'Vivienda');
-
-    var content;
+    let content;
 
     if (this.state.type === 'Colonia') {
       content = (
