@@ -1,4 +1,4 @@
-import React          from 'react';
+import React from 'react';
 
 class MainNavbar extends React.Component{
   constructor(props) {
@@ -23,7 +23,9 @@ class MainNavbar extends React.Component{
             {this.props.children}
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className={'hiddenLinks'} ><a href="/users/edit">Cambiar contraseña</a></li>
+              <li className={'hiddenLinks'} >
+                <a href="/users/edit">Cambiar contraseña</a>
+              </li>
               <li className={'hiddenLinks'} ><a href="/helpers/logout">Salir</a></li>
               <li className="dropdown shownLinks">
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

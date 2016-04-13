@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   get 'helpers/user_info'
   get 'health_check' => 'health_check#index'
 
-  root  'pages#react'
-  get   'reporte' => 'pages#reporte', as: :reporte
+  # get   'reporte' => 'pages#reporte', as: :reporte
+  # TODO change '/2013-01-01/*url' for tunneling
   get   '/2013-01-01/*url', to: 'api#tunnel_request_cloud'
   get   "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request'
   post  "/v1/#{ENV['API_STAGE']}/*url", to: 'api#tunnel_request_post'
 
-  get   '/app/*route' => 'pages#react', as: :react
+  root  'pages#react'
+  get   '*path' => 'pages#react', as: :react
 end
