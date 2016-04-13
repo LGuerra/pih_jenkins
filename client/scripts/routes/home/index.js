@@ -1,9 +1,6 @@
-module.exports = {
-  path: 'home',
+import Home from './components/Home';
 
-  getComponent(location, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./components/Home'))
-    })
-  }
-}
+export default {
+  path: 'home',
+  component: Home
+};

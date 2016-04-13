@@ -1,15 +1,17 @@
 import React from 'react';
-
-import { Link } from 'react-router'
+import NavBar from './navigation/NavBar';
+import Footer from './common/Footer';
 
 const App = React.createClass({
   render() {
     return (
       <div>
+        <NavBar/>
         {this.props.children}
+        <Footer/>
       </div>
     )
   }
 })
 
-module.exports = App;
+export default App;

@@ -73,7 +73,12 @@ module.exports = {
     colors: true
   },
   resolve: {
-    extensions: ['', '.js', '.es6']
+    extensions: ['', '.js', '.es6'],
+    alias: {
+      imNavigation: '/scripts/components/navigation',
+      imComponents: '/scripts/components',
+      imCommon:     '/scripts/components/common'
+    }
   },
   externals: {
     apigClient: "apigClient",
