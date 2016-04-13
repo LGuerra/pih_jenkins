@@ -108,7 +108,19 @@ class MiniSearchForm extends React.Component {
             templateUrl = templateUrl.replace(':longitud:', longitude)
             .replace(':latitud:',  latitude)
             .replace(':colonia:', suburbFromCoordsR.data.id);
-            window.open(templateUrl, '_self');
+            this.props.onUpdateSearchInfo({
+              longitud: longitude,
+              latitud: latitude,
+              colonia: suburbFromCoordsR.data.id,
+              recamaras: this.state.habitaciones,
+              banos: this.state.banos,
+              estacionamientos: this.state.cajones,
+              id_tipo_vivienda: tipoVivienda,
+              edad: this.state.edad,
+              area_construida: this.state.areaConstruida,
+              address: searchInput,
+              tipo_operacion: 0
+            });
           } else {
             let coloniaArr = searchInput.split(",");
             let colonia = (coloniaArr.length > 3) ? coloniaArr[1] : coloniaArr[0];
@@ -170,7 +182,10 @@ class MiniSearchForm extends React.Component {
               .replace(':colonia:', this.refs.searchInput.state.selectedID)
               .replace(':reportType:', this.state.searchType);
 
-            window.open(templateUrl, '_self');
+            this.props.onUpdateSearchInfo({
+              colonia: this.refs.searchInput.state.selectedID,
+              reportType: this.state.searchType
+            });
           }
         }
       }

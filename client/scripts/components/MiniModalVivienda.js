@@ -15,6 +15,10 @@ class MiniModalVivienda extends React.Component {
     this.refs.modal.show();
   }
 
+  hide () {
+    this.refs.modal.hide();
+  }
+
   _sendRequest () {
     this.props.requestVivienda();
   }

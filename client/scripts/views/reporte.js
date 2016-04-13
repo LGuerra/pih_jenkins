@@ -204,6 +204,10 @@ class Reporte extends React.Component{
     return loadingFrame;
   }
 
+  _onUpdateSearchInfo(info) {
+    console.log(info)
+  }
+
   render() {
     let loadingFrame      = this._getLoadingFrame(this.state.loadingReport);
     let content;
@@ -233,6 +237,7 @@ class Reporte extends React.Component{
             ddChange={this._ddChange}>
             <div style={{display: 'flex', width: '100%'}}>
               <MiniSearchForm
+                onUpdateSearchInfo={this._onUpdateSearchInfo}
                 ddSearchBar={this.state.ddSearchBar}
                 ddChange={this._ddChange}
                 searchType={this.state.type} />
