@@ -65,6 +65,7 @@
   "homepage": "https://github.com/Intelimetrica/pih_banca#readme",
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "react-router": "^2.1.1"
   }
 }

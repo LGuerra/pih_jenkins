@@ -18,6 +18,13 @@ let apiEndpoint = `/v1/${stage}`;
 
 axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
 
+const userAPI = (() => {
+  let getInfo = () => {
+    return axios.get('helpers/user_info');
+  }
+  return { getInfo };
+})();
+
 const viviendaAPI = (() => {
 
   let similars = (params) => {
@@ -162,4 +169,4 @@ const detailView = (id) => {
   return axios.all(requests);
 };
 
-export { suburbAPI, suburbsAPI, helpersAPI, viviendaAPI, detailView }
+export { userAPI, suburbAPI, suburbsAPI, helpersAPI, viviendaAPI, detailView }
