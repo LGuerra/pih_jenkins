@@ -6,6 +6,8 @@ class Report extends React.Component {
   }
 
   render() {
+    console.log(this.props.location.query);
+
     return (
       <div>
         <h3>Report</h3>
