@@ -2,7 +2,12 @@ import React from 'react';
 
 const NotFound = React.createClass({
   render() {
-    return (<h1>NotFound</h1>);
+    const imagePath = 'client/images/';
+    return (
+      <div>
+        <h1>NotFound</h1>
+      </div>
+    );
   }
 })
 

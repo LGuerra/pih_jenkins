@@ -25,18 +25,10 @@ const NavBarCollapse = (props) => {
   );
 };
 
-NavBarCollapse.propTypes = {
-  id: React.PropTypes.string
-};
-
-NavBarCollapse.defaultProps = {
-  id: 'banca-intelimetrica-navbar-collapse'
-};
-
 const NavBarHeader = (props) => {
   return (
     <div className='navbar-header'>
-      <NavBarCollapse/>
+      <NavBarCollapse id={props.id}/>
       <NavBarBrand/>
     </div>
   );

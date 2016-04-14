@@ -63,6 +63,10 @@ module.exports = {
         node_modules: /node_modules/,
         loader: 'url-loader?limit=1000'
       },
+      {
+        test: /\.svg/,
+        loader: 'svg-url-loader'
+      },
       {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
@@ -73,15 +77,12 @@ module.exports = {
     colors: true
   },
   resolve: {
+    root: path.resolve(__dirname),
     extensions: ['', '.js', '.es6'],
     alias: {
-      imNavigation: '/scripts/components/navigation',
-      imComponents: '/scripts/components',
-      imCommon:     '/scripts/components/common'
+      imNavigation: 'client/scripts/components/navigation/index',
+      imComponents: 'client/scripts/components',
+      imCommon:     'client/scripts/components/common'
     }
-  },
-  externals: {
-    apigClient: "apigClient",
-    apigClientFactory: "apigClientFactory" 
   }
 };
