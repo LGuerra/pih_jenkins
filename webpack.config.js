@@ -80,9 +80,12 @@ module.exports = {
     root: path.resolve(__dirname),
     extensions: ['', '.js', '.es6'],
     alias: {
-      imNavigation: 'client/scripts/components/navigation/index',
-      imComponents: 'client/scripts/components',
-      imCommon:     'client/scripts/components/common'
+      'api-banca': 'client/scripts/api/api-helper',
+      'helpers-banca': 'client/scripts/helpers/index',
+      'im-main-navigation': 'client/scripts/components/navigation/main/index',
+      'im-secondary-navigation': 'client/scripts/components/navigation/secondary/index',
+      'im-components': 'client/scripts/components',
+      'im-common': 'client/scripts/components/common'
     }
   }
 };
