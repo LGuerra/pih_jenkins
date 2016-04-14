@@ -1,7 +1,17 @@
+// React
 import React from 'react';
 import { render } from 'react-dom';
-import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
+
+// Router
+import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import { userAPI } from './api/api-helper';
+
+// Redux
+import promise from 'redux-promise';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+
+import reducers from './reducers';
 
 require('./../styles/main.scss');
 
@@ -14,6 +24,10 @@ import UserRoutes from './routes/users';
 import ReportRoutes from './routes/report';
 import NotFoundRoutes from './routes/notFound';
 import ConditionsRoutes from './routes/conditions';
+
+const createStoreWithMiddleware = applyMiddleware(
+  promise
+)(createStore);
 
 const routes = {
   path: '/',
@@ -28,6 +42,8 @@ const routes = {
 };
 
 render(
-  <Router history={browserHistory} routes={routes} />,
-  document.getElementById('react-view-container')
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <Router history={browserHistory} routes={routes} />
+  </Provider>
+  , document.getElementById('react-view-container')
 );

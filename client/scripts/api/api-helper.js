@@ -144,13 +144,13 @@ const suburbAPI = (() => {
     return axios.get(`${apiEndpoint}/suburb/${id}/adjacent`);
   };
 
-  return { 
+  return {
     adjacent,
     information,
     appreciation,
     averageM2,
     averageOffer,
-    averageTime, 
+    averageTime,
     centroid,
     geojson,
     smooth,
