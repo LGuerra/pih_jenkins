@@ -1,31 +1,21 @@
+// Libraries
 import React from     'react';
 import ReactDOM from  'react-dom';
 
+// Components
 import Table from     '../../components/Table';
 import Spinner from   '../../components/Spinner';
 
+// Helpers
 import Helpers from '../../helpers';
-import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
+import { connect } from 'react-redux';
+import { fetchColoniasComparables } from '../../actions/report_actions';
 
 class ComparativoColonias extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
-  }
-
-  highlightRow(id) {
-    let rows = $(ReactDOM.findDOMNode(this)).find('tr');
-
-    rows.each(function(index) {
-      if ($(this).data('id') == id) {
-        if ($(this).attr('class')) {
-          $(this).removeClass('active-row')
-        } else {
-          $(this).addClass('active-row')
-        }
-      }
-    });
   }
 
   _formatData(data) {
@@ -54,34 +44,30 @@ class ComparativoColonias extends React.Component {
     });
   }
 
-  componentDidMount() {
-    let id_col = this.props.zoneID;
-    suburbAPI.adjacent(id_col)
-    .then((abjacentsR) => { return (abjacentsR.data); })
-    .then((data) => {
-      suburbsAPI.report(data, 6)
-      .then((suburbsInfoR) => {
-        let data = this._formatData(suburbsInfoR.data);
-        if (data.rows[0]) {
-          this.setState({
-            data: data
-          });
+  highlightRow(id) {
+    let rows = $(ReactDOM.findDOMNode(this)).find('tr');
+
+    rows.each(function(index) {
+      if ($(this).data('id') == id) {
+        if ($(this).attr('class')) {
+          $(this).removeClass('active-row')
         } else {
-          this.setState({
-            data: {
-              rows: []
-            }
-          });
+          $(this).addClass('active-row')
         }
-      });
+      }
     });
+  }
+
+  componentWillMount() {
+    this.props.fetchColoniasComparables(this.props.zoneID);
   }
 
   render() {
     let content = <Spinner style={{height: '300px'}}/>;
 
-    if (this.state.data) {
-      if (this.state.data.rows[0]) {
+    if (this.props.coloniasComparables) {
+      let data = this._formatData(this.props.coloniasComparables);
+      if (data.rows[0]) {
         content = (
           <div>
             <h3 className={'SectionTitle'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
@@ -93,7 +79,7 @@ class ComparativoColonias extends React.Component {
                   idField={'id'}
                   onMouseoverRow={this.props.onMouseover}
                   specificClass={'ReporteTable table-hover'}
-                  data={this.state.data.rows} />
+                  data={data.rows} />
               </div>
             </div>
           </div>
@@ -107,10 +93,18 @@ class ComparativoColonias extends React.Component {
       }
     }
 
-    return (
-      content
-    );
+    return (content);
   }
 }
 
-export default ComparativoColonias;
+function mapStateToProps(state) {
+  if (state.report.coloniasComparables.length) {
+    return {
+      coloniasComparables: state.report.coloniasComparables
+    }
+  }
+
+  return {};
+}
+
+export default connect(mapStateToProps, { fetchColoniasComparables })(ComparativoColonias);

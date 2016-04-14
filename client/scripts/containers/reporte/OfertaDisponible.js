@@ -1,13 +1,13 @@
-// Vendor
+// Libraries
 import React from 'react';
-import axios from 'axios';
-
-// Helpers
-import Helpers from '../../helpers';
-import { suburbAPI } from './../../api/api-helper.js';
 
 // Components
 import Spinner from './../../components/Spinner';
+
+// Helpers
+import Helpers from '../../helpers';
+import { connect } from 'react-redux';
+import { fetchOfertaDisponible } from '../../actions/report_actions';
 
 class OfertaDisponible extends React.Component {
   constructor(props) {
@@ -16,26 +16,13 @@ class OfertaDisponible extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    let id = this.props.zoneID;
-    axios.all([
-      suburbAPI.listingCount(id, 1),
-      suburbAPI.listingCount(id, 6),
-      suburbAPI.averageTime(id, 6)
-    ]).then((response) => {
-      this.setState({
-        data : {
-          monthlyListing: response[0].data.count,
-          semesterListing: response[1].data.count,
-          averageTime: response[2].data.avg
-        }
-      });
-    });
+  componentWillMount() {
+    this.props.fetchOfertaDisponible(this.props.zoneID);
   }
 
   render() {
     var content = <Spinner style={{height: '120px'}}/>;
-    var data = this.state.data;
+    var data = this.props.ofertaDisponible;
 
     if (data) {
       content = (
@@ -85,4 +72,18 @@ class OfertaDisponible extends React.Component {
   }
 }
 
-export default OfertaDisponible;
+function mapStateToProps(state) {
+  if (state.report.ofertaDisponible.length) {
+    return {
+      ofertaDisponible : {
+        monthlyListing: state.report.ofertaDisponible[0].count,
+        semesterListing: state.report.ofertaDisponible[1].count,
+        averageTime: state.report.ofertaDisponible[2].avg
+      }
+    }
+  }
+
+  return {};
+}
+
+export default connect(mapStateToProps, { fetchOfertaDisponible })(OfertaDisponible);

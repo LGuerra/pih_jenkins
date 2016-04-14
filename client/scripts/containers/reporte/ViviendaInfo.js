@@ -1,12 +1,14 @@
-// Vendor
+// Libraries
 import React from 'react';
 import _ from 'lodash';
-import { viviendaAPI } from './../../api/api-helper.js';
 
+// Components
 import Spinner from './../../components/Spinner'
 
 // Helpers
 import Helpers from '../../helpers';
+import { connect } from 'react-redux';
+import { fetchViviendaInfo } from '../../actions/report_actions';
 
 class ViviendaInfo extends React.Component {
   constructor(props) {
@@ -15,33 +17,6 @@ class ViviendaInfo extends React.Component {
     this.state = {};
 
     this._togglePopOver = this._togglePopOver.bind(this);
-  }
-
-  componentDidMount() {
-    let params = _.pick(this.props.params,
-      'longitud',
-      'latitud',
-      'id_tipo_propiedad',
-      'area_construida',
-      'recamaras',
-      'banos',
-      'estacionamientos',
-      'edad',
-      'tipo_operacion');
-
-      viviendaAPI.valuation(params)
-      .then((modelValuationR) => {
-        this.setState({
-          data: {
-            confianza:  modelValuationR.data.confianza || 1,
-            precioM2:   modelValuationR.data.valuacion_m2 || 0,
-            valuacion:  modelValuationR.data.valuacion || 0
-          }
-        }, () => {
-          this.props.onGetViviendaInfo(_.merge(this.state.data, this.props.params));
-        });
-      });
-
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -66,6 +41,21 @@ class ViviendaInfo extends React.Component {
     }
   }
 
+  componentWillMount() {
+    let params = _.pick(this.props.params,
+      'longitud',
+      'latitud',
+      'id_tipo_propiedad',
+      'area_construida',
+      'recamaras',
+      'banos',
+      'estacionamientos',
+      'edad',
+      'tipo_operacion');
+
+    this.props.fetchViviendaInfo(params);
+  }
+
   _togglePopOver(show) {
     if (show) {
       $('#confianza').popover('show');
@@ -77,11 +67,11 @@ class ViviendaInfo extends React.Component {
   render() {
     let content = <Spinner style={{height: '120px'}}/>;
 
-    if (this.state.data) {
+    if (this.props.viviendaInfo) {
       let stars = new Array();
-      let reputacion = this.state.data.confianza > 5 ? 5 : this.state.data.confianza;
+      let reputacion = this.props.viviendaInfo.confianza > 5 ? 5 : this.props.viviendaInfo.confianza;
       let reputacionComponent;
-      let valuacion = Math.floor(this.state.data.valuacion / 1000);
+      let valuacion = Math.floor(this.props.viviendaInfo.valuacion / 1000);
 
       if (reputacion < 2) {
         stars.push(
@@ -123,7 +113,7 @@ class ViviendaInfo extends React.Component {
               {reputacionComponent}
             </div>
             <div className={'InfoElement'} style={{textAlign: 'center'}}>
-              <p className={'secondary-price'}>{Helpers.formatAsPrice(this.state.data.precioM2)}</p>
+              <p className={'secondary-price'}>{Helpers.formatAsPrice(this.props.viviendaInfo.precioM2)}</p>
               <p className={'subtitle'}>{'Precio estimado por m²'}</p>
             </div>
           </div>
@@ -137,5 +127,18 @@ class ViviendaInfo extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  if (!_.isEmpty(state.report.viviendaInfo)) {
+    return {
+      viviendaInfo: {
+        confianza:  state.report.viviendaInfo.confianza || 1,
+        precioM2:   state.report.viviendaInfo.valuacion_m2 || 0,
+        valuacion:  state.report.viviendaInfo.valuacion || 0
+      }
+    }
+  }
 
-export default ViviendaInfo;
+  return {};
+}
+
+export default connect(mapStateToProps, { fetchViviendaInfo })(ViviendaInfo);

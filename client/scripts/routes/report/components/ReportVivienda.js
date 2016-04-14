@@ -38,20 +38,11 @@ class ReporteVivienda extends Component {
     var coloniaName = this.state.coloniaInfo
       ? this.state.coloniaInfo.coloniaInfo.nombre
       : '';
-    var compareTables;
-
-    if (this.state.viviendaInfo) {
-      compareTables = (
-        <ComparativoViviendas
-          ref={'comparativoViviendas'}
-          coloniaName={coloniaName}
-          viviendaInfo={this.state.viviendaInfo}
-          params={this.props.viviendaParams}/>
-      );
-    }
 
     return (
       <div>
+        <FormatStickyNavbar
+          viewType={'Vivienda'}/>
         <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             <SecondaryNavbar
@@ -113,7 +104,11 @@ class ReporteVivienda extends Component {
         </div>
         <div className={'BlockContainer MainSection'} style={{marginTop: '10px'}}>
           <div className={'max-width-container'}>
-            {compareTables}
+            <ComparativoViviendas
+              ref={'comparativoViviendas'}
+              coloniaName={coloniaName}
+              viviendaInfo={this.state.viviendaInfo}
+              params={this.props.viviendaParams}/>
             <div className={'Footnote'}>
               <img width={'7px'} src={IMAGES.asterisk} />
               <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>

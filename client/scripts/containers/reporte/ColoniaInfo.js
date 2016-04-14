@@ -1,14 +1,13 @@
 // Libraries
 import React from 'react';
-import axios from 'axios';
-import { suburbAPI } from './../../api/api-helper.js';
+
 // Components
 import Spinner from './../../components/Spinner';
 
 // Helpers
 import Helpers from '../../helpers';
 import { connect } from 'react-redux';
-import { fetchColoniaInfo } from  '../../actions/index'
+import { fetchColoniaInfo } from  '../../actions/report_actions';
 
 class ColoniaInfo extends React.Component {
   constructor(props) {

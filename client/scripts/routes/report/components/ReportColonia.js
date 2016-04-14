@@ -8,8 +8,6 @@ import FormatLineChart        from '../../../containers/reporte/FormatLineChart'
 import FormatStackedBarChart  from '../../../containers/reporte/FormatStackedBarChart';
 import FormatStickyNavbar     from '../../../containers/reporte/FormatStickyNavbar';
 import OfertaDisponible       from '../../../containers/reporte/OfertaDisponible';
-import SecondaryNavbar        from '../../../containers/reporte/SecondaryNavbar';
-import ViviendaInfo           from '../../../containers/reporte/ViviendaInfo';
 
 class ReporteColonia extends Component {
   constructor(props) {
@@ -52,6 +50,8 @@ class ReporteColonia extends Component {
 
     return (
       <div>
+        <FormatStickyNavbar
+          viewType={'Colonia'}/>
         <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             <div>

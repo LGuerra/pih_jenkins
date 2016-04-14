@@ -64,6 +64,7 @@
   },
   "homepage": "https://github.com/Intelimetrica/pih_banca#readme",
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "bootstrap": "^3.3.6",
     "jquery": "^2.1.4",
     "react-redux": "^4.4.4",

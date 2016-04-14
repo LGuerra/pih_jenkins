@@ -9,7 +9,23 @@ import Spinner from     '../../components/Spinner';
 // Helpers
 import Helpers from '../../helpers';
 import helper_properties from '../../helper_properties';
-import { suburbAPI } from './../../api/api-helper.js';
+import { connect } from 'react-redux';
+import { fetchPrecioHistorico } from '../../actions/report_actions';
+
+function _formatData(data) {
+  let arrayPoints = data.map((element, index) => {
+    return ({
+      value: element.promedio_venta,
+      xVariable: new Date(element.fecha)
+    });
+  });
+
+  return [{
+    color: '#35C0BE',
+    label: 'Promedio de venta',
+    data: arrayPoints
+  }];
+}
 
 class FormatLineChart extends React.Component {
   constructor(props) {
@@ -46,21 +62,6 @@ class FormatLineChart extends React.Component {
     return (html);
   }
 
-  _formatData(data) {
-    let arrayPoints = data.map((element, index) => {
-      return ({
-        value: element.promedio_venta,
-        xVariable: new Date(element.fecha)
-      });
-    });
-
-    return [{
-      color: '#35C0BE',
-      label: 'Promedio de venta',
-      data: arrayPoints
-    }];
-  }
-
   _checkoutAvailability(apreciacion) {
     if (apreciacion > 0.20 || apreciacion == null) {
       this.setState({
@@ -69,26 +70,20 @@ class FormatLineChart extends React.Component {
     }
   }
 
-  componentDidMount() {
-      suburbAPI.historicPrice(this.props.zoneID)
-      .then((suburbHistoricR) => {
-      let data = this._formatData(suburbHistoricR.data);
-      this.setState({
-        data: data
-      });
-    });
+  componentWillMount() {
+    this.props.fetchPrecioHistorico(this.props.zoneID);
   }
 
   render() {
     let content = <Spinner style={{height: '220px'}}/>;
 
-    if (this.state.data) {
-      if (this.state.data[0].data[0] && this.state.isAvailable) {
+    if (this.props.precioHistorico) {
+      if (this.props.precioHistorico[0].data[0] && this.state.isAvailable) {
         content = (
           <LineChart
             id={this.props.id}
             showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
-            data={this.state.data}
+            data={this.props.precioHistorico}
             tooltipFormat={this._tooltipLineFormat}
             yTitleUnit={'Precio promedio m²'}
             height={220}
@@ -119,4 +114,14 @@ class FormatLineChart extends React.Component {
   }
 }
 
-export default FormatLineChart;
+function mapStateToProps(state) {
+  if (state.report.precioHistorico.length) {
+    return {
+      precioHistorico: _formatData(state.report.precioHistorico)
+    };
+  }
+
+  return {};
+}
+
+export default connect(mapStateToProps, { fetchPrecioHistorico })(FormatLineChart);
