@@ -15,7 +15,6 @@ const App = React.createClass({
           <NavBarDropDown image={'https://mobxjs.github.io/mobx/getting-started-assets/images/mobservable.png'} />
         </NavBar>
         <SecondaryNav>
-
         </SecondaryNav>
         {this.props.children}
         <Footer/>

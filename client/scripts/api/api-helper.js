@@ -17,12 +17,17 @@ switch(process.env.NODE_ENV) {
 let apiEndpoint = `/v1/${stage}`;
 
 axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
+axios.defaults.headers.post['X-Transaction'] = 'POST Example';
 
 const userAPI = (() => {
   let getInfo = () => {
     return axios.get('helpers/user_info');
   }
-  return { getInfo };
+
+  let signIn = (user) => {
+    return axios.post('/users/sign_in.json', { user: user });
+  }
+  return { getInfo, signIn };
 })();
 
 const viviendaAPI = (() => {

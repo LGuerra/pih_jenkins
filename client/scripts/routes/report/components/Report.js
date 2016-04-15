@@ -5,9 +5,11 @@ class Report extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+  }
+
   render() {
     console.log(this.props.location.query);
-
     return (
       <div>
         <h3>Report</h3>

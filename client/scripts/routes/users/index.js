@@ -1,5 +1,6 @@
 import SignIn from './signIn/SignIn';
 import UsersContainer from './components/UsersContainer';
+import { userIsAuthenticated } from 'helpers-banca';
 
 
 export default {
@@ -8,7 +9,8 @@ export default {
   childRoutes: [
     {
       path: 'login',
-      component: SignIn
+      component: SignIn,
+      onEnter: userIsAuthenticated
     }
   ]
 };
