@@ -6,7 +6,12 @@ import {
   FETCH_DISTRIBUCION_PRECIO,
   FETCH_COLONIAS_COMPARABLES,
   FETCH_VIVIENDA_INFO,
-  FETCH_VIVIENDAS_COMPARABLES
+  FETCH_VIVIENDAS_COMPARABLES,
+  FETCH_COLONIAS_MAP,
+  FECTH_ACTUAL_COLONIA_MAP,
+  FETCH_CENTROID,
+  SELECT_COMPARATIVO_COLONIAS,
+  SELECT_POLYGON
 } from '../actions/report_actions';
 
 const INITIAL_STATE = {
@@ -18,7 +23,12 @@ const INITIAL_STATE = {
   distribucionPrecio: {},
   propiedadesComparables: {},
   coloniasComparables: [],
-  viviendasComparables: []
+  viviendasComparables: [],
+  coloniasMap: [],
+  actualColoniaMap: null,
+  centroid: null,
+  selectedComparativoColonias: null,
+  selectedPolygon: null
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -69,6 +79,39 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         viviendasComparables: action.payload.data.similar_houses
+      }
+
+    case FETCH_COLONIAS_MAP: {
+      return {
+        ...state,
+        coloniasMap: action.payload.data
+      }
+    }
+
+    case FECTH_ACTUAL_COLONIA_MAP: {
+      return {
+        ...state,
+        actualColoniaMap: action.payload.data
+      }
+    }
+
+    case FETCH_CENTROID: {
+      return {
+        ...state,
+        centroid: action.payload.data
+      }
+    }
+
+    case SELECT_COMPARATIVO_COLONIAS:
+      return {
+        ...state,
+        selectedComparativoColonias: action.payload
+      }
+
+    case SELECT_POLYGON:
+      return {
+        ...state,
+        selectedPolygon: action.payload
       }
 
     default:

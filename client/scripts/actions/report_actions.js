@@ -9,6 +9,14 @@ export const FETCH_PRECIO_HISTORICO         = 'FETCH_PRECIO_HISTORICO';
 export const FETCH_DISTRIBUCION_PRECIO      = 'FETCH_DISTRIBUCION_PRECIO';
 export const FETCH_COLONIAS_COMPARABLES     = 'FETCH_COLONIAS_COMPARABLES';
 export const FETCH_VIVIENDAS_COMPARABLES    = 'FETCH_VIVIENDAS_COMPARABLES';
+export const FETCH_COLONIAS_MAP             = 'FETCH_COLONIAS_MAP';
+export const FECTH_ACTUAL_COLONIA_MAP       = 'FECTH_ACTUAL_COLONIA_MAP';
+export const FETCH_CENTROID                 = 'FETCH_CENTROID';
+
+// Interactivity
+export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
+export const SELECT_POLYGON                 = 'SELECT_POLYGON';
+
 
 export function fetchColoniaInfo(idCol) {
   const request = axios.all([
@@ -92,5 +100,50 @@ export function fetchViviendasComparables(params) {
   return {
     type: FETCH_VIVIENDAS_COMPARABLES,
     payload: request
+  }
+}
+
+export function fetchColoniasMap(idCol) {
+  const request = suburbAPI.adjacent(idCol)
+    .then(abjacentsR => abjacentsR.data)
+    .then(data => {
+      return suburbsAPI.geojsons(data)
+    });
+
+  return {
+    type: FETCH_COLONIAS_MAP,
+    payload: request
+  }
+}
+
+export function fetchActualColoniaMap(idCol) {
+  const request = suburbAPI.geojson(idCol);
+
+  return {
+    type: FECTH_ACTUAL_COLONIA_MAP,
+    payload: request
+  }
+}
+
+export function fetchCentroid(idCol) {
+  const request = suburbAPI.centroid(idCol);
+
+  return {
+    type: FETCH_CENTROID,
+    payload: request
+  }
+}
+
+export function onSelectComparativoColonias(idCol) {
+  return {
+    type: SELECT_COMPARATIVO_COLONIAS,
+    payload: idCol
+  }
+}
+
+export function onSelectPolygon(idCol) {
+  return {
+    type: SELECT_POLYGON,
+    payload: idCol
   }
 }

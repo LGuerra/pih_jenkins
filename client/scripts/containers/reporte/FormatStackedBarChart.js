@@ -11,67 +11,7 @@ import Spinner from         '../../components/Spinner';
 import { connect } from 'react-redux';
 import { fetchDistribucionTipologia } from '../../actions/report_actions';
 
-const labelsDictionary = {
-  area_construida: 'Superficie construida',
-  recamaras: 'Recámaras',
-  id_tipo_propiedad: 'Tipo vivienda',
-  edad: 'Edad'
-}
-
-function _formatData(data) {
-  if (data.json_tipologias) {
-    var formattedData = _.map(data.json_tipologias, (element, key) => {
-      let label = key;
-
-      element.forEach(function(bar) {
-        bar.color = '#35C0BE';
-        bar.hoverColor = '#2a9998';
-      });
-
-      if (label === 'recamaras') {
-        element = _.sortBy(element, function(element) {
-          return element.label;
-        });
-      }
-
-      if (label === 'area_construida') {
-        element = _.sortBy(element, function(element) {
-          return (element.label);
-        });
-
-        let indexes = {};
-
-        element.forEach(function(obj, index) {
-          if (obj.label[0] === '<') {
-            obj.label = '≤ ' + obj.label.substr(2);
-            indexes.lt_c = index;
-          }
-          if (obj.label[0] === '>') {
-            obj.label = '≥ ' + obj.label.substr(2);
-            indexes.ht_c = index;
-          }
-          obj.label = obj.label.substr(0, obj.label.length - 2) + 'm²';
-        });
-
-        let ltC = element.splice(indexes.lt_c, 1);
-        let htC = element.splice(indexes.ht_c - 1, 1);
-
-        element.reverse();
-        element.unshift(ltC[0]);
-        element.push(htC[0]);
-      }
-
-      return ({
-        label: labelsDictionary[label],
-        bars: element
-      });
-    });
-  } else {
-    return ([]);
-  }
-
-  return (formattedData);
-}
+import { formatDistribucionTipologia } from '../../data_formatters';
 
 class FormatStackedBarChart extends React.Component {
   constructor(props) {
@@ -121,7 +61,7 @@ class FormatStackedBarChart extends React.Component {
 function mapStateToProps(state) {
   if (!_.isEmpty(state.report.distribucionTipologia)) {
     return {
-      distribucionTipologia: _formatData(state.report.distribucionTipologia)
+      distribucionTipologia: formatDistribucionTipologia(state.report.distribucionTipologia)
     };
   }
 
