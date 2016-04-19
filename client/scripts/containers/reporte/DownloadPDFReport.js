@@ -4,9 +4,9 @@ import _  from 'lodash';
 import PDFReport  from '../../PDFReport';
 
 import { connect } from 'react-redux';
+import { setLoadingFrame } from '../../actions/report_actions'
 import {
   formatPrecioHistorico,
-  formatDistribucionTipologia,
   formatDistribucionPrecio,
   formatComparativoViviendas,
   formatComparativoColonias
@@ -20,7 +20,7 @@ class DownloadPDFReport extends Component {
   }
 
   _generateInfo(url) {
-    var report = this.props.report;
+    let report = this.props.report;
     //Initial variables
     let viviendaInfo = {};
     let viviendasComparables = [];
@@ -39,11 +39,6 @@ class DownloadPDFReport extends Component {
       semesterListing: report.ofertaDisponible[1].count,
       averageTime: report.ofertaDisponible[2].avg
     };
-
-    let distribucionPrecio = formatDistribucionPrecio(report.distribucionPrecio);
-    let distribucionTipologia = formatDistribucionTipologia(report.distribucionTipologia);
-    let precioHistorico = formatPrecioHistorico(report.precioHistorico);
-
 
     let dataTokens = this._getImages().map((element) => {
       return ({
@@ -94,16 +89,19 @@ class DownloadPDFReport extends Component {
       {
         identifier: 'distribucion_precio.json',
         dataType: 'json',
-        data: distribucionPrecio
+        data: formatDistribucionPrecio(report.distribucionPrecio)
       },
       {
         identifier: 'precio_historico.json',
         dataType: 'json',
-        data: precioHistorico
+        data: formatPrecioHistorico(report.precioHistorico)
       }
     ]);
 
-    PDFReport.downloadPDFReport(url, dataTokens);
+    PDFReport.downloadPDFReport(url, dataTokens)
+      .then(() => {
+        this.props.setLoadingFrame(false);
+      });
   }
 
   _downloadReport() {
@@ -131,6 +129,7 @@ class DownloadPDFReport extends Component {
         PDFReport.printInfo(this.reportUrl);
       })
       .fail(() => {
+        this.props.setLoadingFrame(true);
         this._generateInfo(this.reportUrl);
       });
   }
@@ -165,4 +164,4 @@ function mapStateToProps(state) {
   return { report: state.report };
 }
 
-export default connect(mapStateToProps)(DownloadPDFReport);
+export default connect(mapStateToProps, { setLoadingFrame })(DownloadPDFReport);

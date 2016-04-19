@@ -1,6 +1,7 @@
 // Vendor
 import React from 'react';
 import _ from     'lodash';
+import { connect } from 'react-redux';
 
 // Components
 import BackToTop from           '../../../components/BackToTop';
@@ -78,7 +79,7 @@ class Report extends React.Component {
   }
 
   render() {
-    let loadingFrame  = this._getLoadingFrame(this.state.loadingReport);
+    let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
     let viewType      = this.props.location.query.tipo;
     let content;
 
@@ -131,4 +132,10 @@ class Report extends React.Component {
   }
 }
 
-export default Report;
+function mapStateToProps(state) {
+  return {
+    isLoadingFrame: state.report.isLoadingFrame
+  };
+}
+
+export default connect(mapStateToProps)(Report);

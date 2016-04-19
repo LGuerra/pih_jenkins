@@ -13,6 +13,8 @@ export const FETCH_COLONIAS_MAP             = 'FETCH_COLONIAS_MAP';
 export const FECTH_ACTUAL_COLONIA_MAP       = 'FECTH_ACTUAL_COLONIA_MAP';
 export const FETCH_CENTROID                 = 'FETCH_CENTROID';
 
+export const SET_LOADING_FRAME              = 'SET_LOADING_FRAME';
+
 // Interactivity
 export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
@@ -145,5 +147,12 @@ export function onSelectPolygon(idCol) {
   return {
     type: SELECT_POLYGON,
     payload: idCol
+  }
+}
+
+export function setLoadingFrame(toggle) {
+  return {
+    type: SET_LOADING_FRAME,
+    payload: toggle
   }
 }

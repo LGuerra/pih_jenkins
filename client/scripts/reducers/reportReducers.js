@@ -10,6 +10,7 @@ import {
   FETCH_COLONIAS_MAP,
   FECTH_ACTUAL_COLONIA_MAP,
   FETCH_CENTROID,
+  SET_LOADING_FRAME,
   SELECT_COMPARATIVO_COLONIAS,
   SELECT_POLYGON
 } from '../actions/report_actions';
@@ -28,7 +29,8 @@ const INITIAL_STATE = {
   actualColoniaMap: null,
   centroid: null,
   selectedComparativoColonias: null,
-  selectedPolygon: null
+  selectedPolygon: null,
+  isLoadingFrame: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -99,6 +101,13 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         centroid: action.payload.data
+      }
+    }
+
+    case SET_LOADING_FRAME: {
+      return {
+        ...state,
+        isLoadingFrame: action.payload
       }
     }
 

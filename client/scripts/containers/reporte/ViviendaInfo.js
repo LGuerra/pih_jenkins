@@ -15,19 +15,18 @@ class ViviendaInfo extends React.Component {
     super(props);
 
     this.state = {};
-
     this._togglePopOver = this._togglePopOver.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.data && this.state.data) {
-      let descriptions = ['más de 40%', 'entre 30% y 40% ', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
+    if (_.isUndefined(prevProps.viviendaInfo) && !_.isEqual(prevProps.viviendaInfo, this.props.viviendaInfo)) {
+      let descriptions = ['más de 40%', 'entre 30% y 40%', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
       let popoverPosition = window.innerWidth < 550 ? 'bottom' : 'right';
       let title = `
         <div class="popover PopoverConfianza" role="tooltip">
           <div class="arrow"></div>
           <p>La mitad o más de los inmuebles en esta colonia tienen un error en
-          la estimación de ${descriptions[this.state.data.confianza - 1]} error absoluto en la estimación de
+          la estimación de ${descriptions[this.props.viviendaInfo.confianza - 1]} error absoluto en la estimación de
           valores dentro de esta colonia.</p>
         </div>
       `;
