@@ -4,7 +4,7 @@ const NavBarLink = (props) => {
   if(!props.router) {
     return (
       <li className={props.className}>
-        <a href={props.link}>{props.text}</a>
+        <a href={props.link} onClick={props.onClick}>{props.text}</a>
       </li>
     );
   } else {

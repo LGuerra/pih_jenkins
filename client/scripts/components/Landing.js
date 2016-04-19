@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Home = React.createClass({
+const Landing = React.createClass({
   render() {
     return (
       <div style={{ background: '#284B63', padding: 15 }}>
@@ -21,4 +21,4 @@ const Home = React.createClass({
   }
 })
 
-export default Home;
+module.exports = Landing;

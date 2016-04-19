@@ -29,7 +29,7 @@ const NavBarHeader = (props) => {
   return (
     <div className='navbar-header'>
       <NavBarCollapse id={props.id}/>
-      <NavBarBrand/>
+      <NavBarBrand text={props.text}/>
     </div>
   );
 };

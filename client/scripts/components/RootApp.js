@@ -2,7 +2,7 @@ import React from 'react';
 import { NavBar, NavBarLink, NavBarDropDown } from 'im-main-navigation';
 import Footer from './common/Footer';
 
-class App extends React.Component {
+class RootApp extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -10,11 +10,11 @@ class App extends React.Component {
   render() {
     return (
       <div id='banca-router'>
-        <NavBar id='my-new-id' logoText='Intelimétrica'/>
         {this.props.children}
+        <Footer/>
       </div>
     )
   }
 }
 
-export default App;
+export default RootApp;

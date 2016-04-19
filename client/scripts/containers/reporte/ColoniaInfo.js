@@ -1,10 +1,13 @@
+// Libraries
 import React from 'react';
-import axios from 'axios';
 
-import Helpers from '../../helpers';
-import { suburbAPI } from './../../api/api-helper.js';
-
+// Components
 import Spinner from './../../components/Spinner';
+
+// Helpers
+import Helpers from '../../helpers';
+import { connect } from 'react-redux';
+import { fetchColoniaInfo } from  '../../actions/report_actions';
 
 class ColoniaInfo extends React.Component {
   constructor(props) {
@@ -12,27 +15,8 @@ class ColoniaInfo extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    let id_col = this.props.zoneID;
-
-    axios.all([
-      suburbAPI.averageOffer(id_col, 6),
-      suburbAPI.averageM2(id_col, 6),
-      suburbAPI.information(id_col),
-      suburbAPI.appreciation(id_col)
-    ]).then((response) => {
-      this.setState({
-        data: {
-          averageOffer: response[0].data.avg,
-          averageM2: response[1].data.avg,
-          coloniaInfo: {
-            nombre: response[2].data.nombre,
-            SHF: response[2].data.precio_m2_shf
-          },
-          apreciacion: response[3].data ? response[3].data.apreciacion_anualizada : null
-        }
-      });
-    });
+  componentWillMount() {
+    this.props.fetchColoniaInfo(this.props.zoneID);
   }
 
   componentDidUpdate (prevState) {
@@ -48,8 +32,8 @@ class ColoniaInfo extends React.Component {
   render() {
     let apreciacion;
     let shf;
-    var data = this.state.data;
-    var content = <Spinner style={{height: '120px'}}/>;
+    let data = this.props.coloniaInfo;
+    let content = <Spinner style={{height: '120px'}}/>;
     let colName;
 
     if (data) {
@@ -117,4 +101,23 @@ class ColoniaInfo extends React.Component {
   }
 }
 
-export default ColoniaInfo;
+function mapStateToProps(state) {
+  if (state.report.coloniaInfo.length) {
+    return {
+      coloniaInfo: {
+        averageOffer: state.report.coloniaInfo[0].avg,
+        averageM2: state.report.coloniaInfo[1].avg,
+        coloniaInfo: {
+          nombre: state.report.coloniaInfo[2].nombre,
+          SHF: state.report.coloniaInfo[2].precio_m2_shf
+        },
+        apreciacion: state.report.coloniaInfo[3] ? state.report.coloniaInfo[3].apreciacion_anualizada : null
+      }
+    }
+  }
+
+  return {};
+}
+
+
+export default connect(mapStateToProps, { fetchColoniaInfo })(ColoniaInfo);

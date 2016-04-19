@@ -7,8 +7,8 @@ const NavBar = React.createClass({
     var id = this.props.id;
     return (
       <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <NavBarHeader id={id}/>
+        <div className="container">
+          <NavBarHeader text={this.props.logoText} id={id}/>
           <NavBarContent id={id}>
             {this.props.children}
           </NavBarContent>

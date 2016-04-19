@@ -1,11 +1,13 @@
 // Vendor
-import React from 'react';
+import React  from 'react';
+import _      from 'lodash';
 
 // Components
 import StickyNavbar from '../../components/StickyNavbar';
 
 // Helpers
 import Helpers from '../../helpers';
+import { connect } from 'react-redux';
 
 class FormatStickyNavbar extends React.Component{
   constructor(props) {
@@ -85,4 +87,30 @@ class FormatStickyNavbar extends React.Component{
   }
 }
 
-export default FormatStickyNavbar;
+function mapStateToProps(state) {
+  let toProps = {};
+  if (!_.isEmpty(state.report.viviendaInfo)) {
+    toProps.viviendaInfo = {
+      confianza:  state.report.viviendaInfo.confianza || 1,
+      precioM2:   state.report.viviendaInfo.valuacion_m2 || 0,
+      valuacion:  state.report.viviendaInfo.valuacion || 0
+    };
+  }
+
+  if (state.report.coloniaInfo.length) {
+    toProps.coloniaInfo =  {
+      averageOffer: state.report.coloniaInfo[0].avg,
+      averageM2: state.report.coloniaInfo[1].avg,
+      coloniaInfo: {
+        nombre: state.report.coloniaInfo[2].nombre,
+        SHF: state.report.coloniaInfo[2].precio_m2_shf
+      },
+      apreciacion: state.report.coloniaInfo[3] ? state.report.coloniaInfo[3].apreciacion_anualizada : null
+    }
+  }
+
+  return toProps;
+}
+
+
+export default connect(mapStateToProps)(FormatStickyNavbar);

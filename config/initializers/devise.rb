@@ -299,5 +299,11 @@ Devise.setup do |config|
 
   # Time period for account expiry from last_activity_at
   # config.expire_after = 90.days
+  Warden::Manager.after_set_user do |user,auth,opts|
+    auth.cookies[:signed_in] = true
+  end
 
+  Warden::Manager.before_logout do |user,auth,opts|
+    auth.cookies.delete :signed_in
+  end
 end

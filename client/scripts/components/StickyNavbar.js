@@ -8,11 +8,8 @@ class StickyNavbar extends React.Component{
     var stickyNavTop = $('.secondary-nav').offset() ?
       $('.secondary-nav').offset().top : 50;
 
-    console.log('AQYU')
-
     var stickyNav = function(){
       var scrollTop = $(window).scrollTop();
-      console.log(scrollTop, stickyNavTop)
       if (scrollTop > (stickyNavTop * 2)) {
         $('#sticky-nav').css({
           display: 'block',

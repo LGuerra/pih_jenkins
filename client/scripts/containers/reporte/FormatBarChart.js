@@ -9,7 +9,50 @@ import Spinner from   '../../components/Spinner';
 
 // Helpers
 import Helpers from '../../helpers';
-import { suburbAPI } from './../../api/api-helper.js';
+import { connect } from 'react-redux';
+import { fetchDistribucionPrecio } from '../../actions/report_actions';
+
+function _formatData(data) {
+  let formattedData;
+  let stringElement;
+
+  if (data.json_precios) {
+    formattedData = _.map(data.json_precios, (element, key) => {
+      let label;
+      if (element.lim_inf === 'limite_inf') {
+        label = '< ' + Helpers.formatAsNumber(element.lim_sup / 1000);
+      } else if (element.lim_sup === 'limite_sup') {
+        label = '> ' + Helpers.formatAsNumber(element.lim_inf / 1000);
+      } else {
+        label = Helpers.formatAsNumber(element.lim_inf / 1000) + ' a ' + Helpers.formatAsNumber(element.lim_sup / 1000);
+      }
+      return({
+        lim_inf: element.lim_inf,
+        lim_sup: element.lim_sup,
+        label: label,
+        value: element.value
+      });
+    });
+
+  } else {
+    formattedData = [];
+  }
+
+  formattedData = _.filter(formattedData, element => {
+    if (typeof element.lim_inf == 'number') {
+      return (element);
+    }
+    stringElement = element;
+  })
+
+  formattedData = _.sortBy(formattedData, element => {
+    return element.lim_inf;
+  });
+
+  formattedData.unshift(stringElement);
+
+  return (formattedData);
+}
 
 class FormatBarChart extends React.Component {
   constructor(props) {
@@ -44,66 +87,19 @@ class FormatBarChart extends React.Component {
     return (html);
   }
 
-  _formatData(data) {
-    let formattedData;
-    var stringElement;
-    if (data.json_precios) {
-      formattedData = _.map(data.json_precios, (element, key) => {
-        let label;
-        if (element.lim_inf === 'limite_inf') {
-          label = '< ' + Helpers.formatAsNumber(element.lim_sup / 1000);
-        } else if (element.lim_sup === 'limite_sup') {
-          label = '> ' + Helpers.formatAsNumber(element.lim_inf / 1000);
-        } else {
-          label = Helpers.formatAsNumber(element.lim_inf / 1000) + ' a ' + Helpers.formatAsNumber(element.lim_sup / 1000);
-        }
-        return({
-          lim_inf: element.lim_inf,
-          lim_sup: element.lim_sup,
-          label: label,
-          value: element.value
-        });
-      });
-
-    } else {
-      formattedData = [];
-    }
-
-    formattedData = _.filter(formattedData, element => {
-      if (typeof element.lim_inf == 'number') {
-        return (element);
-      }
-      stringElement = element;
-    })
-
-    formattedData = _.sortBy(formattedData, element => {
-      return element.lim_inf;
-    });
-
-    formattedData.unshift(stringElement);
-
-    return (formattedData);
-  }
-
-  componentDidMount() {
-    suburbAPI.priceDistribution(this.props.zoneID)
-    .then((stadisticsPriceDistributionR) => {
-      let data = this._formatData(stadisticsPriceDistributionR.data);
-      this.setState({
-        data: data
-      });
-    });
+  componentWillMount() {
+    this.props.fetchDistribucionPrecio(this.props.zoneID);
   }
 
   render() {
     let content = <Spinner style={{height: '220px'}}/>;
 
-    if (this.state.data) {
-      if (this.state.data[0] && this.state.isAvailable) {
+    if (this.props.distribucionPrecio) {
+      if (this.props.distribucionPrecio[0] && this.state.isAvailable) {
         content = (<BarChart
           id={this.props.id}
           showAxis={{x: {ticks: true, line: true}, y:{ticks: true, line: false}}}
-          data={this.state.data}
+          data={this.props.distribucionPrecio}
           tooltipFormat={this._tooltipBarFormat}
           color={'#35C0BE'}
           hoverColor={'#2a9998'}
@@ -133,4 +129,14 @@ class FormatBarChart extends React.Component {
   }
 }
 
-export default FormatBarChart;
+function mapStateToProps(state) {
+  if (!_.isEmpty(state.report.distribucionPrecio)) {
+    return {
+      distribucionPrecio: _formatData(state.report.distribucionPrecio)
+    }
+  }
+
+  return {};
+}
+
+export default connect(mapStateToProps, { fetchDistribucionPrecio })(FormatBarChart);
