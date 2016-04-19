@@ -62,15 +62,7 @@ module.exports = {
         test: /\.(png|jpg)$/,
         node_modules: /node_modules/,
         loader: 'url-loader?limit=1000'
-      },
-      {
-        test: /\.svg/,
-        loader: 'svg-url-loader'
-      },
-      {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
+      }
     ]
   },
   stats: {
@@ -81,6 +73,7 @@ module.exports = {
     extensions: ['', '.js', '.es6'],
     alias: {
       'api-banca': 'client/scripts/api/api-helper',
+      'images-banca': 'client/images',
       'helpers-banca': 'client/scripts/helpers/index',
       'im-main-navigation': 'client/scripts/components/navigation/main/index',
       'im-secondary-navigation': 'client/scripts/components/navigation/secondary/index',

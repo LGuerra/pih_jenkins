@@ -3,6 +3,7 @@ import NavBarHeader from './NavBarHeader';
 import NavBarContent from './NavBarContent';
 
 const NavBar = React.createClass({
+
   render() {
     var id = this.props.id;
     return (

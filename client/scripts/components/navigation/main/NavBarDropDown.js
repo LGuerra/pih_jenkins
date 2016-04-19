@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const NavBarDropDown = React.createClass({
+class NavBarDropDown extends React.Component { 
   render() {
     const props = this.props;
     const text = props.text; 
     const links = props.links;
-    const image = (typeof props.image === 'undefined') ? {} : <i><img style={{ height: 20 }} src={props.image}/></i>;
+    const image = (typeof props.image === 'undefined') ? '' : <i><img style={{ height: 20 }} src={props.image}/></i>;
     return (
       <li className='dropdown'>
         <a aria-expanded='false' aria-haspopup='true' className='dropdown-toggle' data-toggle='dropdown' href='#' role='button'>
@@ -29,7 +29,7 @@ const NavBarDropDown = React.createClass({
       </li>
     );
   }
-});
+}
 
 NavBarDropDown.propTypes = { 
   text: React.PropTypes.string.isRequired,

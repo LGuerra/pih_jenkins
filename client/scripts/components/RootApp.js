@@ -11,7 +11,6 @@ class RootApp extends React.Component {
     return (
       <div id='banca-router'>
         {this.props.children}
-        <Footer/>
       </div>
     )
   }
