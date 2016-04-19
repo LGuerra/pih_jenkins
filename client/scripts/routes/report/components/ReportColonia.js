@@ -9,45 +9,14 @@ import FormatStackedBarChart  from '../../../containers/reporte/FormatStackedBar
 import FormatStickyNavbar     from '../../../containers/reporte/FormatStickyNavbar';
 import OfertaDisponible       from '../../../containers/reporte/OfertaDisponible';
 
+import { connect } from 'react-redux';
+
 class ReporteColonia extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {}
-  }
-
-  _onGetColoniaInfo(info) {
-    this.setState({
-      coloniaInfo: info
-    }, () => {
-      this.refs.precioHistorico._checkoutAvailability(info.apreciacion);
-    });
-  }
-
-  _onGetViviendaInfo(info) {
-    this.setState({viviendaInfo: info});
-  }
-
-  _onMouseoverFeature(info) {
-    console.log(info)
-  }
-
-  _onMouseoverColoniaTable(info) {
-    console.log(info)
   }
 
   render() {
-    var coloniaName = this.state.coloniaInfo
-      ? this.state.coloniaInfo.coloniaInfo.nombre
-      : '';
-    var compareTables = (
-      <ComparativoColonias
-        ref={'comparativoColonias'}
-        zoneID={this.props.coloniaID}
-        onMouseout={this._onMouseoverColoniaTable}
-        onMouseover={this._onMouseoverColoniaTable} />
-    );
-
     return (
       <div>
         <FormatStickyNavbar
@@ -55,14 +24,13 @@ class ReporteColonia extends Component {
         <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             <div>
-              <h3 className={'SectionTitle'}>{'Información de la colonia ' + coloniaName}</h3>
+              <h3 className={'SectionTitle'}>{'Información de la colonia ' + this.props.coloniaName}</h3>
               <div className={'LineDivider'}></div>
             </div>
             <div className={'BlockContainer row'}>
               <div className={'col-sm-12'}>
                 <ColoniaInfo
                   ref={'coloniaInfo'}
-                  onGetColoniaInfo={this._onGetColoniaInfo.bind(this)}
                   zoneID={this.props.coloniaID}
                   viewType={'Colonia'}/>
               </div>
@@ -103,7 +71,9 @@ class ReporteColonia extends Component {
         </div>
         <div className={'BlockContainer MainSection'} style={{marginTop: '10px'}}>
           <div className={'max-width-container'}>
-            {compareTables}
+            <ComparativoColonias
+              ref={'comparativoColonias'}
+              zoneID={this.props.coloniaID} />
             <div className={'Footnote'}>
               <img width={'7px'} src={IMAGES.asterisk} />
               <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
@@ -112,11 +82,9 @@ class ReporteColonia extends Component {
         </div>
         <div style={{margin: '10px 0px'}}>
           <FormatGoogleMaps
-            coloniaName={coloniaName}
             viewType={'Vivienda'}
             viviendaInfo={{}}
             zoneID={this.props.coloniaID}
-            onMouseoverFeature={this._onMouseoverFeature}
             ref={'formatGoogleMaps'}/>
         </div>
       </div>
@@ -124,4 +92,15 @@ class ReporteColonia extends Component {
   }
 }
 
-export default ReporteColonia;
+
+function mapStateToProps(state) {
+  let coloniaName = state.report.coloniaInfo.length
+    ? state.report.coloniaInfo[2].nombre
+    : '';
+
+  return {
+    coloniaName: coloniaName
+  }
+}
+
+export default connect(mapStateToProps)(ReporteColonia);

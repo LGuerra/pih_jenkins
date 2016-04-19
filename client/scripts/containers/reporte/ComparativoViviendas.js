@@ -11,44 +11,12 @@ import Spinner from   '../../components/Spinner';
 import Helpers from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchViviendasComparables } from '../../actions/report_actions';
+import { formatComparativoViviendas } from '../../data_formatters';
 
 class ComparativoViviendas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  _formatData(data) {
-    let formattedData = [{
-        'Precio por m²': Helpers.formatAsPrice(this.props.viviendaInfo.precioM2) || '-',
-        'Precio de oferta': Helpers.formatAsPrice(this.props.viviendaInfo.valuacion) || '-',
-        'Recámaras': this.props.viviendaInfo.recamaras || '-',
-        'Baños': this.props.viviendaInfo.banos || '-',
-        'Estacionamientos': this.props.viviendaInfo.estacionamientos || '-',
-        'Área construida': this.props.viviendaInfo.area_construida || '-',
-        'Edad': this.props.viviendaInfo.edad || '-',
-        'Colonia': this.props.coloniaName || '-'
-    }];
-
-    data.forEach((element, index) => {
-      formattedData.push({
-        'Precio por m²': Helpers.formatAsPrice(element.precio / element.m2) || '-',
-        'Precio de oferta': Helpers.formatAsPrice(element.precio) || '-',
-        'Recámaras': element.recamaras || '-',
-        'Baños': element.banos || '-',
-        'Estacionamientos': element.estacionamientos || '-',
-        'Área construida': element.m2 || '-',
-        'Edad': element.edad || '-',
-        'Colonia': element.nombre_colonia || '-'
-      });
-    });
-
-    let headers = Object.keys(formattedData[0]);
-
-    return ({
-      headers: Object.keys(formattedData[0]),
-      rows: formattedData
-    });
   }
 
   componentWillUpdate(nextProps) {
@@ -79,7 +47,10 @@ class ComparativoViviendas extends React.Component {
       : 'Departamentos comparables';
 
     if (this.props.viviendasComparables) {
-      let data = this._formatData(this.props.viviendasComparables);
+      let data = formatComparativoViviendas(
+        this.props.viviendasComparables,
+        _.merge(this.props.viviendaInfo, this.props.params),
+        this.props.coloniaName);
 
       content = (
         <div>
@@ -102,6 +73,11 @@ class ComparativoViviendas extends React.Component {
 
 function mapStateToProps(state) {
   let toProps = {};
+
+  if (state.report.coloniaInfo.length) {
+    toProps.coloniaName = state.report.coloniaInfo[2].nombre;
+  }
+
   if (!_.isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {
         confianza:  state.report.viviendaInfo.confianza || 1,

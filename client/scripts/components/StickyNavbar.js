@@ -27,6 +27,8 @@ class StickyNavbar extends React.Component{
         });
       }
     };
+
+    stickyNav();
     $(window).scroll(function() {
       stickyNav();
     });

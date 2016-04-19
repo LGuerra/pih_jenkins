@@ -1,11 +1,17 @@
 // Vendor
-import React from 'react';
+import React  from 'react';
+import _      from 'lodash';
 
 // Components
 import GoogleMap from   '../../components/GoogleMap';
 import Marker from      '../../components/Marker';
 
 import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
+
+// Helpers
+import Helpers from '../../helpers';
+import { connect } from 'react-redux';
+import { fetchColoniasMap, fetchCentroid, fetchActualColoniaMap, onSelectPolygon } from '../../actions/report_actions';
 
 class FormatGoogleMaps extends React.Component {
   constructor(props) {
@@ -16,7 +22,6 @@ class FormatGoogleMaps extends React.Component {
     };
 
     this.highlightFeature = this.highlightFeature.bind(this);
-    this._getMap = this._getMap.bind(this);
   }
 
   highlightFeature(id) {
@@ -49,7 +54,7 @@ class FormatGoogleMaps extends React.Component {
   }
 
   _getMap() {
-    return (this.refs.map);
+    return this.refs.map;
   }
 
   _getXYFromCentroid(lat, lon) {
@@ -75,54 +80,15 @@ class FormatGoogleMaps extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchColoniasMap(this.props.zoneID);
+    this.props.fetchCentroid(this.props.zoneID);
+    this.props.fetchActualColoniaMap(this.props.zoneID);
+
     let map = this.refs.map.mapRef;
-    // Get actual Geojson polygon
-    suburbAPI.geojson(this.props.zoneID)
-    .then((geojsonR) => {
-      map.data.addGeoJson({
-        type: 'Feature',
-        geometry: geojsonR.data,
-        properties: {
-          id: this.props.zoneID,
-          current: true
-        }
-      });
-    });
-
-    // Get centroid
-    suburbAPI.centroid(this.props.zoneID)
-    .then((suburbCentroidR) => {
-      this.setState({
-        centroid: {lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat}
-      }, () => {
-        map.setCenter({lat: suburbCentroidR.data.lng, lng: suburbCentroidR.data.lat});
-      })
-    });
-
-    // Get adjacet Geojson polygon
-    suburbAPI.adjacent(this.props.zoneID)
-    .then((abjacentsR) => { return abjacentsR.data })
-    .then((data) => {
-      suburbsAPI.geojsons(data)
-      .then((suburbsGeoR) => {
-        suburbsGeoR.data.forEach((colonia, index) => {
-          if(colonia.properties.id !== this.props.zoneID) {
-            map.data.addGeoJson({
-              type: 'Feature',
-              geometry: {
-                coordinates: colonia.coordinates,
-                type: colonia.type
-              },
-              properties: colonia.properties
-            });
-          }
-        });
-      });
-    });
 
     map.data.addListener('mouseover', (event) => {
       this.highlightFeature(event.feature.getProperty('id'));
-      this.props.onMouseoverFeature(event.feature.getProperty('id'));
+      this.props.onSelectPolygon(event.feature.getProperty('id'));
 
       let html;
       let getHTML = (value) => {
@@ -139,8 +105,8 @@ class FormatGoogleMaps extends React.Component {
         let centroid = this._getXYFromCentroid(lat, lng);
 
         $('#map-tooltip').css({
-          left: centroid.x + 15 - ($('#map-tooltip').width() / 2),
-          top: (centroid.y - ($('#map-tooltip').height() / 2) - 21),
+          left: centroid.x - ($('#map-tooltip').width() / 2),
+          top: (centroid.y - ($('#map-tooltip').height() / 2) - 11),
           display: centroid.isInside ? 'block': 'none'
         });
       }
@@ -155,7 +121,7 @@ class FormatGoogleMaps extends React.Component {
         .html(html);
 
       if (event.feature.getProperty('current')) {
-        positionTooltip(this.state.centroid.lat, this.state.centroid.lng)
+        positionTooltip(this.props.centroid.lng, this.props.centroid.lat)
       } else {
         positionTooltip(event.feature.getProperty('lat'), event.feature.getProperty('lng'))
       }
@@ -163,14 +129,12 @@ class FormatGoogleMaps extends React.Component {
 
     map.data.addListener('mouseout', (event) => {
       this.highlightFeature();
-      this.props.onMouseoverFeature(event.feature.getProperty('id'));
+      this.props.onSelectPolygon();
     });
 
     map.data.addListener('click', (event) => {
       if (!event.feature.getProperty('current')) {
-        let templateUrl = ('/reporte?colonia=:colonia:&tipo=:reportType:')
-          .replace(':colonia:', event.feature.getProperty('id'))
-          .replace(':reportType:', 'Colonia');
+        let templateUrl = (`/reporte?colonia=${event.feature.getProperty('id')}&tipo=Colonia`)
         window.open(templateUrl, '_self')
       }
     });
@@ -189,6 +153,60 @@ class FormatGoogleMaps extends React.Component {
     this.highlightFeature();
   }
 
+  _drawPolygons(data) {
+    let map = this.refs.map.mapRef;
+
+    data.forEach((colonia, index) => {
+      if(colonia.properties.id !== this.props.zoneID) {
+        map.data.addGeoJson({
+          type: 'Feature',
+          geometry: {
+            coordinates: colonia.coordinates,
+            type: colonia.type
+          },
+          properties: colonia.properties
+        });
+      }
+    });
+  }
+
+  _positionMapByCentroid(centroid) {
+    let map = this.refs.map.mapRef;
+
+    map.setCenter({lat: centroid.lng, lng: centroid.lat});
+  }
+
+  _drawActualPolygon(data) {
+    let map = this.refs.map.mapRef;
+
+    map.data.addGeoJson({
+      type: 'Feature',
+      geometry: data,
+      properties: {
+        id: this.props.zoneID,
+        current: true
+      }
+    });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!_.isEqual(nextProps.colPolygons, this.props.colPolygons)) {
+      this._drawPolygons(nextProps.colPolygons);
+    }
+
+    if (!_.isEqual(nextProps.centroid, this.props.centroid)) {
+      this._positionMapByCentroid(nextProps.centroid);
+    }
+
+    if (!_.isEqual(nextProps.actualColoniaMap, this.props.actualColoniaMap)) {
+      this._drawActualPolygon(nextProps.actualColoniaMap);
+    }
+
+    if (!_.isEqual(nextProps.selectedComparativoColonias, this.props.selectedComparativoColonias)) {
+      this.highlightFeature(nextProps.selectedComparativoColonias)
+    }
+  }
+
   render() {
     let marker;
 
@@ -197,13 +215,13 @@ class FormatGoogleMaps extends React.Component {
         <Marker
           latitud={this.props.viviendaInfo.lat}
           longitud={this.props.viviendaInfo.lng}
-          getMap={this._getMap}
+          getMap={this._getMap.bind(this)}
           color={'red'}/>
       );
     }
 
     return (
-      <div>
+      <div style={{position: 'relative'}}>
         <GoogleMap
           latitud={19.2837698}
           longitud={-99.1839327}
@@ -222,4 +240,20 @@ class FormatGoogleMaps extends React.Component {
   }
 }
 
-export default FormatGoogleMaps;
+function mapStateToProps(state) {
+  let coloniaName = state.report.coloniaInfo.length
+    ? state.report.coloniaInfo[2].nombre
+    : '';
+
+  return {
+    coloniaName: coloniaName,
+    selectedComparativoColonias: state.report.selectedComparativoColonias,
+    actualColoniaMap: state.report.actualColoniaMap,
+    colPolygons: state.report.coloniasMap,
+    centroid: state.report.centroid
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchColoniasMap, fetchCentroid, fetchActualColoniaMap, onSelectPolygon })(FormatGoogleMaps);

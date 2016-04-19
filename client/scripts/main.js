@@ -5,7 +5,7 @@ import { Router, browserHistory } from 'react-router'
 
 // Redux
 import promise from 'redux-promise';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
 import reducers from './reducers';
@@ -23,9 +23,9 @@ import ConditionsRoutes from './routes/conditions';
 
 import { serverAuthResponse, checkPermissions } from 'helpers-banca';
 
-const createStoreWithMiddleware = applyMiddleware(
-  promise
-)(createStore);
+const createStoreWithMiddleware = compose(
+    applyMiddleware( promise ),
+  window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore);
 
 const routes = {
   component: RootApp,
@@ -67,7 +67,7 @@ const routes = {
           onEnter: checkPermissions,
           group: 'prueba',
           path: '/reporte',
-          component: require('./routes/report/components/Report')
+          component: require('./routes/report/components/Report').default
         }
       ]
     },
@@ -81,3 +81,4 @@ render(
   </Provider>
   , document.getElementById('react-view-container')
 );
+

@@ -1,6 +1,7 @@
 // Libraries
-import React from     'react';
-import ReactDOM from  'react-dom';
+import React    from 'react';
+import ReactDOM from 'react-dom';
+import _        from 'lodash';
 
 // Components
 import Table from     '../../components/Table';
@@ -9,7 +10,8 @@ import Spinner from   '../../components/Spinner';
 // Helpers
 import Helpers from '../../helpers';
 import { connect } from 'react-redux';
-import { fetchColoniasComparables } from '../../actions/report_actions';
+import { fetchColoniasComparables, onSelectComparativoColonias } from '../../actions/report_actions';
+import { formatComparativoColonias } from '../../data_formatters';
 
 class ComparativoColonias extends React.Component {
   constructor(props) {
@@ -18,55 +20,41 @@ class ComparativoColonias extends React.Component {
     this.state = {};
   }
 
-  _formatData(data) {
-    let currentIndex;
-    let formattedData = data.map((element, index) => {
-      if (element.colonia === this.props.zoneID) {
-        currentIndex = index;
-      }
-      return ({
-        'Colonia': element.nombre,
-        'Precio m²': Helpers.formatAsPrice(element.average),
-        'Viviendas ofertadas': element.count,
-        'id': element.colonia
-      });
-    });
-
-    let current = formattedData.splice(currentIndex, 1)[0];
-    formattedData.unshift(current);
-
-    let headers = Object.keys(formattedData[0]);
-    headers.pop();
-
-    return ({
-      headers: headers,
-      rows: formattedData
-    });
-  }
-
-  highlightRow(id) {
+  _highlightRow(id) {
     let rows = $(ReactDOM.findDOMNode(this)).find('tr');
 
     rows.each(function(index) {
-      if ($(this).data('id') == id) {
+      if (id && $(this).data('id') == id) {
         if ($(this).attr('class')) {
-          $(this).removeClass('active-row')
+          $(this).removeClass('active-row');
         } else {
-          $(this).addClass('active-row')
+          $(this).addClass('active-row');
         }
+      } else {
+        $(this).removeClass('active-row');
       }
     });
+  }
+
+  _onMouseoverColoniaTable(colonia) {
+    this.props.onSelectComparativoColonias(colonia.id);
   }
 
   componentWillMount() {
     this.props.fetchColoniasComparables(this.props.zoneID);
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (!_.isEqual(nextProps.selectedPolygon, this.props.selectedPolygon)) {
+      this._highlightRow(nextProps.selectedPolygon);
+    }
+  }
+
   render() {
     let content = <Spinner style={{height: '300px'}}/>;
 
     if (this.props.coloniasComparables) {
-      let data = this._formatData(this.props.coloniasComparables);
+      let data = formatComparativoColonias(this.props.coloniasComparables, this.props.zoneID);
       if (data.rows[0]) {
         content = (
           <div>
@@ -77,7 +65,7 @@ class ComparativoColonias extends React.Component {
                 <Table
                   remarcableRow={[0]}
                   idField={'id'}
-                  onMouseoverRow={this.props.onMouseover}
+                  onMouseoverRow={this._onMouseoverColoniaTable.bind(this)}
                   specificClass={'ReporteTable table-hover'}
                   data={data.rows} />
               </div>
@@ -100,11 +88,14 @@ class ComparativoColonias extends React.Component {
 function mapStateToProps(state) {
   if (state.report.coloniasComparables.length) {
     return {
-      coloniasComparables: state.report.coloniasComparables
+      coloniasComparables: state.report.coloniasComparables,
+      selectedPolygon: state.report.selectedPolygon
     }
   }
 
   return {};
 }
 
-export default connect(mapStateToProps, { fetchColoniasComparables })(ComparativoColonias);
+export default connect(
+  mapStateToProps,
+  { fetchColoniasComparables, onSelectComparativoColonias })(ComparativoColonias);

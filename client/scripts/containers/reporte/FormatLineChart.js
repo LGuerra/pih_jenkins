@@ -12,30 +12,11 @@ import helper_properties from '../../helper_properties';
 import { connect } from 'react-redux';
 import { fetchPrecioHistorico } from '../../actions/report_actions';
 
-function _formatData(data) {
-  let arrayPoints = data.map((element, index) => {
-    return ({
-      value: element.promedio_venta,
-      xVariable: new Date(element.fecha)
-    });
-  });
-
-  return [{
-    color: '#35C0BE',
-    label: 'Promedio de venta',
-    data: arrayPoints
-  }];
-}
+import { formatPrecioHistorico } from '../../data_formatters';
 
 class FormatLineChart extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isAvailable: true
-    };
-
-    this._xTickFormat = this._xTickFormat.bind(this);
   }
 
   _xTickFormat(d, i) {
@@ -62,13 +43,6 @@ class FormatLineChart extends React.Component {
     return (html);
   }
 
-  _checkoutAvailability(apreciacion) {
-    if (apreciacion > 0.20 || apreciacion == null) {
-      this.setState({
-        isAvailable: false
-      });
-    }
-  }
 
   componentWillMount() {
     this.props.fetchPrecioHistorico(this.props.zoneID);
@@ -76,9 +50,10 @@ class FormatLineChart extends React.Component {
 
   render() {
     let content = <Spinner style={{height: '220px'}}/>;
+    let apreciacion = this.props.apreciacion;
 
     if (this.props.precioHistorico) {
-      if (this.props.precioHistorico[0].data[0] && this.state.isAvailable) {
+      if (this.props.precioHistorico[0].data[0] && !(apreciacion > 0.20 || apreciacion == null)) {
         content = (
           <LineChart
             id={this.props.id}
@@ -87,8 +62,8 @@ class FormatLineChart extends React.Component {
             tooltipFormat={this._tooltipLineFormat}
             yTitleUnit={'Precio promedio m²'}
             height={220}
-            xtickFormat={this._xTickFormat}
-            ytickFormat={this._yTickFormat}
+            xtickFormat={this._xTickFormat.bind(this)}
+            ytickFormat={this._yTickFormat.bind(this)}
             margin={{
               left: 70,
               right: 35,
@@ -115,9 +90,14 @@ class FormatLineChart extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let apreciacion = state.report.coloniaInfo.length
+    ? state.report.coloniaInfo[3].apreciacion_anualizada
+    : 0;
+
   if (state.report.precioHistorico.length) {
     return {
-      precioHistorico: _formatData(state.report.precioHistorico)
+      apreciacion: apreciacion,
+      precioHistorico: formatPrecioHistorico(state.report.precioHistorico)
     };
   }
 
