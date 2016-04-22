@@ -14,11 +14,26 @@ export const FECTH_ACTUAL_COLONIA_MAP       = 'FECTH_ACTUAL_COLONIA_MAP';
 export const FETCH_CENTROID                 = 'FETCH_CENTROID';
 
 export const SET_LOADING_FRAME              = 'SET_LOADING_FRAME';
+export const SET_VIVIENDA_INFO              = 'SET_VIVIENDA_INFO';
+export const SET_COLONIA_INFO               = 'SET_COLONIA_INFO';
 
 // Interactivity
 export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
 
+export function onSetViviendaInfo(info) {
+  return {
+    type: SET_VIVIENDA_INFO,
+    payload: info
+  }
+}
+
+export function onSetColoniaInfo(info) {
+  return {
+    type: SET_COLONIA_INFO,
+    payload: info
+  }
+}
 
 export function fetchColoniaInfo(idCol) {
   const request = axios.all([

@@ -145,6 +145,7 @@ class IMInputDropdown extends React.Component {
 
 
   createIMDropdown () {
+    console.log(this.state.items)
     return (<IMDropdown items={this.state.items}
                         className={this.props.dropdownClass}
                         styles={{width:this.refs.input.offsetWidth}}

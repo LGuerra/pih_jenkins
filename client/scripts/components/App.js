@@ -12,14 +12,14 @@ class App extends React.Component {
     // based in main.js config
     var appRoutes = this.props.routes[0].childRoutes[2];
     var routesToLinks = _.map(appRoutes, (route, index) => {
-      console.log(route);
+      //console.log(route);
     });
   }
 
   render() {
     const content = this.getNavBarContent();
     var userSVG = require('file!images-banca/user.svg');
-    console.log(userSVG);
+    //console.log(userSVG);
     return (
       <div id='banca-router'>
         <NavBar id='my-new-id' logoText='Intelimétrica'>

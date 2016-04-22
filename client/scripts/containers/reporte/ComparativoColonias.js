@@ -41,7 +41,7 @@ class ComparativoColonias extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchColoniasComparables(this.props.zoneID);
+    this.props.fetchColoniasComparables(this.props.colonia);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -50,11 +50,17 @@ class ComparativoColonias extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this.props.fetchColoniasComparables(this.props.colonia);
+    }
+  }
+
   render() {
     let content = <Spinner style={{height: '300px'}}/>;
 
     if (this.props.coloniasComparables) {
-      let data = formatComparativoColonias(this.props.coloniasComparables, this.props.zoneID);
+      let data = formatComparativoColonias(this.props.coloniasComparables, this.props.colonia);
       if (data.rows[0]) {
         content = (
           <div>
@@ -86,14 +92,16 @@ class ComparativoColonias extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let toProps = {
+    colonia: state.report.urlParams.colonia
+  };
+
   if (state.report.coloniasComparables.length) {
-    return {
-      coloniasComparables: state.report.coloniasComparables,
-      selectedPolygon: state.report.selectedPolygon
-    }
+    toProps.coloniasComparables = state.report.coloniasComparables;
+    toProps.selectedPolygon = state.report.selectedPolygon;
   }
 
-  return {};
+  return toProps;
 }
 
 export default connect(

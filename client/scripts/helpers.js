@@ -32,10 +32,23 @@ function getURLParameter(name) {
   /*eslint-enable*/
 }
 
+function getHouseInfor(id, callback) {
+  let request = {placeId: id};
+  let map = new google.maps.Map(document.createElement('div'));
+  let service = new google.maps.places.PlacesService(map);
+
+  service.getDetails(request, (place, status) => {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      callback(place);
+    }
+  });
+}
+
 module.exports = {
   formatAsPrice: formatAsPrice,
   formatAsBigPrice: formatAsBigPrice,
   formatAsNumber: formatAsNumber,
   toTitleCase: toTitleCase,
+  getHouseInfor: getHouseInfor,
   getURLParameter: getURLParameter
 };

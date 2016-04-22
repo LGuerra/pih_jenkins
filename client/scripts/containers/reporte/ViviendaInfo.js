@@ -18,6 +18,21 @@ class ViviendaInfo extends React.Component {
     this._togglePopOver = this._togglePopOver.bind(this);
   }
 
+  _updateViviendaInfo() {
+    let params = _.pick(this.props.urlParams,
+      'longitud',
+      'latitud',
+      'id_tipo_propiedad',
+      'area_construida',
+      'recamaras',
+      'banos',
+      'estacionamientos',
+      'edad',
+      'tipo_operacion');
+
+    this.props.fetchViviendaInfo(params);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (_.isUndefined(prevProps.viviendaInfo) && !_.isEqual(prevProps.viviendaInfo, this.props.viviendaInfo)) {
       let descriptions = ['más de 40%', 'entre 30% y 40%', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
@@ -38,21 +53,14 @@ class ViviendaInfo extends React.Component {
         placement: popoverPosition
       });
     }
+
+    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this._updateViviendaInfo()
+    }
   }
 
   componentWillMount() {
-    let params = _.pick(this.props.params,
-      'longitud',
-      'latitud',
-      'id_tipo_propiedad',
-      'area_construida',
-      'recamaras',
-      'banos',
-      'estacionamientos',
-      'edad',
-      'tipo_operacion');
-
-    this.props.fetchViviendaInfo(params);
+    this._updateViviendaInfo();
   }
 
   _togglePopOver(show) {
@@ -127,17 +135,19 @@ class ViviendaInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
+  var toProps = {
+    urlParams: state.report.urlParams
+  };
+
   if (!_.isEmpty(state.report.viviendaInfo)) {
-    return {
-      viviendaInfo: {
-        confianza:  state.report.viviendaInfo.confianza || 1,
-        precioM2:   state.report.viviendaInfo.valuacion_m2 || 0,
-        valuacion:  state.report.viviendaInfo.valuacion || 0
-      }
-    }
+    toProps.viviendaInfo = {
+      confianza:  state.report.viviendaInfo.confianza || 1,
+      precioM2:   state.report.viviendaInfo.valuacion_m2 || 0,
+      valuacion:  state.report.viviendaInfo.valuacion || 0
+    };
   }
 
-  return {};
+  return toProps;
 }
 
 export default connect(mapStateToProps, { fetchViviendaInfo })(ViviendaInfo);

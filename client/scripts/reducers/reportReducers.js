@@ -1,4 +1,8 @@
+import Helpers    from '../helpers';
+
 import {
+  SET_VIVIENDA_INFO,
+  SET_COLONIA_INFO,
   FETCH_COLONIA_INFO,
   FETCH_OFERTA_DISPONIBLE,
   FETCH_DISTRIBUCION_TIPOLOGIA,
@@ -16,6 +20,20 @@ import {
 } from '../actions/report_actions';
 
 const INITIAL_STATE = {
+  viewType: Helpers.getURLParameter('tipo'),
+  urlParams: {
+    longitud: Number(Helpers.getURLParameter('longitud')),
+    latitud: Number(Helpers.getURLParameter('latitud')),
+    recamaras: Number(Helpers.getURLParameter('recamaras')),
+    banos: Number(Helpers.getURLParameter('banos')),
+    estacionamientos: Number(Helpers.getURLParameter('estacionamientos')),
+    edad: Number(Helpers.getURLParameter('edad')),
+    id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_vivienda')),
+    area_construida: Number(Helpers.getURLParameter('area_construida')),
+    address: Helpers.getURLParameter('address'),
+    tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')),
+    colonia: Helpers.getURLParameter('colonia')
+  },
   viviendaInfo: {},
   coloniaInfo: [],
   ofertaDisponible: {},
@@ -35,6 +53,22 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
+    case SET_VIVIENDA_INFO: {
+      return {
+        ...INITIAL_STATE,
+        urlParams: action.payload,
+        viewType: 'Vivienda'
+      }
+    }
+
+    case SET_COLONIA_INFO: {
+      return {
+        ...INITIAL_STATE,
+        urlParams: action.payload,
+        viewType: 'Colonia'
+      }
+    }
+
     case FETCH_COLONIA_INFO:
       return {
         ...state,

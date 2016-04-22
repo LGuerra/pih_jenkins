@@ -1,6 +1,7 @@
 // Vendor
 import React from 'react';
 import _     from 'lodash';
+import { connect } from 'react-redux';
 
 // Components
 import BarChart from  '../../components/BarChart';
@@ -8,9 +9,8 @@ import NoChart from   '../../components/NoChart';
 import Spinner from   '../../components/Spinner';
 
 // Helpers
-import Helpers from '../../helpers';
-import { connect } from 'react-redux';
-import { fetchDistribucionPrecio } from '../../actions/report_actions';
+import Helpers                      from '../../helpers';
+import { fetchDistribucionPrecio }  from '../../actions/report_actions';
 import { formatDistribucionPrecio } from '../../data_formatters';
 
 class FormatBarChart extends React.Component {
@@ -43,7 +43,13 @@ class FormatBarChart extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchDistribucionPrecio(this.props.zoneID);
+    this.props.fetchDistribucionPrecio(this.props.colonia);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this.props.fetchDistribucionPrecio(this.props.colonia);
+    }
   }
 
   render() {
@@ -85,13 +91,15 @@ class FormatBarChart extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let toProps = {
+    colonia: state.report.urlParams.colonia
+  };
+
   if (!_.isEmpty(state.report.distribucionPrecio)) {
-    return {
-      distribucionPrecio: formatDistribucionPrecio(state.report.distribucionPrecio)
-    }
+    toProps.distribucionPrecio = formatDistribucionPrecio(state.report.distribucionPrecio);
   }
 
-  return {};
+  return toProps;
 }
 
 export default connect(mapStateToProps, { fetchDistribucionPrecio })(FormatBarChart);

@@ -1,5 +1,6 @@
 // Vendor
-import React from 'react';
+import React  from 'react';
+import _      from 'lodash';
 
 // Components
 import LineChart from   '../../components/LineChart';
@@ -45,7 +46,13 @@ class FormatLineChart extends React.Component {
 
 
   componentWillMount() {
-    this.props.fetchPrecioHistorico(this.props.zoneID);
+    this.props.fetchPrecioHistorico(this.props.colonia);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this.props.fetchPrecioHistorico(this.props.colonia);
+    }
   }
 
   render() {
@@ -90,18 +97,20 @@ class FormatLineChart extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let toProps = {
+    colonia: state.report.urlParams.colonia
+  };
+
   let apreciacion = state.report.coloniaInfo.length
     ? state.report.coloniaInfo[3].apreciacion_anualizada
     : 0;
 
   if (state.report.precioHistorico.length) {
-    return {
-      apreciacion: apreciacion,
-      precioHistorico: formatPrecioHistorico(state.report.precioHistorico)
-    };
+    toProps.apreciacion = apreciacion;
+    toProps.precioHistorico = formatPrecioHistorico(state.report.precioHistorico);
   }
 
-  return {};
+  return toProps;
 }
 
 export default connect(mapStateToProps, { fetchPrecioHistorico })(FormatLineChart);

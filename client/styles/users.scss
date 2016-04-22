@@ -68,20 +68,8 @@ $new_password_form_height: 205px;
     padding-left: 2px;
     padding-right: 2px;
   }
-  .input-group-addon{
-    border: none;
-  }
   .has-feedback span{
     border: none;
-  }
-  .form-control{
-    border: none; 
-    box-shadow: none;
-    border-bottom: 1px solid #9c9c9c;  
-    border-radius: 0;
-    &:focus{
-      border-bottom: 1px solid #35c0be;
-    }
   }
 }
 .sign-up-container, .sign-in-container, .forgotten-container, .new-password-container {

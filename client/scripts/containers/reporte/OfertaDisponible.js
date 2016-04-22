@@ -1,5 +1,6 @@
 // Libraries
-import React from 'react';
+import React  from 'react';
+import _      from 'lodash';
 
 // Components
 import Spinner from './../../components/Spinner';
@@ -17,7 +18,13 @@ class OfertaDisponible extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchOfertaDisponible(this.props.zoneID);
+    this.props.fetchOfertaDisponible(this.props.colonia);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this.props.fetchOfertaDisponible(this.props.colonia);
+    }
   }
 
   render() {
@@ -73,17 +80,19 @@ class OfertaDisponible extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let toProps = {
+    colonia: state.report.urlParams.colonia
+  };
+
   if (state.report.ofertaDisponible.length) {
-    return {
-      ofertaDisponible : {
-        monthlyListing: state.report.ofertaDisponible[0].count,
-        semesterListing: state.report.ofertaDisponible[1].count,
-        averageTime: state.report.ofertaDisponible[2].avg
-      }
+    toProps.ofertaDisponible = {
+      monthlyListing: state.report.ofertaDisponible[0].count,
+      semesterListing: state.report.ofertaDisponible[1].count,
+      averageTime: state.report.ofertaDisponible[2].avg
     }
   }
 
-  return {};
+  return toProps;
 }
 
 export default connect(mapStateToProps, { fetchOfertaDisponible })(OfertaDisponible);

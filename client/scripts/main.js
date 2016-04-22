@@ -49,7 +49,6 @@ const routes = {
       },
       indexRoute: {
         getComponent: (nextState, cb) => {
-          console.log('indexRoute');
           serverAuthResponse()
           .then((args) => {
             return require.ensure([], (require) => {

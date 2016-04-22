@@ -34,6 +34,8 @@ class DownloadPDFReport extends Component {
       apreciacion: report.coloniaInfo[3].apreciacion_anualizada
     };
 
+    coloniaInfo.coloniaInfo.SHF = report.coloniaInfo[2].precio_m2_shf;
+
     let ofertaDisponible = {
       monthlyListing: report.ofertaDisponible[0].count,
       semesterListing: report.ofertaDisponible[1].count,
@@ -48,16 +50,26 @@ class DownloadPDFReport extends Component {
       });
     });
 
-    if (this.props.viewType === 'Vivienda') {
+    if (this.props.report.viewType === 'Vivienda') {
       viviendaInfo = _.merge({
         confianza:  report.viviendaInfo.confianza || 1,
         precioM2:   report.viviendaInfo.valuacion_m2 || 0,
         valuacion:  report.viviendaInfo.valuacion || 0
-      }, this.props.viviendaParams);
+      }, _.pick(this.props.urlParams,
+        ['longitud',
+          'latitud',
+          'recamaras',
+          'banos',
+          'estacionamientos',
+          'edad',
+          'id_tipo_propiedad',
+          'area_construida',
+          'address',
+          'tipo_operacion']));
 
       viviendasComparables = formatComparativoViviendas(report.viviendasComparables, viviendaInfo, report.coloniaInfo[2].nombre);
     } else {
-      coloniasComparables = formatComparativoColonias(report.coloniasComparables, this.props.coloniaID);
+      coloniasComparables = formatComparativoColonias(report.coloniasComparables, this.props.report.urlParams.colonia);
     }
 
     dataTokens = dataTokens.concat([
@@ -117,11 +129,11 @@ class DownloadPDFReport extends Component {
 
     let date = dd + '-' + mm + '-' + yyyy;
 
-    if (this.props.viewType === 'Vivienda') {
+    if (this.props.report.viewType === 'Vivienda') {
       let randomText = Math.random().toString(36).substr(2, 10);
-      this.reportUrl = host + this.props.viewType.toLowerCase() + '/' + this.props.coloniaID + '-' + randomText + '/' + date;
+      this.reportUrl = host + this.props.report.viewType.toLowerCase() + '/' + this.props.report.urlParams.colonia + '-' + randomText + '/' + date;
     } else {
-      this.reportUrl = host + this.props.viewType.toLowerCase() + '/' + this.props.coloniaID + '/' + date;
+      this.reportUrl = host + this.props.report.viewType.toLowerCase() + '/' + this.props.report.urlParams.colonia + '/' + date;
     }
 
     $.get(this.reportUrl)

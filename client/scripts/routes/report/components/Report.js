@@ -8,6 +8,7 @@ import BackToTop from           '../../../components/BackToTop';
 import MainNavbar from          '../../../components/MainNavbar';
 import Spinner from             '../../../components/Spinner';
 import MiniSearchForm from      '../../../components/MiniSearchForm';
+import URLHandler from          '../../../components/urlHandler';
 
 // Views
 import DownloadPDFReport from   '../../../containers/reporte/DownloadPDFReport';
@@ -17,6 +18,7 @@ import ReportVivienda from './ReportVivienda';
 // Helpers
 import Helpers    from '../../../helpers';
 import PDFReport  from '../../../PDFReport';
+import { onSetViviendaInfo, onSetColoniaInfo } from '../../../actions/report_actions';
 
 class Report extends React.Component {
   constructor(props) {
@@ -24,14 +26,13 @@ class Report extends React.Component {
 
     this.state = {
       type: Helpers.getURLParameter('tipo'),
-      coloniaID: Helpers.getURLParameter('colonia'),
       ddSearchBar: false,
       loadingReport: false
     };
 
     if (Helpers.getURLParameter('tipo') == 'Vivienda') {
       //Get initial State
-      this.state.viviendaParams =  {
+      this.state.urlParams =  {
         longitud: Number(Helpers.getURLParameter('longitud')),
         latitud: Number(Helpers.getURLParameter('latitud')),
         recamaras: Number(Helpers.getURLParameter('recamaras')),
@@ -75,15 +76,16 @@ class Report extends React.Component {
   }
 
   _onUpdateSearchInfo(info) {
-    console.log(info)
-  }
-
-  componentDidMount() {
+    if (info.reportType === 'Colonia') {
+      this.props.onSetColoniaInfo(_.pick(info, ['colonia']));
+    } else {
+      this.props.onSetViviendaInfo(info);
+    }
   }
 
   render() {
     let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
-    let viewType      = this.props.location.query.tipo;
+    let viewType      = this.props.viewType;
     let content;
 
     if (viewType === 'Colonia') {
@@ -94,29 +96,27 @@ class Report extends React.Component {
     } else {
       content = (
         <ReportVivienda
-          viviendaParams = {this.state.viviendaParams}
+          urlParams = {this.props.urlParams}
           coloniaInfo = {this.state.coloniaInfo}
           coloniaID = {this.state.coloniaID} />
       );
     }
+
     return (
       <div onClick={this._clickOutside}>
+        <URLHandler {..._.merge(this.props.urlParams, { tipo: this.props.viewType })} />
         <header>
           <MainNavbar
-            type={this.state.type}
             onOpenForm={this._openForm}
             ddSearchBar={this.state.ddSearchBar}
             ddChange={this._ddChange}>
             <div style={{display: 'flex', width: '100%'}}>
               <MiniSearchForm
-                onUpdateSearchInfo={this._onUpdateSearchInfo}
+                onUpdateSearchInfo={this._onUpdateSearchInfo.bind(this)}
                 ddSearchBar={this.state.ddSearchBar}
                 ddChange={this._ddChange}
                 searchType={this.state.type} />
-              <DownloadPDFReport
-                viviendaParams={this.state.viviendaParams}
-                coloniaID={this.state.coloniaID}
-                viewType={viewType} />
+              <DownloadPDFReport />
             </div>
           </MainNavbar>
             {loadingFrame}
@@ -136,8 +136,10 @@ class Report extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    viewType: state.report.viewType,
+    urlParams: state.report.urlParams,
     isLoadingFrame: state.report.isLoadingFrame
   };
 }
 
-export default connect(mapStateToProps)(Report);
+export default connect(mapStateToProps, { onSetViviendaInfo, onSetColoniaInfo })(Report);

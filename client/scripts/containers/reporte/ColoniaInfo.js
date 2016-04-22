@@ -1,5 +1,6 @@
 // Libraries
-import React from 'react';
+import React  from 'react';
+import _      from 'lodash';
 
 // Components
 import Spinner from './../../components/Spinner';
@@ -16,16 +17,12 @@ class ColoniaInfo extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchColoniaInfo(this.props.zoneID);
+    this.props.fetchColoniaInfo(this.props.colonia);
   }
 
-  componentDidUpdate (prevState) {
-    if (this.state.data && !this.state.loaded) {
-      this.setState({
-        loaded: true
-      }, () => {
-        this.props.onGetColoniaInfo(this.state.data);
-      });
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this.props.fetchColoniaInfo(this.props.colonia);
     }
   }
 
@@ -102,21 +99,23 @@ class ColoniaInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let toProps = {
+    colonia: state.report.urlParams.colonia
+  };
+
   if (state.report.coloniaInfo.length) {
-    return {
+    toProps.coloniaInfo = {
+      averageOffer: state.report.coloniaInfo[0].avg,
+      averageM2: state.report.coloniaInfo[1].avg,
       coloniaInfo: {
-        averageOffer: state.report.coloniaInfo[0].avg,
-        averageM2: state.report.coloniaInfo[1].avg,
-        coloniaInfo: {
-          nombre: state.report.coloniaInfo[2].nombre,
-          SHF: state.report.coloniaInfo[2].precio_m2_shf
-        },
-        apreciacion: state.report.coloniaInfo[3] ? state.report.coloniaInfo[3].apreciacion_anualizada : null
-      }
+        nombre: state.report.coloniaInfo[2].nombre,
+        SHF: state.report.coloniaInfo[2].precio_m2_shf
+      },
+      apreciacion: state.report.coloniaInfo[3] ? state.report.coloniaInfo[3].apreciacion_anualizada : null
     }
   }
 
-  return {};
+  return toProps;
 }
 
 

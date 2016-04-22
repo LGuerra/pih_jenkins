@@ -115,7 +115,7 @@ class MiniSearchForm extends React.Component {
               recamaras: this.state.habitaciones,
               banos: this.state.banos,
               estacionamientos: this.state.cajones,
-              id_tipo_vivienda: tipoVivienda,
+              id_tipo_propiedad: tipoVivienda,
               edad: this.state.edad,
               area_construida: this.state.areaConstruida,
               address: searchInput,

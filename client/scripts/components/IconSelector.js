@@ -1,0 +1,51 @@
+import React, { Component } from 'react';
+import _ from 'lodash';
+
+class IconsSelector extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      active: this.props.defaultIcon
+    }
+  }
+
+  _selectIcon(value) {
+    this.setState({
+      active: value
+    }, () => {
+      let toReturn = {};
+      toReturn[this.props.unit] = value;
+
+      this.props.onUpdateValue(toReturn);
+    });
+  }
+
+  _buildItems() {
+    return _.map(this.props.icons, (icon, index) => {
+      let isActive = icon.value === this.state.active
+        ? '_blue'
+        : '';
+
+      return (
+        <div
+            key={'icon-' + index}
+            onClick={this._selectIcon.bind(this, icon.value)}
+            className={'icon'}>
+          <img className={'icon-image'} width={20} height={20} src={IMAGES[icon.icon + isActive]} />
+          <p className={'icon-label'}>{icon.label}</p>
+        </div>
+      );
+    });
+  }
+
+  render() {
+    return (
+      <div className={'icon-picker'}>
+        {this._buildItems()}
+      </div>
+    );
+  }
+}
+
+export default IconsSelector

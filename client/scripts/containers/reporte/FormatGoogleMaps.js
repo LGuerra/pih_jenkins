@@ -1,6 +1,7 @@
 // Vendor
 import React  from 'react';
 import _      from 'lodash';
+import { connect } from 'react-redux';
 
 // Components
 import GoogleMap from   '../../components/GoogleMap';
@@ -10,7 +11,6 @@ import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
 
 // Helpers
 import Helpers from '../../helpers';
-import { connect } from 'react-redux';
 import { fetchColoniasMap, fetchCentroid, fetchActualColoniaMap, onSelectPolygon } from '../../actions/report_actions';
 
 class FormatGoogleMaps extends React.Component {
@@ -26,7 +26,6 @@ class FormatGoogleMaps extends React.Component {
 
   highlightFeature(id) {
     let map = this.refs.map.mapRef;
-
     if (id) {
       map.data.setStyle(function(feature) {
         let fillColor = feature.getProperty('current') ? '#353535' : '#9a9a9a';
@@ -79,11 +78,19 @@ class FormatGoogleMaps extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchColoniasMap(this.props.zoneID);
-    this.props.fetchCentroid(this.props.zoneID);
-    this.props.fetchActualColoniaMap(this.props.zoneID);
+  _setMap(colonia) {
+    let map = this.refs.map.mapRef;
+    map.data.forEach(function(feature) {
+      map.data.remove(feature);
+    });
 
+    this.props.fetchColoniasMap(colonia);
+    this.props.fetchCentroid(colonia);
+    this.props.fetchActualColoniaMap(colonia);
+  }
+
+  componentDidMount() {
+    this._setMap(this.props.colonia);
     let map = this.refs.map.mapRef;
 
     map.data.addListener('mouseover', (event) => {
@@ -157,7 +164,7 @@ class FormatGoogleMaps extends React.Component {
     let map = this.refs.map.mapRef;
 
     data.forEach((colonia, index) => {
-      if(colonia.properties.id !== this.props.zoneID) {
+      if(colonia.properties.id !== this.props.colonia) {
         map.data.addGeoJson({
           type: 'Feature',
           geometry: {
@@ -183,27 +190,33 @@ class FormatGoogleMaps extends React.Component {
       type: 'Feature',
       geometry: data,
       properties: {
-        id: this.props.zoneID,
+        id: this.props.colonia,
         current: true
       }
     });
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (!_.isEqual(nextProps.colPolygons, this.props.colPolygons)) {
-      this._drawPolygons(nextProps.colPolygons);
+    if (_.isEmpty(this.props.coloniasMap) && !_.isEqual(nextProps.coloniasMap, this.props.coloniasMap)) {
+      this._drawPolygons(nextProps.coloniasMap);
     }
 
-    if (!_.isEqual(nextProps.centroid, this.props.centroid)) {
+    if (_.isNull(this.props.centroid) && !_.isEqual(nextProps.centroid, this.props.centroid)) {
       this._positionMapByCentroid(nextProps.centroid);
     }
 
-    if (!_.isEqual(nextProps.actualColoniaMap, this.props.actualColoniaMap)) {
+    if (_.isNull(this.props.actualColoniaMap) && !_.isEqual(nextProps.actualColoniaMap, this.props.actualColoniaMap)) {
       this._drawActualPolygon(nextProps.actualColoniaMap);
     }
 
     if (!_.isEqual(nextProps.selectedComparativoColonias, this.props.selectedComparativoColonias)) {
       this.highlightFeature(nextProps.selectedComparativoColonias)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this._setMap(this.props.colonia);
     }
   }
 
@@ -246,10 +259,16 @@ function mapStateToProps(state) {
     : '';
 
   return {
+    viviendaInfo: {
+      lat: state.report.urlParams.latitud,
+      lng: state.report.urlParams.longitud
+    },
+    viewType: state.report.viewType,
+    colonia: state.report.urlParams.colonia,
     coloniaName: coloniaName,
     selectedComparativoColonias: state.report.selectedComparativoColonias,
     actualColoniaMap: state.report.actualColoniaMap,
-    colPolygons: state.report.coloniasMap,
+    coloniasMap: state.report.coloniasMap,
     centroid: state.report.centroid
   }
 }

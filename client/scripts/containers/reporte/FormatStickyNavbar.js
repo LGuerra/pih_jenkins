@@ -19,16 +19,16 @@ class FormatStickyNavbar extends React.Component{
     let image;
 
     if (props.viviendaInfo) {
-      if (props.viviendaInfo.id_tipo_propiedad == 2) {
+      if (props.urlParams.id_tipo_propiedad == 2) {
         image = (<img width={'15px'} src={IMAGES.house} />);
-      } else if (props.viviendaInfo.id_tipo_propiedad == 4) {
+      } else if (props.urlParams.id_tipo_propiedad == 4) {
         image = (<img width={'15px'} src={IMAGES.apartment} />);
       }
 
       return (
         <div className={'NavbarIcons'} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <div className={'sticky-address'} style={{maxWidth: '33.3%'}}>
-            <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.viviendaInfo.address}</p>
+            <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.urlParams.address}</p>
           </div>
           <div className={'NavbarIcon'}>
             <p style={{color: '#35C079'}}>{Helpers.formatAsPrice(props.viviendaInfo.valuacion)}</p>
@@ -38,22 +38,22 @@ class FormatStickyNavbar extends React.Component{
           </div>
           <div className={'NavbarIcon'}>
             <img width={'15px'} src={IMAGES.bed} />
-            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.viviendaInfo.recamaras}</p>
+            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.urlParams.recamaras}</p>
             <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'Recámaras'}</p>
           </div>
           <div className={'NavbarIcon'}>
             <img width={'15px'} src={IMAGES.wc} />
-            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.viviendaInfo.banos}</p>
+            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.urlParams.banos}</p>
             <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'Baños'}</p>
           </div>
           <div className={'NavbarIcon'}>
             <img width={'15px'} src={IMAGES.car} />
-            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.viviendaInfo.estacionamientos}</p>
+            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.urlParams.estacionamientos}</p>
             <p className={'navbar-desc'} style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'Estacionamientos'}</p>
           </div>
           <div className={'NavbarIcon'}>
             <img width={'15px'} src={IMAGES.area} />
-            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.viviendaInfo.area_construida}</p>
+            <p style={{fontSize: '12px', margin: '0px 5px 0px 5px'}}>{props.urlParams.area_construida}</p>
             <p style={{fontSize: '12px', margin: '0px 5px 0px 0px'}}>{'m²'}</p>
           </div>
         </div> );
@@ -102,7 +102,10 @@ class FormatStickyNavbar extends React.Component{
 }
 
 function mapStateToProps(state) {
-  let toProps = {};
+  let toProps = {
+    urlParams: state.report.urlParams
+  };
+
   if (!_.isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {
       confianza:  state.report.viviendaInfo.confianza || 1,

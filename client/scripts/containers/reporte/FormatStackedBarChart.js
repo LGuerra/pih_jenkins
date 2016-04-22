@@ -1,6 +1,7 @@
 // Vendor
 import React from 'react'
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 // Components
 import StackedBarChart from '../../components/StackedBarChart';
@@ -8,19 +9,18 @@ import NoChart from         '../../components/NoChart';
 import Spinner from         '../../components/Spinner';
 
 // Helpers
-import { connect } from 'react-redux';
-import { fetchDistribucionTipologia } from '../../actions/report_actions';
-
-import { formatDistribucionTipologia } from '../../data_formatters';
+import { fetchDistribucionTipologia }   from '../../actions/report_actions';
+import { formatDistribucionTipologia }  from '../../data_formatters';
 
 class FormatStackedBarChart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentWillMount() {
+    this.props.fetchDistribucionTipologia(this.props.colonia);
   }
 
-  componentWillMount() {
-    this.props.fetchDistribucionTipologia(this.props.zoneID);
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
+      this.props.fetchDistribucionTipologia(this.props.colonia);
+    }
   }
 
   render() {
@@ -59,13 +59,15 @@ class FormatStackedBarChart extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let toProps = {
+    colonia: state.report.urlParams.colonia
+  };
+
   if (!_.isEmpty(state.report.distribucionTipologia)) {
-    return {
-      distribucionTipologia: formatDistribucionTipologia(state.report.distribucionTipologia)
-    };
+    toProps.distribucionTipologia = formatDistribucionTipologia(state.report.distribucionTipologia);
   }
 
-  return {};
+  return toProps;
 }
 
 export default connect(mapStateToProps, { fetchDistribucionTipologia })(FormatStackedBarChart);

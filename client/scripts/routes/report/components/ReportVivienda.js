@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 
 import ColoniaInfo            from '../../../containers/reporte/ColoniaInfo';
@@ -26,18 +27,17 @@ class ReporteVivienda extends Component {
         <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             <SecondaryNavbar
-              data={this.props.viviendaParams}
+              data={this.props.urlParams}
               width={'100%'} />
             <div className={'BlockContainer row'}>
               <div style={{borderRight: '1px solid #c9c9c9', padding: '0'}} className={'col-sm-4'}>
                 <ViviendaInfo
                   ref={'viviendaInfo'}
-                  params={this.props.viviendaParams}/>
+                  params={this.props.urlParams}/>
               </div>
               <div className={'col-sm-8'} style={{padding: '0px'}}>
                 <ColoniaInfo
                   ref={'coloniaInfo'}
-                  zoneID={this.props.coloniaID}
                   viewType={'Vivienda'}/>
               </div>
             </div>
@@ -83,7 +83,7 @@ class ReporteVivienda extends Component {
           <div className={'max-width-container'}>
             <ComparativoViviendas
               ref={'comparativoViviendas'}
-              params={this.props.viviendaParams}/>
+              params={this.props.urlParams}/>
             <div className={'Footnote'}>
               <img width={'7px'} src={IMAGES.asterisk} />
               <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
@@ -94,8 +94,8 @@ class ReporteVivienda extends Component {
           <FormatGoogleMaps
             viewType={'Vivienda'}
             viviendaInfo={{
-              lat: this.props.viviendaParams.latitud,
-              lng: this.props.viviendaParams.longitud
+              lat: this.props.urlParams.latitud,
+              lng: this.props.urlParams.longitud
             }}
             zoneID={this.props.coloniaID}
             onMouseoverFeature={this._onMouseoverFeature}
