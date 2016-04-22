@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import ValuePicker    from '../../../components/ValuePicker';
-import IconSelector   from '../../../components/IconSelector';
-import InputFieldForm from '../../../components/InputFieldForm';
-
-import { onSetParamsInfo }  from '../../../actions/landing_actions';
-
+import ValuePicker    from './ValuePicker';
+import IconSelector   from './IconSelector';
+import InputFieldForm from './InputFieldForm';
 
 class ViviendaParamsFields extends Component {
   constructor(props) {
@@ -17,7 +14,7 @@ class ViviendaParamsFields extends Component {
   _onUpdateValue(value) {
     let newState = _.merge(this.props.infoParams, value);
 
-    this.props.onSetParamsInfo(newState);
+    this.props.onUpdateData(newState);
   }
 
   render() {
@@ -102,10 +99,4 @@ class ViviendaParamsFields extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    infoParams: state.landing.infoParams
-  }
-}
-
-export default connect(mapStateToProps, { onSetParamsInfo })(ViviendaParamsFields);
+export default ViviendaParamsFields;

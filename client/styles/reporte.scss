@@ -269,3 +269,61 @@
   display: flex;
   justify-content: space-around;
 }
+
+.ControlBar {
+  .control-container {
+    height: 40px;
+    padding: 20px;
+    margin-bottom: 15px;
+    z-index: 80;
+    .menu-item {
+      margin-right: 20px;
+      display: inline-block;
+      text-transform: uppercase;
+      padding: 0px 20px;
+      text-align: center;
+      &:hover {
+        border-bottom: 3px solid #1394bc;
+      }
+      a {
+        font-size: 13px;
+        color: #222222;
+        font-weight: 400;
+        text-decoration: none;
+      }
+    }
+    .menu-item-selected {
+      border-bottom: 3px solid #1394bc;
+    }
+    .menu-item-disabled {
+      cursor: not-allowed;
+      &:hover {
+        border-bottom: 0px solid #1394bc;
+      }
+      a {
+        cursor: not-allowed;
+        font-size: 14px;
+        color: $gray-3;
+        font-weight: 400;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.ColoniaForm {
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+    .btn-blue {
+      background-color: #35c0be;
+    }
+    .btn {
+      color: #FFF;
+    }
+  }
+}
+
+.ViviendaForm {
+  padding: 0px 15px;
+}

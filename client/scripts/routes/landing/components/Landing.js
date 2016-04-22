@@ -2,10 +2,12 @@ import React        from 'react';
 import { connect }  from 'react-redux'
 
 import LandingSearchForm  from './LandingSearchForm';
-import ViviendaParamsFields from './ViviendaParamsFields';
 
-import Helpers        from '../../../helpers';
-import { helpersAPI } from '../../../api/api-helper.js';
+import Helpers              from '../../../helpers';
+import { helpersAPI }       from '../../../api/api-helper.js';
+
+import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
+import { onSetParamsInfo }  from '../../../actions/landing_actions';
 
 class Landing extends React.Component {
   constructor(props) {
@@ -42,6 +44,10 @@ class Landing extends React.Component {
           });
       });
     }
+  }
+
+  _onUpdateDataParams(newParams) {
+    this.props.onSetParamsInfo(newParams);
   }
 
   render() {
@@ -94,7 +100,9 @@ class Landing extends React.Component {
             <LandingSearchForm
               searchType={'Vivienda'}
               placeholder={'Busca la ubicación de la vivienda'}/>
-            <ViviendaParamsFields />
+            <ViviendaParamsFields
+              infoParams={this.props.infoParams}
+              onUpdateData={this._onUpdateDataParams.bind(this)}/>
             <div className={'buttons-redirect'}>
               <button onClick={this._generateViviendaReport.bind(this)} className={'btn'}>
                 {'GENERAR REPORTE DE VIVIENDA'}
@@ -115,5 +123,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps, { onSetParamsInfo })(Landing);
 

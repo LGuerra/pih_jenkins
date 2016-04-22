@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _                    from 'lodash';
-import API                  from '../../../api';
-import SuggestionsDropdown  from '../../../components/SuggestionsDropdown'
+import API                  from '../api';
+import SuggestionsDropdown  from './SuggestionsDropdown'
 
 class SuggestionsInputField extends Component {
   constructor(props) {

@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 
 // Components
 import BackToTop from           '../../../components/BackToTop';
-import MainNavbar from          '../../../components/MainNavbar';
 import Spinner from             '../../../components/Spinner';
 import MiniSearchForm from      '../../../components/MiniSearchForm';
 import URLHandler from          '../../../components/urlHandler';
 
 // Views
-import DownloadPDFReport from   '../../../containers/reporte/DownloadPDFReport';
-import ReportColonia from './ReportColonia';
-import ReportVivienda from './ReportVivienda';
+import DownloadPDFReport  from   '../../../containers/reporte/DownloadPDFReport';
+import ReportColonia      from './ReportColonia';
+import ReportVivienda     from './ReportVivienda';
+import ControlBar         from './ControlBar';
 
 // Helpers
 import Helpers    from '../../../helpers';
@@ -106,20 +106,10 @@ class Report extends React.Component {
       <div onClick={this._clickOutside}>
         <URLHandler {..._.merge(this.props.urlParams, { tipo: this.props.viewType })} />
         <header>
-          <MainNavbar
-            onOpenForm={this._openForm}
-            ddSearchBar={this.state.ddSearchBar}
-            ddChange={this._ddChange}>
-            <div style={{display: 'flex', width: '100%'}}>
-              <MiniSearchForm
-                onUpdateSearchInfo={this._onUpdateSearchInfo.bind(this)}
-                ddSearchBar={this.state.ddSearchBar}
-                ddChange={this._ddChange}
-                searchType={this.state.type} />
-              <DownloadPDFReport />
-            </div>
-          </MainNavbar>
-            {loadingFrame}
+          <ControlBar>
+            <DownloadPDFReport />
+          </ControlBar>
+          {loadingFrame}
         </header>
         <div>
           {content}

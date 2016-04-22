@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import SuggestionsInputField from './SuggestionsInputField';
+import SuggestionsInputField            from '../../../components/SuggestionsInputField';
 import { onSetColonia, onSetVivienda }  from '../../../actions/landing_actions';
 
 class LandingSearchForm extends Component {
