@@ -54,6 +54,8 @@ class ViviendaInfo extends React.Component {
       });
     }
 
+    console.log(_.isEqual(prevProps.urlParams, this.props.urlParams))
+
     if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
       this._updateViviendaInfo()
     }

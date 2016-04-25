@@ -58,7 +58,7 @@ export default function(state = INITIAL_STATE, action) {
     case SET_VIVIENDA_INFO: {
       return {
         ...INITIAL_STATE,
-        urlParams: _.merge(INITIAL_STATE.urlParams, action.payload),
+        urlParams: action.payload,
         viewType: 'Vivienda'
       }
     }
@@ -66,7 +66,7 @@ export default function(state = INITIAL_STATE, action) {
     case SET_COLONIA_INFO: {
       return {
         ...INITIAL_STATE,
-        urlParams: _.merge(INITIAL_STATE.urlParams, action.payload),
+        urlParams: action.payload,
         viewType: 'Colonia'
       }
     }
