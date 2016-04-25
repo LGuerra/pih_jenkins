@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { suburbAPI, suburbsAPI, viviendaAPI } from '../api/api-helper.js';
 
+// API methods
 export const FETCH_COLONIA_INFO             = 'FETCH_COLONIA_INFO';
 export const FETCH_VIVIENDA_INFO            = 'FETCH_VIVIENDA_INFO';
 export const FETCH_OFERTA_DISPONIBLE        = 'FETCH_OFERTA_DISPONIBLE';
@@ -13,6 +14,7 @@ export const FETCH_COLONIAS_MAP             = 'FETCH_COLONIAS_MAP';
 export const FECTH_ACTUAL_COLONIA_MAP       = 'FECTH_ACTUAL_COLONIA_MAP';
 export const FETCH_CENTROID                 = 'FETCH_CENTROID';
 
+// Setting properties
 export const SET_LOADING_FRAME              = 'SET_LOADING_FRAME';
 export const SET_VIVIENDA_INFO              = 'SET_VIVIENDA_INFO';
 export const SET_COLONIA_INFO               = 'SET_COLONIA_INFO';

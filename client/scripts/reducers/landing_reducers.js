@@ -3,8 +3,8 @@ const INITIAL_STATE = {
   vivienda: {},
   infoParams: {
     id_tipo_vivienda: 2,
-    reacamaras: 0,
-    banos: 0,
+    reacamaras: 1,
+    banos: 1,
     estacionamientos: 0,
     area_construida: 100,
     edad: 1

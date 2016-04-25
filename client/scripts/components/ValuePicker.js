@@ -22,13 +22,25 @@ class ValuePicker extends Component {
   }
 
   _buildValues() {
-    return _.map(_.range(this.props.lowerLimit, this.props.upperLimit), (index) =>  {
-      let isActive = this.state.active === index ? 'active' : '';
+    let range = [];
+    let temp = this.props.lowerLimit
+
+    while (temp <= this.props.upperLimit) {
+      range.push(temp);
+      temp += this.props.steps;
+    }
+
+    return _.map(range, (value, index) =>  {
+      let isActive = this.state.active === value ? 'active' : '';
+      let label = index !== (range.length - 1)
+        ? value
+        : value + '+';
+
       return (
         <div
-          onClick={this._selectValue.bind(this, index)}
+          onClick={this._selectValue.bind(this, value)}
           key={'selector-' + index}
-          className={'selector ' + isActive}><p>{index}</p></div>
+          className={'selector ' + isActive}><p>{label}</p></div>
       )
     });
   }

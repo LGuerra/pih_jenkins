@@ -3,13 +3,24 @@ import React, { Component } from 'react';
 class InputFieldForm extends Component {
   _onChangeValue(e) {
     let toReturn = {};
-    toReturn[this.props.unit] = e.target.value;
+    let value = e.target.value;
 
+    if (Number(e.target.value) > Number(e.target.max)) {
+      value = e.target.max;
+      e.target.value = value;
+    }
+
+    if (Number(e.target.value) < Number(e.target.min)) {
+      value = e.target.min;
+      e.target.value = value;
+    }
+
+    toReturn[this.props.unit] = value;
     this.props.onUpdateValue(toReturn);
   }
 
   _onClick(e) {
-    console.log(e.target.select());
+    e.target.select();
   }
 
   render() {

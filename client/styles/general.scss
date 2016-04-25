@@ -127,13 +127,13 @@ body {
 .value-picker {
   display: flex;
   justify-content: space-between;
-  max-width: 240px;
+  max-width: 280px;
   .selector {
     cursor: pointer;
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     background-color: #ddd;
-    padding-top: 4px;
+    padding-top: 9px;
     border-radius: 2px;
     p {
       text-align: center;
