@@ -128,10 +128,10 @@ body {
   justify-content: space-between;
   .selector {
     cursor: pointer;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background-color: #ddd;
-    padding-top: 9px;
+    padding-top: 6px;
     border-radius: 2px;
     @include transition(all, 0.3s, ease);
     p {
@@ -151,12 +151,13 @@ body {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  max-width: 240px;
+  padding: 0px 10px;
   .icon {
     display: flex;
     .icon-label {
       margin-left: 15px;
       margin-top: 5px;
+      font-size: 15px;
     }
   }
 }
@@ -188,7 +189,8 @@ body {
 }
 
 .valuation-container{
-  border-bottom: 1px solid #DDDDDD;
+  display: flex;
+  align-items: stretch;
   .valuation-input{
     padding: 25px;
     border-right: 1px solid #DDDDDD;

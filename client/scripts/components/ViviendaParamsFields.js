@@ -20,7 +20,7 @@ class ViviendaParamsFields extends Component {
   render() {
     return (
       <div>
-        <div style={{display: 'flex', alignItems: 'stretch', borderBottom: '1px solid #DDDDDD'}} className={'row valuation-container'}>
+        <div style={{borderBottom: '1px solid #DDDDDD'}} className={'row valuation-container'}>
           <div className={'col-sm-4 valuation-input'}>
             <p className={'valuation-input-title'}>{'Tipo de vivienda'}</p>
             <IconSelector
@@ -64,7 +64,7 @@ class ViviendaParamsFields extends Component {
             />
           </div>
         </div>
-        <div style={{display: 'flex', alignItems: 'stretch'}} className={'row valuation-container'}>
+        <div className={'row valuation-container'}>
           <div className={'col-sm-4 valuation-input'}>
             <p className={'valuation-input-title'}>{'Estacionamientos'}</p>
             <ValuePicker

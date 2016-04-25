@@ -7,6 +7,11 @@
     &:hover{
       background-color: #2A9998 !important;
     }
+    &:active, &:focus{
+      outline: none;
+      box-shadow: none;
+      border: 1px solid #35C0BE;
+    }
   }
 
   .Index {
@@ -23,17 +28,18 @@
 
     .buttons-redirect {
       display: flex;
-      justify-content: space-around;
-      max-width: 1500px;
-      margin: 50px auto;
+      justify-content: center;
+      button{
+        margin: 35px 55px;
+      }
     }
   }
 
   .LandingForm {
     padding-bottom: 50px;
     .landing-search-form {
-      padding: 30px;
-      margin-top: 10px;
+      padding: 20px 30px 30px 30px;
+      margin-top: 40px;
       input{
         box-shadow: none;
         &:active, &:focus{
@@ -65,6 +71,11 @@
       padding: 0px 100px;
       max-width: 1500px;
       margin: auto;
+      .colonia-search{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
     }
     .scrolled {
       background-color: rgba(242, 245, 245, 0.55);
@@ -72,9 +83,10 @@
     .buttons-redirect {
       margin-top: 60px;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       .btn {
         @include transition(all, 0.5s, ease);
+        margin: 0px 35px;
       }
     }
   }

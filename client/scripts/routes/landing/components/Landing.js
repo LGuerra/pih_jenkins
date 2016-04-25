@@ -33,7 +33,7 @@ class Landing extends React.Component {
     if (this.props.colonia.id) {
       window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
     } else {
-      togglePopover('.Colonia', 'Elige una colonia válida');
+      togglePopover('.Colonia', 'Ingrese una colonia válida');
     }
   }
 
@@ -58,12 +58,12 @@ class Landing extends React.Component {
                 &address=${this.props.vivienda.content}
               `, '_self')
             } else {
-              togglePopover('.Vivienda', 'Elige una vivienda válida');
+              togglePopover('.Vivienda', 'Ingrese una dirección válida');
             }
           });
       });
     } else {
-      togglePopover('.Vivienda', 'Debes elegir una vivienda');
+      togglePopover('.Vivienda', 'Ingrese una dirección válida');
     }
   }
 
@@ -108,18 +108,19 @@ class Landing extends React.Component {
           </div>
           <div className={'inner-form'}>
             <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
-            <LandingSearchForm
-              searchType={'Colonia'}
-              placeholder={'Ingrese el nombre de la colonia'}/>
+            <div className={'colonia-search'}>
+              <LandingSearchForm
+                searchType={'Colonia'}
+                placeholder={'Ingrese el nombre de la colonia'}/>
+              <div style={{marginTop: '15px'}}>
+                <button className={'btn'}>
+                 {'VER COLONIAS DISPONIBLES'}
+                </button>
+              </div>
+            </div>
             <div className={'buttons-redirect'}>
               <button onClick={this._generateColoniaReport.bind(this)} className={'btn'}>
                 {'GENERAR REPORTE DE COLONIA'}
-              </button>
-              <div>
-                <p>{'ó'}</p>
-              </div>
-              <button className={'btn'}>
-                {'CATÁLOGO DE COLONIAS'}
               </button>
             </div>
           </div>

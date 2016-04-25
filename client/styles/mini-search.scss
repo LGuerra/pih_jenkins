@@ -140,6 +140,8 @@
 }
 
 .popover-alert.left {
+  box-shadow: none !important;
+  border: 1px solid #FE696B;
   .arrow {
     top: 50% !important;
   }
