@@ -123,11 +123,9 @@ body {
   display: none !important;
 }
 
-
 .value-picker {
   display: flex;
   justify-content: space-between;
-  max-width: 280px;
   .selector {
     cursor: pointer;
     width: 35px;
@@ -135,8 +133,12 @@ body {
     background-color: #ddd;
     padding-top: 9px;
     border-radius: 2px;
+    @include transition(all, 0.3s, ease);
     p {
       text-align: center;
+    }
+    &:hover{
+      background-color: #71d2d1;
     }
   }
   .active {
@@ -162,7 +164,16 @@ body {
 .input-field-form {
   display: flex;
   .input-container {
-    width: 150px;
+    width: 100%;
+    input{
+      box-shadow: none;
+      text-align: center;
+      &:active, &:focus{
+        outline: none;
+        box-shadow: none;
+        border: 1px solid #35C0BE;
+      }
+    }
   }
   .input-label {
     margin-left: 10px;
@@ -173,5 +184,21 @@ body {
 .input-group {
   .error {
     border: 1px solid #FE696B;
+  }
+}
+
+.valuation-container{
+  border-bottom: 1px solid #DDDDDD;
+  .valuation-input{
+    padding: 25px;
+    border-right: 1px solid #DDDDDD;
+  }
+  .valuation-input-last{
+    padding: 25px;
+    border-right: none;
+  }
+  .valuation-input-title{
+    font-weight: 500;
+    margin-bottom: 15px;
   }
 }

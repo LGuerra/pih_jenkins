@@ -67,6 +67,18 @@ class Landing extends React.Component {
     }
   }
 
+  _scrollTo(identifier) {
+    $('html, body').animate({
+      scrollTop: $(identifier).offset().top
+    }, 700);
+
+    //$(identifier).find('.inner-form').addClass('scrolled');
+    setTimeout(() => {
+      $(identifier).find('.landing-search-form input').focus();
+      //$(identifier).find('.inner-form').removeClass('scrolled');
+    }, 700);
+  }
+
   _onUpdateDataParams(newParams) {
     this.props.onSetParamsInfo(newParams);
   }
@@ -82,15 +94,15 @@ class Landing extends React.Component {
             </div>
           </div>
           <div className={'buttons-redirect'}>
-            <button className={'btn'}>
+            <button onClick={this._scrollTo.bind(this, '#colonia-form')} className={'btn'}>
               {'REPORTE COLONIA'}
             </button>
-            <button className={'btn'}>
+            <button onClick={this._scrollTo.bind(this, '#vivienda-form')} className={'btn'}>
               {'REPORTE VIVIENDA'}
             </button>
           </div>
         </div>
-        <div className={'LandingForm'}>
+        <div id={'colonia-form'} className={'LandingForm'}>
           <div className={'Breakpoint'}>
             <h2>{'REPORTE COLONIA'}</h2>
           </div>
@@ -98,7 +110,7 @@ class Landing extends React.Component {
             <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
             <LandingSearchForm
               searchType={'Colonia'}
-              placeholder={'Busca nombre de la colonia'}/>
+              placeholder={'Ingrese el nombre de la colonia'}/>
             <div className={'buttons-redirect'}>
               <button onClick={this._generateColoniaReport.bind(this)} className={'btn'}>
                 {'GENERAR REPORTE DE COLONIA'}
@@ -112,15 +124,15 @@ class Landing extends React.Component {
             </div>
           </div>
         </div>
-        <div className={'LandingForm'}>
+        <div id={'vivienda-form'} className={'LandingForm'}>
           <div className={'Breakpoint'}>
             <h2>{'REPORTE VIVIENDA'}</h2>
           </div>
           <div className={'inner-form'}>
             <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
             <LandingSearchForm
-              searchType={'Vivienda'}
-              placeholder={'Busca la ubicación de la vivienda'}/>
+              placeholder={'Ingrese la dirección de la vivienda'}
+              searchType={'Vivienda'} />
             <ViviendaParamsFields
               infoParams={this.props.infoParams}
               onUpdateData={this._onUpdateDataParams.bind(this)}/>

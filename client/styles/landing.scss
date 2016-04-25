@@ -3,33 +3,51 @@
     padding: 10px 20px;
     background-color: #35c0be !important;
     color: #fff;
+    @include transition(all, 0.5s, ease);
+    &:hover{
+      background-color: #2A9998 !important;
+    }
   }
 
   .Index {
     background: url('./../images/dante.jpg');
-    height: 500px;
+    height: calc(100vh - 52px);
+    background-repeat: no-repeat;
+    background-size: 100vw;
 
     .headers {
-      margin-top: 100px;
+      margin-top: 40vh;
       text-align: center;
       color: #FFFFFF;
     }
 
     .buttons-redirect {
-      margin-top: 100px;
       display: flex;
       justify-content: space-around;
+      max-width: 1500px;
+      margin: 50px auto;
     }
   }
 
   .LandingForm {
-    margin-bottom: 50px;
+    padding-bottom: 50px;
     .landing-search-form {
       padding: 30px;
       margin-top: 10px;
+      input{
+        box-shadow: none;
+        &:active, &:focus{
+          outline: none;
+          box-shadow: none;
+          border: 1px solid #35C0BE;
+        }
+      }
+      .input-group-addon{
+        background-color: #fff !important;
+      }
     }
     .subtitle {
-      margin-top: 50px;
+      padding-top: 50px;
       font-size: 20px;
       font-weight: 300;
       text-align: center;
@@ -45,11 +63,19 @@
     }
     .inner-form {
       padding: 0px 100px;
+      max-width: 1500px;
+      margin: auto;
+    }
+    .scrolled {
+      background-color: rgba(242, 245, 245, 0.55);
     }
     .buttons-redirect {
-      margin-top: 100px;
+      margin-top: 60px;
       display: flex;
       justify-content: space-around;
+      .btn {
+        @include transition(all, 0.5s, ease);
+      }
     }
   }
 }
