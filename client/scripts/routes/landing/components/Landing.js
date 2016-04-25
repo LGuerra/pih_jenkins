@@ -71,7 +71,7 @@ class Landing extends React.Component {
             <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
             <LandingSearchForm
               searchType={'Colonia'}
-              placeholder={'Busca nombre de la colonia'}/>
+              placeholder={'Ingrese el nombre de la colonia'}/>
             <div className={'buttons-redirect'}>
               <button onClick={this._generateColoniaReport.bind(this)} className={'btn'}>
                 {'GENERAR REPORTE DE COLONIA'}
@@ -93,7 +93,7 @@ class Landing extends React.Component {
             <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
             <LandingSearchForm
               searchType={'Vivienda'}
-              placeholder={'Busca la ubicación de la vivienda'}/>
+              placeholder={'Ingrese la dirección de la vivienda'}/>
             <ViviendaParamsFields />
             <div className={'buttons-redirect'}>
               <button onClick={this._generateViviendaReport.bind(this)} className={'btn'}>
