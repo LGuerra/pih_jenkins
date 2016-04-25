@@ -14,12 +14,12 @@ import { formatDistribucionTipologia }  from '../../data_formatters';
 
 class FormatStackedBarChart extends React.Component {
   componentWillMount() {
-    this.props.fetchDistribucionTipologia(this.props.colonia);
+    this.props.fetchDistribucionTipologia(this.props.urlParams.colonia);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
-      this.props.fetchDistribucionTipologia(this.props.colonia);
+    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this.props.fetchDistribucionTipologia(this.props.urlParams.colonia);
     }
   }
 
@@ -60,7 +60,7 @@ class FormatStackedBarChart extends React.Component {
 
 function mapStateToProps(state) {
   let toProps = {
-    colonia: state.report.urlParams.colonia
+    urlParams: state.report.urlParams
   };
 
   if (!_.isEmpty(state.report.distribucionTipologia)) {

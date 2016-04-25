@@ -85,7 +85,7 @@ class MiniSearchForm extends React.Component {
        templateUrl += '&recamaras=' + this.state.habitaciones;
        templateUrl += '&banos=' + this.state.banos;
        templateUrl += '&estacionamientos=' + this.state.cajones;
-       templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
+       templateUrl += '&id_tipo_propiedad=' + tipoVivienda;
        templateUrl += '&edad=' + this.state.edad;
        templateUrl += '&area_construida=' + this.state.areaConstruida;
        templateUrl += '&address=' + searchInput;

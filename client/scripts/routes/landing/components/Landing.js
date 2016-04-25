@@ -48,15 +48,7 @@ class Landing extends React.Component {
           .then((response) => {
             if (response.data.trusted) {
               let colonia = response.data.id;
-              window.open(`
-                /reporte?colonia=${colonia}&tipo=Vivienda
-                &longitud=${longitude}&latitud=${latitude}
-                &recamaras=${infoParams.reacamaras}&banos=${infoParams.banos}
-                &estacionamientos=${infoParams.estacionamientos}
-                &id_tipo_vivienda=${infoParams.id_tipo_vivienda}&edad=${infoParams.edad}
-                &area_construida=${infoParams.area_construida}&tipo_operacion=0
-                &address=${this.props.vivienda.content}
-              `, '_self')
+              window.open(`/reporte?colonia=${colonia}&tipo=Vivienda&longitud=${longitude}&latitud=${latitude}&recamaras=${infoParams.recamaras}&banos=${infoParams.banos}&estacionamientos=${infoParams.estacionamientos}&id_tipo_propiedad=${infoParams.id_tipo_propiedad}&edad=${infoParams.edad}&area_construida=${infoParams.area_construida}&tipo_operacion=0&address=${this.props.vivienda.content}`, '_self')
             } else {
               togglePopover('.Vivienda', 'Ingrese una dirección válida');
             }

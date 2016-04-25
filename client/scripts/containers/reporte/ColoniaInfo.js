@@ -17,12 +17,12 @@ class ColoniaInfo extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchColoniaInfo(this.props.colonia);
+    this.props.fetchColoniaInfo(this.props.urlParams.colonia);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
-      this.props.fetchColoniaInfo(this.props.colonia);
+    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this.props.fetchColoniaInfo(this.props.urlParams.colonia);
     }
   }
 
@@ -100,7 +100,7 @@ class ColoniaInfo extends React.Component {
 
 function mapStateToProps(state) {
   let toProps = {
-    colonia: state.report.urlParams.colonia
+    urlParams: state.report.urlParams
   };
 
   if (state.report.coloniaInfo.length) {

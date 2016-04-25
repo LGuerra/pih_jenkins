@@ -43,12 +43,12 @@ class FormatBarChart extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchDistribucionPrecio(this.props.colonia);
+    this.props.fetchDistribucionPrecio(this.props.urlParams.colonia);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
-      this.props.fetchDistribucionPrecio(this.props.colonia);
+    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this.props.fetchDistribucionPrecio(this.props.urlParams.colonia);
     }
   }
 
@@ -92,7 +92,7 @@ class FormatBarChart extends React.Component {
 
 function mapStateToProps(state) {
   let toProps = {
-    colonia: state.report.urlParams.colonia
+    urlParams: state.report.urlParams
   };
 
   if (!_.isEmpty(state.report.distribucionPrecio)) {

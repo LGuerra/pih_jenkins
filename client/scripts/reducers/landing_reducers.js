@@ -2,8 +2,8 @@ const INITIAL_STATE = {
   colonia: {},
   vivienda: {},
   infoParams: {
-    id_tipo_vivienda: 2,
-    reacamaras: 1,
+    id_tipo_propiedad: 2,
+    recamaras: 1,
     banos: 1,
     estacionamientos: 0,
     area_construida: 100,
