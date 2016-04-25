@@ -31,7 +31,6 @@ class ReporteColonia extends Component {
               <div className={'col-sm-12'}>
                 <ColoniaInfo
                   ref={'coloniaInfo'}
-                  zoneID={this.props.coloniaID}
                   viewType={'Colonia'}/>
               </div>
             </div>
@@ -41,30 +40,26 @@ class ReporteColonia extends Component {
           <div className={'max-width-container'}>
             <div>
               <OfertaDisponible
-                ref={'ofertaDisponible'}
-                zoneID={this.props.coloniaID} />
+                ref={'ofertaDisponible'}/>
             </div>
             <div>
               <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
               <FormatStackedBarChart
                 ref={'distribucionTipologia'}
-                id={'distribucion_tipologia'}
-                zoneID={this.props.coloniaID}/>
+                id={'distribucion_tipologia'}/>
             </div>
             <div className={'BlockContainer row'}>
               <div style={{paddingLeft: '0px', borderRight: '1px solid #c9c9c9'}} className={'col-sm-6'}>
                 <h4 className={'SubsectionTitle'}>Precio Histórico por m²</h4>
                 <FormatLineChart
                   ref={'precioHistorico'}
-                  id={'precio_historico'}
-                  zoneID={this.props.coloniaID} />
+                  id={'precio_historico'}/>
               </div>
               <div className={'col-sm-6 barchart-section'}>
                 <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
                 <FormatBarChart
                   ref={'distribucionPrecio'}
-                  id={'distribucion_precio'}
-                  zoneID={this.props.coloniaID}/>
+                  id={'distribucion_precio'}/>
               </div>
             </div>
           </div>
@@ -72,8 +67,7 @@ class ReporteColonia extends Component {
         <div className={'BlockContainer MainSection'} style={{marginTop: '10px'}}>
           <div className={'max-width-container'}>
             <ComparativoColonias
-              ref={'comparativoColonias'}
-              zoneID={this.props.coloniaID} />
+              ref={'comparativoColonias'}/>
             <div className={'Footnote'}>
               <img width={'7px'} src={IMAGES.asterisk} />
               <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
@@ -84,7 +78,6 @@ class ReporteColonia extends Component {
           <FormatGoogleMaps
             viewType={'Vivienda'}
             viviendaInfo={{}}
-            zoneID={this.props.coloniaID}
             ref={'formatGoogleMaps'}/>
         </div>
       </div>

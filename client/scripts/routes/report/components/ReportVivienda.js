@@ -112,6 +112,7 @@ function mapStateToProps(state) {
     : '';
 
   return {
+    urlParams: state.report.urlParams,
     coloniaName: coloniaName
   }
 }

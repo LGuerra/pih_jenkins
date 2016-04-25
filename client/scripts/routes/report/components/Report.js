@@ -18,45 +18,10 @@ import ControlBar         from './ControlBar';
 // Helpers
 import Helpers    from '../../../helpers';
 import PDFReport  from '../../../PDFReport';
-import { onSetViviendaInfo, onSetColoniaInfo } from '../../../actions/report_actions';
 
 class Report extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      type: Helpers.getURLParameter('tipo'),
-      ddSearchBar: false,
-      loadingReport: false
-    };
-
-    if (Helpers.getURLParameter('tipo') == 'Vivienda') {
-      //Get initial State
-      this.state.urlParams =  {
-        longitud: Number(Helpers.getURLParameter('longitud')),
-        latitud: Number(Helpers.getURLParameter('latitud')),
-        recamaras: Number(Helpers.getURLParameter('recamaras')),
-        banos: Number(Helpers.getURLParameter('banos')),
-        estacionamientos: Number(Helpers.getURLParameter('estacionamientos')),
-        edad: Number(Helpers.getURLParameter('edad')),
-        id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_vivienda')),
-        area_construida: Number(Helpers.getURLParameter('area_construida')),
-        address: Helpers.getURLParameter('address'),
-        tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion'))
-      }
-    }
-
-    //Methods instances
-    this._clickOutside = this._clickOutside.bind(this);
-    this._ddChange = this._ddChange.bind(this);
-  }
-
-  _clickOutside() {
-    this.setState({ddSearchBar: false});
-  }
-
-  _ddChange(dd) {
-    this.setState({ddSearchBar: dd});
   }
 
   _getLoadingFrame(condition) {
@@ -75,36 +40,28 @@ class Report extends React.Component {
     return loadingFrame;
   }
 
-  _onUpdateSearchInfo(info) {
-    if (info.reportType === 'Colonia') {
-      this.props.onSetColoniaInfo(_.pick(info, ['colonia']));
-    } else {
-      this.props.onSetViviendaInfo(info);
-    }
-  }
-
   render() {
     let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
     let viewType      = this.props.viewType;
+    let urlParams = this.props.viewType === 'Vivienda'
+      ? this.props.urlParams
+      : _.pick(this.props.urlParams, ['colonia']);
+
     let content;
 
     if (viewType === 'Colonia') {
       content = (
-        <ReportColonia
-          coloniaID = {this.state.coloniaID} />
+        <ReportColonia/>
       );
     } else {
       content = (
-        <ReportVivienda
-          urlParams = {this.props.urlParams}
-          coloniaInfo = {this.state.coloniaInfo}
-          coloniaID = {this.state.coloniaID} />
+        <ReportVivienda/>
       );
     }
 
     return (
       <div onClick={this._clickOutside}>
-        <URLHandler {..._.merge(this.props.urlParams, { tipo: this.props.viewType })} />
+        <URLHandler {..._.merge(urlParams, { tipo: this.props.viewType })} />
         <header>
           <ControlBar>
             <DownloadPDFReport />
@@ -132,4 +89,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { onSetViviendaInfo, onSetColoniaInfo })(Report);
+export default connect(mapStateToProps)(Report);

@@ -25,7 +25,7 @@ class ViviendaParamsFields extends Component {
             <p className={'valuation-input-title'}>{'Tipo de vivienda'}</p>
             <IconSelector
               onUpdateValue={this._onUpdateValue.bind(this)}
-              unit={'id_tipo_vivienda'}
+              unit={'id_tipo_propiedad'}
               icons={[
                 {
                   label: 'Casa',
@@ -38,18 +38,18 @@ class ViviendaParamsFields extends Component {
                   value: 4
                 }
               ]}
-              defaultIcon={this.props.infoParams.id_tipo_vivienda}
+              defaultIcon={this.props.infoParams.id_tipo_propiedad}
             />
           </div>
           <div className={'col-sm-4 valuation-input'}>
             <p className={'valuation-input-title'}>{'Recámaras'}</p>
             <ValuePicker
               onUpdateValue={this._onUpdateValue.bind(this)}
-              unit={'reacamaras'}
+              unit={'recamaras'}
               lowerLimit={1}
               upperLimit={7}
               steps={1}
-              defaultActive={this.props.infoParams.reacamaras}
+              defaultActive={this.props.infoParams.recamaras}
             />
           </div>
           <div className={'col-sm-4 valuation-input-last'}>

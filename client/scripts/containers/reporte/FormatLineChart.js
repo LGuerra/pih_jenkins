@@ -46,12 +46,12 @@ class FormatLineChart extends React.Component {
 
 
   componentWillMount() {
-    this.props.fetchPrecioHistorico(this.props.colonia);
+    this.props.fetchPrecioHistorico(this.props.urlParams.colonia);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
-      this.props.fetchPrecioHistorico(this.props.colonia);
+    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this.props.fetchPrecioHistorico(this.props.urlParams.colonia);
     }
   }
 
@@ -98,7 +98,7 @@ class FormatLineChart extends React.Component {
 
 function mapStateToProps(state) {
   let toProps = {
-    colonia: state.report.urlParams.colonia
+    urlParams: state.report.urlParams
   };
 
   let apreciacion = state.report.coloniaInfo.length

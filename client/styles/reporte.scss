@@ -325,5 +325,24 @@
 }
 
 .ViviendaForm {
+  .centered {
+    display: flex;
+    justify-content: space-around;
+    .buttons-container {
+      padding: 20px 0px;
+      .btn {
+        color: #FFF;
+      }
+      .btn-blue {
+        background-color: #35c0be;
+      }
+      display: flex;
+      justify-content: space-around;
+      width: 400px;
+    }
+  }
+}
+
+.ViviendaForm {
   padding: 0px 15px;
 }

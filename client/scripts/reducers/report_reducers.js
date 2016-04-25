@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import Helpers    from '../helpers';
 
 import {
@@ -24,15 +26,15 @@ const INITIAL_STATE = {
   urlParams: {
     longitud: Number(Helpers.getURLParameter('longitud')),
     latitud: Number(Helpers.getURLParameter('latitud')),
-    recamaras: Number(Helpers.getURLParameter('recamaras')),
-    banos: Number(Helpers.getURLParameter('banos')),
-    estacionamientos: Number(Helpers.getURLParameter('estacionamientos')),
-    edad: Number(Helpers.getURLParameter('edad')),
-    id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_vivienda')),
-    area_construida: Number(Helpers.getURLParameter('area_construida')),
-    address: Helpers.getURLParameter('address'),
-    tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')),
-    colonia: Helpers.getURLParameter('colonia')
+    recamaras: Number(Helpers.getURLParameter('recamaras')) || 1,
+    banos: Number(Helpers.getURLParameter('banos')) || 1,
+    estacionamientos: Number(Helpers.getURLParameter('estacionamientos')) || 0,
+    edad: Number(Helpers.getURLParameter('edad')) || 1,
+    id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_propiedad')) || 2,
+    area_construida: Number(Helpers.getURLParameter('area_construida')) || 100,
+    address: Helpers.getURLParameter('address') || '',
+    tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')) || 0,
+    colonia: Helpers.getURLParameter('colonia') || ''
   },
   viviendaInfo: {},
   coloniaInfo: [],
@@ -56,7 +58,7 @@ export default function(state = INITIAL_STATE, action) {
     case SET_VIVIENDA_INFO: {
       return {
         ...INITIAL_STATE,
-        urlParams: action.payload,
+        urlParams: _.merge(INITIAL_STATE.urlParams, action.payload),
         viewType: 'Vivienda'
       }
     }
@@ -64,7 +66,7 @@ export default function(state = INITIAL_STATE, action) {
     case SET_COLONIA_INFO: {
       return {
         ...INITIAL_STATE,
-        urlParams: action.payload,
+        urlParams: _.merge(INITIAL_STATE.urlParams, action.payload),
         viewType: 'Colonia'
       }
     }
