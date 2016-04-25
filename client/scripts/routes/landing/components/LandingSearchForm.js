@@ -20,7 +20,7 @@ class LandingSearchForm extends Component {
         onSelectItem={this._onSelectItem.bind(this)}
         placeholder={this.props.placeholder}
         specificGroupClass={'landing-search-form'}
-        specificInputClass={'form-control'}/>
+        specificInputClass={'form-control ' + this.props.searchType}/>
     );
   }
 }

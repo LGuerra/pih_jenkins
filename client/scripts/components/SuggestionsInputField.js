@@ -148,9 +148,13 @@ class SuggestionsInputField extends Component {
           <div className="input-group-addon">
             <img width={20} height={20} src={IMAGES.black_lupa}></img>
           </div>
-          <input id="landing-input"
+          <input
+            id="landing-input"
             type="text"
             ref="input"
+            data-toggle="popover"
+            data-template='<div class="popover popover-alert" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+            data-trigger="manual"
             className={this.props.specificInputClass}
             placeholder={this.props.placeholder}
             onChange={this._inputChangeHandler.bind(this)}

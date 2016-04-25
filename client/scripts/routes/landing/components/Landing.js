@@ -9,6 +9,21 @@ import { helpersAPI }       from '../../../api/api-helper.js';
 import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
 import { onSetParamsInfo }  from '../../../actions/landing_actions';
 
+function togglePopover(identifier, content) {
+  $(identifier)
+    .addClass('error');
+
+  $(identifier).popover({content: content,
+                                        placement: 'top'});
+  $(identifier).popover('show');
+
+  setTimeout(() => {
+    $(identifier)
+      .removeClass('error');
+    $(identifier).popover('destroy');
+  }, 2000);
+}
+
 class Landing extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +32,8 @@ class Landing extends React.Component {
   _generateColoniaReport() {
     if (this.props.colonia.id) {
       window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
+    } else {
+      togglePopover('.Colonia', 'Elige una colonia válida');
     }
   }
 
@@ -40,9 +57,13 @@ class Landing extends React.Component {
                 &area_construida=${infoParams.area_construida}&tipo_operacion=0
                 &address=${this.props.vivienda.content}
               `, '_self')
+            } else {
+              togglePopover('.Vivienda', 'Elige una vivienda válida');
             }
           });
       });
+    } else {
+      togglePopover('.Vivienda', 'Debes elegir una vivienda');
     }
   }
 
