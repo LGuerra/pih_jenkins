@@ -28,9 +28,10 @@ function togglePopover(identifier, content) {
 class ControlBar extends React.Component{
   constructor(props) {
     super(props);
+    this.urlParams = _.clone(this.props.infoParams);
 
     this.state = {
-      infoParams: _.pick(this.props.infoParams, ['area_construida', 'banos', 'edad', 'estacionamientos', 'id_tipo_propiedad', 'recamaras', 'tipo_operacion'])
+      infoParams: this.props.infoParams
     };
   }
 
@@ -48,8 +49,13 @@ class ControlBar extends React.Component{
 
 
   _onUpdateDataParams(params) {
+    let toFormat = {};
+    for (let key in this.urlParams) {
+      toFormat[key] = params[key] || this.urlParams[key];
+    }
+
     this.setState({
-      infoParams: _.pick(params, ['area_construida', 'banos', 'edad', 'estacionamientos', 'id_tipo_propiedad', 'recamaras', 'tipo_operacion'])
+      infoParams: toFormat
     });
   }
 
@@ -80,13 +86,13 @@ class ControlBar extends React.Component{
                 address: place.formatted_address
               };
 
-              this.props.onSetViviendaInfo(_.merge(params, infoParams));
+              this._toggleCollapse('.Viviendafor')
+              this.props.onSetViviendaInfo(_.merge(infoParams, params));
             } else {
               togglePopover('.Vivienda', 'Elige una vivienda válida');
             }
           });
       });
-      this._toggleCollapse('.ColoniaForm')
     } else {
       togglePopover('.Vivienda', 'Debes elegir una vivienda');
     }
