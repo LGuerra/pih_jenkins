@@ -125,7 +125,8 @@ body {
 
 .value-picker {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap: wrap;
   .selector {
     cursor: pointer;
     width: 30px;
@@ -133,6 +134,8 @@ body {
     background-color: #ddd;
     padding-top: 6px;
     border-radius: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     @include transition(all, 0.3s, ease);
     p {
       text-align: center;

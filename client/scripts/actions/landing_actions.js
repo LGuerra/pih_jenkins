@@ -1,6 +1,14 @@
 export const SET_COLONIA      = 'SET_COLONIA';
 export const SET_VIVIENDA     = 'SET_VIVIENDA';
 export const SET_PARAMS_INFO  = 'SET_PARAMS_INFO';
+export const SET_FORM         = 'SET_FORM';
+
+export function onSetForm(idForm) {
+  return {
+    type: SET_FORM,
+    payload: idForm
+  }
+}
 
 export function onSetColonia(coloniaInfo) {
   return {

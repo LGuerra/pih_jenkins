@@ -1,14 +1,18 @@
-import React from 'react';
-import _ from 'lodash';
-import { connect } from 'react-redux';
+// Vendor
+import React        from 'react';
+import _            from 'lodash';
+import { connect }  from 'react-redux';
 
+// Components
 import SuggestionsInputField  from '../../../components/SuggestionsInputField';
 import ViviendaParamsFields   from '../../../components/ViviendaParamsFields';
 
-import { onSetColoniaInfo, onSetViviendaInfo } from '../../../actions/report_actions';
+// Helpers
+import Helpers                                  from '../../../helpers';
+import { helpersAPI }                           from '../../../api/api-helper.js';
 
-import Helpers              from '../../../helpers';
-import { helpersAPI }       from '../../../api/api-helper.js';
+// Actions
+import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
 
 function togglePopover(identifier, content) {
   $(identifier)
@@ -43,7 +47,32 @@ class ControlBar extends React.Component{
 
   _onSelectVivienda(item) {
     this.setState({
-      vivienda: item
+      vivienda: null
+    }, () => {
+      Helpers.getHouseInfor(item.id, (place) => {
+        let latitude    = place.geometry.location.lat();
+        let longitude   = place.geometry.location.lng();
+        let infoParams  = this.state.infoParams;
+
+        helpersAPI.suburbIsTrusted(latitude, longitude)
+          .then((response) => {
+            if (response.data.trusted) {
+              let params = {
+                colonia: response.data.id,
+                latitud: latitude,
+                longitud: longitude,
+                tipo_operacion: 0,
+                address: place.formatted_address
+              };
+
+              this.setState({
+                vivienda: params
+              });
+            } else {
+              togglePopover('.Vivienda', 'Elige una vivienda válida');
+            }
+          });
+      });
     });
   }
 
@@ -70,29 +99,15 @@ class ControlBar extends React.Component{
 
   _generateViviendaReport() {
     if (this.state.vivienda) {
-      Helpers.getHouseInfor(this.state.vivienda.id, (place) => {
-        let latitude    = place.geometry.location.lat();
-        let longitude   = place.geometry.location.lng();
-        let infoParams  = this.state.infoParams;
+      let infoParams  = _.clone(this.props.infoParams);
+      let toFormat = {};
 
-        helpersAPI.suburbIsTrusted(latitude, longitude)
-          .then((response) => {
-            if (response.data.trusted) {
-              let params = {
-                colonia: response.data.id,
-                latitud: latitude,
-                longitud: longitude,
-                tipo_operacion: 0,
-                address: place.formatted_address
-              };
+      for (let key in this.urlParams) {
+        toFormat[key] = this.state.vivienda[key] || infoParams[key] || this.urlParams[key];
+      }
 
-              this._toggleCollapse('.Viviendafor')
-              this.props.onSetViviendaInfo(_.merge(infoParams, params));
-            } else {
-              togglePopover('.Vivienda', 'Elige una vivienda válida');
-            }
-          });
-      });
+      this._toggleCollapse('.ViviendaForm')
+      this.props.onSetViviendaInfo(toFormat);
     } else {
       togglePopover('.Vivienda', 'Debes elegir una vivienda');
     }
@@ -100,6 +115,8 @@ class ControlBar extends React.Component{
 
   _toggleCollapse(divId) {
     let collapsables = ['ColoniaForm', 'ViviendaForm'];
+    this.refs.colonia_field.cleanSuggestions();
+    this.refs.vivienda_field.cleanSuggestions();
 
     _.forEach(collapsables, (collapsable) => {
       if (collapsable === divId) {
@@ -108,6 +125,10 @@ class ControlBar extends React.Component{
         $("#" + collapsable).collapse('hide');
       }
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    this.prevUrlParams = prevProps.infoParams;
   }
 
   render() {
@@ -133,6 +154,7 @@ class ControlBar extends React.Component{
             <div className={'row'}>
               <div className={'col-sm-7'}>
                 <SuggestionsInputField
+                  ref={'colonia_field'}
                   searchType={'Colonia'}
                   onSelectItem={this._onSelectColonia.bind(this)}
                   placeholder={'Busca la ubicación de la vivienda'}
@@ -156,6 +178,7 @@ class ControlBar extends React.Component{
           </div>
           <div id={'ViviendaForm'} className={'collapse ViviendaForm'}>
             <SuggestionsInputField
+              ref={'vivienda_field'}
               searchType={'Vivienda'}
               onSelectItem={this._onSelectVivienda.bind(this)}
               placeholder={'Busca la vivienda'}

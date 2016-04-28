@@ -20,81 +20,85 @@ class ViviendaParamsFields extends Component {
   render() {
     return (
       <div>
-        <div style={{borderBottom: '1px solid #DDDDDD'}} className={'row valuation-container'}>
-          <div className={'col-sm-4 valuation-input'}>
-            <p className={'valuation-input-title'}>{'Tipo de vivienda'}</p>
-            <IconSelector
-              onUpdateValue={this._onUpdateValue.bind(this)}
-              unit={'id_tipo_propiedad'}
-              icons={[
-                {
-                  label: 'Casa',
-                  icon: 'house',
-                  value: 2
-                },
-                {
-                  label: 'Departamento',
-                  icon: 'apartment',
-                  value: 4
-                }
-              ]}
-              defaultIcon={this.props.infoParams.id_tipo_propiedad}
-            />
-          </div>
-          <div className={'col-sm-4 valuation-input'}>
-            <p className={'valuation-input-title'}>{'Recámaras'}</p>
-            <ValuePicker
-              onUpdateValue={this._onUpdateValue.bind(this)}
-              unit={'recamaras'}
-              lowerLimit={1}
-              upperLimit={7}
-              steps={1}
-              defaultActive={this.props.infoParams.recamaras}
-            />
-          </div>
-          <div className={'col-sm-4 valuation-input-last'}>
-            <p className={'valuation-input-title'}>{'Baños'}</p>
-            <ValuePicker
-              onUpdateValue={this._onUpdateValue.bind(this)}
-              unit={'banos'}
-              lowerLimit={1}
-              upperLimit={7}
-              steps={1}
-              defaultActive={this.props.infoParams.banos}
-            />
+        <div style={{borderBottom: '1px solid #DDDDDD'}} className={'valuation-container'}>
+          <div className={'row'}>
+            <div className={'col-md-4 valuation-input'}>
+              <p className={'valuation-input-title'}>{'Tipo de vivienda'}</p>
+              <IconSelector
+                onUpdateValue={this._onUpdateValue.bind(this)}
+                unit={'id_tipo_propiedad'}
+                icons={[
+                  {
+                    label: 'Casa',
+                    icon: 'house',
+                    value: 2
+                  },
+                  {
+                    label: 'Departamento',
+                    icon: 'apartment',
+                    value: 4
+                  }
+                ]}
+                defaultIcon={this.props.infoParams.id_tipo_propiedad}
+              />
+            </div>
+            <div className={'col-md-4 valuation-input'}>
+              <p className={'valuation-input-title'}>{'Recámaras'}</p>
+              <ValuePicker
+                onUpdateValue={this._onUpdateValue.bind(this)}
+                unit={'recamaras'}
+                lowerLimit={1}
+                upperLimit={7}
+                steps={1}
+                defaultActive={this.props.infoParams.recamaras}
+              />
+            </div>
+            <div className={'col-md-4 valuation-input-last'}>
+              <p className={'valuation-input-title'}>{'Baños'}</p>
+              <ValuePicker
+                onUpdateValue={this._onUpdateValue.bind(this)}
+                unit={'banos'}
+                lowerLimit={1}
+                upperLimit={7}
+                steps={1}
+                defaultActive={this.props.infoParams.banos}
+              />
+            </div>
           </div>
         </div>
-        <div className={'row valuation-container'}>
-          <div className={'col-sm-4 valuation-input'}>
-            <p className={'valuation-input-title'}>{'Estacionamientos'}</p>
-            <ValuePicker
-              onUpdateValue={this._onUpdateValue.bind(this)}
-              unit={'estacionamientos'}
-              lowerLimit={0}
-              upperLimit={5}
-              steps={1}
-              defaultActive={this.props.infoParams.estacionamientos}
-            />
-          </div>
-          <div className={'col-sm-4 valuation-input'}>
-            <p className={'valuation-input-title'}>{'Área de construcción'}</p>
-            <InputFieldForm
-              onUpdateValue={this._onUpdateValue.bind(this)}
-              min={0}
-              max={2000}
-              unit={'area_construida'}
-              defaultValue={this.props.infoParams.area_construida}
-              label={'m²'}/>
-          </div>
-          <div className={'col-sm-4 valuation-input-last'}>
-            <p className={'valuation-input-title'}>{'Edad'}</p>
-            <InputFieldForm
-              onUpdateValue={this._onUpdateValue.bind(this)}
-              min={0}
-              max={20}
-              unit={'edad'}
-              defaultValue={this.props.infoParams.edad}
-              label={'Años'}/>
+        <div className={'valuation-container'}>
+          <div className={'row'}>
+            <div className={'col-md-4 valuation-input'}>
+              <p className={'valuation-input-title'}>{'Estacionamientos'}</p>
+              <ValuePicker
+                onUpdateValue={this._onUpdateValue.bind(this)}
+                unit={'estacionamientos'}
+                lowerLimit={0}
+                upperLimit={7}
+                steps={1}
+                defaultActive={this.props.infoParams.estacionamientos}
+              />
+            </div>
+            <div className={'col-md-4 valuation-input'}>
+              <p className={'valuation-input-title'}>{'Área de construcción'}</p>
+              <InputFieldForm
+                onUpdateValue={this._onUpdateValue.bind(this)}
+                min={0}
+                max={2000}
+                unit={'area_construida'}
+                defaultValue={this.props.infoParams.area_construida}
+                label={'m²'}/>
+            </div>
+            <div className={'col-md-4 valuation-input-last'}>
+              <p className={'valuation-input-title'}>{'Edad'}</p>
+              <InputFieldForm
+                onUpdateValue={this._onUpdateValue.bind(this)}
+                min={0}
+                max={20}
+                unit={'edad'}
+                defaultValue={this.props.infoParams.edad}
+                label={'Años'}/>
+            </div>
           </div>
         </div>
       </div>

@@ -325,6 +325,11 @@
 }
 
 .ViviendaForm {
+  .valuation-container {
+    .row {
+      width: 100%;
+    }
+  }
   .centered {
     display: flex;
     justify-content: space-around;

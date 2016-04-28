@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import _  from 'lodash';
+import { connect }          from 'react-redux';
+import _                    from 'lodash';
 
-import PDFReport  from '../../PDFReport';
+import { setLoadingFrame }  from '../../actions/report_actions'
+import PDFReport            from '../../PDFReport';
 
-import { connect } from 'react-redux';
-import { setLoadingFrame } from '../../actions/report_actions'
 import {
   formatPrecioHistorico,
   formatDistribucionPrecio,

@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+  activeForm: 1,
   colonia: {},
   vivienda: {},
   infoParams: {
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
 }
 
 import {
+  SET_FORM,
   SET_COLONIA,
   SET_VIVIENDA,
   SET_PARAMS_INFO
@@ -19,6 +21,13 @@ import {
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
+
+    case SET_FORM: {
+      return {
+        ...state,
+        activeForm: action.payload
+      }
+    }
 
     case SET_COLONIA: {
       return {

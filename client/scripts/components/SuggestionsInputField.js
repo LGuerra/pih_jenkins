@@ -1,7 +1,12 @@
+// Vendor
 import React, { Component } from 'react';
 import _                    from 'lodash';
+
+// Components
+import SuggestionsDropdown  from './SuggestionsDropdown';
+
+// Helpers
 import API                  from '../api';
-import SuggestionsDropdown  from './SuggestionsDropdown'
 
 class SuggestionsInputField extends Component {
   constructor(props) {
@@ -63,9 +68,17 @@ class SuggestionsInputField extends Component {
       if ( e.keyCode === 13 ) {
         this._onSelectItem(this.state.selectedSuggestion);
       }
-
     }
+  }
 
+  cleanSuggestions() {
+    this.setState({
+      showDropdown: false
+    });
+  }
+
+  _onClick(e) {
+    e.target.select();
   }
 
   _onSelectItem(item) {
@@ -157,6 +170,7 @@ class SuggestionsInputField extends Component {
             data-trigger="manual"
             className={this.props.specificInputClass}
             placeholder={this.props.placeholder}
+            onClick={this._onClick}
             onChange={this._inputChangeHandler.bind(this)}
             onKeyDown={this._keyDownInput.bind(this)}></input>
         </div>

@@ -1,16 +1,16 @@
 // Vendor
-import React from 'react';
-import _ from     'lodash';
-import { connect } from 'react-redux';
+import React        from 'react';
+import _            from 'lodash';
+import { connect }  from 'react-redux';
 
 // Components
-import BackToTop from           '../../../components/BackToTop';
-import Spinner from             '../../../components/Spinner';
-import MiniSearchForm from      '../../../components/MiniSearchForm';
-import URLHandler from          '../../../components/urlHandler';
+import BackToTop          from '../../../components/BackToTop';
+import Spinner            from '../../../components/Spinner';
+import MiniSearchForm     from '../../../components/MiniSearchForm';
+import URLHandler         from '../../../components/urlHandler';
+import DownloadPDFReport  from '../../../containers/reporte/DownloadPDFReport';
 
 // Views
-import DownloadPDFReport  from   '../../../containers/reporte/DownloadPDFReport';
 import ReportColonia      from './ReportColonia';
 import ReportVivienda     from './ReportVivienda';
 import ControlBar         from './ControlBar';
@@ -41,13 +41,12 @@ class Report extends React.Component {
   }
 
   render() {
+    let content;
     let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
     let viewType      = this.props.viewType;
-    let urlParams = this.props.viewType === 'Vivienda'
+    let urlParams     = this.props.viewType === 'Vivienda'
       ? this.props.urlParams
       : _.pick(this.props.urlParams, ['colonia']);
-
-    let content;
 
     if (viewType === 'Colonia') {
       content = (

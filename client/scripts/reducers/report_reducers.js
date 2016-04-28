@@ -56,6 +56,10 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case SET_VIVIENDA_INFO: {
+      if (_.isEqual(action.payload, state.urlParams)) {
+        return state;
+      }
+
       return {
         ...INITIAL_STATE,
         urlParams: action.payload,

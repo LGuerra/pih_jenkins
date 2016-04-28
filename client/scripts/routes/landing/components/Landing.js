@@ -7,7 +7,7 @@ import Helpers              from '../../../helpers';
 import { helpersAPI }       from '../../../api/api-helper.js';
 
 import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
-import { onSetParamsInfo }  from '../../../actions/landing_actions';
+import { onSetParamsInfo, onSetForm }  from '../../../actions/landing_actions';
 
 function togglePopover(identifier, content) {
   $(identifier)
@@ -59,81 +59,81 @@ class Landing extends React.Component {
     }
   }
 
-  _scrollTo(identifier) {
-    $('html, body').animate({
-      scrollTop: $(identifier).offset().top
-    }, 700);
-
-    //$(identifier).find('.inner-form').addClass('scrolled');
-    setTimeout(() => {
-      $(identifier).find('.landing-search-form input').focus();
-      //$(identifier).find('.inner-form').removeClass('scrolled');
-    }, 700);
+  _toggleMenu(form) {
+    this.props.onSetForm(form);
   }
 
   _onUpdateDataParams(newParams) {
     this.props.onSetParamsInfo(newParams);
   }
 
+  componentDidUpdate() {
+    $('#colonia-form').find('.landing-search-form input').focus();
+  }
+
   render() {
+    let content;
+
+    if (this.props.activeForm === 1) {
+      content = (
+        <div className={'inner-form'}>
+          <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
+          <div className={'row colonia-search'}>
+            <div className={'col-md-8'}>
+              <LandingSearchForm
+                searchType={'Colonia'}
+                placeholder={'Ingrese el nombre de la colonia'}/>
+            </div>
+            <div className={'col-md-4 btn-disponible'} style={{marginTop: '55px'}}>
+              <button className={'btn'}>
+               {'VER COLONIAS DISPONIBLES'}
+              </button>
+            </div>
+          </div>
+          <div className={'buttons-redirect'}>
+            <button onClick={this._generateColoniaReport.bind(this)} className={'btn'}>
+              {'GENERAR REPORTE DE COLONIA'}
+            </button>
+          </div>
+        </div>
+      );
+    } else if (this.props.activeForm === 2) {
+      content = (
+        <div className={'inner-form'}>
+          <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
+          <LandingSearchForm
+            placeholder={'Ingrese la dirección de la vivienda'}
+            searchType={'Vivienda'} />
+          <ViviendaParamsFields
+            infoParams={this.props.infoParams}
+            onUpdateData={this._onUpdateDataParams.bind(this)}/>
+          <div className={'buttons-redirect'}>
+            <button onClick={this._generateViviendaReport.bind(this)} className={'btn'}>
+              {'GENERAR REPORTE DE VIVIENDA'}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className={'Landing'}>
         <div className={'Index'}>
           <div className={'row'}>
             <div className={'col-md-8 col-md-offset-2 headers'}>
               <h2>{'Plataforma de Inteligencia Hipotecaria'}</h2>
-              <h3>{'La información hipotecaria que buscas, para encontrar la opción exacta para vivir'}</h3>
             </div>
           </div>
           <div className={'buttons-redirect'}>
-            <button onClick={this._scrollTo.bind(this, '#colonia-form')} className={'btn'}>
-              {'REPORTE COLONIA'}
-            </button>
-            <button onClick={this._scrollTo.bind(this, '#vivienda-form')} className={'btn'}>
+            <button onClick={this._toggleMenu.bind(this, 1)} className={'btn btn-left ' + (this.props.activeForm === 1 ? 'active' : '')}>
               {'REPORTE VIVIENDA'}
             </button>
+            <button onClick={this._toggleMenu.bind(this, 2)} className={'btn btn-right ' + (this.props.activeForm === 2 ? 'active' : '')}>
+              {'REPORTE COLONIA'}
+            </button>
           </div>
-        </div>
-        <div id={'colonia-form'} className={'LandingForm'}>
-          <div className={'Breakpoint'}>
-            <h2>{'REPORTE COLONIA'}</h2>
-          </div>
-          <div className={'inner-form'}>
-            <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
-            <div className={'colonia-search'}>
-              <LandingSearchForm
-                searchType={'Colonia'}
-                placeholder={'Ingrese el nombre de la colonia'}/>
-              <div style={{marginTop: '15px'}}>
-                <button className={'btn'}>
-                 {'VER COLONIAS DISPONIBLES'}
-                </button>
-              </div>
-            </div>
-            <div className={'buttons-redirect'}>
-              <button onClick={this._generateColoniaReport.bind(this)} className={'btn'}>
-                {'GENERAR REPORTE DE COLONIA'}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div id={'vivienda-form'} className={'LandingForm'}>
-          <div className={'Breakpoint'}>
-            <h2>{'REPORTE VIVIENDA'}</h2>
-          </div>
-          <div className={'inner-form'}>
-            <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
-            <LandingSearchForm
-              placeholder={'Ingrese la dirección de la vivienda'}
-              searchType={'Vivienda'} />
-            <ViviendaParamsFields
-              infoParams={this.props.infoParams}
-              onUpdateData={this._onUpdateDataParams.bind(this)}/>
-            <div className={'buttons-redirect'}>
-              <button onClick={this._generateViviendaReport.bind(this)} className={'btn'}>
-                {'GENERAR REPORTE DE VIVIENDA'}
-              </button>
-            </div>
+          <div id={'colonia-form'} className={'LandingForm'}>
+            {content}
           </div>
         </div>
       </div>
@@ -142,12 +142,8 @@ class Landing extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    colonia: state.landing.colonia,
-    vivienda: state.landing.vivienda,
-    infoParams: state.landing.infoParams
-  };
+  return state.landing;
 }
 
-export default connect(mapStateToProps, { onSetParamsInfo })(Landing);
+export default connect(mapStateToProps, { onSetParamsInfo, onSetForm })(Landing);
 
