@@ -73,6 +73,7 @@ class SuggestionsInputField extends Component {
       selectedSuggestion: item,
       showDropdown: false
     }, () => {
+      this.refs.input.value = item.content;
       this.props.onSelectItem(item);
     });
   }

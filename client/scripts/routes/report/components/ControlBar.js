@@ -14,8 +14,7 @@ function togglePopover(identifier, content) {
   $(identifier)
     .addClass('error');
 
-  $(identifier).popover({content: content,
-                                        placement: 'top'});
+  $(identifier).popover({content: content, placement: 'top'});
   $(identifier).popover('show');
 
   setTimeout(() => {
