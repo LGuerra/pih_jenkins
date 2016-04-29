@@ -18,9 +18,9 @@ let apiEndpoint = `/v1/${stage}`;
 if(process.env.NODE_ENV === 'test') {
   apiEndpoint = `http://0.0.0.0:3000/v1/${stage}`;
 } else {
-  // var $ = require('jquery');
-  // axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
-  // axios.defaults.headers.post['X-Transaction'] = 'POST Example';
+  var $ = require('jquery');
+  axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
+  axios.defaults.headers.post['X-Transaction'] = 'POST Example';
 }
 
 const userAPI = (() => {

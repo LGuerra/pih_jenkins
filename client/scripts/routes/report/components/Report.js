@@ -19,6 +19,8 @@ import ControlBar         from './ControlBar';
 import Helpers    from '../../../helpers';
 import PDFReport  from '../../../PDFReport';
 
+import { setUrlParams } from '../../../actions/report_actions';
+
 class Report extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +40,25 @@ class Report extends React.Component {
     ) : '';
 
     return loadingFrame;
+  }
+
+  componentDidMount() {
+    
+    // let urlParams = {
+    //   longitud: Number(Helpers.getURLParameter('longitud')) || 0,
+    //   latitud: Number(Helpers.getURLParameter('latitud')) || 0,
+    //   recamaras: Number(Helpers.getURLParameter('recamaras')) || 1,
+    //   banos: Number(Helpers.getURLParameter('banos')) || 1,
+    //   estacionamientos: Number(Helpers.getURLParameter('estacionamientos')) || 0,
+    //   edad: Number(Helpers.getURLParameter('edad')) || 1,
+    //   id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_propiedad')) || 2,
+    //   area_construida: Number(Helpers.getURLParameter('area_construida')) || 100,
+    //   address: Helpers.getURLParameter('address') || '',
+    //   tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')) || 0,
+    //   colonia: Helpers.getURLParameter('colonia') || ''
+    // };
+
+    // this.props.setUrlParams(urlParams);
   }
 
   render() {
@@ -88,4 +109,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Report);
+export default connect(mapStateToProps, {setUrlParams})(Report);

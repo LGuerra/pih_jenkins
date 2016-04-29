@@ -24,7 +24,9 @@ class URLHandler extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.updateParams(newProps);
+    if (this.props.isAvaliable) {
+      this.updateParams(newProps);
+    }
   }
 
   render() {

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Helpers    from '../helpers';
 
 import {
+  SET_URL_PARAMS,
   SET_VIVIENDA_INFO,
   SET_COLONIA_INFO,
   FETCH_COLONIA_INFO,
@@ -22,10 +23,10 @@ import {
 } from '../actions/report_actions';
 
 const INITIAL_STATE = {
-  viewType: Helpers.getURLParameter('tipo'),
+  viewType: Helpers.getURLParameter('tipo') || 'Vivienda',
   urlParams: {
-    longitud: Number(Helpers.getURLParameter('longitud')),
-    latitud: Number(Helpers.getURLParameter('latitud')),
+    longitud: Number(Helpers.getURLParameter('longitud')) || 0,
+    latitud: Number(Helpers.getURLParameter('latitud')) || 0,
     recamaras: Number(Helpers.getURLParameter('recamaras')) || 1,
     banos: Number(Helpers.getURLParameter('banos')) || 1,
     estacionamientos: Number(Helpers.getURLParameter('estacionamientos')) || 0,
@@ -55,6 +56,14 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
+
+    case SET_URL_PARAMS: {
+      return {
+        ...state,
+        urlParams: {}
+      }
+    }
+
     case SET_VIVIENDA_INFO: {
       if (_.isEqual(action.payload, state.urlParams)) {
         return state;
