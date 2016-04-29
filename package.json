@@ -16,6 +16,8 @@
     "bootstrap": "^3.3.6",
     "bootstrap-sass": "^3.3.6",
     "bootstrap-webpack": "0.0.5",
+    "chai": "^3.5.0",
+    "chai-immutable": "^1.5.4",
     "css-loader": "^0.23.1",
     "d3": "^3.5.12",
     "eslint": "^1.10.3",
@@ -32,6 +34,7 @@
     "lodash": "^3.10.1",
     "lodash.compose": "^2.4.1",
     "lodash.identity": "^3.0.0",
+    "mocha": "^2.4.5",
     "moment": "^2.11.0",
     "node-libs-browser": "^0.5.3",
     "node-sass": "^3.4.2",
@@ -48,7 +51,8 @@
     "webpack-sources": "^0.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register --require ./test/js/*  --recursive",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -67,6 +71,7 @@
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "bootstrap": "^3.3.6",
+    "immutable": "^3.8.1",
     "jquery": "^2.1.4",
     "react-redux": "^4.4.4",
     "react-router": "^2.1.1",
