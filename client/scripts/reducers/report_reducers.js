@@ -1,7 +1,5 @@
 import _ from 'lodash';
 
-import Helpers    from '../helpers';
-
 import {
   SET_VIEW_TYPE,
   SET_URL_PARAMS,
