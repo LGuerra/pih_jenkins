@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import {
-  // Action descriptors
+  // Action type
   SELECT_COMPARATIVO_COLONIAS,
   SELECT_POLYGON,
   SET_COLONIA_INFO,
@@ -17,18 +17,15 @@ import {
   setLoadingFrame,
   setUrlParams,
   setViewType
-} from '../../client/scripts/actions/report_actions';
+} from '../../../client/scripts/actions/report_actions';
 
 function testActionCreators(actionCreator, type, payload) {
-  const expectedAction = {
-    type: type,
-    payload: payload
-  };
+  const expectedAction = {type, payload};
 
   expect(actionCreator(payload)).to.eql(expectedAction);
 }
 
-describe('actions', () => {
+describe('report actions', () => {
   it('should create an action to set colonia info', () => {
     testActionCreators(onSetColoniaInfo, SET_COLONIA_INFO, {
       colonia: '09016638'
@@ -49,12 +46,18 @@ describe('actions', () => {
   });
 
   it('should create an action to select comparativo colonias', () => {
-    testActionCreators(onSelectComparativoColonias, SELECT_COMPARATIVO_COLONIAS, '09016638');
+    testActionCreators(
+      onSelectComparativoColonias,
+      SELECT_COMPARATIVO_COLONIAS,
+      '09016638');
   });
 
 
   it('should create an action to select a polygon on the map', () => {
-    testActionCreators(onSelectPolygon, SELECT_POLYGON, '09016638');
+    testActionCreators(
+      onSelectPolygon,
+      SELECT_POLYGON,
+      '09016638');
   });
 
   it('should create an action to activate LoadingFrame', () => {
@@ -62,16 +65,19 @@ describe('actions', () => {
   });
 
   it('should create an action to change url params when report is loaded', () => {
-    testActionCreators(setUrlParams, SET_URL_PARAMS, {
-      recamaras: 2,
-      banos: 1,
-      estacionamientos: 1,
-      id_tipo_vivienda: 4,
-      edad: 0,
-      area_construida: 100,
-      address: 'Reforma Norte, Guerrero, Ciudad de México, México',
-      tipo_operacion: 0
-    });
+    testActionCreators(
+      setUrlParams,
+      SET_URL_PARAMS,
+      {
+        recamaras: 2,
+        banos: 1,
+        estacionamientos: 1,
+        id_tipo_vivienda: 4,
+        edad: 0,
+        area_construida: 100,
+        address: 'Reforma Norte, Guerrero, Ciudad de México, México',
+        tipo_operacion: 0
+      });
   });
 
   it('should create an action to change view type when report is loaded', () => {

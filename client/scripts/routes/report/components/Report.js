@@ -42,7 +42,7 @@ class Report extends React.Component {
     return loadingFrame;
   }
 
-  componentDidMount() {  
+  componentDidMount() {
     let urlParams = {
       longitud: Number(Helpers.getURLParameter('longitud')) || 0,
       latitud: Number(Helpers.getURLParameter('latitud')) || 0,
@@ -55,7 +55,7 @@ class Report extends React.Component {
       address: Helpers.getURLParameter('address') || '',
       tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')) || 0,
       colonia: Helpers.getURLParameter('colonia') || ''
-    };    
+    };
 
     this.props.setViewType(Helpers.getURLParameter('tipo'));
     this.props.setUrlParams(urlParams);

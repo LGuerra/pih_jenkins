@@ -1,8 +1,10 @@
 import { expect } from 'chai';
 import _ from 'lodash';
-import reportReducers from '../../client/scripts/reducers/report_reducers';
+
+import reportReducers from '../../../client/scripts/reducers/report_reducers';
+
 import {
-  //Action descriptors
+  //Actions type
   SET_VIEW_TYPE,
   SET_URL_PARAMS,
   SET_VIVIENDA_INFO,
@@ -21,7 +23,7 @@ import {
   SET_LOADING_FRAME,
   SELECT_COMPARATIVO_COLONIAS,
   SELECT_POLYGON
-} from '../../client/scripts/actions/report_actions';
+} from '../../../client/scripts/actions/report_actions';
 
 const INITIAL_STATE = {
   viewType: null,
@@ -32,7 +34,6 @@ const INITIAL_STATE = {
   distribucionTipologia: {},
   precioHistorico: [],
   distribucionPrecio: {},
-  propiedadesComparables: {},
   coloniasComparables: [],
   viviendasComparables: [],
   coloniasMap: [],
@@ -43,51 +44,61 @@ const INITIAL_STATE = {
   isLoadingFrame: false
 };
 
-function testReducers(newState, expectedState, type) {
+// Helper function to test reducers with repeated logic
+function testReducers(payload, expectedState, type) {
   expect(
-   reportReducers(INITIAL_STATE, {
-     type: type,
-     payload: newState
-   })
-  ).to.eql(expectedState); 
+    reportReducers(INITIAL_STATE, { type, payload }))
+      .to.eql(expectedState);
 }
 
-describe('reducers', () => {
+// Describe function
+describe('report reducers', () => {
+  var expectedState;
+
+  beforeEach(() => {
+    expectedState = _.clone(INITIAL_STATE)
+  });
+
   it('should return the initial state', () => {
     expect(
       reportReducers(undefined, {})
     ).to.eql(INITIAL_STATE);
   });
 
+  it('should set loading frame', () => {
+    const newState = true;
+
+    expectedState.isLoadingFrame = newState;
+
+   testReducers(newState, expectedState, SET_LOADING_FRAME);
+  });
+
   it('should handle setting URL params', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = {
-     recamaras: 2,
-     banos: 1,
-     estacionamientos: 1,
-     id_tipo_vivienda: 4,
-     edad: 0,
-     area_construida: 100,
-     address: 'Reforma Norte, Guerrero, Ciudad de México, México',
-     tipo_operacion: 0
+      recamaras: 2,
+      banos: 1,
+      estacionamientos: 1,
+      id_tipo_vivienda: 4,
+      edad: 0,
+      area_construida: 100,
+      address: 'Reforma Norte, Guerrero, Ciudad de México, México',
+      tipo_operacion: 0
    };
 
     expectedState.urlParams = newState;
 
-   testReducers(newState, expectedState, SET_URL_PARAMS);
+    testReducers(newState, expectedState, SET_URL_PARAMS);
   });
 
   it('should handle setting view type', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = 'Vivienda';
-    
+
     expectedState.viewType = newState;
 
     testReducers(newState, expectedState, SET_VIEW_TYPE);
   });
 
   it('should handle setting vivienda info', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = {
       recamaras: 2,
       banos: 1,
@@ -106,46 +117,56 @@ describe('reducers', () => {
   });
 
   it('should handle setting colonia info', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = {/*TODO get example*/};
-    
+
     expectedState.urlParams = newState;
     expectedState.viewType = 'Colonia';
 
     testReducers(newState, expectedState, SET_COLONIA_INFO);
   });
 
+
+  it('should handle selecting an specific colonia', () => {
+    const newState = {/*TODO get example*/};
+
+    expectedState.selectedComparativoColonias = {};
+    testReducers(newState, expectedState, SELECT_COMPARATIVO_COLONIAS);
+  });
+
+  it('should handle selecting a polygon on the map', () => {
+    const newState = {/*TODO get example*/};
+
+    expectedState.selectedPolygon = {};
+    testReducers(newState, expectedState, SELECT_POLYGON);
+  });
+
   it('should handle fetching vivienda info', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = {
       data: {/*TODO get example*/}
     };
-    
+
     expectedState.viviendaInfo = {/*TODO get example*/};
 
     testReducers(newState, expectedState, FETCH_VIVIENDA_INFO);
   });
 
   it('should handle fetching colonia info', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = [/*TODO get example*/];
-    
+
     expectedState.coloniaInfo = newState;
 
     testReducers(newState, expectedState, FETCH_COLONIA_INFO);
   });
 
   it('should handle fetching oferta disponible', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = [];
-    
+
     expectedState.ofertaDisponible = [/*TODO get example*/];
 
     testReducers(newState, expectedState, FETCH_OFERTA_DISPONIBLE);
   });
 
   it('should handle fetching distribucion tipologia', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = {
       data: {/*TODO get example*/}
     };
@@ -156,7 +177,6 @@ describe('reducers', () => {
   });
 
   it('should handle fetching precio historico', () => {
-    const expectedState = _.clone(INITIAL_STATE);
     const newState = {
       data: {/*TODO get example*/}
     };
@@ -166,6 +186,59 @@ describe('reducers', () => {
     testReducers(newState, expectedState, FETCH_DISTRIBUCION_TIPOLOGIA);
   });
 
+  it('should handle fetching distribucion precio', () => {
+    const newState = {
+      data: {}
+    };
 
+    expectedState.distribucionPrecio = {};
+    testReducers(newState, expectedState, FETCH_DISTRIBUCION_PRECIO);
+  });
+
+  it('should handle fetching colonias comparables', () => {
+    const newState = {
+      data: []
+    };
+
+    expectedState.coloniasComparables = [];
+    testReducers(newState, expectedState, FETCH_COLONIAS_COMPARABLES);
+  });
+
+  it('should handle fetching viviendas comparables', () => {
+    const newState = {
+      data: {
+        similar_houses: []
+      }
+    };
+
+    expectedState.viviendasComparables = [];
+    testReducers(newState, expectedState, FETCH_VIVIENDAS_COMPARABLES);
+  });
+
+  it('should handle fetching colonias map', () => {
+    const newState = {
+      data: []
+    };
+
+    expectedState.coloniasMap = [];
+    testReducers(newState, expectedState, FETCH_COLONIAS_MAP);
+  });
+
+  it('should handle fetching actual colonia on map', () => {
+    const newState = {
+      data: {}
+    };
+
+    expectedState.actualColoniaMap = {};
+    testReducers(newState, expectedState, FECTH_ACTUAL_COLONIA_MAP);
+  });
+
+  it('should handle fetching centroid on the map', () => {
+    const newState = {
+      data: {}
+    };
+
+    expectedState.centroid = {};
+    testReducers(newState, expectedState, FETCH_CENTROID);
+  });
 });
-

@@ -30,7 +30,6 @@ const INITIAL_STATE = {
   distribucionTipologia: {},
   precioHistorico: [],
   distribucionPrecio: {},
-  propiedadesComparables: {},
   coloniasComparables: [],
   viviendasComparables: [],
   coloniasMap: [],
@@ -44,7 +43,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
 
-    case SET_URL_PARAMS: { 
+    case SET_URL_PARAMS: {
       return {
         ...state,
         urlParams: action.payload
