@@ -26,6 +26,7 @@ class Home extends React.Component {
   }
 
   render() {
+    var down_arrow = require('file!images-banca/down_arrow.svg');
     return (
       <div style={{ height: '100%' , background: '#efefef' }}>
         <NavBar logoText='Intelimétrica'/>
@@ -46,7 +47,7 @@ class Home extends React.Component {
               </div>
             </div>
             <div className='col-sm-12 landing-arrow'>
-              <img height={'30px'} src={IMAGES.downArrow}/>
+              <img height={'30px'} src={down_arrow}/>
             </div>
           </div>
         </div>

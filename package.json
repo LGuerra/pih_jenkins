@@ -53,6 +53,7 @@
   },
   "scripts": {
     "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive",
+    "dev-server": "webpack-dev-server --progress --colors --port 8090 --inline",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {

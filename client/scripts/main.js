@@ -23,9 +23,7 @@ import ConditionsRoutes from './routes/conditions';
 
 import { serverAuthResponse, checkPermissions } from 'helpers-banca';
 
-const createStoreWithMiddleware = compose(
-    applyMiddleware( promise ),
-  window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore);
+const createStoreWithMiddleware = compose(applyMiddleware( promise ))(createStore);
 
 const routes = {
   component: RootApp,
@@ -74,10 +72,12 @@ const routes = {
   ]
 };
 
-render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router history={browserHistory} routes={routes} />
-  </Provider>
+$( document ).ready(function() {
+  console.log('hi');
+  render(
+    <Provider store={createStoreWithMiddleware(reducers)}>
+      <Router history={browserHistory} routes={routes} />
+    </Provider>
   , document.getElementById('react-view-container')
-);
-
+  );
+});

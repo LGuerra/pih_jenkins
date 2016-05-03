@@ -29,7 +29,7 @@ const userAPI = (() => {
   }
 
   let signIn = (user) => {
-    return axios.post('/users/sign_in.json', { user: user });
+    return axios.post('users/sign_in.json', { user: user });
   }
   return { getInfo, signIn };
 })();

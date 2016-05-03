@@ -16,7 +16,7 @@ module.exports = {
     vendor: ['jquery', 'bootstrap']
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js', Infinity),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
@@ -24,10 +24,12 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"dev"'
     }),
-    new extractTextPlugin('../../stylesheets/build/main.css')
+    new extractTextPlugin('main.css')
   ],
   output: {
-    path: path.resolve('./app/assets/javascripts/build/'),
+    path: path.resolve(__dirname, 'application'),
+    publicPath: 'http://localhost:8090/application/',
+    // path: path.resolve('./app/assets/javascripts/build/'),
     filename: '[name].js'
   },
   watch: 'true',
@@ -67,6 +69,12 @@ module.exports = {
   },
   stats: {
     colors: true
+  },
+  devServer: {
+    contentBase: __dirname,
+    quiet: false,
+    noInfo: false,
+    publicPath: "/application/"
   },
   resolve: {
     root: path.resolve(__dirname),
