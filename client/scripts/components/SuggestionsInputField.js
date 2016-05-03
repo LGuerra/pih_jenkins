@@ -6,9 +6,6 @@ import { helpersAPI }       from 'api-banca';
 // Components
 import SuggestionsDropdown  from './SuggestionsDropdown';
 
-// Helpers
-import API                  from '../api';
-
 class SuggestionsInputField extends Component {
   constructor(props) {
     super(props)
@@ -127,8 +124,11 @@ class SuggestionsInputField extends Component {
         .then(response => {
           response = response.data;
           suggests = this._parseSuggestions(response.hits.hit);
-          suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-
+          suggests.unshift({
+            content: searchInput,
+            highlights: searchInput,
+            id: -1
+          });
           this.setState({
             showDropdown: true,
             suggests: suggests
