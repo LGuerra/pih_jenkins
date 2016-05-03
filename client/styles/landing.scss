@@ -1,25 +1,9 @@
 .Landing {
-  button.btn {
-    padding: 10px 20px;
-    @include transition(all, 0.2s, ease);
-    &:hover{
-      background-color: #35C0BE !important;
-      color: #FFF;
-    }
-    &:active, &:focus{
-      outline: none;
-      box-shadow: none;
-      border: 1px solid #35C0BE;
-    }
-  }
-
-  .Index {
-    background: url('./../images/dante.jpg');
-    background-repeat: repeat;
-    height: calc(100vh - 102px);
-    background-repeat: no-repeat;
-    background-size: 100vw;
-
+  background: url('./../images/dante.jpg');
+  background-repeat: no-repeat;
+  background-size: 100vw;
+  .Index {  
+    height: calc(100% - 102px);
     .headers {
       margin-top: 5vh;
       text-align: center;
@@ -29,51 +13,56 @@
     .buttons-redirect {
       display: flex;
       justify-content: center;
-      button{
-        margin: 35px 0px;
+      color: #fff;
+      button.btn {
+        background-color: rgba(250,250,250,0.3);
+        border: 1px solid transparent;
+        color: #fff;
+        padding: 13px;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        &:hover{
+          background-color: #35c0be;
+          border: 1px solid #35c0be;
+          opacity: 0.8;
+        }
+        &:focus{
+          box-shadow: none;
+          outline: none;
+        }
       }
       .btn-left {
-        border-right: 1px solid #FFF;
+        border-left: 1px solid #fff;
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
       }
       .btn-right {
-        border-left: 1px solid #FFF;
+        border-right: 1px solid #FFF;
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
       }
       .active {
-        background-color: #35c0be !important;
+        background-color: #2a9998 !important;
         color: #fff;
+        box-shadow: none;
+        border: 1px solid #2a9998 !important;
+        &:hover{
+          background-color: #2a9998 !important;
+          border: 1px solid #2a9998;
+        }
       }
     }
   }
 
   .LandingForm {
     padding-bottom: 50px;
-    background-color: rgba(255, 255, 255, 0.75);
     .valuation-container {
       .row {
         width: 100%;
       }
     }
-    .landing-search-form {
-      padding: 20px 30px 30px 30px;
-      margin-top: 40px;
-      input{
-        box-shadow: none;
-        &:active, &:focus{
-          outline: none;
-          box-shadow: none;
-          border: 1px solid #35C0BE;
-        }
-      }
-      .input-group-addon{
-        background-color: #fff !important;
-      }
-    }
     .subtitle {
-      padding-top: 50px;
+      padding-top: 15px;
       font-size: 20px;
       font-weight: 300;
       text-align: center;
@@ -89,9 +78,11 @@
       }
     }
     .inner-form {
-      padding: 0px 100px;
+      padding: 30px;
       max-width: 1500px;
       margin: auto;
+      background-color: rgba(255, 255, 255, 0.35);
+      border-radius: 10px;
       .colonia-search{
         .btn {
           display: block;
@@ -109,15 +100,35 @@
       background-color: rgba(242, 245, 245, 0.55);
     }
     .buttons-redirect {
-      margin-top: 60px;
+      margin-top: 20px;
       display: flex;
       justify-content: center;
-      .btn {
-        @include transition(all, 0.5s, ease);
-        margin: 0px 35px;
-      }
     }
   }
+}
+.landing-content{
+  display: flex;
+  align-items: center;
+  .inner-content{
+    padding: 0px 15px;
+  }
+}
+.landing-arrow{
+  margin-top: 50px;
+  img{
+    display: block;
+    margin: 0 auto;
+  }
+}
+.landing-secondary-content{
+  background: url('./../images/iphone_bco.jpg');
+  background-repeat: no-repeat;
+  background-position-x: 30vw;
+  background-color: #ffffff;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
 }
 
 @media screen and (max-width: 990px) {

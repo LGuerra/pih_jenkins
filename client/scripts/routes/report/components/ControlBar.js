@@ -133,9 +133,9 @@ class ControlBar extends React.Component{
 
   render() {
     return (
-      <div>
+      <div style={{backgroundColor: '#fbfbfb', borderBottom: '1px solid #e7e7e7'}}>
         <div className={'max-width-container'}>
-          <div className={'ControlBar'}>
+          <div className={'ControlBar row'}>
             <div className={'col-sm-11'}>
               <div className={'control-container'}>
                 <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.viewType === 'Colonia' ?  'menu-item-selected' : '')}>
@@ -152,7 +152,7 @@ class ControlBar extends React.Component{
           </div>
           <div id={'ColoniaForm'} className={'collapse ColoniaForm'}>
             <div className={'row'}>
-              <div className={'col-sm-7'}>
+              <div className={'col-sm-10'}>
                 <SuggestionsInputField
                   ref={'colonia_field'}
                   searchType={'Colonia'}
@@ -161,20 +161,20 @@ class ControlBar extends React.Component{
                   specificGroupClass={'landing-search-form'}
                   specificInputClass={'form-control Colonia'}/>
               </div>
-              <div className={'col-sm-5'}>
-                <div className={'buttons-container'}>
-                  <button onClick={this._generateColoniaReport.bind(this)} className={'btn btn-blue'}>
-                    {'Generar Reporte'}
-                  </button>
-                  <button className={'btn btn-blue'}>
-                    {'Colonias disponibles'}
-                  </button>
-                  <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'btn'}>
-                    {'Cancelar'}
-                  </button>
-                </div>
+              <div className={'col-sm-2'}>
+                <button className={'aqua-button'}>
+                  {'Ver Colonias disponibles'}
+                </button>
               </div>
             </div>
+              <div className={'buttons-container'}>
+                <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
+                  {'Generar Reporte'}
+                </button>
+                <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'gray-button'}>
+                  {'Cancelar'}
+                </button>
+              </div>
           </div>
           <div id={'ViviendaForm'} className={'collapse ViviendaForm'}>
             <SuggestionsInputField
@@ -189,10 +189,10 @@ class ControlBar extends React.Component{
               onUpdateData={this._onUpdateDataParams.bind(this)} />
             <div className={'centered'}>
               <div className={'buttons-container'}>
-                  <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'btn'}>
+                  <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
                     {'Cancelar'}
                   </button>
-                  <button onClick={this._generateViviendaReport.bind(this)} className={'btn btn-blue'}>
+                  <button onClick={this._generateViviendaReport.bind(this)} className={'aqua-button'}>
                     {'Generar Reporte'}
                   </button>
               </div>

@@ -20,7 +20,7 @@ class Form extends React.Component {
     var csrf = $('meta[name="csrf-token"]').attr('content');
     return (
       <form action='users/sign_in.json' onSubmit={this.onSubmit} method='post'>
-        <div className='input-group form-group  has-feedback has-feedback-left'>
+        <div className='input-group form-group has-feedback has-feedback-left'>
           <span className='input-group-addon'>
             <img height='14px' width='18px' src='/assets/user-black-c9ce21dcbc411b2aca665f2813fc885b474330a4a820ddf4002563690976f2e0.svg'/>
           </span>
@@ -32,7 +32,7 @@ class Form extends React.Component {
           </span>
           <input autoComplete='off' className='input form-control' placeholder='Contraseña' type='password' name='user[password]' ref='password-login' id='user_password'/>
         </div>
-        <input type='submit' name='commit' value='Entrar' className='init-session blue-button'/>
+        <input type='submit' name='commit' value='Entrar' className='init-session aqua-button' style={{padding: '7px 10px'}}/>
         <div className='forgot-remember'>
           <div className='pull-left'>
             <input name='user[remember_me]' type='hidden' value='0'/>

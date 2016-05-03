@@ -166,7 +166,7 @@ class DownloadPDFReport extends Component {
   render() {
     return (
       <div style={{margin: '0px', cursor: 'pointer'}} onClick={this._downloadReport.bind(this)}>
-        <img height={'15px'} style={{margin: '20px 10px'}} src={IMAGES.descarga} />
+        <img height={'15px'} src={IMAGES.descarga} />
       </div>
     );
   }

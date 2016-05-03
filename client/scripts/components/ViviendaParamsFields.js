@@ -22,7 +22,7 @@ class ViviendaParamsFields extends Component {
       <div>
         <div style={{borderBottom: '1px solid #DDDDDD'}} className={'valuation-container'}>
           <div className={'row'}>
-            <div className={'col-md-4 valuation-input'}>
+            <div className={'col-md-4 valuation-input'} style={{paddingBottom: '29px'}}>
               <p className={'valuation-input-title'}>{'Tipo de vivienda'}</p>
               <IconSelector
                 onUpdateValue={this._onUpdateValue.bind(this)}

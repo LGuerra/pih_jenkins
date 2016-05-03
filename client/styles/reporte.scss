@@ -271,10 +271,10 @@
 }
 
 .ControlBar {
+  display: flex;
+  align-items: center;
   .control-container {
-    height: 40px;
-    padding: 20px;
-    margin-bottom: 15px;
+    padding: 10px;
     z-index: 80;
     .menu-item {
       margin-right: 20px;
@@ -283,7 +283,7 @@
       padding: 0px 20px;
       text-align: center;
       &:hover {
-        border-bottom: 3px solid #1394bc;
+        border-bottom: 2px solid #35c0be;
       }
       a {
         font-size: 13px;
@@ -293,7 +293,7 @@
       }
     }
     .menu-item-selected {
-      border-bottom: 3px solid #1394bc;
+      border-bottom: 2px solid #35c0be;
     }
     .menu-item-disabled {
       cursor: not-allowed;
@@ -312,19 +312,24 @@
 }
 
 .ColoniaForm {
+  padding: 20px 0px;
+  .landing-search-form{
+    margin-top: 0px;
+    padding: 0;
+  }
   .buttons-container {
     display: flex;
-    justify-content: space-around;
-    .btn-blue {
-      background-color: #35c0be;
-    }
-    .btn {
-      color: #FFF;
+    justify-content: center;
+    button{
+      margin: 10px 15px;
     }
   }
 }
 
 .ViviendaForm {
+  .landing-search-form{
+    margin-top: 0px;
+  }
   .valuation-container {
     .row {
       width: 100%;
@@ -335,12 +340,6 @@
     justify-content: space-around;
     .buttons-container {
       padding: 20px 0px;
-      .btn {
-        color: #FFF;
-      }
-      .btn-blue {
-        background-color: #35c0be;
-      }
       display: flex;
       justify-content: space-around;
       width: 400px;
@@ -349,5 +348,6 @@
 }
 
 .ViviendaForm {
-  padding: 0px 15px;
+  padding: 20px 0px;
 }
+
