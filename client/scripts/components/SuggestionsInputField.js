@@ -1,6 +1,7 @@
 // Vendor
 import React, { Component } from 'react';
 import _                    from 'lodash';
+import { helpersAPI }       from 'api-banca';
 
 // Components
 import SuggestionsDropdown  from './SuggestionsDropdown';
@@ -120,20 +121,35 @@ class SuggestionsInputField extends Component {
         let prefix = arr.pop();
         let b      = arr.map( e => "'"+e+"'").join(" ");
 
-        API.landing({"q": "(or(and "+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
-                     "return": "name",
-                     "q.parser": "structured",
-                     "highlight.name": "{}"})
-          .done(response => {
-            //Desirable - IF response.isEmpty tell the user there is no data
-            suggests = this._parseSuggestions(response.hits.hit);
-            suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
+        helpersAPI.suburbsByName({
+          'q': `(or(and ${b}(prefix '${prefix}'))'${searchInput}')`
+        })
+        .then(response => {
+          response = response.data;
+          suggests = this._parseSuggestions(response.hits.hit);
+          suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
 
-            this.setState({
-              showDropdown: true,
-              suggests: suggests
-            });
+          this.setState({
+            showDropdown: true,
+            suggests: suggests
           });
+        });
+
+
+        //API.landing({"q": "(or(and "+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
+        //             "return": "name",
+        //             "q.parser": "structured",
+        //             "highlight.name": "{}"})
+        //  .done(response => {
+        //    //TODO If response.isEmpty tell the user there is no data
+        //    suggests = this._parseSuggestions(response.hits.hit);
+        //    suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
+
+        //    this.setState({
+        //      showDropdown: true,
+        //      suggests: suggests
+        //    });
+        //  });
       }
     } else {
       this.setState({

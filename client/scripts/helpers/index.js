@@ -53,20 +53,3 @@ export const redirectToLanding = (nextState, replace, next) => {
 
   });
 }
-
-// export const userIsAuthenticated = (nextState, replace, next) => {
-//   serverAuth()
-//   .then((args) => {
-//     // if(nextState.location.pathname === '/users/login') {
-//     //   replace({ pathname: '/' });
-//     // }
-//     next();
-//   }, 
-//   (args) => {
-//     replace({
-//       pathname: '/users/login',
-//       state: { nextPathname: nextState.location.pathname }
-//     })
-//     next();
-//   });
-// };
