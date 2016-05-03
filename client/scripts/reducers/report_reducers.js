@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
-import Helpers    from '../helpers';
-
 import {
+  SET_VIEW_TYPE,
+  SET_URL_PARAMS,
   SET_VIVIENDA_INFO,
   SET_COLONIA_INFO,
   FETCH_COLONIA_INFO,
@@ -22,20 +22,8 @@ import {
 } from '../actions/report_actions';
 
 const INITIAL_STATE = {
-  viewType: Helpers.getURLParameter('tipo'),
-  urlParams: {
-    longitud: Number(Helpers.getURLParameter('longitud')),
-    latitud: Number(Helpers.getURLParameter('latitud')),
-    recamaras: Number(Helpers.getURLParameter('recamaras')) || 1,
-    banos: Number(Helpers.getURLParameter('banos')) || 1,
-    estacionamientos: Number(Helpers.getURLParameter('estacionamientos')) || 0,
-    edad: Number(Helpers.getURLParameter('edad')) || 1,
-    id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_propiedad')) || 2,
-    area_construida: Number(Helpers.getURLParameter('area_construida')) || 100,
-    address: Helpers.getURLParameter('address') || '',
-    tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')) || 0,
-    colonia: Helpers.getURLParameter('colonia') || ''
-  },
+  viewType: null,
+  urlParams: {},
   viviendaInfo: {},
   coloniaInfo: [],
   ofertaDisponible: {},
@@ -55,6 +43,21 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
+
+    case SET_URL_PARAMS: { 
+      return {
+        ...state,
+        urlParams: action.payload
+      }
+    }
+
+    case SET_VIEW_TYPE: {
+      return {
+        ...state,
+        viewType: action.payload
+      }
+    }
+
     case SET_VIVIENDA_INFO: {
       if (_.isEqual(action.payload, state.urlParams)) {
         return state;

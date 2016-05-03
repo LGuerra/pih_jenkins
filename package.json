@@ -52,7 +52,7 @@
     "webpack-sources": "^0.1.0"
   },
   "scripts": {
-    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --require ./test/js/*  --recursive",
+    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
