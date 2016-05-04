@@ -50,6 +50,9 @@
     }
   }
 }
+.navbar-default{
+  background-color: #E8E8E8;
+}
 
 .HiddenButtons {
   display: none;
@@ -271,29 +274,37 @@
 }
 
 .ControlBar {
+  display: flex;
+  align-items: center;
   .control-container {
-    height: 40px;
-    padding: 20px;
-    margin-bottom: 15px;
     z-index: 80;
     .menu-item {
       margin-right: 20px;
+      padding: 8px 15px;
       display: inline-block;
       text-transform: uppercase;
-      padding: 0px 20px;
       text-align: center;
+      img{
+        @include transition(all, 0.5s, ease);
+        margin-left: 9px;
+      }
+      img.active {
+        -ms-transform: rotate(-180deg); /* IE 9 */
+        -webkit-transform: rotate(-180deg); /* Chrome, Safari, Opera */
+        transform: rotate(-180deg);
+      }
       &:hover {
-        border-bottom: 3px solid #1394bc;
+        border-bottom: 3px solid #71d2d1;
       }
       a {
         font-size: 13px;
-        color: #222222;
+        color: #5D5D5D;
         font-weight: 400;
         text-decoration: none;
       }
     }
     .menu-item-selected {
-      border-bottom: 3px solid #1394bc;
+      border-bottom: 3px solid #35c0be;
     }
     .menu-item-disabled {
       cursor: not-allowed;
@@ -312,19 +323,25 @@
 }
 
 .ColoniaForm {
+  padding: 20px 0px;
+  .landing-search-form{
+    margin-top: 0px;
+    padding: 0;
+  }
   .buttons-container {
     display: flex;
-    justify-content: space-around;
-    .btn-blue {
-      background-color: #35c0be;
-    }
-    .btn {
-      color: #FFF;
+    justify-content: center;
+    button{
+      margin: 10px 15px;
     }
   }
 }
 
 .ViviendaForm {
+  .landing-search-form{
+    margin-top: 0px;
+    padding-top: 0px;
+  }
   .valuation-container {
     .row {
       width: 100%;
@@ -335,12 +352,6 @@
     justify-content: space-around;
     .buttons-container {
       padding: 20px 0px;
-      .btn {
-        color: #FFF;
-      }
-      .btn-blue {
-        background-color: #35c0be;
-      }
       display: flex;
       justify-content: space-around;
       width: 400px;
@@ -349,5 +360,6 @@
 }
 
 .ViviendaForm {
-  padding: 0px 15px;
+  padding: 20px 0px;
 }
+

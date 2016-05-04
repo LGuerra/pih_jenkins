@@ -29,19 +29,31 @@ class Home extends React.Component {
     return (
       <div style={{ height: '100%' , background: '#efefef' }}>
         <NavBar logoText='Intelimétrica'/>
-        <div className='container' style={{ minHeight: 'calc(100% - 102px)'}}>
-          <div className='col-sm-12'>
-            <h1 style={{ fontWeight: 100, color: '#35C0BE', textAlign: 'center' }}>Intelimétrica</h1>
-            <hr style={{ borderColor: '#35C0BE' }}/>
-            <div className='row'>
-              <div className='col-sm-6'>
-                <p>Imperdiet est fusce accumsan libero nam, sit Justo quis suspendisse tempor lacinia ultricies velit ligula justo potenti. Blandit potenti cubilia semper non augue Amet ligula. Donec vehicula, duis lorem faucibus conubia mus risus taciti cras. Porta ligula et a. Molestie, praesent.</p>
-                <p>Urna vel lacinia ornare. Nibh. Quisque. Viverra vitae blandit curae; dui fames feugiat curae; pretium aptent. Montes.</p>
-                <p>Imperdiet pharetra mauris, vehicula sit pretium class interdum ridiculus vivamus posuere curae; sem mauris tempus penatibus volutpat senectus sit fringilla viverra nec amet. Hymenaeos. Porta nisl arcu magnis vivamus. Fusce gravida. Erat. Egestas facilisi cubilia taciti congue nascetur quis est fusce libero.</p>
+        <div className='container' style={{ height: '85vh', display: 'flex', alignItems: 'center'}}>
+          <div className='row'>
+            <div className='col-sm-12'>
+              <h1 style={{ fontWeight: 100, color: '#35C0BE', textAlign: 'center' }}>Plataforma de Inteligencia Hipotecaria</h1>
+              <hr style={{ borderColor: '#35C0BE', marginBottom: '100px' }}/>
+              <div className='row landing-content'>
+                <div className='col-sm-6 inner-content'>
+                  <p>Imperdiet est fusce accumsan libero nam, sit Justo quis suspendisse tempor lacinia ultricies velit ligula justo potenti. Blandit potenti cubilia semper non augue Amet ligula. Donec vehicula, duis lorem faucibus conubia mus risus taciti cras. Porta ligula et a. Molestie, praesent.</p>
+                  <p>Urna vel lacinia ornare. Nibh. Quisque. Viverra vitae blandit curae; dui fames feugiat curae; pretium aptent. Montes.</p>
+                  <p>Imperdiet pharetra mauris, vehicula sit pretium class interdum ridiculus vivamus posuere curae; sem mauris tempus penatibus volutpat senectus sit fringilla viverra nec amet. Hymenaeos. Porta nisl arcu magnis vivamus. Fusce gravida. Erat. Egestas facilisi cubilia taciti congue nascetur quis est fusce libero.</p>
+                </div>
+                <div className='col-sm-6 inner-content'>
+                  <Form onSubmit={this.logInUser}/>
+                </div>
               </div>
-              <div className='col-sm-6'>
-                <Form onSubmit={this.logInUser}/>
-              </div>
+            </div>
+            <div className='col-sm-12 landing-arrow'>
+              <img height={'30px'} src={IMAGES.downArrow}/>
+            </div>
+          </div>
+        </div>
+        <div className='landing-secondary-content'>
+          <div className='container'>
+            <div className='col-sm-6 col-sm-offset-6'>
+              Ut et iaculis elit, vel consequat mi. Suspendisse dapibus tempor enim, condimentum viverra massa scelerisque sed. Quisque sed posuere quam. In vehicula est in odio semper venenatis.
             </div>
           </div>
         </div>

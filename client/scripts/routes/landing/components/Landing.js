@@ -79,19 +79,19 @@ class Landing extends React.Component {
         <div className={'inner-form'}>
           <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
           <div className={'row colonia-search'}>
-            <div className={'col-md-8'}>
+            <div className={'col-md-10'} style={{padding: '0'}}>
               <LandingSearchForm
                 searchType={'Colonia'}
                 placeholder={'Ingrese el nombre de la colonia'}/>
             </div>
-            <div className={'col-md-4 btn-disponible'} style={{marginTop: '55px'}}>
-              <button className={'btn'}>
+            <div className={'col-md-2 btn-disponible'} style={{marginTop: '26px'}}>
+              <button className={'aqua-button'}>
                {'VER COLONIAS DISPONIBLES'}
               </button>
             </div>
           </div>
           <div className={'buttons-redirect'}>
-            <button onClick={this._generateColoniaReport.bind(this)} className={'btn'}>
+            <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
               {'GENERAR REPORTE DE COLONIA'}
             </button>
           </div>
@@ -108,7 +108,7 @@ class Landing extends React.Component {
             infoParams={this.props.infoParams}
             onUpdateData={this._onUpdateDataParams.bind(this)}/>
           <div className={'buttons-redirect'}>
-            <button onClick={this._generateViviendaReport.bind(this)} className={'btn'}>
+            <button onClick={this._generateViviendaReport.bind(this)} className={'aqua-button'}>
               {'GENERAR REPORTE DE VIVIENDA'}
             </button>
           </div>
@@ -124,12 +124,12 @@ class Landing extends React.Component {
               <h2>{'Plataforma de Inteligencia Hipotecaria'}</h2>
             </div>
           </div>
-          <div className={'buttons-redirect'}>
+          <div className={'buttons-redirect'} style={{margin: '20px'}}>
             <button onClick={this._toggleMenu.bind(this, 1)} className={'btn btn-left ' + (this.props.activeForm === 1 ? 'active' : '')}>
-              {'REPORTE VIVIENDA'}
+              {'REPORTE COLONIA'}
             </button>
             <button onClick={this._toggleMenu.bind(this, 2)} className={'btn btn-right ' + (this.props.activeForm === 2 ? 'active' : '')}>
-              {'REPORTE COLONIA'}
+              {'REPORTE VIVIENDA'}
             </button>
           </div>
           <div id={'colonia-form'} className={'LandingForm'}>
