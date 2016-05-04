@@ -30,7 +30,9 @@ module.exports = {
     path: path.resolve(__dirname, 'application'),
     publicPath: 'http://localhost:8090/application/',
     // path: path.resolve('./app/assets/javascripts/build/'),
-    filename: '[name].js'
+    filename: '[name].js',
+    sourceMapFilename: 'debugging/[file].map',
+    pathinfo: true
   },
   watch: 'true',
   // modulesDirectories: modulePaths,
@@ -70,6 +72,9 @@ module.exports = {
   stats: {
     colors: true
   },
+  target: 'web',
+  debug: true,  
+  devtool: 'eval-source-map',
   devServer: {
     contentBase: __dirname,
     quiet: false,
