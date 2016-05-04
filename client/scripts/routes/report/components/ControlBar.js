@@ -125,6 +125,17 @@ class ControlBar extends React.Component{
         $("#" + collapsable).collapse('hide');
       }
     });
+
+    if (this.state.formActive !== divId) {
+      this.setState({
+        formActive: divId
+      });
+    } else {
+      this.setState({
+        formActive: null
+      });
+    }
+
   }
 
   componentDidUpdate(prevProps) {
@@ -140,11 +151,11 @@ class ControlBar extends React.Component{
               <div className={'control-container'}>
                 <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.viewType === 'Colonia' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Colonia'}</a>
-                  <img height={'12px'} src={IMAGES.downArrow} />
+                  <img height={'12px'} src={IMAGES.downArrow} className={this.state.formActive === 'ColoniaForm' ? 'active' : ''}/>
                 </div>
                 <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.viewType === 'Vivienda' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Vivienda'}</a>
-                  <img height={'12px'} src={IMAGES.downArrow} />
+                  <img height={'12px'} src={IMAGES.downArrow} className={this.state.formActive === 'ViviendaForm' ? 'active' : ''}/>
                 </div>
               </div>
             </div>

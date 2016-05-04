@@ -285,7 +285,13 @@
       text-transform: uppercase;
       text-align: center;
       img{
+        @include transition(all, 0.5s, ease);
         margin-left: 9px;
+      }
+      img.active {
+        -ms-transform: rotate(-180deg); /* IE 9 */
+        -webkit-transform: rotate(-180deg); /* Chrome, Safari, Opera */
+        transform: rotate(-180deg);
       }
       &:hover {
         border-bottom: 3px solid #71d2d1;
