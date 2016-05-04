@@ -31,7 +31,7 @@ class IconsSelector extends Component {
         <div
             key={'icon-' + index}
             onClick={this._selectIcon.bind(this, icon.value)}
-            className={'icon'}>
+            className={'icon is' + isActive}>
           <img className={'icon-image'} width={20} height={20} src={IMAGES[icon.icon + isActive]} />
           <p className={'icon-label'}>{icon.label}</p>
         </div>

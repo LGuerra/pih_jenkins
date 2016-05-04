@@ -1,7 +1,7 @@
 // Vendor
 import React, { Component } from 'react';
 import _                    from 'lodash';
-import { helpersAPI }       from 'api-banca';
+import { helpersAPI }       from '../api/api-helper';
 
 // Components
 import SuggestionsDropdown  from './SuggestionsDropdown';
@@ -49,11 +49,11 @@ class SuggestionsInputField extends Component {
       let arrIds = this.state.ids;
       let length = arr.length;
 
-      if ( e.keyCode === 40 ) {
+      if ( e.keyCode == 40 ) {
         i += 1;
         if (i >= length) i -= length;
         this.refs.input.value = this.state.suggests[i].content;
-      } else if ( e.keyCode === 38 ) {
+      } else if ( e.keyCode == 38 ) {
         i -= 1;
         if (i < 0) i += length;
         this.refs.input.value = this.state.suggests[i].content;
@@ -63,7 +63,7 @@ class SuggestionsInputField extends Component {
         selectedSuggestion: arr[i]
       });
 
-      if ( e.keyCode === 13 ) {
+      if ( e.keyCode == 13 ) {
         this._onSelectItem(this.state.selectedSuggestion);
       }
     }
@@ -136,7 +136,7 @@ class SuggestionsInputField extends Component {
         });
 
 
-        //API.landing({"q": "(or(and "+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
+        // API.landing({"q": "(or(and "+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
         //             "return": "name",
         //             "q.parser": "structured",
         //             "highlight.name": "{}"})
