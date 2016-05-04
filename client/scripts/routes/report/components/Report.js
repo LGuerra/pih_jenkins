@@ -42,7 +42,12 @@ class Report extends React.Component {
     return loadingFrame;
   }
 
+  componentDidUpdate() {
+    console.log('Did Update');
+  }
+
   componentDidMount() {  
+    console.log('Did Mount');
     let urlParams = {
       longitud: Number(Helpers.getURLParameter('longitud')) || 0,
       latitud: Number(Helpers.getURLParameter('latitud')) || 0,
@@ -82,7 +87,6 @@ class Report extends React.Component {
 
       return (
         <div onClick={this._clickOutside}>
-          <URLHandler {..._.merge(urlParams, { tipo: this.props.viewType })} />
           <header>
             <ControlBar>
               <DownloadPDFReport />

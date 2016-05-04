@@ -15,16 +15,17 @@ import { helpersAPI }                           from '../../../api/api-helper.js
 import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
 
 function togglePopover(identifier, content) {
-  $(identifier)
-    .addClass('error');
+  $(identifier).addClass('error');
 
-  $(identifier).popover({content: content,
-                                        placement: 'top'});
+  $(identifier).popover({
+    content: content,
+    placement: 'top'
+  });
+
   $(identifier).popover('show');
 
   setTimeout(() => {
-    $(identifier)
-      .removeClass('error');
+    $(identifier).removeClass('error');
     $(identifier).popover('destroy');
   }, 2000);
 }
@@ -107,7 +108,12 @@ class ControlBar extends React.Component{
       }
 
       this._toggleCollapse('.ViviendaForm')
-      this.props.onSetViviendaInfo(toFormat);
+      this.context.router.push({
+        pathname: '/reporte',
+        query: toFormat,
+        state: {}
+      });
+      // this.props.onSetViviendaInfo(toFormat);
     } else {
       togglePopover('.Vivienda', 'Debes elegir una vivienda');
     }
@@ -212,5 +218,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);
+ControlBar.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
+export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);

@@ -50,7 +50,6 @@ const routes = {
           serverAuthResponse()
           .then((args) => {
             return require.ensure([], (require) => {
-              // buggy af
               cb(null, require('./routes/landing/components/Landing').default);
             })
           }).catch((args) => {
@@ -71,8 +70,7 @@ const routes = {
   ]
 };
 
-$( document ).ready(function() {
-  console.log('hi');
+$(document).ready(function() {
   render(
     <Provider store={createStoreWithMiddleware(reducers)}>
       <Router history={browserHistory} routes={routes} />

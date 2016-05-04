@@ -2,7 +2,8 @@
   "extends": "eslint:recommended",
   "rules": {
     "no-unused-vars": 0,
-    "no-console": 0
+    "no-console": 0,
+    "no-debugger": 0
   },
   "env": {
     "es6": true,
@@ -13,6 +14,7 @@
     "$": true,
     "google": true,
     "canvg": true,
+    "debugger": true,
     "uritemplate": true
   },
   "ecmaFeatures": {

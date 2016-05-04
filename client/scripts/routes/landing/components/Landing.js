@@ -30,14 +30,27 @@ class Landing extends React.Component {
   }
 
   _generateColoniaReport() {
+    console.log(this);
+    // debugger;
     if (this.props.colonia.id) {
-      window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
+      this.context.router.push({
+        pathname: '/reporte',
+        query: { 
+          colonia: this.props.colonia.id,
+          tipo: 'Colonia'
+        },
+        state: {
+          sample: 'dude'
+        }
+      });
+      // window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
     } else {
       togglePopover('.Colonia', 'Ingrese una colonia válida');
     }
   }
 
   _generateViviendaReport() {
+    console.log(this);
     if (this.props.vivienda.id) {
       Helpers.getHouseInfor(this.props.vivienda.id, (place) => {
         let latitude    = place.geometry.location.lat();
@@ -48,7 +61,26 @@ class Landing extends React.Component {
           .then((response) => {
             if (response.data.trusted) {
               let colonia = response.data.id;
-              window.open(`/reporte?colonia=${colonia}&tipo=Vivienda&longitud=${longitude}&latitud=${latitude}&recamaras=${infoParams.recamaras}&banos=${infoParams.banos}&estacionamientos=${infoParams.estacionamientos}&id_tipo_propiedad=${infoParams.id_tipo_propiedad}&edad=${infoParams.edad}&area_construida=${infoParams.area_construida}&tipo_operacion=0&address=${this.props.vivienda.content}`, '_self')
+              this.context.router.push({
+                pathname: '/reporte',
+                query: { 
+                  colonia: colonia,
+                  tipo: 'Vivienda',
+                  longitud: longitude,
+                  latitud: latitude,
+                  recamaras: infoParams.recamaras,
+                  banos: infoParams.banos,
+                  estacionamientos: infoParams.estacionamientos,
+                  id_tipo_propiedad: infoParams.id_tipo_propiedad,
+                  edad: infoParams.edad,
+                  area_construida: infoParams.area_construida,
+                  tipo_operacion: 0,
+                  address: this.props.vivienda.content
+                },
+                state: {
+                  sample: 'dude'
+                }
+              });
             } else {
               togglePopover('.Vivienda', 'Ingrese una dirección válida');
             }
@@ -72,9 +104,7 @@ class Landing extends React.Component {
   }
 
   render() {
-    console.log('rrrrrrrr');
     var content;
-
     if (this.props.activeForm === 1) {
       content = (
         <div className={'inner-form'}>
@@ -144,6 +174,10 @@ class Landing extends React.Component {
 function mapStateToProps(state) {
   return state.landing;
 }
+
+Landing.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 // export default Landing;
 export default connect(mapStateToProps, { onSetParamsInfo, onSetForm })(Landing);
