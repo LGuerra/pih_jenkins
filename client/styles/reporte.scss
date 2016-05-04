@@ -50,6 +50,9 @@
     }
   }
 }
+.navbar-default{
+  background-color: #E8E8E8;
+}
 
 .HiddenButtons {
   display: none;
@@ -274,26 +277,28 @@
   display: flex;
   align-items: center;
   .control-container {
-    padding: 10px;
     z-index: 80;
     .menu-item {
       margin-right: 20px;
+      padding: 8px 15px;
       display: inline-block;
       text-transform: uppercase;
-      padding: 0px 20px;
       text-align: center;
+      img{
+        margin-left: 9px;
+      }
       &:hover {
-        border-bottom: 2px solid #35c0be;
+        border-bottom: 3px solid #71d2d1;
       }
       a {
         font-size: 13px;
-        color: #222222;
+        color: #5D5D5D;
         font-weight: 400;
         text-decoration: none;
       }
     }
     .menu-item-selected {
-      border-bottom: 2px solid #35c0be;
+      border-bottom: 3px solid #35c0be;
     }
     .menu-item-disabled {
       cursor: not-allowed;
@@ -329,6 +334,7 @@
 .ViviendaForm {
   .landing-search-form{
     margin-top: 0px;
+    padding-top: 0px;
   }
   .valuation-container {
     .row {

@@ -19,7 +19,7 @@ class ViviendaParamsFields extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop: '25px'}}>
         <div style={{borderBottom: '1px solid #DDDDDD'}} className={'valuation-container'}>
           <div className={'row'}>
             <div className={'col-md-4 valuation-input'} style={{paddingBottom: '29px'}}>

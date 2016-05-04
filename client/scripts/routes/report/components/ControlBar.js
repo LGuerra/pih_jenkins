@@ -140,9 +140,11 @@ class ControlBar extends React.Component{
               <div className={'control-container'}>
                 <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.viewType === 'Colonia' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Colonia'}</a>
+                  <img height={'12px'} src={IMAGES.downArrow} />
                 </div>
                 <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.viewType === 'Vivienda' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Vivienda'}</a>
+                  <img height={'12px'} src={IMAGES.downArrow} />
                 </div>
               </div>
             </div>
@@ -168,11 +170,11 @@ class ControlBar extends React.Component{
               </div>
             </div>
               <div className={'buttons-container'}>
-                <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
-                  {'Generar Reporte'}
-                </button>
                 <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'gray-button'}>
                   {'Cancelar'}
+                </button>
+                <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
+                  {'Generar Reporte'}
                 </button>
               </div>
           </div>
