@@ -19,7 +19,6 @@ class App extends React.Component {
   render() {
     const content = this.getNavBarContent();
     var userSVG = require('file!images-banca/user.svg');
-    //console.log(userSVG);
     return (
       <div id='banca-router'>
         <NavBar id='my-new-id' logoText='Intelimétrica'>

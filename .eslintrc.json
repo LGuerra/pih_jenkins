@@ -10,14 +10,9 @@
     "node": true
   },
   "globals": {
-    "__API_STAGE__": true,
     "$": true,
-    "IMAGES": true,
     "google": true,
     "canvg": true,
-    "apigClient": true,
-    "apigClientFactory": true,
-    "apiGateway": true,
     "uritemplate": true
   },
   "ecmaFeatures": {

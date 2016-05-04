@@ -51,8 +51,7 @@ const routes = {
           .then((args) => {
             return require.ensure([], (require) => {
               // buggy af
-              cb(null, Landing);
-              // cb(null, require('./components/GoogleMap'));
+              cb(null, require('./routes/landing/components/Landing').default);
             })
           }).catch((args) => {
             cb();

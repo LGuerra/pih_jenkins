@@ -39,9 +39,10 @@ class BackToTop extends React.Component {
   }
 
   render() {
+    var goToTop = require('file!images-banca/go_to_top.svg');
     return (
       <a className={'BackToTop'} href={'#'}>
-        <img height={'40px'} src={IMAGES.go_to_top}/>
+        <img height={'40px'} src={goToTop}/>
       </a>
     );
   }

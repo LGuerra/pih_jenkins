@@ -29,13 +29,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'application'),
     publicPath: 'http://localhost:8090/application/',
-    // path: path.resolve('./app/assets/javascripts/build/'),
     filename: '[name].js',
     sourceMapFilename: 'debugging/[file].map',
     pathinfo: true
   },
   watch: 'true',
-  // modulesDirectories: modulePaths,
   module: {
     preLoaders: [
       {

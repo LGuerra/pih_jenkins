@@ -72,7 +72,8 @@ class Landing extends React.Component {
   }
 
   render() {
-    let content;
+    console.log('rrrrrrrr');
+    var content;
 
     if (this.props.activeForm === 1) {
       content = (
@@ -115,7 +116,6 @@ class Landing extends React.Component {
         </div>
       );
     }
-
     return (
       <div className={'Landing'}>
         <div className={'Index'}>
@@ -145,5 +145,5 @@ function mapStateToProps(state) {
   return state.landing;
 }
 
+// export default Landing;
 export default connect(mapStateToProps, { onSetParamsInfo, onSetForm })(Landing);
-

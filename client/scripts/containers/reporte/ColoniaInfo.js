@@ -55,6 +55,7 @@ class ColoniaInfo extends React.Component {
           : apreciacion;
       }
 
+      var asterisk = require('file!images-banca/asterisk.svg');
       content = (
         <div className={'InfoContainer'}>
           <div className={'InfoElement'} style={{textAlign: 'center'}}>
@@ -62,7 +63,7 @@ class ColoniaInfo extends React.Component {
               {data.averageOffer ? Helpers.formatAsPrice(data.averageOffer) : 'No disponible'}
             </p>
             <p className={'subtitle'}>{'Precio promedio total'}
-              <img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}} src={IMAGES.asterisk} />
+              <img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}} src={asterisk} />
             </p>
           </div>
           <div className={'InfoElement'} style={{textAlign: 'center'}}>
@@ -70,7 +71,7 @@ class ColoniaInfo extends React.Component {
               {data.averageM2 ? Helpers.formatAsPrice(data.averageM2) : 'No disponible'}
             </p>
             <p className={'subtitle'}>{'Precio promedio por m²'}
-              <img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}} src={IMAGES.asterisk} />
+              <img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}} src={asterisk} />
             </p>
           </div>
           <div className={'InfoElement'} style={{textAlign: 'center'}}>

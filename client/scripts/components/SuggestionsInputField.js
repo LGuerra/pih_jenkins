@@ -155,11 +155,12 @@ class SuggestionsInputField extends Component {
       );
     }
 
+    var lupaSVG = require('file!images-banca/black_lupa.svg');
     return (
       <div className={'form-group ' + this.props.specificGroupClass}>
         <div className={'input-group'}>
           <div className="input-group-addon">
-            <img width={20} height={20} src={IMAGES.black_lupa}></img>
+            <img width={20} height={20} src={lupaSVG}/>
           </div>
           <input
             id="landing-input"

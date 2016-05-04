@@ -30,7 +30,12 @@ class OfertaDisponible extends React.Component {
   render() {
     var content = <Spinner style={{height: '120px'}}/>;
     var data = this.props.ofertaDisponible;
-
+    var IMAGES = {
+      calendar_houses: require('file!images-banca/calendar_houses.svg'),
+      asterisk: require('file!images-banca/asterisk.svg'),
+      houses: require('file!images-banca/houses.svg'),
+      calendar: require('file!images-banca/calendar.svg')
+    };
     if (data) {
       content = (
         <div className={'listados'}>

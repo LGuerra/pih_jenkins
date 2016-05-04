@@ -12,8 +12,11 @@ class Home extends React.Component {
 
   logInUser(user) {
     userAPI.signIn(user).then((data) => {
+      console.log(this);
+      console.log(data);
       if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
         var nextPath = '/';
+        console.log('redirect');
         if(this.props.location.state !== null) {
           nextPath = this.props.location.state.nextPathname;
         }

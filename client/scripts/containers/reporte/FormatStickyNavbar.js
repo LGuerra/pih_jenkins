@@ -17,7 +17,14 @@ class FormatStickyNavbar extends React.Component{
   _buildViviendaTopBar() {
     let props = this.props;
     let image;
-
+    var IMAGES = {
+      house: require('file!images-banca/house.svg'),
+      apartment: require('file!images-banca/apartment.svg'),
+      bed: require('file!images-banca/bed.svg'),
+      wc: require('file!images-banca/wc.svg'),
+      car: require('file!images-banca/car.svg'),
+      area: require('file!images-banca/area.svg')
+    };
     if (props.viviendaInfo) {
       if (props.urlParams.id_tipo_propiedad == 2) {
         image = (<img width={'15px'} src={IMAGES.house} />);

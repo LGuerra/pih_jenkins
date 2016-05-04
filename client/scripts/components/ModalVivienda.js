@@ -85,7 +85,11 @@ class ModalVivienda extends React.Component {
 
   render () {
     let showing = this.state.showingDropdowns;
-
+    const IMAGES = {
+      blue_bed: require('file!images-banca/bed2.svg'),
+      blue_wc: require('file!images-banca/wc2.svg'),
+      blue_car: require('file!images-banca/car2.svg')
+    };
     return (
       <div className="modal-box" onClick={this._clickOutside}>
         <div className="modal-row modal-icons-row" style={{padding: '15px 0 10px 0'}}>

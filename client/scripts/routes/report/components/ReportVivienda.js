@@ -20,6 +20,7 @@ class ReporteVivienda extends Component {
   }
 
   render() {
+    var asterisk = require('file!images-banca/asterisk.svg');
     return (
       <div>
         <FormatStickyNavbar
@@ -55,7 +56,7 @@ class ReporteVivienda extends Component {
                 zoneID={this.props.coloniaID} />
             </div>
             <div>
-              <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+              <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}} src={asterisk} /></h4>
               <FormatStackedBarChart
                 ref={'distribucionTipologia'}
                 id={'distribucion_tipologia'}
@@ -70,7 +71,7 @@ class ReporteVivienda extends Component {
                   zoneID={this.props.coloniaID} />
               </div>
               <div className={'col-sm-6 barchart-section'}>
-                <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+                <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}} src={asterisk} /></h4>
                 <FormatBarChart
                   ref={'distribucionPrecio'}
                   id={'distribucion_precio'}
@@ -85,7 +86,7 @@ class ReporteVivienda extends Component {
               ref={'comparativoViviendas'}
               params={this.props.urlParams}/>
             <div className={'Footnote'}>
-              <img width={'7px'} src={IMAGES.asterisk} />
+              <img width={'7px'} src={asterisk} />
               <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
             </div>
           </div>

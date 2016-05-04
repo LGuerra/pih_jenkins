@@ -82,7 +82,10 @@ class Table extends React.Component {
         }
       }
     });
-
+    const IMAGES = {
+      plus: require('file!images-banca/plus.svg'),
+      less: require('file!images-banca/less.svg')
+    };
     if (limit || limit == 0) {
       let label = <p style={{marginTop:'25px'}}><img src={IMAGES.plus} width={'15px'}></img><span> comparables</span></p>;
       if (limit == 0) {

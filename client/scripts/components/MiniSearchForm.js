@@ -369,6 +369,7 @@ class MiniSearchForm extends React.Component {
     let ddmodalShown = this.state.ddmodalShown;
     const placement = (window.matchMedia("(max-width: 768px)").matches) ? 'top' : 'left';
 
+    var lupa = require('file!images-banca/lupa.svg');
     return (
           <div className={'mini-search-div'}>
             <div id="id-search-container" onClick={this._stopPropagation} className={'mini-search-container'}>
@@ -400,7 +401,7 @@ class MiniSearchForm extends React.Component {
               </div>
               <div className={'mini-sarch-button'}>
                 <button className="mini-search-button" onClick={this._sendRequest}>
-                  <img width={20} height={20} src={IMAGES.lupa}></img>
+                  <img width={20} height={20} src={lupa}></img>
                 </button>
               </div>
             </div>

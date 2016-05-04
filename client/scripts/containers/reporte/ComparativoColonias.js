@@ -61,10 +61,11 @@ class ComparativoColonias extends React.Component {
 
     if (this.props.coloniasComparables) {
       let data = formatComparativoColonias(this.props.coloniasComparables, this.props.colonia);
+      var asterisk = require('file!images-banca/asterisk.svg');
       if (data.rows[0]) {
         content = (
           <div>
-            <h3 className={'SectionTitle'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
+            <h3 className={'SectionTitle'}>Colonias colindantes<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={asterisk} /></h3>
             <div className={'LineDivider'}></div>
             <div className={'row'}>
               <div className={'col-md-12 col-sm-12'} style={{padding: '0px'}}>

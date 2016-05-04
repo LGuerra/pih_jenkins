@@ -25,9 +25,9 @@ class Marker extends React.Component{
       position: new google.maps.LatLng(props.latitud, props.longitud),
       draggable: false
     });
-
+    const pinSVG = require('file!images-banca/pin_red.svg');
     this.marker.setIcon({
-      url: IMAGES['pin_' + props.color],
+      url: pinSVG,
       scaledSize: new google.maps.Size(20, 27),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(10, 27)
