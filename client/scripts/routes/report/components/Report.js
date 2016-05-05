@@ -88,7 +88,9 @@ class Report extends React.Component {
       <div onClick={this._clickOutside}>
         <header>
           <ControlBar urlParams={urlParams} >
-            <DownloadPDFReport />
+            <DownloadPDFReport
+              viewType={viewType}
+              urlParams={urlParams} />
           </ControlBar>
           {loadingFrame}
         </header>

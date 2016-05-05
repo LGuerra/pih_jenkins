@@ -128,9 +128,6 @@ class ControlBar extends React.Component{
 
   _toggleCollapse(divId) {
     let collapsables = ['ColoniaForm', 'ViviendaForm'];
-    this.refs.colonia_field.cleanSuggestions();
-    this.refs.vivienda_field.cleanSuggestions();
-
     _.forEach(collapsables, (collapsable) => {
       if (collapsable === divId) {
         $("#" + collapsable).collapse('toggle');

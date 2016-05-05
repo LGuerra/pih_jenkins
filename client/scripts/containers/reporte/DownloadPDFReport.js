@@ -50,7 +50,7 @@ class DownloadPDFReport extends Component {
       });
     });
 
-    if (this.props.report.viewType === 'Vivienda') {
+    if (this.props.viewType === 'Vivienda') {
       viviendaInfo = _.merge({
         confianza:  report.viviendaInfo.confianza || 1,
         precioM2:   report.viviendaInfo.valuacion_m2 || 0,
@@ -69,7 +69,7 @@ class DownloadPDFReport extends Component {
 
       viviendasComparables = formatComparativoViviendas(report.viviendasComparables, viviendaInfo, report.coloniaInfo[2].nombre);
     } else {
-      coloniasComparables = formatComparativoColonias(report.coloniasComparables, this.props.report.urlParams.colonia);
+      coloniasComparables = formatComparativoColonias(report.coloniasComparables, this.props.urlParams.colonia);
     }
 
     dataTokens = dataTokens.concat([
@@ -117,8 +117,8 @@ class DownloadPDFReport extends Component {
   }
 
   _downloadReport() {
-    //let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
-    let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
+    let host = 'http://reportserver-production.elasticbeanstalk.com/reporter/reporte_vivienda/';
+    //let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
     let today = new Date();
     let dd = today.getDate();
     let mm = today.getMonth()+1;
@@ -129,11 +129,11 @@ class DownloadPDFReport extends Component {
 
     let date = dd + '-' + mm + '-' + yyyy;
 
-    if (this.props.report.viewType === 'Vivienda') {
+    if (this.props.viewType === 'Vivienda') {
       let randomText = Math.random().toString(36).substr(2, 10);
-      this.reportUrl = host + this.props.report.viewType.toLowerCase() + '/' + this.props.report.urlParams.colonia + '-' + randomText + '/' + date;
+      this.reportUrl = host + this.props.viewType.toLowerCase() + '/' + this.props.urlParams.colonia + '-' + randomText + '/' + date;
     } else {
-      this.reportUrl = host + this.props.report.viewType.toLowerCase() + '/' + this.props.report.urlParams.colonia + '/' + date;
+      this.reportUrl = host + this.props.viewType.toLowerCase() + '/' + this.props.urlParams.colonia + '/' + date;
     }
 
     $.get(this.reportUrl)

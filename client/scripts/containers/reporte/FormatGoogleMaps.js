@@ -142,8 +142,16 @@ class FormatGoogleMaps extends React.Component {
 
     map.data.addListener('click', (event) => {
       if (!event.feature.getProperty('current')) {
-        let templateUrl = (`/reporte?colonia=${event.feature.getProperty('id')}&tipo=Colonia`)
-        window.open(templateUrl, '_self')
+        let query = {
+          tipo: 'Colonia',
+          colonia: event.feature.getProperty('id')
+        }
+
+        this.context.router.push({
+          pathname: '/reporte',
+          query: query,
+          state: {}
+        });
       }
     });
 
@@ -266,6 +274,10 @@ function mapStateToProps(state) {
     centroid: state.report.centroid
   }
 }
+
+FormatGoogleMaps.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default connect(
   mapStateToProps,

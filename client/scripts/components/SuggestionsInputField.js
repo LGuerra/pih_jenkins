@@ -84,6 +84,7 @@ class SuggestionsInputField extends Component {
       selectedSuggestion: item,
       showDropdown: false
     }, () => {
+      this.refs.input.value = item.content;
       this.props.onSelectItem(item);
     });
   }
@@ -134,22 +135,6 @@ class SuggestionsInputField extends Component {
             suggests: suggests
           });
         });
-
-
-        // API.landing({"q": "(or(and "+ b + "(prefix '" + prefix + "'))'" + searchInput + "')",
-        //             "return": "name",
-        //             "q.parser": "structured",
-        //             "highlight.name": "{}"})
-        //  .done(response => {
-        //    //TODO If response.isEmpty tell the user there is no data
-        //    suggests = this._parseSuggestions(response.hits.hit);
-        //    suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
-
-        //    this.setState({
-        //      showDropdown: true,
-        //      suggests: suggests
-        //    });
-        //  });
       }
     } else {
       this.setState({
@@ -175,6 +160,10 @@ class SuggestionsInputField extends Component {
     return (
       <div className={'form-group ' + this.props.specificGroupClass}>
         <div className={'input-group'}>
+          <div
+            onClick={this.cleanSuggestions.bind(this)}
+            className={'click-outside'} style={{display: this.state.showDropdown ? 'block' : 'none'}}>
+          </div>
           <div className="input-group-addon">
             <img width={20} height={20} src={lupaSVG}/>
           </div>
