@@ -18,7 +18,8 @@
     "uritemplate": true,
     "describe": true,
     "it": true,
-    "before": true
+    "before": true,
+    "beforeEach": true
   },
   "ecmaFeatures": {
     "modules": true,

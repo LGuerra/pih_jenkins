@@ -10,7 +10,7 @@ var modulePaths = [node_modules, client, bootstrap];
 // Add gzip
 var extractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
-    entry: 'mocha!./test/js/components/SuggestionsInputField_spec.js',
+    entry: 'mocha!./test/js/index.js',
     output: {
         path: __dirname,
         filename: 'bundle.js'
