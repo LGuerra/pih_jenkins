@@ -341,14 +341,11 @@
       width: 100%;
     }
   }
-  .centered {
+  .buttons-container {
     display: flex;
-    justify-content: space-around;
-    .buttons-container {
-      padding: 20px 0px;
-      display: flex;
-      justify-content: space-around;
-      width: 400px;
+    justify-content: center;
+    button{
+      margin: 10px 15px;
     }
   }
 }

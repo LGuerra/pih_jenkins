@@ -189,15 +189,13 @@ class ControlBar extends React.Component{
             <ViviendaParamsFields
               infoParams={this.props.infoParams}
               onUpdateData={this._onUpdateDataParams.bind(this)} />
-            <div className={'centered'}>
-              <div className={'buttons-container'}>
-                  <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
-                    {'Cancelar'}
-                  </button>
-                  <button onClick={this._generateViviendaReport.bind(this)} className={'aqua-button'}>
-                    {'Generar Reporte'}
-                  </button>
-              </div>
+            <div className={'buttons-container'}>
+                <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
+                  {'Cancelar'}
+                </button>
+                <button onClick={this._generateViviendaReport.bind(this)} className={'aqua-button'}>
+                  {'Generar Reporte'}
+                </button>
             </div>
           </div>
         </div>
