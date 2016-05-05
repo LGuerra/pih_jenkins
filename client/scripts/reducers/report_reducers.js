@@ -1,10 +1,7 @@
 import _ from 'lodash';
 
 import {
-  SET_VIEW_TYPE,
-  SET_URL_PARAMS,
-  SET_VIVIENDA_INFO,
-  SET_COLONIA_INFO,
+  SET_INITIAL_STATE,
   FETCH_COLONIA_INFO,
   FETCH_OFERTA_DISPONIBLE,
   FETCH_DISTRIBUCION_TIPOLOGIA,
@@ -22,15 +19,12 @@ import {
 } from '../actions/report_actions';
 
 const INITIAL_STATE = {
-  viewType: null,
-  urlParams: {},
   viviendaInfo: {},
   coloniaInfo: [],
   ofertaDisponible: {},
   distribucionTipologia: {},
   precioHistorico: [],
   distribucionPrecio: {},
-  propiedadesComparables: {},
   coloniasComparables: [],
   viviendasComparables: [],
   coloniasMap: [],
@@ -44,37 +38,9 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
 
-    case SET_URL_PARAMS: { 
+    case SET_INITIAL_STATE: {
       return {
-        ...state,
-        urlParams: action.payload
-      }
-    }
-
-    case SET_VIEW_TYPE: {
-      return {
-        ...state,
-        viewType: action.payload
-      }
-    }
-
-    case SET_VIVIENDA_INFO: {
-      if (_.isEqual(action.payload, state.urlParams)) {
-        return state;
-      }
-
-      return {
-        ...INITIAL_STATE,
-        urlParams: action.payload,
-        viewType: 'Vivienda'
-      }
-    }
-
-    case SET_COLONIA_INFO: {
-      return {
-        ...INITIAL_STATE,
-        urlParams: action.payload,
-        viewType: 'Colonia'
+        ...INITIAL_STATE
       }
     }
 

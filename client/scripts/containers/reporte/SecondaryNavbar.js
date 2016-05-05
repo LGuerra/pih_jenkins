@@ -73,9 +73,7 @@ class SecondaryNavbar extends React.Component{
 }
 
 function mapStateToProps(state) {
-  return {
-    urlParams: state.report.urlParams
-  };
+  return {};
 }
 
 export default connect(mapStateToProps)(SecondaryNavbar);

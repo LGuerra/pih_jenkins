@@ -19,7 +19,7 @@ import ControlBar         from './ControlBar';
 import Helpers    from '../../../helpers';
 import PDFReport  from '../../../PDFReport';
 
-import { setUrlParams, setViewType } from '../../../actions/report_actions';
+import { setIntialState } from '../../../actions/report_actions';
 
 class Report extends React.Component {
   constructor(props) {
@@ -42,72 +42,66 @@ class Report extends React.Component {
     return loadingFrame;
   }
 
-  componentDidUpdate() {
-    console.log('Did Update');
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(prevProps.location.query, this.props.location.query)) {
+      this.props.setIntialState();
+    }
   }
 
-  componentDidMount() {  
-    console.log('Did Mount');
+  _getUrlParams() {
     let urlParams = {
-      longitud: Number(Helpers.getURLParameter('longitud')) || 0,
-      latitud: Number(Helpers.getURLParameter('latitud')) || 0,
-      recamaras: Number(Helpers.getURLParameter('recamaras')) || 1,
-      banos: Number(Helpers.getURLParameter('banos')) || 1,
-      estacionamientos: Number(Helpers.getURLParameter('estacionamientos')) || 0,
-      edad: Number(Helpers.getURLParameter('edad')) || 1,
-      id_tipo_propiedad: Number(Helpers.getURLParameter('id_tipo_propiedad')) || 2,
-      area_construida: Number(Helpers.getURLParameter('area_construida')) || 100,
-      address: Helpers.getURLParameter('address') || '',
-      tipo_operacion: Number(Helpers.getURLParameter('tipo_operacion')) || 0,
-      colonia: Helpers.getURLParameter('colonia') || ''
-    };    
+      longitud: this.props.location.query.longitud || 0,
+      latitud: this.props.location.query.latitud || 0,
+      recamaras: this.props.location.query.recamaras || 1,
+      banos: this.props.location.query.banos || 1,
+      estacionamientos: this.props.location.query.estacionamientos || 0,
+      edad: this.props.location.query.edad|| 1,
+      id_tipo_propiedad: this.props.location.query.id_tipo_propiedad || 2,
+      area_construida: this.props.location.query.area_construida || 100,
+      address: this.props.location.query.address || '',
+      tipo_operacion: this.props.location.query.tipo_operacion || 0,
+      colonia: this.props.location.query.colonia || ''
+    }
 
-    this.props.setViewType(Helpers.getURLParameter('tipo'));
-    this.props.setUrlParams(urlParams);
+    return urlParams;
   }
 
   render() {
-    if (this.props.urlParams) {
-      let report;
-      let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
-      let viewType      = this.props.viewType;
-      let urlParams     = this.props.viewType === 'Vivienda'
-        ? this.props.urlParams
-        : _.pick(this.props.urlParams, ['colonia']);
+    let report;
+    let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
+    let viewType      = this.props.location.query.tipo;
+    let urlParams     = this._getUrlParams();
 
-      if (viewType === 'Colonia') {
-        report = (
-          <ReportColonia/>
-        );
-      } else {
-        report = (
-          <ReportVivienda/>
-        );
-      }
-
-      return (
-        <div onClick={this._clickOutside}>
-          <header>
-            <ControlBar>
-              <DownloadPDFReport />
-            </ControlBar>
-            {loadingFrame}
-          </header>
-          <div>
-            {report}
-          </div>
-          <div>
-            <BackToTop />
-          </div>
-          <canvas id='canvas' style={{display: 'none'}} width='300px' height='200px'>
-          </canvas>
-        </div>
+    if (viewType === 'Colonia') {
+      report = (
+        <ReportColonia
+          urlParams={urlParams}/>
       );
     } else {
-      return (
-        <div>Hola amigos</div>
+      report = (
+        <ReportVivienda
+          urlParams={urlParams}/>
       );
     }
+
+    return (
+      <div onClick={this._clickOutside}>
+        <header>
+          <ControlBar urlParams={urlParams} >
+            <DownloadPDFReport />
+          </ControlBar>
+          {loadingFrame}
+        </header>
+        <div>
+          {report}
+        </div>
+        <div>
+          <BackToTop />
+        </div>
+        <canvas id='canvas' style={{display: 'none'}} width='300px' height='200px'>
+        </canvas>
+      </div>
+    );
   }
 }
 
@@ -127,4 +121,4 @@ function mapStateToProps(state) {
   return toReturn;
 }
 
-export default connect(mapStateToProps, {setUrlParams, setViewType})(Report);
+export default connect(mapStateToProps, {setIntialState})(Report);

@@ -97,9 +97,7 @@ class FormatLineChart extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   let apreciacion = state.report.coloniaInfo.length
     ? state.report.coloniaInfo[3].apreciacion_anualizada

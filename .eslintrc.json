@@ -15,7 +15,10 @@
     "google": true,
     "canvg": true,
     "debugger": true,
-    "uritemplate": true
+    "uritemplate": true,
+    "describe": true,
+    "it": true,
+    "before": true
   },
   "ecmaFeatures": {
     "modules": true,

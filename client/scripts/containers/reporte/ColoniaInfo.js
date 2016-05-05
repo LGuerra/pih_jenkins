@@ -100,9 +100,7 @@ class ColoniaInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   if (state.report.coloniaInfo.length) {
     toProps.coloniaInfo = {

@@ -188,7 +188,6 @@ body {
 }
 
 .input-group {
-  margin-bottom: 20px;
   .error {
     border: 1px solid #FE696B;
   }
@@ -227,7 +226,7 @@ body {
 
 .landing-search-form {
   padding: 20px 30px 0px 30px;
-  margin-top: 40px;
+  margin-top: 10px;
   input{
     box-shadow: none;
     &:active, &:focus{

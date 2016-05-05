@@ -109,9 +109,7 @@ class FormatStickyNavbar extends React.Component{
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   if (!_.isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {

@@ -33,6 +33,11 @@ class ComparativoViviendas extends React.Component {
         'tipo_operacion');
 
       params['precio_m2'] = nextProps.viviendaInfo.precioM2;
+
+      for(var key in params) {
+        params[key] = Number(params[key]);
+      }
+
       this.props.fetchViviendasComparables(params)
     }
 

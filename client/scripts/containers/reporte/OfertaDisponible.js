@@ -23,6 +23,7 @@ class OfertaDisponible extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this.isLoading = true;
       this.props.fetchOfertaDisponible(this.props.urlParams.colonia);
     }
   }
@@ -85,9 +86,7 @@ class OfertaDisponible extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   if (state.report.ofertaDisponible.length) {
     toProps.ofertaDisponible = {

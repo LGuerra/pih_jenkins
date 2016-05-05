@@ -110,12 +110,12 @@ class Landing extends React.Component {
         <div className={'inner-form'}>
           <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
           <div className={'row colonia-search'}>
-            <div className={'col-md-10'}>
+            <div className={'col-md-10'} style={{padding: '0'}}>
               <LandingSearchForm
                 searchType={'Colonia'}
                 placeholder={'Ingrese el nombre de la colonia'}/>
             </div>
-            <div className={'col-md-2 btn-disponible'} style={{marginTop: '55px'}}>
+            <div className={'col-md-2 btn-disponible'} style={{marginTop: '26px'}}>
               <button className={'aqua-button'}>
                {'VER COLONIAS DISPONIBLES'}
               </button>

@@ -41,7 +41,7 @@ class ComparativoColonias extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchColoniasComparables(this.props.colonia);
+    this.props.fetchColoniasComparables(this.props.urlParams.colonia);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -51,8 +51,8 @@ class ComparativoColonias extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
-      this.props.fetchColoniasComparables(this.props.colonia);
+    if (!_.isEqual(prevProps.urlParams.colonia, this.props.urlParams.colonia)) {
+      this.props.fetchColoniasComparables(this.props.urlParams.colonia);
     }
   }
 
@@ -60,7 +60,7 @@ class ComparativoColonias extends React.Component {
     let content = <Spinner style={{height: '300px'}}/>;
 
     if (this.props.coloniasComparables) {
-      let data = formatComparativoColonias(this.props.coloniasComparables, this.props.colonia);
+      let data = formatComparativoColonias(this.props.coloniasComparables, this.props.urlParams.colonia);
       var asterisk = require('file!images-banca/asterisk.svg');
       if (data.rows[0]) {
         content = (
@@ -93,9 +93,7 @@ class ComparativoColonias extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    colonia: state.report.urlParams.colonia
-  };
+  let toProps = {};
 
   if (state.report.coloniasComparables.length) {
     toProps.coloniasComparables = state.report.coloniasComparables;

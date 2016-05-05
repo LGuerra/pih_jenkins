@@ -138,9 +138,7 @@ class ViviendaInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  var toProps = {
-    urlParams: state.report.urlParams
-  };
+  var toProps = {};
 
   if (!_.isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {

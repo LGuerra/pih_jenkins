@@ -59,9 +59,7 @@ class FormatStackedBarChart extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   if (!_.isEmpty(state.report.distribucionTipologia)) {
     toProps.distribucionTipologia = formatDistribucionTipologia(state.report.distribucionTipologia);

@@ -5,7 +5,7 @@
   .Index {  
     height: calc(100% - 102px);
     .headers {
-      margin-top: 5vh;
+      margin-top: 4vh;
       text-align: center;
       color: #FFFFFF;
     }
@@ -24,7 +24,7 @@
         &:hover{
           background-color: #35c0be;
           border: 1px solid #35c0be;
-          opacity: 0.8;
+          opacity: 0.8  ;
         }
         &:focus{
           box-shadow: none;
@@ -62,8 +62,9 @@
       }
     }
     .subtitle {
-      padding-top: 15px;
-      font-size: 20px;
+      padding-top: 5px;
+      margin-bottom: 0;
+      font-size: 18px;
       font-weight: 300;
       text-align: center;
       color: #FFF;
@@ -78,8 +79,9 @@
       }
     }
     .inner-form {
-      padding: 30px;
+      padding: 12px;
       max-width: 1500px;
+      width: 95%;
       margin: auto;
       background-color: rgba(255, 255, 255, 0.35);
       border-radius: 10px;
@@ -93,6 +95,9 @@
           @media screen and (max-width: 990px) {
             margin-top: 0px !important;
           }
+        }
+        .landing-search-form{
+          margin-top: 10px;
         }
       }
     }

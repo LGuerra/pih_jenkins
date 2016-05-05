@@ -84,13 +84,14 @@ class FormatGoogleMaps extends React.Component {
       map.data.remove(feature);
     });
 
+
     this.props.fetchColoniasMap(colonia);
     this.props.fetchCentroid(colonia);
     this.props.fetchActualColoniaMap(colonia);
   }
 
   componentDidMount() {
-    this._setMap(this.props.colonia);
+    this._setMap(this.props.urlParams.colonia);
     let map = this.refs.map.mapRef;
 
     map.data.addListener('mouseover', (event) => {
@@ -164,7 +165,7 @@ class FormatGoogleMaps extends React.Component {
     let map = this.refs.map.mapRef;
 
     data.forEach((colonia, index) => {
-      if(colonia.properties.id !== this.props.colonia) {
+      if(colonia.properties.id !== this.props.urlParams.colonia) {
         map.data.addGeoJson({
           type: 'Feature',
           geometry: {
@@ -190,7 +191,7 @@ class FormatGoogleMaps extends React.Component {
       type: 'Feature',
       geometry: data,
       properties: {
-        id: this.props.colonia,
+        id: this.props.urlParams.colonia,
         current: true
       }
     });
@@ -215,14 +216,13 @@ class FormatGoogleMaps extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.colonia, this.props.colonia)) {
-      this._setMap(this.props.colonia);
+    if (!_.isEqual(prevProps.urlParams.colonia, this.props.urlParams.colonia)) {
+      this._setMap(this.props.urlParams.colonia);
     }
   }
 
   render() {
     let marker;
-
     if (this.props.viewType === 'Vivienda') {
       marker = (
         <Marker
@@ -259,12 +259,6 @@ function mapStateToProps(state) {
     : '';
 
   return {
-    viviendaInfo: {
-      lat: state.report.urlParams.latitud,
-      lng: state.report.urlParams.longitud
-    },
-    viewType: state.report.viewType,
-    colonia: state.report.urlParams.colonia,
     coloniaName: coloniaName,
     selectedComparativoColonias: state.report.selectedComparativoColonias,
     actualColoniaMap: state.report.actualColoniaMap,
