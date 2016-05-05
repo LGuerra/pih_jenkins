@@ -7,13 +7,14 @@ class NavBarDropDown extends React.Component {
     const text = props.text; 
     const links = props.links;
     const image = (typeof props.image === 'undefined') ? '' : <i><img style={{ height: 20 }} src={props.image}/></i>;
+    var downArrow = require('file!images-banca/down_arrow.svg');
+
     return (
       <li className='dropdown'>
         <a aria-expanded='false' aria-haspopup='true' className='dropdown-toggle' data-toggle='dropdown' href='#' role='button'>
           {image}
           {text}
-          <span className='caret'>
-          </span>
+          <img height={'10px'} src={downArrow} className='nav-arrow'/>
         </a>
         <ul className='dropdown-menu'>
           {links.map((link, index) => { 

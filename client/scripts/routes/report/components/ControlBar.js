@@ -154,18 +154,17 @@ class ControlBar extends React.Component{
 
   render() {
     var downArrow = require('file!images-banca/down_arrow.svg');
-
     return (
       <div style={{backgroundColor: '#fbfbfb', borderBottom: '1px solid #e7e7e7'}}>
         <div className={'max-width-container'}>
           <div className={'ControlBar row'}>
             <div className={'col-sm-11'}>
               <div className={'control-container'}>
-                <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.viewType === 'Colonia' ?  'menu-item-selected' : '')}>
+                <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.urlParams.tipo === 'Colonia' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Colonia'}</a>
                   <img height={'12px'} src={downArrow} className={this.state.formActive === 'ColoniaForm' ? 'active' : ''}/>
                 </div>
-                <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.viewType === 'Vivienda' ?  'menu-item-selected' : '')}>
+                <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.urlParams.tipo === 'Vivienda' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Vivienda'}</a>
                   <img height={'12px'} src={downArrow} className={this.state.formActive === 'ViviendaForm' ? 'active' : ''}/>
                 </div>
@@ -227,14 +226,8 @@ class ControlBar extends React.Component{
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    viewType: state.report.viewType
-  };
-}
-
 ControlBar.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);
+export default connect(null, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);

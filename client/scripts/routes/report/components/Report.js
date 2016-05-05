@@ -60,7 +60,8 @@ class Report extends React.Component {
       area_construida: this.props.location.query.area_construida || 100,
       address: this.props.location.query.address || '',
       tipo_operacion: this.props.location.query.tipo_operacion || 0,
-      colonia: this.props.location.query.colonia || ''
+      colonia: this.props.location.query.colonia || '',
+      tipo: this.props.location.query.tipo || 'Colonia'
     }
 
     return urlParams;
