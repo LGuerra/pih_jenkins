@@ -23,7 +23,7 @@ class App extends React.Component {
       <div id='banca-router'>
         <NavBar id='my-new-id' logoText='Intelimétrica'>
           <NavBarLink/>
-          <NavBarDropDown image={userSVG}/>
+          <NavBarDropDown image={userSVG} links={[{url: '/helpers/logout', text: 'Logout', isRR: false}]}/>
         </NavBar>
         {this.props.children}
         <Footer/>

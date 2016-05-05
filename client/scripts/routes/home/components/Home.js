@@ -11,21 +11,27 @@ class Home extends React.Component {
   }
 
   logInUser(user) {
-    userAPI.signIn(user).then((data) => {
-      console.log(this);
-      console.log(data);
-      if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
-        var nextPath = '/';
-        console.log('redirect');
-        if(this.props.location.state !== null) {
-          nextPath = this.props.location.state.nextPathname;
+    let alertText = 'Error while logging...'
+    userAPI.signIn(user)
+      .then(data => {
+        if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
+          let nextPath = '/';
+          alertText = 'Correct logging...';
+          if(this.props.location.state !== null) {
+            nextPath = this.props.location.state.nextPathname;
+          }
+          this.context.router.replace({
+            pathname: nextPath
+          });
         }
-        this.context.router.replace({
-          pathname: nextPath
-        });
-      }
-    });
-    console.log('try to login');
+        document.getElementById('alert-banca-text').textContent = alertText;
+        $('#alert-banca').show();
+      })
+      .catch(data => {
+        console.log('--------');
+        document.getElementById('alert-banca-text').textContent = alertText;
+        $('#alert-banca').show();
+      });
   }
 
   render() {

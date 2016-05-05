@@ -16,6 +16,12 @@
 </head>
 <body>
 <div id="modal-reserved-area"></div>
+<div id="alert-banca" class="alert alert-dismissible fade in" role="alert" style="position: absolute; width: 100%; min-height: 51px; top: 51px; display: none">
+  <div class="container">
+    <div class="col-sm-12 alert-text" id="alert-banca-text">
+    </div>
+  </div>
+</div>
 <%= render 'layouts/alert_notice'%>
 <%= yield %>
 <%= render 'layouts/asset_configuration' %>
