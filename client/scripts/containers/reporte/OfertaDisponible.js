@@ -23,6 +23,7 @@ class OfertaDisponible extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+      this.isLoading = true;
       this.props.fetchOfertaDisponible(this.props.urlParams.colonia);
     }
   }
@@ -30,7 +31,12 @@ class OfertaDisponible extends React.Component {
   render() {
     var content = <Spinner style={{height: '120px'}}/>;
     var data = this.props.ofertaDisponible;
-
+    var IMAGES = {
+      calendar_houses: require('file!images-banca/calendar_houses.svg'),
+      asterisk: require('file!images-banca/asterisk.svg'),
+      houses: require('file!images-banca/houses.svg'),
+      calendar: require('file!images-banca/calendar.svg')
+    };
     if (data) {
       content = (
         <div className={'listados'}>
@@ -80,9 +86,7 @@ class OfertaDisponible extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   if (state.report.ofertaDisponible.length) {
     toProps.ofertaDisponible = {

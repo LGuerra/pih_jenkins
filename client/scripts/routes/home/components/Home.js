@@ -12,8 +12,11 @@ class Home extends React.Component {
 
   logInUser(user) {
     userAPI.signIn(user).then((data) => {
+      console.log(this);
+      console.log(data);
       if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
         var nextPath = '/';
+        console.log('redirect');
         if(this.props.location.state !== null) {
           nextPath = this.props.location.state.nextPathname;
         }
@@ -26,6 +29,7 @@ class Home extends React.Component {
   }
 
   render() {
+    var down_arrow = require('file!images-banca/down_arrow.svg');
     return (
       <div style={{ height: '100%' , background: '#efefef' }}>
         <NavBar logoText='Intelimétrica'/>
@@ -46,7 +50,7 @@ class Home extends React.Component {
               </div>
             </div>
             <div className='col-sm-12 landing-arrow'>
-              <img height={'30px'} src={IMAGES.downArrow}/>
+              <img height={'30px'} src={down_arrow}/>
             </div>
           </div>
         </div>

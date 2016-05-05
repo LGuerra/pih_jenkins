@@ -1,9 +1,11 @@
+
 /*
  * File that encapsulates general utilities
  * for encapsulating maps
  */
 
-var lapiz_white = IMAGES.lapiz_white;
+var lapiz_white = require('file!images-banca/user.svg');
+// var lapiz_white = IMAGES.lapiz_white;
 
 var MapUtils = {
   styles: [{

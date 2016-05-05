@@ -28,6 +28,7 @@ class InputFieldForm extends Component {
       <div className={'form-group input-field-form'}>
         <div className={'input-container'}>
           <input
+            ref={'input'}
             onClick={this._onClick}
             onChange={this._onChangeValue.bind(this)}
             className={'form-control'}

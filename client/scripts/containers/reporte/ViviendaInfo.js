@@ -72,7 +72,11 @@ class ViviendaInfo extends React.Component {
 
   render() {
     let content = <Spinner style={{height: '120px'}}/>;
-
+    const IMAGES = {
+      alert: require('file!images-banca/alert.svg'),
+      star: require('file!images-banca/star.svg'),
+      star_2: require('file!images-banca/star_2.svg')
+    };
     if (this.props.viviendaInfo) {
       let stars = new Array();
       let reputacion = this.props.viviendaInfo.confianza > 5 ? 5 : this.props.viviendaInfo.confianza;
@@ -134,9 +138,7 @@ class ViviendaInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  var toProps = {
-    urlParams: state.report.urlParams
-  };
+  var toProps = {};
 
   if (!_.isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {

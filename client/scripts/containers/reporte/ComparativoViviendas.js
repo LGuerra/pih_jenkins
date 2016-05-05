@@ -33,6 +33,11 @@ class ComparativoViviendas extends React.Component {
         'tipo_operacion');
 
       params['precio_m2'] = nextProps.viviendaInfo.precioM2;
+
+      for(var key in params) {
+        params[key] = Number(params[key]);
+      }
+
       this.props.fetchViviendasComparables(params)
     }
 
@@ -52,9 +57,10 @@ class ComparativoViviendas extends React.Component {
         _.merge(this.props.viviendaInfo, this.props.params),
         this.props.coloniaName);
 
+      var asterisk = require('file!images-banca/asterisk.svg');
       content = (
         <div>
-          <h3 className={'SectionTitle'}>{label}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h3>
+          <h3 className={'SectionTitle'}>{label}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={asterisk} /></h3>
           <div className={'LineDivider'}></div>
           <Table
             remarcableRow={[0]}

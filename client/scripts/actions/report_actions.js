@@ -15,6 +15,7 @@ export const FECTH_ACTUAL_COLONIA_MAP       = 'FECTH_ACTUAL_COLONIA_MAP';
 export const FETCH_CENTROID                 = 'FETCH_CENTROID';
 
 // Setting properties
+export const SET_INITIAL_STATE              = 'SET_INITIAL_STATE';
 export const SET_URL_PARAMS                 = 'SET_URL_PARAMS';
 export const SET_VIEW_TYPE                  = 'SET_VIEW_TYPE';
 export const SET_LOADING_FRAME              = 'SET_LOADING_FRAME';
@@ -25,31 +26,10 @@ export const SET_COLONIA_INFO               = 'SET_COLONIA_INFO';
 export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
 
-export function setUrlParams(urlParams) {
-  return {
-    type: SET_URL_PARAMS,
-    payload: urlParams
-  }
-}
 
-export function setViewType(viewType) {
+export function setIntialState() {
   return {
-    type: SET_VIEW_TYPE,
-    payload: viewType
-  }
-}
-
-export function onSetViviendaInfo(info) {
-  return {
-    type: SET_VIVIENDA_INFO,
-    payload: info
-  }
-}
-
-export function onSetColoniaInfo(info) {
-  return {
-    type: SET_COLONIA_INFO,
-    payload: info
+    type: SET_INITIAL_STATE
   }
 }
 

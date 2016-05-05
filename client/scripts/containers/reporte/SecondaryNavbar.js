@@ -11,7 +11,14 @@ class SecondaryNavbar extends React.Component{
   render() {
     let props = this.props;
     let imageTipoPropiedad;
-
+    var IMAGES = {
+      house: require('file!images-banca/house.svg'),
+      apartment: require('file!images-banca/apartment.svg'),
+      bed: require('file!images-banca/bed.svg'),
+      wc: require('file!images-banca/wc.svg'),
+      car: require('file!images-banca/car.svg'),
+      area: require('file!images-banca/area.svg')
+    };
     if (props.urlParams.id_tipo_propiedad == 2) {
       imageTipoPropiedad = (<div className={'NavbarIcon'}>
         <img width={'15px'} src={IMAGES.house} />
@@ -66,9 +73,7 @@ class SecondaryNavbar extends React.Component{
 }
 
 function mapStateToProps(state) {
-  return {
-    urlParams: state.report.urlParams
-  };
+  return {};
 }
 
 export default connect(mapStateToProps)(SecondaryNavbar);

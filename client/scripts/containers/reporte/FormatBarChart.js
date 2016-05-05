@@ -91,9 +91,7 @@ class FormatBarChart extends React.Component {
 }
 
 function mapStateToProps(state) {
-  let toProps = {
-    urlParams: state.report.urlParams
-  };
+  let toProps = {};
 
   if (!_.isEmpty(state.report.distribucionPrecio)) {
     toProps.distribucionPrecio = formatDistribucionPrecio(state.report.distribucionPrecio);

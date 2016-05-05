@@ -23,9 +23,7 @@ import ConditionsRoutes from './routes/conditions';
 
 import { serverAuthResponse, checkPermissions } from 'helpers-banca';
 
-const createStoreWithMiddleware = compose(
-    applyMiddleware( promise ),
-  window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore);
+const createStoreWithMiddleware = compose(applyMiddleware( promise ))(createStore);
 
 const routes = {
   component: RootApp,
@@ -52,9 +50,7 @@ const routes = {
           serverAuthResponse()
           .then((args) => {
             return require.ensure([], (require) => {
-              // buggy af
-              cb(null, Landing);
-              // cb(null, require('./components/GoogleMap'));
+              cb(null, require('./routes/landing/components/Landing').default);
             })
           }).catch((args) => {
             cb();
@@ -74,10 +70,11 @@ const routes = {
   ]
 };
 
-render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router history={browserHistory} routes={routes} />
-  </Provider>
+$(document).ready(function() {
+  render(
+    <Provider store={createStoreWithMiddleware(reducers)}>
+      <Router history={browserHistory} routes={routes} />
+    </Provider>
   , document.getElementById('react-view-container')
-);
-
+  );
+});

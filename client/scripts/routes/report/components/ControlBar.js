@@ -15,16 +15,17 @@ import { helpersAPI }                           from '../../../api/api-helper.js
 import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
 
 function togglePopover(identifier, content) {
-  $(identifier)
-    .addClass('error');
+  $(identifier).addClass('error');
 
-  $(identifier).popover({content: content,
-                                        placement: 'top'});
+  $(identifier).popover({
+    content: content,
+    placement: 'top'
+  });
+
   $(identifier).popover('show');
 
   setTimeout(() => {
-    $(identifier)
-      .removeClass('error');
+    $(identifier).removeClass('error');
     $(identifier).popover('destroy');
   }, 2000);
 }
@@ -32,7 +33,7 @@ function togglePopover(identifier, content) {
 class ControlBar extends React.Component{
   constructor(props) {
     super(props);
-    this.urlParams = _.clone(this.props.infoParams);
+    this.urlParams = _.clone(this.props.urlParams);
 
     this.state = {
       infoParams: this.props.infoParams
@@ -90,7 +91,13 @@ class ControlBar extends React.Component{
 
   _generateColoniaReport() {
     if (this.state.colonia) {
-      this.props.onSetColoniaInfo(_.pick(this.state, ['colonia']));
+      let toFormat = _.pick(this.state, ['colonia']);
+      toFormat.tipo = 'Colonia';
+      this.context.router.push({
+        pathname: '/reporte',
+        query: toFormat,
+        state: {}
+      });
       this._toggleCollapse('.ColoniaForm')
     } else {
       togglePopover('.Colonia', 'Elige una colonia válida');
@@ -99,15 +106,21 @@ class ControlBar extends React.Component{
 
   _generateViviendaReport() {
     if (this.state.vivienda) {
-      let infoParams  = _.clone(this.props.infoParams);
-      let toFormat = {};
+      let infoParams  = _.clone(this.props.urlParams);
+      let toFormat = {
+        tipo: 'Vivienda'
+      };
 
       for (let key in this.urlParams) {
         toFormat[key] = this.state.vivienda[key] || infoParams[key] || this.urlParams[key];
       }
 
       this._toggleCollapse('.ViviendaForm')
-      this.props.onSetViviendaInfo(toFormat);
+      this.context.router.push({
+        pathname: '/reporte',
+        query: toFormat,
+        state: {}
+      });
     } else {
       togglePopover('.Vivienda', 'Debes elegir una vivienda');
     }
@@ -143,6 +156,8 @@ class ControlBar extends React.Component{
   }
 
   render() {
+    var downArrow = require('file!images-banca/down_arrow.svg');
+
     return (
       <div style={{backgroundColor: '#fbfbfb', borderBottom: '1px solid #e7e7e7'}}>
         <div className={'max-width-container'}>
@@ -151,11 +166,11 @@ class ControlBar extends React.Component{
               <div className={'control-container'}>
                 <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.viewType === 'Colonia' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Colonia'}</a>
-                  <img height={'12px'} src={IMAGES.downArrow} className={this.state.formActive === 'ColoniaForm' ? 'active' : ''}/>
+                  <img height={'12px'} src={downArrow} className={this.state.formActive === 'ColoniaForm' ? 'active' : ''}/>
                 </div>
                 <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.viewType === 'Vivienda' ?  'menu-item-selected' : '')}>
                   <a href={'#'}>{'Reporte Vivienda'}</a>
-                  <img height={'12px'} src={IMAGES.downArrow} className={this.state.formActive === 'ViviendaForm' ? 'active' : ''}/>
+                  <img height={'12px'} src={downArrow} className={this.state.formActive === 'ViviendaForm' ? 'active' : ''}/>
                 </div>
               </div>
             </div>
@@ -198,7 +213,7 @@ class ControlBar extends React.Component{
               specificGroupClass={'landing-search-form'}
               specificInputClass={'form-control Vivienda'}/>
             <ViviendaParamsFields
-              infoParams={this.props.infoParams}
+              infoParams={this.props.urlParams}
               onUpdateData={this._onUpdateDataParams.bind(this)} />
             <div className={'buttons-container'}>
                 <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
@@ -216,12 +231,13 @@ class ControlBar extends React.Component{
 }
 
 function mapStateToProps(state) {
-  let infoParams = _.clone(state.report.urlParams);
   return {
-    viewType: state.report.viewType,
-    infoParams: infoParams
+    viewType: state.report.viewType
   };
 }
 
-export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);
+ControlBar.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
+export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);

@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const NavBarBrand = (props) => {
   return (
-    <a className='navbar-brand' href='#'>{props.text}</a>
+    <Link className='navbar-brand' to='/'>{props.text}</Link>
   );
 };
 

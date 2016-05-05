@@ -29,7 +29,7 @@ const userAPI = (() => {
   }
 
   let signIn = (user) => {
-    return axios.post('/users/sign_in.json', { user: user });
+    return axios.post('users/sign_in.json', { user: user });
   }
   return { getInfo, signIn };
 })();
@@ -57,9 +57,22 @@ const helpersAPI = (() => {
     return axios.get(`${apiEndpoint}/helpers/suburb-from-coordinates`, { params: {lat: lat, lng: lng} });
   };
 
+  let suburbsByName = (params) => {
+    var base = {
+      'return': 'name',
+      'q.parser': 'structured',
+      'highlight.name': '{}',
+      ...params
+    };
+    return axios.get(`${apiEndpoint}/helpers/suburbs-by-name`, {
+      params: base
+    });
+  };
+
   return {
     suburbIsTrusted,
-    suburbFromCoords
+    suburbFromCoords,
+    suburbsByName
   };
 
 })();

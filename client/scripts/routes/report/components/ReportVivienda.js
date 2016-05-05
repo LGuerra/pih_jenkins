@@ -20,23 +20,27 @@ class ReporteVivienda extends Component {
   }
 
   render() {
+    var asterisk = require('file!images-banca/asterisk.svg');
     return (
       <div>
         <FormatStickyNavbar
+          urlParams={this.props.urlParams}
           viewType={'Vivienda'}/>
         <div style={{padding: '10px'}} className={'MainSection'}>
           <div className={'max-width-container'}>
             <SecondaryNavbar
-              data={this.props.urlParams}
+              urlParams={this.props.urlParams}
               width={'100%'} />
             <div className={'BlockContainer row'}>
               <div style={{borderRight: '1px solid #c9c9c9', padding: '0'}} className={'col-sm-4'}>
                 <ViviendaInfo
+                  urlParams={this.props.urlParams}
                   ref={'viviendaInfo'}
                   params={this.props.urlParams}/>
               </div>
               <div className={'col-sm-8'} style={{padding: '0px'}}>
                 <ColoniaInfo
+                  urlParams={this.props.urlParams}
                   ref={'coloniaInfo'}
                   viewType={'Vivienda'}/>
               </div>
@@ -51,12 +55,14 @@ class ReporteVivienda extends Component {
             </div>
             <div>
               <OfertaDisponible
+                urlParams={this.props.urlParams}
                 ref={'ofertaDisponible'}
                 zoneID={this.props.coloniaID} />
             </div>
             <div>
-              <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+              <h4 className={'SubsectionTitle'}>{'Distribución de Tipología'}<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}} src={asterisk} /></h4>
               <FormatStackedBarChart
+                urlParams={this.props.urlParams}
                 ref={'distribucionTipologia'}
                 id={'distribucion_tipologia'}
                 zoneID={this.props.coloniaID}/>
@@ -65,13 +71,15 @@ class ReporteVivienda extends Component {
               <div style={{paddingLeft: '0px', borderRight: '1px solid #c9c9c9'}} className={'col-sm-6'}>
                 <h4 className={'SubsectionTitle'}>Precio Histórico por m²</h4>
                 <FormatLineChart
+                  urlParams={this.props.urlParams}
                   ref={'precioHistorico'}
                   id={'precio_historico'}
                   zoneID={this.props.coloniaID} />
               </div>
               <div className={'col-sm-6 barchart-section'}>
-                <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}}src={IMAGES.asterisk} /></h4>
+                <h4 className={'SubsectionTitle'}>Distribución de Precio por m²<img width={'5px'} style={{marginBottom: '10px', marginLeft: '3px'}} src={asterisk} /></h4>
                 <FormatBarChart
+                  urlParams={this.props.urlParams}
                   ref={'distribucionPrecio'}
                   id={'distribucion_precio'}
                   zoneID={this.props.coloniaID}/>
@@ -85,19 +93,20 @@ class ReporteVivienda extends Component {
               ref={'comparativoViviendas'}
               params={this.props.urlParams}/>
             <div className={'Footnote'}>
-              <img width={'7px'} src={IMAGES.asterisk} />
+              <img width={'7px'} src={asterisk} />
               <p style={{textAlign: 'right', margin: '5px 0 0 3px'}}>{'Información de mercado con base en datos de los últimos 6 meses.'}</p>
             </div>
           </div>
         </div>
         <div style={{margin: '10px 0px'}}>
           <FormatGoogleMaps
+            urlParams={this.props.urlParams}
             viewType={'Vivienda'}
             viviendaInfo={{
               lat: this.props.urlParams.latitud,
               lng: this.props.urlParams.longitud
             }}
-            zoneID={this.props.coloniaID}
+            zoneID={this.props.urlParams.colonia}
             onMouseoverFeature={this._onMouseoverFeature}
             ref={'formatGoogleMaps'}/>
         </div>
@@ -112,7 +121,6 @@ function mapStateToProps(state) {
     : '';
 
   return {
-    urlParams: state.report.urlParams,
     coloniaName: coloniaName
   }
 }

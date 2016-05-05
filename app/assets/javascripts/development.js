@@ -10,6 +10,3 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require ./build/vendor.js
-//= require images
-//= require ./build/main.js

@@ -31,7 +31,7 @@ class ValuePicker extends Component {
     }
 
     return _.map(range, (value, index) =>  {
-      let isActive = this.state.active === value ? 'active' : '';
+      let isActive = this.state.active == value ? 'active' : '';
       let label = index !== (range.length - 1)
         ? value
         : value + '+';
