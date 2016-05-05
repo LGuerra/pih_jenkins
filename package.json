@@ -38,6 +38,7 @@
     "lodash.identity": "^3.0.0",
     "mocha": "^2.4.5",
     "mocha-jsdom": "^1.1.0",
+    "mocha-loader": "^0.7.1",
     "moment": "^2.11.0",
     "node-libs-browser": "^0.5.3",
     "node-sass": "^3.4.2",
@@ -57,7 +58,8 @@
   "scripts": {
     "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive",
     "dev-server": "webpack-dev-server --progress --colors --port 8090 --inline",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "tests": "webpack-dev-server --config webpack.config.test.js --hot --inline --output-filename test.js"
   },
   "repository": {
     "type": "git",

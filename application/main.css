@@ -5501,6 +5501,9 @@ button.close {
       margin-bottom: 0px !important;
       margin-left: 10px; }
 
+.navbar-default {
+  background-color: #E8E8E8; }
+
 .HiddenButtons {
   display: none; }
 
@@ -5724,23 +5727,31 @@ button.close {
       -ms-flex-align: center;
           align-items: center; }
   .ControlBar .control-container {
-    padding: 10px;
     z-index: 80; }
     .ControlBar .control-container .menu-item {
       margin-right: 20px;
+      padding: 8px 15px;
       display: inline-block;
       text-transform: uppercase;
-      padding: 0px 20px;
       text-align: center; }
+      .ControlBar .control-container .menu-item img {
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        margin-left: 9px; }
+      .ControlBar .control-container .menu-item img.active {
+        /* IE 9 */
+        -webkit-transform: rotate(-180deg);
+        /* Chrome, Safari, Opera */
+        transform: rotate(-180deg); }
       .ControlBar .control-container .menu-item:hover {
-        border-bottom: 2px solid #35c0be; }
+        border-bottom: 3px solid #71d2d1; }
       .ControlBar .control-container .menu-item a {
         font-size: 13px;
-        color: #222222;
+        color: #5D5D5D;
         font-weight: 400;
         text-decoration: none; }
     .ControlBar .control-container .menu-item-selected {
-      border-bottom: 2px solid #35c0be; }
+      border-bottom: 3px solid #35c0be; }
     .ControlBar .control-container .menu-item-disabled {
       cursor: not-allowed; }
       .ControlBar .control-container .menu-item-disabled:hover {
@@ -5770,29 +5781,23 @@ button.close {
       margin: 10px 15px; }
 
 .ViviendaForm .landing-search-form {
-  margin-top: 0px; }
+  margin-top: 0px;
+  padding-top: 0px; }
 
 .ViviendaForm .valuation-container .row {
   width: 100%; }
 
-.ViviendaForm .centered {
+.ViviendaForm .buttons-container {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-justify-content: space-around;
-      -ms-flex-pack: distribute;
-          justify-content: space-around; }
-  .ViviendaForm .centered .buttons-container {
-    padding: 20px 0px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-justify-content: space-around;
-        -ms-flex-pack: distribute;
-            justify-content: space-around;
-    width: 400px; }
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+  .ViviendaForm .buttons-container button {
+    margin: 10px 15px; }
 
 .ViviendaForm {
   padding: 20px 0px; }
@@ -5804,7 +5809,7 @@ button.close {
   .Landing .Index {
     height: calc(100% - 102px); }
     .Landing .Index .headers {
-      margin-top: 5vh;
+      margin-top: 4vh;
       text-align: center;
       color: #FFFFFF; }
     .Landing .Index .buttons-redirect {
@@ -5821,7 +5826,8 @@ button.close {
         background-color: rgba(250, 250, 250, 0.3);
         border: 1px solid transparent;
         color: #fff;
-        padding: 13px;
+        padding: 10px;
+        font-size: 13px;
         transition: all 0.3s ease;
         -webkit-transition: all 0.3s ease; }
         .Landing .Index .buttons-redirect button.btn:hover {
@@ -5852,8 +5858,9 @@ button.close {
     .Landing .LandingForm .valuation-container .row {
       width: 100%; }
     .Landing .LandingForm .subtitle {
-      padding-top: 15px;
-      font-size: 20px;
+      padding-top: 5px;
+      margin-bottom: 0;
+      font-size: 18px;
       font-weight: 300;
       text-align: center;
       color: #FFF; }
@@ -5865,8 +5872,9 @@ button.close {
         color: #fff;
         font-weight: lighter; }
     .Landing .LandingForm .inner-form {
-      padding: 30px;
+      padding: 12px;
       max-width: 1500px;
+      width: 95%;
       margin: auto;
       background-color: rgba(255, 255, 255, 0.35);
       border-radius: 10px; }
@@ -5877,6 +5885,8 @@ button.close {
       @media screen and (max-width: 990px) {
         .Landing .LandingForm .inner-form .colonia-search .btn-disponible {
           margin-top: 0px !important; } }
+      .Landing .LandingForm .inner-form .colonia-search .landing-search-form {
+        margin-top: 10px; }
     .Landing .LandingForm .scrolled {
       background-color: rgba(242, 245, 245, 0.55); }
     .Landing .LandingForm .buttons-redirect {
@@ -6149,7 +6159,7 @@ button.close {
   .Landing .Index {
     height: calc(100% - 102px); }
     .Landing .Index .headers {
-      margin-top: 5vh;
+      margin-top: 4vh;
       text-align: center;
       color: #FFFFFF; }
     .Landing .Index .buttons-redirect {
@@ -6166,7 +6176,8 @@ button.close {
         background-color: rgba(250, 250, 250, 0.3);
         border: 1px solid transparent;
         color: #fff;
-        padding: 13px;
+        padding: 10px;
+        font-size: 13px;
         transition: all 0.3s ease;
         -webkit-transition: all 0.3s ease; }
         .Landing .Index .buttons-redirect button.btn:hover {
@@ -6197,8 +6208,9 @@ button.close {
     .Landing .LandingForm .valuation-container .row {
       width: 100%; }
     .Landing .LandingForm .subtitle {
-      padding-top: 15px;
-      font-size: 20px;
+      padding-top: 5px;
+      margin-bottom: 0;
+      font-size: 18px;
       font-weight: 300;
       text-align: center;
       color: #FFF; }
@@ -6210,8 +6222,9 @@ button.close {
         color: #fff;
         font-weight: lighter; }
     .Landing .LandingForm .inner-form {
-      padding: 30px;
+      padding: 12px;
       max-width: 1500px;
+      width: 95%;
       margin: auto;
       background-color: rgba(255, 255, 255, 0.35);
       border-radius: 10px; }
@@ -6222,6 +6235,8 @@ button.close {
       @media screen and (max-width: 990px) {
         .Landing .LandingForm .inner-form .colonia-search .btn-disponible {
           margin-top: 0px !important; } }
+      .Landing .LandingForm .inner-form .colonia-search .landing-search-form {
+        margin-top: 10px; }
     .Landing .LandingForm .scrolled {
       background-color: rgba(242, 245, 245, 0.55); }
     .Landing .LandingForm .buttons-redirect {
@@ -6599,21 +6614,21 @@ body {
     margin-left: 10px;
     margin-top: 7px; }
 
-.input-group {
-  margin-bottom: 20px; }
-  .input-group .error {
-    border: 1px solid #FE696B; }
-  .input-group input {
+.input-group .error {
+  border: 1px solid #FE696B; }
+
+.input-group input {
+  box-shadow: none;
+  text-align: left; }
+  .input-group input:active, .input-group input:focus {
+    outline: none;
     box-shadow: none;
-    text-align: left; }
-    .input-group input:active, .input-group input:focus {
-      outline: none;
-      box-shadow: none;
-      border: 1px solid #35C0BE; }
-  .input-group .input-group-addon {
-    background-color: #fff !important;
-    border: 1px solid #CCCCCC;
-    border-right: none; }
+    border: 1px solid #35C0BE; }
+
+.input-group .input-group-addon {
+  background-color: #fff !important;
+  border: 1px solid #CCCCCC;
+  border-right: none; }
 
 .valuation-container {
   display: -webkit-box;
@@ -6636,7 +6651,7 @@ body {
 
 .landing-search-form {
   padding: 20px 30px 0px 30px;
-  margin-top: 40px; }
+  margin-top: 10px; }
   .landing-search-form input {
     box-shadow: none; }
     .landing-search-form input:active, .landing-search-form input:focus {

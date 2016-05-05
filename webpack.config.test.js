@@ -9,31 +9,12 @@ var modulePaths = [node_modules, client, bootstrap];
 
 // Add gzip
 var extractTextPlugin = require('extract-text-webpack-plugin');
-
 module.exports = {
-  entry: {
-    main: path.resolve(__dirname, './client/scripts/main.js'),
-    vendor: ['jquery', 'bootstrap']
-  },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js', Infinity),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"dev"'
-    }),
-    new extractTextPlugin('main.css')
-  ],
-  output: {
-    path: path.resolve(__dirname, 'application'),
-    publicPath: 'http://localhost:8090/application/',
-    filename: '[name].js',
-    sourceMapFilename: 'debugging/[file].map',
-    pathinfo: true
-  },
-  watch: 'true',
+    entry: 'mocha!./test/js/components/SuggestionsInputField_spec.js',
+    output: {
+        path: __dirname,
+        filename: 'bundle.js'
+    },
   module: {
     preLoaders: [
       {
@@ -71,15 +52,9 @@ module.exports = {
     colors: true
   },
   target: 'web',
-  debug: true,  
+  debug: true,
   devtool: 'eval-source-map',
-  devServer: {
-    contentBase: __dirname,
-    quiet: false,
-    noInfo: false,
-    publicPath: "/application/"
-  },
-  resolve: {
+    resolve: {
     root: path.resolve(__dirname),
     extensions: ['', '.js', '.es6'],
     alias: {
@@ -92,4 +67,4 @@ module.exports = {
       'im-common': 'client/scripts/components/common'
     }
   }
-};
+}
