@@ -58,10 +58,9 @@ describe('ValuePicker Component', () => {
     const expectedUnitValue = { unit: 3 };
     let selectedValue;
 
-    const onUpdateValue     = (value) => {
+    const onUpdateValue = (value) => {
       selectedValue = value;
     };
-
 
     const component = renderIntoDocument(
       <ValuePicker
@@ -77,8 +76,7 @@ describe('ValuePicker Component', () => {
     const values = scryRenderedDOMComponentsWithClass(component, 'selector');
     Simulate.click(values[2]);
 
-    expect(values[2].className).to.eql(expectedClass)
-
+    expect(values[2].className).to.eql(expectedClass);
     expect(selectedValue).to.eql(expectedUnitValue);
   });
 });

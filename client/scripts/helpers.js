@@ -47,11 +47,12 @@ export function getHouseInfor(id, callback) {
 }
 
 export function classNames(assingments) {
-  return _.reduce(assingments, (actual, value, key) => {
+  let className = _.reduce(assingments, (actual, value, key) => {
     if (value) {
       return actual + ' ' + key;
     }
-
     return actual;
   }, '');
+
+  return className.substring(1);
 }
