@@ -9,7 +9,7 @@ import NoChart from   '../../components/NoChart';
 import Spinner from   '../../components/Spinner';
 
 // Helpers
-import Helpers                      from '../../helpers';
+import { formatAsPrice }            from '../../helpers';
 import { fetchDistribucionPrecio }  from '../../actions/report_actions';
 import { formatDistribucionPrecio } from '../../data_formatters';
 
@@ -22,11 +22,11 @@ class FormatBarChart extends React.Component {
     let title
 
     if (d.lim_inf === 'limite_inf') {
-      title = 'Menor a ' +  Helpers.formatAsPrice(d.lim_sup);
+      title = 'Menor a ' +  formatAsPrice(d.lim_sup);
     } else if (d.lim_sup === 'limite_sup') {
-      title = 'Mayor a ' + Helpers.formatAsPrice(d.lim_inf);
+      title = 'Mayor a ' + formatAsPrice(d.lim_inf);
     } else {
-      title = Helpers.formatAsPrice(d.lim_inf) + ' a ' +  Helpers.formatAsPrice(d.lim_sup);
+      title = formatAsPrice(d.lim_inf) + ' a ' +  formatAsPrice(d.lim_sup);
     }
 
     let html = `<div class="TooltipContainer">

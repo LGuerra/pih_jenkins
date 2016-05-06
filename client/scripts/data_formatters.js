@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import Helpers from './helpers';
+import { formatAsPrice, formatAsNumber } from './helpers';
 
 export function formatPrecioHistorico(data) {
   let arrayPoints = data.map((element, index) => {
@@ -87,11 +87,11 @@ export function formatDistribucionPrecio(data) {
     formattedData = _.map(data.json_precios, (element, key) => {
       let label;
       if (element.lim_inf === 'limite_inf') {
-        label = '< ' + Helpers.formatAsNumber(element.lim_sup / 1000);
+        label = '< ' + formatAsNumber(element.lim_sup / 1000);
       } else if (element.lim_sup === 'limite_sup') {
-        label = '> ' + Helpers.formatAsNumber(element.lim_inf / 1000);
+        label = '> ' + formatAsNumber(element.lim_inf / 1000);
       } else {
-        label = Helpers.formatAsNumber(element.lim_inf / 1000) + ' a ' + Helpers.formatAsNumber(element.lim_sup / 1000);
+        label = formatAsNumber(element.lim_inf / 1000) + ' a ' + formatAsNumber(element.lim_sup / 1000);
       }
       return({
         lim_inf: element.lim_inf,
@@ -123,8 +123,8 @@ export function formatDistribucionPrecio(data) {
 
 export function formatComparativoViviendas(data, viviendaInfo, coloniaName) {
   let formattedData = [{
-      'Precio por m²': Helpers.formatAsPrice(viviendaInfo.precioM2) || '-',
-      'Precio de oferta': Helpers.formatAsPrice(viviendaInfo.valuacion) || '-',
+      'Precio por m²': formatAsPrice(viviendaInfo.precioM2) || '-',
+      'Precio de oferta': formatAsPrice(viviendaInfo.valuacion) || '-',
       'Recámaras': viviendaInfo.recamaras || '-',
       'Baños': viviendaInfo.banos || '-',
       'Estacionamientos': viviendaInfo.estacionamientos || '-',
@@ -136,8 +136,8 @@ export function formatComparativoViviendas(data, viviendaInfo, coloniaName) {
 
   data.forEach((element, index) => {
     formattedData.push({
-      'Precio por m²': Helpers.formatAsPrice(element.precio / element.m2) || '-',
-      'Precio de oferta': Helpers.formatAsPrice(element.precio) || '-',
+      'Precio por m²': formatAsPrice(element.precio / element.m2) || '-',
+      'Precio de oferta': formatAsPrice(element.precio) || '-',
       'Recámaras': element.recamaras || '-',
       'Baños': element.banos || '-',
       'Estacionamientos': element.estacionamientos || '-',
@@ -163,7 +163,7 @@ export function formatComparativoColonias(data, currentID) {
     }
     return ({
       'Colonia': element.nombre,
-      'Precio m²': Helpers.formatAsPrice(element.average),
+      'Precio m²': formatAsPrice(element.average),
       'Viviendas ofertadas': element.count,
       'id': element.colonia
     });

@@ -26,6 +26,12 @@ class Report extends React.Component {
     super(props);
   }
 
+  _scrollTo() {
+    $('html, body').animate({
+      scrollTop: $('body').offset().top
+    }, 500);
+  }
+
   _getLoadingFrame(condition) {
     let loadingFrame = condition ? (
       <div style={{
@@ -42,9 +48,14 @@ class Report extends React.Component {
     return loadingFrame;
   }
 
+  componentDidMount() {
+    this.props.setIntialState();
+  }
+
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.location.query, this.props.location.query)) {
       this.props.setIntialState();
+      this._scrollTo();
     }
   }
 

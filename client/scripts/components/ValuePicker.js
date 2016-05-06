@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import { classNames } from '../helpers'
+
 class ValuePicker extends Component {
   constructor(props) {
     super(props)
@@ -31,7 +33,6 @@ class ValuePicker extends Component {
     }
 
     return _.map(range, (value, index) =>  {
-      let isActive = this.state.active == value ? 'active' : '';
       let label = index !== (range.length - 1)
         ? value
         : value + '+';
@@ -40,7 +41,10 @@ class ValuePicker extends Component {
         <div
           onClick={this._selectValue.bind(this, value)}
           key={'selector-' + index}
-          className={'selector ' + isActive}><p>{label}</p></div>
+          className={classNames({
+            selector: true,
+            active: this.state.active == value
+          })}><p>{label}</p></div>
       )
     });
   }

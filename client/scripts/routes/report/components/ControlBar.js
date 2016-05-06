@@ -8,8 +8,8 @@ import SuggestionsInputField  from '../../../components/SuggestionsInputField';
 import ViviendaParamsFields   from '../../../components/ViviendaParamsFields';
 
 // Helpers
-import Helpers                                  from '../../../helpers';
-import { helpersAPI }                           from '../../../api/api-helper.js';
+import { getHouseInfor, classNames }  from '../../../helpers';
+import { helpersAPI }     from '../../../api/api-helper.js';
 
 // Actions
 import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
@@ -50,7 +50,7 @@ class ControlBar extends React.Component{
     this.setState({
       vivienda: null
     }, () => {
-      Helpers.getHouseInfor(item.id, (place) => {
+      getHouseInfor(item.id, (place) => {
         let latitude    = place.geometry.location.lat();
         let longitude   = place.geometry.location.lng();
         let infoParams  = this.state.infoParams;
@@ -107,13 +107,13 @@ class ControlBar extends React.Component{
   _generateViviendaReport() {
     if (this.state.vivienda) {
       let infoParams  = _.clone(this.props.urlParams);
-      let toFormat = {
-        tipo: 'Vivienda'
-      };
+      let toFormat = {};
 
       for (let key in this.urlParams) {
         toFormat[key] = this.state.vivienda[key] || infoParams[key] || this.urlParams[key];
       }
+
+      toFormat.tipo = 'Vivienda';
 
       this._toggleCollapse('.ViviendaForm')
       this.context.router.push({
@@ -176,7 +176,7 @@ class ControlBar extends React.Component{
           </div>
           <div id={'ColoniaForm'} className={'collapse ColoniaForm'}>
             <div className={'row'}>
-              <div className={'col-sm-10'}>
+              <div style={{marginTop: '20px'}} className={'col-sm-10'}>
                 <SuggestionsInputField
                   ref={'colonia_field'}
                   searchType={'Colonia'}
@@ -185,22 +185,22 @@ class ControlBar extends React.Component{
                   specificGroupClass={'landing-search-form'}
                   specificInputClass={'form-control Colonia'}/>
               </div>
-              <div className={'col-sm-2'}>
+              <div style={{marginTop: '20px'}}  className={'col-sm-2'}>
                 <button className={'aqua-button'}>
                   {'Ver Colonias disponibles'}
                 </button>
               </div>
             </div>
-              <div className={'buttons-container'}>
-                <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'gray-button'}>
-                  {'Cancelar'}
-                </button>
-                <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
-                  {'Generar Reporte'}
-                </button>
-              </div>
+            <div style={{marginBottom: '20px'}} className={'buttons-container'}>
+              <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'gray-button'}>
+                {'Cancelar'}
+              </button>
+              <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
+                {'Generar Reporte'}
+              </button>
+            </div>
           </div>
-          <div id={'ViviendaForm'} className={'collapse ViviendaForm'}>
+          <div style={{marginTop: '20px'}} id={'ViviendaForm'} className={'collapse ViviendaForm'}>
             <SuggestionsInputField
               ref={'vivienda_field'}
               searchType={'Vivienda'}
@@ -211,7 +211,7 @@ class ControlBar extends React.Component{
             <ViviendaParamsFields
               infoParams={this.props.urlParams}
               onUpdateData={this._onUpdateDataParams.bind(this)} />
-            <div className={'buttons-container'}>
+            <div style={{marginBottom: '20px'}} className={'buttons-container'}>
                 <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
                   {'Cancelar'}
                 </button>

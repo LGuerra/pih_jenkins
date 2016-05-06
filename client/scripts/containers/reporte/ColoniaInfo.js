@@ -6,7 +6,7 @@ import _      from 'lodash';
 import Spinner from './../../components/Spinner';
 
 // Helpers
-import Helpers from '../../helpers';
+import { formatAsPrice } from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchColoniaInfo } from  '../../actions/report_actions';
 
@@ -41,7 +41,7 @@ class ColoniaInfo extends React.Component {
         : '';
 
       if (data.coloniaInfo.SHF) {
-        shf = Helpers.formatAsPrice(data.coloniaInfo.SHF);
+        shf = formatAsPrice(data.coloniaInfo.SHF);
       } else {
         shf = 'No disponible';
       }
@@ -60,7 +60,7 @@ class ColoniaInfo extends React.Component {
         <div className={'InfoContainer'}>
           <div className={'InfoElement'} style={{textAlign: 'center'}}>
             <p className={'green-price'}>
-              {data.averageOffer ? Helpers.formatAsPrice(data.averageOffer) : 'No disponible'}
+              {data.averageOffer ? formatAsPrice(data.averageOffer) : 'No disponible'}
             </p>
             <p className={'subtitle'}>{'Precio promedio total'}
               <img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}} src={asterisk} />
@@ -68,7 +68,7 @@ class ColoniaInfo extends React.Component {
           </div>
           <div className={'InfoElement'} style={{textAlign: 'center'}}>
             <p className={'secondary-price'}>
-              {data.averageM2 ? Helpers.formatAsPrice(data.averageM2) : 'No disponible'}
+              {data.averageM2 ? formatAsPrice(data.averageM2) : 'No disponible'}
             </p>
             <p className={'subtitle'}>{'Precio promedio por m²'}
               <img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}} src={asterisk} />

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Spinner from './../../components/Spinner'
 
 // Helpers
-import Helpers from '../../helpers';
+import { formatAsPrice } from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchViviendaInfo } from '../../actions/report_actions';
 
@@ -75,7 +75,8 @@ class ViviendaInfo extends React.Component {
     const IMAGES = {
       alert: require('file!images-banca/alert.svg'),
       star: require('file!images-banca/star.svg'),
-      star_2: require('file!images-banca/star_2.svg')
+      star_2: require('file!images-banca/star_2.svg'),
+      question: require('file!images-banca/question.svg')
     };
     if (this.props.viviendaInfo) {
       let stars = new Array();
@@ -118,12 +119,12 @@ class ViviendaInfo extends React.Component {
           <h4 className={'SubsectionTitle'} style={{marginLeft: '5px'}}>{'Vivienda valuada'}</h4>
           <div className={'InfoContainer'}>
             <div className={'InfoElement'} style={{textAlign: 'center'}}>
-              <p className={'green-price'}>{Helpers.formatAsPrice(valuacion * 1000)}</p>
+              <p className={'green-price'}>{formatAsPrice(valuacion * 1000)}</p>
               <p className={'subtitle'} style={{marginBottom: '0px'}}>{'Precio estimado'}</p>
               {reputacionComponent}
             </div>
             <div className={'InfoElement'} style={{textAlign: 'center'}}>
-              <p className={'secondary-price'}>{Helpers.formatAsPrice(this.props.viviendaInfo.precioM2)}</p>
+              <p className={'secondary-price'}>{formatAsPrice(this.props.viviendaInfo.precioM2)}</p>
               <p className={'subtitle'}>{'Precio estimado por m²'}</p>
             </div>
           </div>

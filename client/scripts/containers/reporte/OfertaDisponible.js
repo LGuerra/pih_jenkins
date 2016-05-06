@@ -6,7 +6,7 @@ import _      from 'lodash';
 import Spinner from './../../components/Spinner';
 
 // Helpers
-import Helpers from '../../helpers';
+import { formatAsNumber } from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchOfertaDisponible } from '../../actions/report_actions';
 
@@ -45,7 +45,7 @@ class OfertaDisponible extends React.Component {
               <img height={'50px'} src={IMAGES.houses} style={{margin: '0px 10px'}}/>
               <div style={{width: '100px'}}>
                 <p className={'OfertaDisponible-price'}>
-                  {data.monthlyListing ? Helpers.formatAsNumber(Number(data.monthlyListing)) : 'N.D.'}</p>
+                  {data.monthlyListing ? formatAsNumber(Number(data.monthlyListing)) : 'N.D.'}</p>
                 <p className={'subtitle'}>{'Listados en el último mes'}</p>
               </div>
             </div>
@@ -55,7 +55,7 @@ class OfertaDisponible extends React.Component {
               <img height={'55px'} src={IMAGES.calendar_houses} style={{margin: '0px 10px'}}/>
               <div style={{width: '100px'}}>
                 <p className={'OfertaDisponible-price'}>
-                  {data.semesterListing ? Helpers.formatAsNumber(Number(data.semesterListing)) : 'N.D.'}</p>
+                  {data.semesterListing ? formatAsNumber(Number(data.semesterListing)) : 'N.D.'}</p>
                 <p className={'subtitle'}>{'Listados en los últimos 6 meses'}</p>
               </div>
             </div>
@@ -66,7 +66,7 @@ class OfertaDisponible extends React.Component {
                 <img height={'50px'} src={IMAGES.calendar} style={{margin: '0px 10px'}}/>
                 <div style={{width: '100px'}}>
                   <p className={'OfertaDisponible-price'}>
-                    {data.averageTime ? Helpers.formatAsNumber(Number(data.averageTime)) + ' días' : 'N.D.'}</p>
+                    {data.averageTime ? formatAsNumber(Number(data.averageTime)) + ' días' : 'N.D.'}</p>
                   <p className={'subtitle'}>{'Tiempo promedio en el mercado'}<img width={'5px'} style={{marginBottom: '8px', marginLeft: '1px'}}src={IMAGES.asterisk} /></p>
                 </div>
               </div>

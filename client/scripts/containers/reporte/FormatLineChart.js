@@ -8,8 +8,8 @@ import NoChart from     '../../components/NoChart';
 import Spinner from     '../../components/Spinner';
 
 // Helpers
-import Helpers from '../../helpers';
 import helper_properties from '../../helper_properties';
+import { formatAsPrice } from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchPrecioHistorico } from '../../actions/report_actions';
 
@@ -27,7 +27,7 @@ class FormatLineChart extends React.Component {
   }
 
   _yTickFormat(d, i) {
-    return (Helpers.formatAsPrice(d));
+    return (formatAsPrice(d));
   }
 
   _tooltipLineFormat(d) {
@@ -37,7 +37,7 @@ class FormatLineChart extends React.Component {
     var html = `<div class="TooltipContainer">
       <div class="Tooltip-row">
         <p class="Tooltip-title">${dateFormatted} - </p>
-        <p class="Tooltip-value">${Helpers.formatAsPrice(d.data0.value.value)}</p>
+        <p class="Tooltip-value">${formatAsPrice(d.data0.value.value)}</p>
       </div>
     </div>`;
 

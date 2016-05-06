@@ -3,7 +3,7 @@ import { connect }  from 'react-redux'
 
 import LandingSearchForm  from './LandingSearchForm';
 
-import Helpers              from '../../../helpers';
+import { getHouseInfor, classNames } from '../../../helpers';
 import { helpersAPI }       from '../../../api/api-helper.js';
 
 import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
@@ -14,7 +14,7 @@ function togglePopover(identifier, content) {
     .addClass('error');
 
   $(identifier).popover({content: content,
-                                        placement: 'top'});
+    placement: 'top'});
   $(identifier).popover('show');
 
   setTimeout(() => {
@@ -30,12 +30,11 @@ class Landing extends React.Component {
   }
 
   _generateColoniaReport() {
-    console.log(this);
     // debugger;
     if (this.props.colonia.id) {
       this.context.router.push({
         pathname: '/reporte',
-        query: { 
+        query: {
           colonia: this.props.colonia.id,
           tipo: 'Colonia'
         },
@@ -50,9 +49,8 @@ class Landing extends React.Component {
   }
 
   _generateViviendaReport() {
-    console.log(this);
     if (this.props.vivienda.id) {
-      Helpers.getHouseInfor(this.props.vivienda.id, (place) => {
+      getHouseInfor(this.props.vivienda.id, (place) => {
         let latitude    = place.geometry.location.lat();
         let longitude   = place.geometry.location.lng();
         let infoParams  = this.props.infoParams;
@@ -63,7 +61,7 @@ class Landing extends React.Component {
               let colonia = response.data.id;
               this.context.router.push({
                 pathname: '/reporte',
-                query: { 
+                query: {
                   colonia: colonia,
                   tipo: 'Vivienda',
                   longitud: longitude,
@@ -155,10 +153,22 @@ class Landing extends React.Component {
             </div>
           </div>
           <div className={'buttons-redirect'} style={{margin: '20px'}}>
-            <button onClick={this._toggleMenu.bind(this, 1)} className={'btn btn-left ' + (this.props.activeForm === 1 ? 'active' : '')}>
+            <button
+              onClick={this._toggleMenu.bind(this, 1)}
+              className={classNames({
+                'btn': true,
+                'btn-left': true,
+                'active': this.props.activeForm === 1
+              })}>
               {'REPORTE COLONIA'}
             </button>
-            <button onClick={this._toggleMenu.bind(this, 2)} className={'btn btn-right ' + (this.props.activeForm === 2 ? 'active' : '')}>
+            <button
+              onClick={this._toggleMenu.bind(this, 2)}
+              className={classNames({
+                'btn': true,
+                'btn-left': true,
+                'active': this.props.activeForm === 2
+              })}>
               {'REPORTE VIVIENDA'}
             </button>
           </div>

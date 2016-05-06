@@ -6,7 +6,7 @@ import _      from 'lodash';
 import StickyNavbar from '../../components/StickyNavbar';
 
 // Helpers
-import Helpers from '../../helpers';
+import { formatAsPrice } from '../../helpers';
 import { connect } from 'react-redux';
 
 class FormatStickyNavbar extends React.Component{
@@ -38,7 +38,7 @@ class FormatStickyNavbar extends React.Component{
             <p style={{marginBottom: '0px', fontSize: '12px'}}>{props.urlParams.address}</p>
           </div>
           <div className={'NavbarIcon'}>
-            <p style={{color: '#35C079'}}>{Helpers.formatAsPrice(props.viviendaInfo.valuacion)}</p>
+            <p style={{color: '#35C079'}}>{formatAsPrice(props.viviendaInfo.valuacion)}</p>
           </div>
           <div className={'NavbarIcon'}>
             {image}
@@ -77,11 +77,11 @@ class FormatStickyNavbar extends React.Component{
             <p style={{marginBottom: '10px', fontSize: '14px'}}>{'Colonia ' + props.coloniaInfo.coloniaInfo.nombre}</p>
           </div>
           <div className={'NavbarIcon'}>
-            <p style={{color: '#35c079', fontSize: '17px'}}>{Helpers.formatAsPrice(props.coloniaInfo.averageOffer)}</p>
+            <p style={{color: '#35c079', fontSize: '17px'}}>{formatAsPrice(props.coloniaInfo.averageOffer)}</p>
             <p className={'navbar-desc'} style={{marginTop: '4px', marginBottom: '10px', fontSize: '14px'}}>Precio promedio</p>
           </div>
           <div  className={'NavbarIcon'} style={{marginBottom: '0px', fontSize: '14px'}}>
-            <p>{Helpers.formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
+            <p>{formatAsPrice(props.coloniaInfo.averageM2) + ' promedio por m²'}</p>
           </div>
         </div>
         );
