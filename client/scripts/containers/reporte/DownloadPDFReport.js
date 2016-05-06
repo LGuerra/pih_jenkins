@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { connect }          from 'react-redux';
 import _                    from 'lodash';
+import { connect }          from 'react-redux';
 
 import { setLoadingFrame }  from '../../actions/report_actions'
-import PDFReport            from '../../PDFReport';
+import { printInfo, downloadPDFReport} from '../../PDFReport';
 
 import {
   formatPrecioHistorico,
@@ -110,7 +110,7 @@ class DownloadPDFReport extends Component {
       }
     ]);
 
-    PDFReport.downloadPDFReport(url, dataTokens)
+    downloadPDFReport(url, dataTokens)
       .then(() => {
         this.props.setLoadingFrame(false);
       });
@@ -121,7 +121,7 @@ class DownloadPDFReport extends Component {
     //let host = 'http://192.168.0.225:4567/reporter/reporte_vivienda/';
     let today = new Date();
     let dd = today.getDate();
-    let mm = today.getMonth()+1;
+    let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();
 
     if (mm < 10) mm = '0' + mm;
@@ -131,14 +131,14 @@ class DownloadPDFReport extends Component {
 
     if (this.props.viewType === 'Vivienda') {
       let randomText = Math.random().toString(36).substr(2, 10);
-      this.reportUrl = host + this.props.viewType.toLowerCase() + '/' + this.props.urlParams.colonia + '-' + randomText + '/' + date;
+      this.reportUrl = `${host}${this.props.viewType.toLowerCase()}/${this.props.urlParams.colonia}-${randomText}/${date}`;
     } else {
-      this.reportUrl = host + this.props.viewType.toLowerCase() + '/' + this.props.urlParams.colonia + '/' + date;
+      this.reportUrl = `${host}${this.props.viewType.toLowerCase()}/${this.props.urlParams.colonia}/${date}`;
     }
 
     $.get(this.reportUrl)
       .done(() => {
-        PDFReport.printInfo(this.reportUrl);
+        printInfo(this.reportUrl);
       })
       .fail(() => {
         this.props.setLoadingFrame(true);
