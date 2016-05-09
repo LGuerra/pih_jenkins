@@ -15,6 +15,10 @@ class InputFieldForm extends Component {
       e.target.value = value;
     }
 
+    if (e.target.value == '') {
+      value = e.target.min;
+      e.target.value = value;
+    }
     toReturn[this.props.unit] = value;
     this.props.onUpdateValue(toReturn);
   }

@@ -41,13 +41,13 @@ let _askForPDF = (miliseconds, attempts, url) => {
   return deferred.promise();
 }
 
-let printInfo = url => {
+export function printInfo(url) {
   let anchor = document.createElement('a');
   anchor.href = url;
   anchor.click();
 }
 
-let downloadPDFReport = (url, dataTokens) => {
+export function downloadPDFReport(url, dataTokens)  {
   let deferred = $.Deferred();
   let promises = dataTokens.map((token) => {
     return _buildPromises(
@@ -76,7 +76,3 @@ let downloadPDFReport = (url, dataTokens) => {
   return deferred.promise();
 }
 
-export default {
-  printInfo,
-  downloadPDFReport
-};

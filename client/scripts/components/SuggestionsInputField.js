@@ -65,6 +65,10 @@ class SuggestionsInputField extends Component {
 
       if ( e.keyCode == 13 ) {
         this._onSelectItem(this.state.selectedSuggestion);
+      } else if ( e.keyCode == 27 ) {
+        this.setState({
+          showDropdown: false
+        });
       }
     }
   }
@@ -95,8 +99,12 @@ class SuggestionsInputField extends Component {
     let suggests = [];
     if (searchInput.length >= 3) {
       if (this.props.searchType === 'Vivienda') {
-        // Callback to set suggestions into state. Will recieve suggestions in prediction variable
-        let displaySuggestions = (predictions, status) => {
+        // Create service to use googleapi autocompletion
+        let service = new google.maps.places.AutocompleteService();
+        // Build Request
+        let request = { input: searchInput, types: ['address'] , componentRestrictions: {country: 'mx'}};
+        // Execute service and print result in callback
+        service.getPlacePredictions(request, (predictions, status) => {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
             suggests = this._parseSuggestionsGoogle(predictions);
             suggests.unshift({content: searchInput, highlights: searchInput, id: -1});
@@ -106,14 +114,7 @@ class SuggestionsInputField extends Component {
               suggests: suggests
             });
           }
-        };
-
-        // Create service to use googleapi autocompletion
-        let service = new google.maps.places.AutocompleteService();
-        // Build Request
-        let request = { input: searchInput, types: ['address'] , componentRestrictions: {country: 'mx'}};
-        // Execute service and print result in callback
-        service.getPlacePredictions(request, displaySuggestions);
+        });
       } else {
         let arr    = searchInput.split(" ");
         let prefix = arr.pop();
@@ -122,7 +123,7 @@ class SuggestionsInputField extends Component {
         helpersAPI.suburbsByName({
           'q': `(or(and ${b}(prefix '${prefix}'))'${searchInput}')`
         })
-        .then(response => {
+        .then((response) => {
           response = response.data;
           suggests = this._parseSuggestions(response.hits.hit);
           suggests.unshift({

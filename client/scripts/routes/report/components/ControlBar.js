@@ -14,7 +14,7 @@ import { helpersAPI }     from '../../../api/api-helper.js';
 // Actions
 import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
 
-function togglePopover(identifier, content) {
+function handleErrorAlert(identifier, content) {
   $(identifier).addClass('error');
 
   $(identifier).popover({
@@ -70,7 +70,7 @@ class ControlBar extends React.Component{
                 vivienda: params
               });
             } else {
-              togglePopover('.Vivienda', 'Elige una vivienda válida');
+              handleErrorAlert('.Vivienda', 'Elige una vivienda válida');
             }
           });
       });
@@ -100,7 +100,7 @@ class ControlBar extends React.Component{
       });
       this._toggleCollapse('.ColoniaForm')
     } else {
-      togglePopover('.Colonia', 'Elige una colonia válida');
+      handleErrorAlert('.Colonia', 'Elige una colonia válida');
     }
   }
 
@@ -122,7 +122,7 @@ class ControlBar extends React.Component{
         state: {}
       });
     } else {
-      togglePopover('.Vivienda', 'Debes elegir una vivienda');
+      handleErrorAlert('.Vivienda', 'Debes elegir una vivienda');
     }
   }
 

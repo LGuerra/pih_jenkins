@@ -84,4 +84,25 @@ describe('SuggestionsInputField Component', () => {
     Simulate.keyDown(input, {keyCode: 38});
     expect(input.value).to.eql(expectedValue2);
   });
+
+  it('should hide suggestions field when user clicks on ESC', () => {
+
+    const component = renderIntoDocument(
+      <SuggestionsInputField />
+    );
+
+    component.setState({
+      suggests: suggests,
+      selectedSuggestion: suggests[1]
+    });
+
+    const input = component.refs.input;
+    input.value = 'This is a new item';
+
+    setTimeout(() => {
+      expect(component.state.showDropdown).to.equal(true);
+      Simulate.keyDown(input, {keyCode: 27});
+      expect(component.state.showDropdown).to.equal(false);
+    }, 0);
+  });
 });

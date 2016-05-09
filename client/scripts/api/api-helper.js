@@ -87,12 +87,12 @@ const suburbsAPI = (() => {
   let report = (ids, months) => {
     let idsParams = ids.join(',');
     return axios.get(
-      `${apiEndpoint}/suburbs/report`, 
+      `${apiEndpoint}/suburbs/report`,
       {
         params: {
           id_cols: idsParams,
           months: months || 6
-        } 
+        }
       }
     );
   };
@@ -147,7 +147,7 @@ const suburbAPI = (() => {
   let historicPrice = (id) => {
     return axios.get(`${apiEndpoint}/suburb/${id}/historic-price`);
   };
-  
+
   let listingCount = (id, months) => {
     let params = {};
     if(typeof months !== 'undefined') params.months = months;

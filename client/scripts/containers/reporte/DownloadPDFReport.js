@@ -3,7 +3,7 @@ import _                    from 'lodash';
 import { connect }          from 'react-redux';
 
 import { setLoadingFrame }  from '../../actions/report_actions'
-import { printInfo, downloadPDFReport} from '../../PDFReport';
+import { printInfo, downloadPDFReport } from '../../PDFReport';
 
 import {
   formatPrecioHistorico,
@@ -135,6 +135,7 @@ class DownloadPDFReport extends Component {
     } else {
       this.reportUrl = `${host}${this.props.viewType.toLowerCase()}/${this.props.urlParams.colonia}/${date}`;
     }
+
 
     $.get(this.reportUrl)
       .done(() => {
