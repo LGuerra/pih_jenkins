@@ -10,6 +10,7 @@ web:
     - db
   env_file: .env
   environment:
+    - RAILS_ENV=development
     - API_STAGE=dev
 
 test:
