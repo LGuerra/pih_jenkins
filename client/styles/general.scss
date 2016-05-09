@@ -267,6 +267,12 @@ body {
   }
   .input-group-addon{
     background-color: #fff !important;
+    -webkit-border-top-left-radius: 4px !important;
+    -webkit-border-bottom-left-radius: 4px !important;
+    -moz-border-radius-topleft: 4px !important;
+    -moz-border-radius-bottomleft: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
   }
   .click-outside {
     position: fixed;

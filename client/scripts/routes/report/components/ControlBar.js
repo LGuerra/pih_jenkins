@@ -155,16 +155,16 @@ class ControlBar extends React.Component{
   render() {
     var downArrow = require('file!images-banca/down_arrow.svg');
     return (
-      <div style={{backgroundColor: '#fbfbfb', borderBottom: '1px solid #e7e7e7'}}>
-        <div className={'max-width-container'}>
-          <div className={'ControlBar row'}>
-            <div className={'col-sm-11'}>
+      <div style={{backgroundColor: '#ffffff', borderBottom: '1px solid #e7e7e7'}}>
+        <div className={''}>
+          <div className={'ControlBar max-width-container'}>
+            <div className={'col-sm-11'} style={{padding: '0px'}}>
               <div className={'control-container'}>
-                <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.urlParams.tipo === 'Colonia' ?  'menu-item-selected' : '')}>
+                <div onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'menu-item ' + (this.props.urlParams.tipo === 'Colonia' ?  'menu-item-selected' : '') + ' ' + (this.state.formActive === 'ColoniaForm' ?  'menu-item-active' : '')}>
                   <a href={'#'}>{'Reporte Colonia'}</a>
                   <img height={'12px'} src={downArrow} className={this.state.formActive === 'ColoniaForm' ? 'active' : ''}/>
                 </div>
-                <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.urlParams.tipo === 'Vivienda' ?  'menu-item-selected' : '')}>
+                <div onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'menu-item ' + (this.props.urlParams.tipo === 'Vivienda' ?  'menu-item-selected' : '') + ' ' + (this.state.formActive === 'ViviendaForm' ?  'menu-item-active' : '')}>
                   <a href={'#'}>{'Reporte Vivienda'}</a>
                   <img height={'12px'} src={downArrow} className={this.state.formActive === 'ViviendaForm' ? 'active' : ''}/>
                 </div>
@@ -175,49 +175,53 @@ class ControlBar extends React.Component{
             </div>
           </div>
           <div id={'ColoniaForm'} className={'collapse ColoniaForm'}>
-            <div className={'row'}>
-              <div style={{marginTop: '20px'}} className={'col-sm-10'}>
-                <SuggestionsInputField
-                  ref={'colonia_field'}
-                  searchType={'Colonia'}
-                  onSelectItem={this._onSelectColonia.bind(this)}
-                  placeholder={'Busca la ubicación de la vivienda'}
-                  specificGroupClass={'landing-search-form'}
-                  specificInputClass={'form-control Colonia'}/>
+            <div className={'max-width-container'}>
+              <div className={'row'}>
+                <div style={{marginTop: '20px', padding: '0 11px'}} className={'col-sm-12'}>
+                  <SuggestionsInputField
+                    ref={'colonia_field'}
+                    searchType={'Colonia'}
+                    onSelectItem={this._onSelectColonia.bind(this)}
+                    placeholder={'Ingrese el nombre de la colonia'}
+                    specificGroupClass={'landing-search-form'}
+                    specificInputClass={'form-control Colonia'}/>
+                </div>
+                {/*<div style={{marginTop: '20px'}}  className={'col-sm-2'}>
+                  <button className={'aqua-button'}>
+                    {'Ver Colonias disponibles'}
+                  </button>
+                </div>*/}
               </div>
-              <div style={{marginTop: '20px'}}  className={'col-sm-2'}>
-                <button className={'aqua-button'}>
-                  {'Ver Colonias disponibles'}
-                </button>
-              </div>
-            </div>
-            <div style={{marginBottom: '20px'}} className={'buttons-container'}>
-              <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'gray-button'}>
-                {'Cancelar'}
-              </button>
-              <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
-                {'Generar Reporte'}
-              </button>
-            </div>
-          </div>
-          <div style={{marginTop: '20px'}} id={'ViviendaForm'} className={'collapse ViviendaForm'}>
-            <SuggestionsInputField
-              ref={'vivienda_field'}
-              searchType={'Vivienda'}
-              onSelectItem={this._onSelectVivienda.bind(this)}
-              placeholder={'Busca la vivienda'}
-              specificGroupClass={'landing-search-form'}
-              specificInputClass={'form-control Vivienda'}/>
-            <ViviendaParamsFields
-              infoParams={this.props.urlParams}
-              onUpdateData={this._onUpdateDataParams.bind(this)} />
-            <div style={{marginBottom: '20px'}} className={'buttons-container'}>
-                <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
+              <div style={{marginBottom: '20px'}} className={'buttons-container'}>
+                <button onClick={this._toggleCollapse.bind(this, 'ColoniaForm')} className={'gray-button'}>
                   {'Cancelar'}
                 </button>
-                <button onClick={this._generateViviendaReport.bind(this)} className={'aqua-button'}>
+                <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
                   {'Generar Reporte'}
                 </button>
+              </div>
+            </div>
+          </div>
+          <div id={'ViviendaForm'} className={'collapse ViviendaForm'}>
+            <div className={'max-width-container'}>
+              <SuggestionsInputField
+                ref={'vivienda_field'}
+                searchType={'Vivienda'}
+                onSelectItem={this._onSelectVivienda.bind(this)}
+                placeholder={'Ingrese la dirección de la vivienda'}
+                specificGroupClass={'landing-search-form'}
+                specificInputClass={'form-control Vivienda'}/>
+              <ViviendaParamsFields
+                infoParams={this.props.urlParams}
+                onUpdateData={this._onUpdateDataParams.bind(this)} />
+              <div style={{marginBottom: '20px'}} className={'buttons-container'}>
+                  <button onClick={this._toggleCollapse.bind(this, 'ViviendaForm')} className={'gray-button'}>
+                    {'Cancelar'}
+                  </button>
+                  <button onClick={this._generateViviendaReport.bind(this)} className={'aqua-button'}>
+                    {'Generar Reporte'}
+                  </button>
+              </div>
             </div>
           </div>
         </div>

@@ -22,7 +22,6 @@ class App extends React.Component {
     return (
       <div id='banca-router'>
         <NavBar id='my-new-id' logoText='Intelimétrica'>
-          <NavBarLink/>
           <NavBarDropDown image={userSVG}/>
         </NavBar>
         {this.props.children}

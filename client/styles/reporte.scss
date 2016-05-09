@@ -274,7 +274,8 @@
 }
 
 .ControlBar {
-  display: flex;
+  display: flex !important;
+  justify-content: center;
   align-items: center;
   .control-container {
     z-index: 80;
@@ -284,6 +285,8 @@
       display: inline-block;
       text-transform: uppercase;
       text-align: center;
+      border: 1px solid transparent;
+      border-top: none;
       img{
         @include transition(all, 0.3s, ease-in-out);
         margin-left: 9px;
@@ -294,6 +297,10 @@
         transform: rotate(-180deg);
       }
       &:hover {
+        background-color: #FBFBFB;
+        border-top: none;
+        border: 1px solid #dddddd;
+        border-top: none;
         border-bottom: 3px solid #71d2d1;
       }
       a {
@@ -305,6 +312,12 @@
     }
     .menu-item-selected {
       border-bottom: 3px solid #35c0be;
+    }
+    .menu-item-active {
+      background-color: #FBFBFB;
+      border: 1px solid #dddddd;
+      border-top: none;
+      border-bottom: 3px solid #35C0BE;
     }
     .menu-item-disabled {
       cursor: not-allowed;
@@ -324,6 +337,9 @@
 
 .ColoniaForm {
   padding: 0px;
+  background-color: #fbfbfb;
+  border: 1px solid #dddddd;
+  border-bottom: 1px solid transparent;
   .landing-search-form{
     margin-top: 0px;
     padding: 0;
@@ -338,6 +354,10 @@
 }
 
 .ViviendaForm {
+  background-color: #fbfbfb;
+  border: 1px solid #dddddd;
+  border-bottom: 1px solid transparent;
+  padding-top: 20px;
   .landing-search-form{
     margin-top: 0px;
     padding: 0px 13px;
@@ -356,7 +376,4 @@
   }
 }
 
-.ViviendaForm {
-  padding: 0px;
-}
 
