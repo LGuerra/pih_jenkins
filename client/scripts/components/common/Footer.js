@@ -11,7 +11,7 @@ const Footer = (props) => {
         </div>
         <div style={{display: 'inline-block', marginRight: '10px'}}>
           <p className='link-to'>
-            
+            <Link to='conditions'>Condiciones</Link>
           </p>
         </div>
       </div>

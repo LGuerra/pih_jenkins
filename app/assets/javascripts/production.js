@@ -1,1 +1,1 @@
-//= require images
+// require_self

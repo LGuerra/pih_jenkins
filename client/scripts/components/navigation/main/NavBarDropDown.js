@@ -18,11 +18,13 @@ class NavBarDropDown extends React.Component {
         </a>
         <ul className='dropdown-menu'>
           {links.map((link, index) => { 
+            console.log(link.text);
+            let component = link.isRR ? 
+              <Link to={link.url}>{link.text}</Link> :
+              <a href={link.url}>{link.text}</a>;
             return (
               <li key={index}>
-                <Link to={link.url}>
-                  {link.text}
-                </Link>
+                {component}
               </li>
             );
           })}
