@@ -103,9 +103,9 @@
 .MainSection {
   @include transition(all, 0.75s, ease);
   background-color: $white;
-  &:hover{
+  /* &:hover{
     background-color: rgba(242, 245, 245, 0.55);
-  }
+  } */
 }
 
 .TooltipContainer {

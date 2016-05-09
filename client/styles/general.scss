@@ -186,13 +186,24 @@ body {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  padding: 0px 10px;
+  padding: 5px 10px 0px 10px;
   .icon {
     display: flex;
+    background-color: #dddddd;
+    border-radius: 3px;
+    width: 160px;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    @include transition(all, 0.3s, ease);
+    &:hover{
+      color: #FFF;
+      background-color: #71d2d1;
+    }
     .icon-label {
-      margin-left: 15px;
-      margin-top: 5px;
-      font-size: 15px;
+      margin: 0;
+      margin-left: 8px;
+      font-size: 14px;
     }
   }
 }
