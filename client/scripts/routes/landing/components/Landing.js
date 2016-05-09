@@ -108,16 +108,16 @@ class Landing extends React.Component {
         <div className={'inner-form'}>
           <p className={'subtitle'}>{'Módulo que genera un reporte detallado con la información necesaria y exacta de la colonia donde se quiere encontrar la vivienda deseada.'}</p>
           <div className={'row colonia-search'}>
-            <div className={'col-md-10'} style={{padding: '0'}}>
+            <div className={'col-md-12'} style={{padding: '0'}}>
               <LandingSearchForm
                 searchType={'Colonia'}
                 placeholder={'Ingrese el nombre de la colonia'}/>
             </div>
-            <div className={'col-md-2 btn-disponible'} style={{marginTop: '26px'}}>
+            {/*<div className={'col-md-2 btn-disponible'} style={{marginTop: '26px'}}>
               <button className={'aqua-button'}>
                {'VER COLONIAS DISPONIBLES'}
               </button>
-            </div>
+            </div>*/}
           </div>
           <div className={'buttons-redirect'}>
             <button onClick={this._generateColoniaReport.bind(this)} className={'aqua-button'}>
@@ -166,7 +166,7 @@ class Landing extends React.Component {
               onClick={this._toggleMenu.bind(this, 2)}
               className={classNames({
                 'btn': true,
-                'btn-left': true,
+                'btn-right': true,
                 'active': this.props.activeForm === 2
               })}>
               {'REPORTE VIVIENDA'}
