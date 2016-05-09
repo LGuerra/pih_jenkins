@@ -16,7 +16,7 @@ class Home extends React.Component {
       .then(data => {
         if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
           let nextPath = '/';
-          alertText = 'Correct logging...';
+          alertText = 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged';
           if(this.props.location.state !== null) {
             nextPath = this.props.location.state.nextPathname;
           }
@@ -25,12 +25,17 @@ class Home extends React.Component {
           });
         }
         document.getElementById('alert-banca-text').textContent = alertText;
-        $('#alert-banca').show();
+        $('#alert-banca').addClass('alert-success').show();
+        setTimeout( function() {
+          $('#alert-banca').removeClass('alert-success').hide();
+        }, 2000);
       })
       .catch(data => {
-        console.log('--------');
-        document.getElementById('alert-banca-text').textContent = alertText;
-        $('#alert-banca').show();
+        document.getElementById('alert-banca-text').textContent = `Error: ${data.data.error}`;
+        $('#alert-banca').addClass('alert-danger').show();
+        setTimeout( function() {
+          $('#alert-banca').removeClass('alert-danger').hide();
+        }, 2000);
       });
   }
 

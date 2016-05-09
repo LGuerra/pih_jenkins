@@ -23,9 +23,8 @@ export const checkPermissions = function(nextState, replace, next) {
     next();
   })
   .catch((args) => {
-    console.log('not even logged');
     replace({
-      pathname: '/users/login',
+      pathname: '/',
       state: { nextPathname: nextState.location.pathname }
     })
     next();

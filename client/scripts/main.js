@@ -29,7 +29,7 @@ const routes = {
   component: RootApp,
   childRoutes: [
     ConditionsRoutes,
-    UserRoutes,
+    // UserRoutes,
     {
       path: '/',
       getComponent: (nextState, cb) => {
