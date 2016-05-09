@@ -39,7 +39,7 @@ describe('IconSelector Component', () => {
   });
 
   it('should select the defaultIcon', () => {
-    const expectedClass = 'icon is_2';
+    const expectedClass = 'icon is_active';
     const defaultIcon = 4;
     const component = renderIntoDocument(
       <IconSelector
@@ -58,7 +58,7 @@ describe('IconSelector Component', () => {
     let selectedValue;
     const unit          = 'unit';
     const expectedValue = { unit: 4 };
-    const expectedClass = 'icon is_2';
+    const expectedClass = 'icon is_active';
 
     const onUpdateValue = (value) => {
       selectedValue = value;
