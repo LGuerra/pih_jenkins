@@ -25,11 +25,11 @@ if(process.env.NODE_ENV === 'test') {
 
 const userAPI = (() => {
   let getInfo = () => {
-    return axios.get('helpers/user_info');
+    return axios.get('/helpers/user_info');
   }
 
   let signIn = (user) => {
-    return axios.post('users/sign_in.json', { user: user });
+    return axios.post('/users/sign_in.json', { user: user });
   }
   return { getInfo, signIn };
 })();

@@ -21,15 +21,16 @@ import ReportRoutes from './routes/report';
 import NotFoundRoutes from './routes/notFound';
 import ConditionsRoutes from './routes/conditions';
 
-import { serverAuthResponse, checkPermissions } from 'helpers-banca';
+import { serverAuthResponse, checkPermissions, removeAlerts } from 'helpers-banca';
 
 const createStoreWithMiddleware = compose(applyMiddleware( promise ))(createStore);
 
 const routes = {
   component: RootApp,
+  onEnter: removeAlerts,
   childRoutes: [
     ConditionsRoutes,
-    UserRoutes,
+    // UserRoutes,
     {
       path: '/',
       getComponent: (nextState, cb) => {

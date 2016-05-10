@@ -18,17 +18,19 @@ class Form extends React.Component {
 
   render() {
     var csrf = $('meta[name="csrf-token"]').attr('content');
+    var user = require('file!images-banca/user.svg');
+    var lock = require('file!images-banca/lock.svg');
     return (
       <form action='users/sign_in.json' onSubmit={this.onSubmit} method='post'>
         <div className='input-group form-group has-feedback has-feedback-left'>
           <span className='input-group-addon'>
-            <img height='14px' width='18px' src='/assets/user-black-c9ce21dcbc411b2aca665f2813fc885b474330a4a820ddf4002563690976f2e0.svg'/>
+            <img height='14px' width='18px' src={user}/>
           </span>
           <input autofocus='autofocus' className='input form-control' placeholder='Correo electrónico' type='email' name='user[email]' ref='email-login' id='user_email'/>
         </div>
         <div className='input-group form-group  has-feedback has-feedback-left'>
           <span className='input-group-addon'>
-            <img height='14px' width='18px' src='/assets/lock-7980078872810e9971a1b16b597e103ceb4dc999011a41b2687044263ed69c44.svg'/>
+            <img height='14px' width='18px' src={lock}/>
           </span>
           <input autoComplete='off' className='input form-control' placeholder='Contraseña' type='password' name='user[password]' ref='password-login' id='user_password'/>
         </div>

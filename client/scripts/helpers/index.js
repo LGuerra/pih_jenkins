@@ -12,6 +12,13 @@ export const serverAuthResponse = () => {
   });
 }
 
+export const removeAlerts = (nextState, replace, next) => {
+  setTimeout( function() {
+    $('#alert-banca, .sign-in-notice').hide();
+  }, 3000);
+  next();
+};
+
 export const checkPermissions = function(nextState, replace, next) {
   var routeGroup = this.group || '';
   serverAuthResponse()
@@ -23,9 +30,8 @@ export const checkPermissions = function(nextState, replace, next) {
     next();
   })
   .catch((args) => {
-    console.log('not even logged');
     replace({
-      pathname: '/users/login',
+      pathname: '/',
       state: { nextPathname: nextState.location.pathname }
     })
     next();

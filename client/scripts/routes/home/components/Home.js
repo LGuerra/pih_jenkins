@@ -11,21 +11,30 @@ class Home extends React.Component {
   }
 
   logInUser(user) {
-    userAPI.signIn(user).then((data) => {
-      console.log(this);
-      console.log(data);
-      if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
-        var nextPath = '/';
-        console.log('redirect');
-        if(this.props.location.state !== null) {
-          nextPath = this.props.location.state.nextPathname;
+    let alertText = 'Error while logging...'
+    userAPI.signIn(user)
+      .then(data => {
+        if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
+          let nextPath = '/';
+          alertText = 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged';
+          if(this.props.location.state !== null) {
+            nextPath = this.props.location.state.nextPathname;
+          }
+          this.context.router.replace({
+            pathname: nextPath
+          });
         }
-        this.context.router.replace({
-          pathname: nextPath
-        });
-      }
-    });
-    console.log('try to login');
+        document.getElementById('alert-banca-text').textContent = alertText;
+        $('#alert-banca').addClass('alert-success').show();
+
+      })
+      .catch(data => {
+        document.getElementById('alert-banca-text').textContent = `Error: ${data.data.error}`;
+        $('#alert-banca').addClass('alert-danger').show();
+      })
+      .then(() => {
+        $('#alert-banca').removeClass('alert-success alert-danger');
+      });
   }
 
   render() {

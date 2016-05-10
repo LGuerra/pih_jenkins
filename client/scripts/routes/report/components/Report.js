@@ -112,8 +112,7 @@ class Report extends React.Component {
         <div>
           <BackToTop />
         </div>
-        <canvas id='canvas' style={{display: 'none'}} width='300px' height='200px'>
-        </canvas>
+        <canvas id='canvas' style={{display: 'none'}} width='300px' height='200px'/>
       </div>
     );
   }
