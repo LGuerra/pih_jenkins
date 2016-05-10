@@ -14,5 +14,5 @@ Rails.application.routes.draw do
 
   root  'pages#react'
 
-  get   '*path' => 'pages#react', as: :react
+  get   '*path' => 'pages#react', as: :react, constraints: -> (req) { !(req.fullpath =~ /^\/assets\/.*/) }
 end

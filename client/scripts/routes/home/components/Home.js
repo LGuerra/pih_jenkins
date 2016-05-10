@@ -26,16 +26,14 @@ class Home extends React.Component {
         }
         document.getElementById('alert-banca-text').textContent = alertText;
         $('#alert-banca').addClass('alert-success').show();
-        setTimeout( function() {
-          $('#alert-banca').removeClass('alert-success').hide();
-        }, 2000);
+
       })
       .catch(data => {
         document.getElementById('alert-banca-text').textContent = `Error: ${data.data.error}`;
         $('#alert-banca').addClass('alert-danger').show();
-        setTimeout( function() {
-          $('#alert-banca').removeClass('alert-danger').hide();
-        }, 2000);
+      })
+      .then(() => {
+        $('#alert-banca').removeClass('alert-success alert-danger');
       });
   }
 
