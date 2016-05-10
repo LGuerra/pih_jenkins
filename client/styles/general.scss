@@ -256,12 +256,17 @@ body {
   display: flex;
   align-items: stretch;
   .valuation-input{
+    height: 125px;
     padding: 25px;
     border-right: 1px solid #DDDDDD;
+    @media screen and (max-width: 991px) {
+      border: 1px solid transparent !important;
+      padding: 0px 25px;
+    }
   }
   .valuation-input-last{
-    padding: 25px;
     border-right: none;
+    border-right: 1px solid transparent !important;
   }
   .valuation-input-title{
     font-weight: 500;

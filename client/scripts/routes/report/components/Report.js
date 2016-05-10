@@ -19,7 +19,7 @@ import ControlBar         from './ControlBar';
 import Helpers    from '../../../helpers';
 import PDFReport  from '../../../PDFReport';
 
-import { setIntialState } from '../../../actions/report_actions';
+import { setInitialState } from '../../../actions/report_actions';
 
 class Report extends React.Component {
   constructor(props) {
@@ -49,12 +49,12 @@ class Report extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setIntialState();
+    this.props.setInitialState();
   }
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.location.query, this.props.location.query)) {
-      this.props.setIntialState();
+      this.props.setInitialState();
       this._scrollTo();
     }
   }
@@ -135,4 +135,4 @@ function mapStateToProps(state) {
   return toReturn;
 }
 
-export default connect(mapStateToProps, {setIntialState})(Report);
+export default connect(mapStateToProps, {setInitialState})(Report);

@@ -86,6 +86,10 @@
       margin: auto;
       background-color: rgba(255, 255, 255, 0.35);
       border-radius: 10px;
+      @media screen and (max-width: 768px) {
+        width: 100%;
+        padding: 0px;
+      }
       .colonia-search{
         .btn {
           display: block;

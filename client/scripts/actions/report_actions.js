@@ -27,7 +27,7 @@ export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
 
 
-export function setIntialState() {
+export function setInitialState() {
   return {
     type: SET_INITIAL_STATE
   }

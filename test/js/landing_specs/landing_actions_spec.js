@@ -2,11 +2,13 @@ import { expect } from 'chai';
 
 import {
   // Action type
+  SET_INITIAL_STATE,
   SET_COLONIA,
   SET_VIVIENDA,
   SET_PARAMS_INFO,
   SET_FORM,
   // Action creators
+  setInitialState,
   onSetForm,
   onSetColonia,
   onSetVivienda,
@@ -14,12 +16,20 @@ import {
 } from '../../../client/scripts/actions/landing_actions';
 
 function testActionCreators(actionCreator, type, payload) {
-  const expectedAction = {type, payload}
+  const expectedAction = { type, payload };
 
   expect(actionCreator(payload)).to.eql(expectedAction);
 }
 
 describe('landing actions', () => {
+  it('should create an action to reset initial state on landing view', () => {
+    const expectedAction = {
+      type: SET_INITIAL_STATE
+    };
+
+    expect(setInitialState()).to.eql(expectedAction);
+  });
+
   it('should create an action to set ', () => {
     testActionCreators(onSetForm, SET_FORM, 1);
   });

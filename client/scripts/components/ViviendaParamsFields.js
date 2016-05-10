@@ -20,9 +20,9 @@ class ViviendaParamsFields extends Component {
   render() {
     return (
       <div style={{marginTop: '25px'}}>
-        <div style={{borderBottom: '1px solid #DDDDDD'}} className={'valuation-container'}>
+        <div className={'valuation-container'}>
           <div className={'row'}>
-            <div className={'col-md-4 col-sm-6 valuation-input'} style={{paddingBottom: '29px'}}>
+            <div className={'col-md-4 col-sm-6 valuation-input'} style={{paddingBottom: '29px', borderBottom: '1px solid #DDDDDD'}}>
               <p className={'valuation-input-title'}>{'Tipo de vivienda'}</p>
               <IconSelector
                 onUpdateValue={this._onUpdateValue.bind(this)}
@@ -42,7 +42,7 @@ class ViviendaParamsFields extends Component {
                 defaultIcon={this.props.infoParams.id_tipo_propiedad}
               />
             </div>
-            <div className={'col-md-4 col-sm-6 valuation-input'}>
+            <div style={{borderBottom: '1px solid #DDDDDD'}}  className={'col-md-4 col-sm-6 valuation-input'}>
               <p className={'valuation-input-title'}>{'Recámaras'}</p>
               <ValuePicker
                 onUpdateValue={this._onUpdateValue.bind(this)}
@@ -53,7 +53,7 @@ class ViviendaParamsFields extends Component {
                 defaultActive={this.props.infoParams.recamaras}
               />
             </div>
-            <div className={'col-md-4 col-sm-6 valuation-input-last'}>
+            <div style={{borderBottom: '1px solid #DDDDDD'}}  className={'col-md-4 col-sm-6 valuation-input valuation-input-last'}>
               <p className={'valuation-input-title'}>{'Baños'}</p>
               <ValuePicker
                 onUpdateValue={this._onUpdateValue.bind(this)}
@@ -64,10 +64,6 @@ class ViviendaParamsFields extends Component {
                 defaultActive={this.props.infoParams.banos}
               />
             </div>
-          </div>
-        </div>
-        <div className={'valuation-container'}>
-          <div className={'row'}>
             <div className={'col-md-4 col-sm-6 valuation-input'}>
               <p className={'valuation-input-title'}>{'Estacionamientos'}</p>
               <ValuePicker
@@ -89,7 +85,7 @@ class ViviendaParamsFields extends Component {
                 defaultValue={this.props.infoParams.area_construida}
                 label={'m²'}/>
             </div>
-            <div className={'col-md-4 col-sm-6 valuation-input-last'}>
+            <div className={'col-md-4 col-sm-6 valuation-input valuation-input-last'}>
               <p className={'valuation-input-title'}>{'Edad'}</p>
               <InputFieldForm
                 onUpdateValue={this._onUpdateValue.bind(this)}
