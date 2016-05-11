@@ -16,12 +16,13 @@ class Home extends React.Component {
       .then(data => {
         if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
           let nextPath = '/';
-          alertText = 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged';
+          alertText = 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took ';
           if(this.props.location.state !== null) {
             nextPath = this.props.location.state.nextPathname;
           }
-          this.context.router.replace({
-            pathname: nextPath
+          this.context.router.push({
+            pathname: nextPath,
+            query: this.props.location.state.query
           });
         }
         document.getElementById('alert-banca-text').textContent = alertText;
