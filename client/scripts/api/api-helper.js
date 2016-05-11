@@ -5,7 +5,7 @@ switch(process.env.NODE_ENV) {
   case 'staging':
     stage = 'staging';
     break;
-  case 'prod':
+  case 'production':
     stage = 'prod';
     break;
   case 'dev':
