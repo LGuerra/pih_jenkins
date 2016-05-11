@@ -38,10 +38,12 @@ class Home extends React.Component {
   }
 
   render() {
+    console.log('LogoImage')
     var down_arrow = require('file!images-banca/down_arrow.svg');
+    var logoImage = require('file!images-banca/logo_im.svg');
     return (
       <div style={{ height: '100%' , background: '#efefef' }}>
-        <NavBar logoText='Intelimétrica'/>
+        <NavBar logoImage={'HOLA'}/>
         <div className='container' style={{ height: '85vh', display: 'flex', alignItems: 'center'}}>
           <div className='row'>
             <div className='col-sm-12'>

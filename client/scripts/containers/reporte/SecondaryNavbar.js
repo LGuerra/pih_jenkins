@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
 class SecondaryNavbar extends React.Component{
   constructor(props) {
     super(props);
@@ -72,8 +71,4 @@ class SecondaryNavbar extends React.Component{
   }
 }
 
-function mapStateToProps(state) {
-  return {};
-}
-
-export default connect(mapStateToProps)(SecondaryNavbar);
+export default SecondaryNavbar;

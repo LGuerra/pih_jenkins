@@ -1,7 +1,7 @@
 // Vendor
-import React from 'react';
-import _     from 'lodash';
-import { connect } from 'react-redux';
+import React                  from 'react';
+import { isEqual, isEmpty }   from 'lodash';
+import { connect }            from 'react-redux';
 
 // Components
 import BarChart from  '../../components/BarChart';
@@ -47,7 +47,7 @@ class FormatBarChart extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+    if (!isEqual(prevProps.urlParams, this.props.urlParams)) {
       this.props.fetchDistribucionPrecio(this.props.urlParams.colonia);
     }
   }
@@ -93,7 +93,7 @@ class FormatBarChart extends React.Component {
 function mapStateToProps(state) {
   let toProps = {};
 
-  if (!_.isEmpty(state.report.distribucionPrecio)) {
+  if (!isEmpty(state.report.distribucionPrecio)) {
     toProps.distribucionPrecio = formatDistribucionPrecio(state.report.distribucionPrecio);
   }
 

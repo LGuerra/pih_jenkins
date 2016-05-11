@@ -293,6 +293,7 @@ body {
     }
     @media screen and (max-width: 766px) {
       border-bottom: 1px solid #DDDDDD !important;
+      border-right: none !important;
       height: 110px;
       &:nth-child(5){
         border-bottom: 1px solid #DDDDDD !important;

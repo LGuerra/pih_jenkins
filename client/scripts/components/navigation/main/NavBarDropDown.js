@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class NavBarDropDown extends React.Component { 
+class NavBarDropDown extends React.Component {
   render() {
     const props = this.props;
-    const text = props.text; 
+    const text = props.text;
     const links = props.links;
     const image = (typeof props.image === 'undefined') ? '' : <i><img style={{ height: 20 }} src={props.image}/></i>;
     var downArrow = require('file!images-banca/down_arrow.svg');
@@ -17,9 +17,8 @@ class NavBarDropDown extends React.Component {
           <img height={'10px'} src={downArrow} className='nav-arrow'/>
         </a>
         <ul className='dropdown-menu'>
-          {links.map((link, index) => { 
-            console.log(link.text);
-            let component = link.isRR ? 
+          {links.map((link, index) => {
+            let component = link.isRR ?
               <Link to={link.url}>{link.text}</Link> :
               <a href={link.url}>{link.text}</a>;
             return (
@@ -34,7 +33,7 @@ class NavBarDropDown extends React.Component {
   }
 }
 
-NavBarDropDown.propTypes = { 
+NavBarDropDown.propTypes = {
   text: React.PropTypes.string.isRequired,
   links: React.PropTypes.array.isRequired,
   image: React.PropTypes.string

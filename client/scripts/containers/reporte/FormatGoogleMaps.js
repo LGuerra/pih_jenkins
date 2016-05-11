@@ -1,7 +1,7 @@
 // Vendor
-import React  from 'react';
-import _      from 'lodash';
-import { connect } from 'react-redux';
+import React                        from 'react';
+import { isEmpty, isNull, isEqual } from 'lodash';
+import { connect }                  from 'react-redux';
 
 // Components
 import GoogleMap from   '../../components/GoogleMap';
@@ -10,7 +10,6 @@ import Marker from      '../../components/Marker';
 import { suburbAPI, suburbsAPI } from './../../api/api-helper.js';
 
 // Helpers
-import Helpers from '../../helpers';
 import { fetchColoniasMap, fetchCentroid, fetchActualColoniaMap, onSelectPolygon } from '../../actions/report_actions';
 
 class FormatGoogleMaps extends React.Component {
@@ -206,25 +205,25 @@ class FormatGoogleMaps extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (_.isEmpty(this.props.coloniasMap) && !_.isEqual(nextProps.coloniasMap, this.props.coloniasMap)) {
+    if (isEmpty(this.props.coloniasMap) && !isEqual(nextProps.coloniasMap, this.props.coloniasMap)) {
       this._drawPolygons(nextProps.coloniasMap);
     }
 
-    if (_.isNull(this.props.centroid) && !_.isEqual(nextProps.centroid, this.props.centroid)) {
+    if (isNull(this.props.centroid) && !isEqual(nextProps.centroid, this.props.centroid)) {
       this._positionMapByCentroid(nextProps.centroid);
     }
 
-    if (_.isNull(this.props.actualColoniaMap) && !_.isEqual(nextProps.actualColoniaMap, this.props.actualColoniaMap)) {
+    if (isNull(this.props.actualColoniaMap) && !isEqual(nextProps.actualColoniaMap, this.props.actualColoniaMap)) {
       this._drawActualPolygon(nextProps.actualColoniaMap);
     }
 
-    if (!_.isEqual(nextProps.selectedComparativoColonias, this.props.selectedComparativoColonias)) {
+    if (!isEqual(nextProps.selectedComparativoColonias, this.props.selectedComparativoColonias)) {
       this.highlightFeature(nextProps.selectedComparativoColonias)
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.urlParams.colonia, this.props.urlParams.colonia)) {
+    if (!isEqual(prevProps.urlParams.colonia, this.props.urlParams.colonia)) {
       this._setMap(this.props.urlParams.colonia);
     }
   }

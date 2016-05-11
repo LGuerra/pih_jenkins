@@ -1,6 +1,6 @@
 // Vendor
-import React  from 'react';
-import _      from 'lodash';
+import React        from 'react';
+import { isEmpty }  from 'lodash';
 
 // Components
 import StickyNavbar from '../../components/StickyNavbar';
@@ -111,7 +111,7 @@ class FormatStickyNavbar extends React.Component{
 function mapStateToProps(state) {
   let toProps = {};
 
-  if (!_.isEmpty(state.report.viviendaInfo)) {
+  if (!isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {
       confianza:  state.report.viviendaInfo.confianza || 1,
       precioM2:   state.report.viviendaInfo.valuacion_m2 || 0,

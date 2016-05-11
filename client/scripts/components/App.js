@@ -17,13 +17,14 @@ class App extends React.Component {
   }
 
   render() {
-    const content = this.getNavBarContent();
-    var userSVG = require('file!images-banca/user.svg');
+    const content   = this.getNavBarContent();
+    const userSVG   = require('file!images-banca/user.svg');
+    const logoImage = require('file!images-banca/logo_im.svg');
     return (
       <div id='banca-router'>
-        <NavBar id='my-new-id' logoText='Intelimétrica'>
+        <NavBar id='my-new-id' logoImage={logoImage}>
           {/*<NavBarLink/>*/}
-          <NavBarDropDown image={userSVG} links={[{url: '/helpers/logout', text: 'Logout', isRR: false}]}/>
+          <NavBarDropDown image={userSVG} links={[{url: '/helpers/logout', text: 'Cerrar sesión', isRR: false}]}/>
         </NavBar>
         {this.props.children}
         <Footer/>
