@@ -15,14 +15,15 @@ class Home extends React.Component {
     userAPI.signIn(user)
       .then(data => {
         if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
-          let nextPath = '/';
+          let nextPath = '/', query = {};
           alertText = 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took ';
           if(this.props.location.state !== null) {
             nextPath = this.props.location.state.nextPathname;
+            query = this.props.location.state.query || {};
           }
           this.context.router.push({
             pathname: nextPath,
-            query: this.props.location.state.query
+            query: query
           });
         }
         document.getElementById('alert-banca-text').textContent = alertText;
@@ -30,11 +31,14 @@ class Home extends React.Component {
 
       })
       .catch(data => {
+        console.log(data);
         document.getElementById('alert-banca-text').textContent = `Error: ${data.data.error}`;
         $('#alert-banca').addClass('alert-danger').show();
       })
       .then(() => {
-        $('#alert-banca').removeClass('alert-success alert-danger');
+        setTimeout(function() {
+          $('#alert-banca').removeClass('alert-success alert-danger').hide();
+        }, 4000);
       });
   }
 
@@ -44,7 +48,7 @@ class Home extends React.Component {
     var logoImage = require('file!images-banca/logo_im.svg');
     return (
       <div style={{ height: '100%' , background: '#efefef' }}>
-        <NavBar logoImage={'HOLA'}/>
+        <NavBar logoImage={logoImage}/>
         <div className='container' style={{ height: '85vh', display: 'flex', alignItems: 'center'}}>
           <div className='row'>
             <div className='col-sm-12'>

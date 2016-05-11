@@ -1,5 +1,6 @@
 import { userAPI } from 'api-banca';
 import _ from 'lodash';
+var $ = require('jquery');
 
 export const serverAuthResponse = () => {
   return new Promise((resolve, reject) => {
@@ -14,8 +15,8 @@ export const serverAuthResponse = () => {
 
 export const removeAlerts = (nextState, replace, next) => {
   setTimeout( function() {
-    $('#alert-banca, .sign-in-notice').hide();
-  }, 3000);
+    $('.sign-in-notice').hide();
+  }, 4000);
   next();
 };
 
