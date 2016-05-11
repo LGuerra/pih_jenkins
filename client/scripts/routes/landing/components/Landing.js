@@ -7,7 +7,7 @@ import { getHouseInfor, classNames } from '../../../helpers';
 import { helpersAPI }       from '../../../api/api-helper.js';
 
 import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
-import { onSetParamsInfo, onSetForm }  from '../../../actions/landing_actions';
+import { setInitialState, onSetParamsInfo, onSetForm }  from '../../../actions/landing_actions';
 
 function togglePopover(identifier, content) {
   $(identifier)
@@ -22,6 +22,10 @@ function togglePopover(identifier, content) {
       .removeClass('error');
     $(identifier).popover('destroy');
   }, 2000);
+
+  $('html, body').animate({
+    scrollTop: $('body').offset().top
+  }, 300);
 }
 
 class Landing extends React.Component {
@@ -95,6 +99,10 @@ class Landing extends React.Component {
 
   _onUpdateDataParams(newParams) {
     this.props.onSetParamsInfo(newParams);
+  }
+
+  componentDidMount() {
+    this.props.setInitialState();
   }
 
   componentDidUpdate() {
@@ -190,4 +198,4 @@ Landing.contextTypes = {
 };
 
 // export default Landing;
-export default connect(mapStateToProps, { onSetParamsInfo, onSetForm })(Landing);
+export default connect(mapStateToProps, { setInitialState, onSetParamsInfo, onSetForm })(Landing);

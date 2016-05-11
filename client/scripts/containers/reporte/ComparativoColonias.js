@@ -1,7 +1,7 @@
 // Libraries
-import React    from 'react';
-import ReactDOM from 'react-dom';
-import _        from 'lodash';
+import React            from 'react';
+import { findDOMNode }  from 'react-dom';
+import { isEqual }      from 'lodash';
 
 // Components
 import Table from     '../../components/Table';
@@ -21,7 +21,7 @@ class ComparativoColonias extends React.Component {
   }
 
   _highlightRow(id) {
-    let rows = $(ReactDOM.findDOMNode(this)).find('tr');
+    let rows = $(findDOMNode(this)).find('tr');
 
     rows.each(function(index) {
       if (id && $(this).data('id') == id) {
@@ -45,13 +45,13 @@ class ComparativoColonias extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (!_.isEqual(nextProps.selectedPolygon, this.props.selectedPolygon)) {
+    if (!isEqual(nextProps.selectedPolygon, this.props.selectedPolygon)) {
       this._highlightRow(nextProps.selectedPolygon);
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.urlParams.colonia, this.props.urlParams.colonia)) {
+    if (!isEqual(prevProps.urlParams.colonia, this.props.urlParams.colonia)) {
       this.props.fetchColoniasComparables(this.props.urlParams.colonia);
     }
   }

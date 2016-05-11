@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 import ColoniaInfo            from '../../../containers/reporte/ColoniaInfo';

@@ -3,11 +3,11 @@ import { Link } from 'react-router';
 
 const NavBarBrand = (props) => {
   return (
-    <Link className='navbar-brand' to='/'>{props.text}</Link>
+    <Link className='navbar-brand' style={{ padding: '10px 15px' }} to='/'><img height={'30px'} src={props.image}/></Link>
   );
 };
 
-NavBarBrand.propTypes = { 
+NavBarBrand.propTypes = {
   text: React.PropTypes.string
 };
 
@@ -30,7 +30,7 @@ const NavBarHeader = (props) => {
   return (
     <div className='navbar-header'>
       <NavBarCollapse id={props.id}/>
-      <NavBarBrand text={props.text}/>
+      <NavBarBrand image={props.image}/>
     </div>
   );
 };

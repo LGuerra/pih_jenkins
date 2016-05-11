@@ -1,6 +1,6 @@
 // Libraries
-import React  from 'react';
-import _      from 'lodash';
+import React        from 'react';
+import { isEqual }  from 'lodash';
 
 // Components
 import Spinner from './../../components/Spinner';
@@ -22,7 +22,7 @@ class OfertaDisponible extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+    if (!isEqual(prevProps.urlParams, this.props.urlParams)) {
       this.isLoading = true;
       this.props.fetchOfertaDisponible(this.props.urlParams.colonia);
     }

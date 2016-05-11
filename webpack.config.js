@@ -74,7 +74,7 @@ module.exports = {
     colors: true
   },
   target: 'web',
-  debug: true,  
+  debug: true,
   devtool: 'eval-source-map',
   devServer: {
     contentBase: __dirname,

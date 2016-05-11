@@ -2,6 +2,7 @@ import { expect } from 'chai';
 
 import {
   // Action type
+  SET_INITIAL_STATE,
   SELECT_COMPARATIVO_COLONIAS,
   SELECT_POLYGON,
   SET_COLONIA_INFO,
@@ -10,6 +11,7 @@ import {
   SET_VIEW_TYPE,
   SET_VIVIENDA_INFO,
   // Action creators
+  setInitialState,
   onSelectComparativoColonias,
   onSelectPolygon,
   onSetColoniaInfo,
@@ -24,6 +26,14 @@ function testActionCreators(actionCreator, type, payload) {
 }
 
 describe('report actions', () => {
+  it('should create an action to reset initial state on landing view', () => {
+    const expectedAction = {
+      type: SET_INITIAL_STATE
+    };
+
+    expect(setInitialState()).to.eql(expectedAction);
+  });
+
   it('should create an action to select comparativo colonias', () => {
     testActionCreators(
       onSelectComparativoColonias,

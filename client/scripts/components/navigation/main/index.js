@@ -4,10 +4,10 @@ import NavBarHeader from './NavBarHeader';
 import NavBarLink from './NavBarLink';
 import NavBar from './NavBar';
 
-export { 
+export {
   NavBarDropDown,
   NavBarContent,
-  NavBarHeader, 
-  NavBarLink, 
+  NavBarHeader,
+  NavBarLink,
   NavBar
 }

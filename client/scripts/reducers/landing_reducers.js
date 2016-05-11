@@ -16,11 +16,18 @@ import {
   SET_FORM,
   SET_COLONIA,
   SET_VIVIENDA,
-  SET_PARAMS_INFO
+  SET_PARAMS_INFO,
+  SET_INITIAL_STATE
 } from '../actions/landing_actions';
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
+
+    case SET_INITIAL_STATE: {
+      return {
+        ...INITIAL_STATE
+      }
+    }
 
     case SET_FORM: {
       return {

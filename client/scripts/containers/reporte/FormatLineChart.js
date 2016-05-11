@@ -1,6 +1,6 @@
 // Vendor
-import React  from 'react';
-import _      from 'lodash';
+import React        from 'react';
+import { isEqual }  from 'lodash';
 
 // Components
 import LineChart from   '../../components/LineChart';
@@ -50,7 +50,7 @@ class FormatLineChart extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+    if (!isEqual(prevProps.urlParams, this.props.urlParams)) {
       this.props.fetchPrecioHistorico(this.props.urlParams.colonia);
     }
   }

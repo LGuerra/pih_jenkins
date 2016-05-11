@@ -1,7 +1,7 @@
 // Vendor
-import React from 'react'
-import _ from 'lodash';
-import { connect } from 'react-redux';
+import React                from 'react'
+import { isEqual, isEmpty } from 'lodash';
+import { connect }          from 'react-redux';
 
 // Components
 import StackedBarChart from '../../components/StackedBarChart';
@@ -18,7 +18,7 @@ class FormatStackedBarChart extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+    if (!isEqual(prevProps.urlParams, this.props.urlParams)) {
       this.props.fetchDistribucionTipologia(this.props.urlParams.colonia);
     }
   }
@@ -61,7 +61,7 @@ class FormatStackedBarChart extends React.Component {
 function mapStateToProps(state) {
   let toProps = {};
 
-  if (!_.isEmpty(state.report.distribucionTipologia)) {
+  if (!isEmpty(state.report.distribucionTipologia)) {
     toProps.distribucionTipologia = formatDistribucionTipologia(state.report.distribucionTipologia);
   }
 

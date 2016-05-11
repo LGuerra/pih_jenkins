@@ -1,7 +1,14 @@
-export const SET_COLONIA      = 'SET_COLONIA';
-export const SET_VIVIENDA     = 'SET_VIVIENDA';
-export const SET_PARAMS_INFO  = 'SET_PARAMS_INFO';
-export const SET_FORM         = 'SET_FORM';
+export const SET_INITIAL_STATE  = 'SET_INITIAL_STATE';
+export const SET_COLONIA        = 'SET_COLONIA';
+export const SET_VIVIENDA       = 'SET_VIVIENDA';
+export const SET_PARAMS_INFO    = 'SET_PARAMS_INFO';
+export const SET_FORM           = 'SET_FORM';
+
+export function setInitialState() {
+  return {
+    type: SET_INITIAL_STATE
+  }
+}
 
 export function onSetForm(idForm) {
   return {

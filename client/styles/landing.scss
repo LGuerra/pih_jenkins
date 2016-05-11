@@ -1,7 +1,7 @@
 .Landing {
   background: url('./../images/dante.jpg');
   background-repeat: no-repeat;
-  background-size: 100vw;
+  background-size: cover;
   .Index {  
     height: calc(100% - 102px);
     .headers {
@@ -86,6 +86,10 @@
       margin: auto;
       background-color: rgba(255, 255, 255, 0.35);
       border-radius: 10px;
+      @media screen and (max-width: 768px) {
+        width: 97%;
+        padding: 8px 3px;
+      }
       .colonia-search{
         .btn {
           display: block;

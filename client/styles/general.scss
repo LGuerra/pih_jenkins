@@ -206,6 +206,10 @@ body {
       font-size: 14px;
     }
   }
+  .is_active {
+    background-color: #35c0be;
+    color: #FFF;
+  }
 }
 
 .input-field-form {
@@ -252,16 +256,49 @@ body {
   display: flex;
   align-items: stretch;
   .valuation-input{
+    height: 125px;
     padding: 25px;
-    border-right: 1px solid #DDDDDD;
-  }
-  .valuation-input-last{
-    padding: 25px;
-    border-right: none;
+    @media screen and (max-width: 991px) {
+      padding: 0px 25px;
+    }
   }
   .valuation-input-title{
     font-weight: 500;
     margin-bottom: 15px;
+    @media screen and (max-width: 991px) {
+      margin-top: 14px;
+    }
+  }
+}
+
+.border-controller{
+  .valuation-input{
+    border-bottom: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    &:nth-child(3), &:nth-child(6){
+      border-right: none;
+    }
+    &:nth-child(4), &:nth-child(5), &:nth-child(6){
+      border-bottom: none;
+    }
+    @media screen and (max-width: 991px) {
+      border-bottom: 1px solid #DDDDDD !important;
+      border-right: 1px solid #DDDDDD !important;
+      &:nth-child(2), &:nth-child(4), &:nth-child(6){
+        border-right: none !important;
+      }
+      &:nth-child(5), &:nth-child(6){
+        border-bottom: none !important;
+      }
+    }
+    @media screen and (max-width: 766px) {
+      border-bottom: 1px solid #DDDDDD !important;
+      border-right: none !important;
+      height: 110px;
+      &:nth-child(5){
+        border-bottom: 1px solid #DDDDDD !important;
+      }
+    }
   }
 }
 

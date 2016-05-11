@@ -1,6 +1,6 @@
 // Libraries
 import React from 'react';
-import _ from 'lodash';
+import { pick, isUndefined, isEqual, isEmpty} from 'lodash';
 
 // Components
 import Spinner from './../../components/Spinner'
@@ -18,7 +18,7 @@ class ViviendaInfo extends React.Component {
   }
 
   _updateViviendaInfo() {
-    let params = _.pick(this.props.urlParams,
+    let params = pick(this.props.urlParams,
       'longitud',
       'latitud',
       'id_tipo_propiedad',
@@ -33,7 +33,7 @@ class ViviendaInfo extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (_.isUndefined(prevProps.viviendaInfo) && !_.isEqual(prevProps.viviendaInfo, this.props.viviendaInfo)) {
+    if (isUndefined(prevProps.viviendaInfo) && !isEqual(prevProps.viviendaInfo, this.props.viviendaInfo)) {
       let descriptions = ['más de 40%', 'entre 30% y 40%', 'entre 20% y 30%', 'entre 10% y 20%', 'entre 0 y 10%'];
       let popoverPosition = window.innerWidth < 550 ? 'bottom' : 'right';
       let title = `
@@ -53,7 +53,7 @@ class ViviendaInfo extends React.Component {
       });
     }
 
-    if (!_.isEqual(prevProps.urlParams, this.props.urlParams)) {
+    if (!isEqual(prevProps.urlParams, this.props.urlParams)) {
       this._updateViviendaInfo()
     }
   }
@@ -141,7 +141,7 @@ class ViviendaInfo extends React.Component {
 function mapStateToProps(state) {
   var toProps = {};
 
-  if (!_.isEmpty(state.report.viviendaInfo)) {
+  if (!isEmpty(state.report.viviendaInfo)) {
     toProps.viviendaInfo = {
       confianza:  state.report.viviendaInfo.confianza || 1,
       precioM2:   state.report.viviendaInfo.valuacion_m2 || 0,

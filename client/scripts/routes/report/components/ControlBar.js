@@ -148,10 +148,6 @@ class ControlBar extends React.Component{
 
   }
 
-  componentDidUpdate(prevProps) {
-    this.prevUrlParams = prevProps.infoParams;
-  }
-
   render() {
     var downArrow = require('file!images-banca/down_arrow.svg');
     return (

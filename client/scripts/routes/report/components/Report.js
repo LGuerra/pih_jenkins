@@ -1,7 +1,7 @@
 // Vendor
-import React        from 'react';
-import _            from 'lodash';
-import { connect }  from 'react-redux';
+import React, { Component }        from 'react';
+import { isEqual, isEmpty } from 'lodash';
+import { connect }          from 'react-redux';
 
 // Components
 import BackToTop          from '../../../components/BackToTop';
@@ -16,12 +16,11 @@ import ReportVivienda     from './ReportVivienda';
 import ControlBar         from './ControlBar';
 
 // Helpers
-import Helpers    from '../../../helpers';
 import PDFReport  from '../../../PDFReport';
 
-import { setIntialState } from '../../../actions/report_actions';
+import { setInitialState } from '../../../actions/report_actions';
 
-class Report extends React.Component {
+class Report extends Component {
   constructor(props) {
     super(props);
   }
@@ -49,12 +48,12 @@ class Report extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setIntialState();
+    this.props.setInitialState();
   }
 
   componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps.location.query, this.props.location.query)) {
-      this.props.setIntialState();
+    if (!isEqual(prevProps.location.query, this.props.location.query)) {
+      this.props.setInitialState();
       this._scrollTo();
     }
   }
@@ -123,7 +122,7 @@ function mapStateToProps(state) {
     isLoadingFrame: state.report.isLoadingFrame
   };
 
-  if (!_.isEmpty(state.report.urlParams)) {
+  if (!isEmpty(state.report.urlParams)) {
     toReturn.urlParams = state.report.urlParams;
   }
 
@@ -134,4 +133,4 @@ function mapStateToProps(state) {
   return toReturn;
 }
 
-export default connect(mapStateToProps, {setIntialState})(Report);
+export default connect(mapStateToProps, {setInitialState})(Report);
