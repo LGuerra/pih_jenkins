@@ -18,7 +18,7 @@ class Form extends React.Component {
 
   render() {
     var csrf = $('meta[name="csrf-token"]').attr('content');
-    var user = require('file!images-banca/user.svg');
+    var user = require('file!images-banca/user-black.svg');
     var lock = require('file!images-banca/lock.svg');
     return (
       <form action='users/sign_in.json' onSubmit={this.onSubmit} method='post'>
