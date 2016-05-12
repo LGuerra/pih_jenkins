@@ -15,6 +15,8 @@ class Home extends React.Component {
     userAPI.signIn(user)
       .then(data => {
         if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
+          const USER_ID = data.data.id;
+          ga('set', 'userId', USER_ID);
           let nextPath = '/', query = {};
           alertText = 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took ';
           if(this.props.location.state !== null) {

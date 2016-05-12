@@ -20,6 +20,7 @@
     "it": true,
     "before": true,
     "beforeEach": true
+    "ga": true
   },
   "ecmaFeatures": {
     "modules": true,
