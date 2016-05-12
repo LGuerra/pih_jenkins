@@ -19,7 +19,7 @@
     "describe": true,
     "it": true,
     "before": true,
-    "beforeEach": true
+    "beforeEach": true,
     "ga": true
   },
   "ecmaFeatures": {
