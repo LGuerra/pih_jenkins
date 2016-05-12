@@ -18,7 +18,8 @@
     "apigClient": true,
     "apigClientFactory": true,
     "apiGateway": true,
-    "uritemplate": true
+    "uritemplate": true,
+    "ga": true
   },
   "ecmaFeatures": {
     "modules": true,

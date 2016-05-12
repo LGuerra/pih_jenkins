@@ -13,6 +13,8 @@ class Home extends React.Component {
   logInUser(user) {
     userAPI.signIn(user).then((data) => {
       if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
+        const USER_ID = data.data.id;
+        ga('set', 'userId', USER_ID);
         var nextPath = '/';
         if(this.props.location.state !== null) {
           nextPath = this.props.location.state.nextPathname;
