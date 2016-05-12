@@ -28,6 +28,10 @@ function handleErrorAlert(identifier, content) {
     $(identifier).removeClass('error');
     $(identifier).popover('destroy');
   }, 2000);
+
+  $('html, body').animate({
+    scrollTop: $('body').offset().top
+  }, 300);
 }
 
 class ControlBar extends React.Component{

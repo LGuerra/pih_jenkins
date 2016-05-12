@@ -47,6 +47,7 @@ class ViviendaParamsFields extends Component {
               <ValuePicker
                 onUpdateValue={this._onUpdateValue.bind(this)}
                 unit={'recamaras'}
+                specificClass={'recamaras'}
                 lowerLimit={1}
                 upperLimit={7}
                 steps={1}
@@ -58,6 +59,7 @@ class ViviendaParamsFields extends Component {
               <ValuePicker
                 onUpdateValue={this._onUpdateValue.bind(this)}
                 unit={'banos'}
+                specificClass={'banos'}
                 lowerLimit={1}
                 upperLimit={7}
                 steps={1}
@@ -69,6 +71,7 @@ class ViviendaParamsFields extends Component {
               <ValuePicker
                 onUpdateValue={this._onUpdateValue.bind(this)}
                 unit={'estacionamientos'}
+                specificClass={'estacionamientos'}
                 lowerLimit={0}
                 upperLimit={7}
                 steps={1}

@@ -9,7 +9,7 @@ import { helpersAPI }       from '../../../api/api-helper.js';
 import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
 import { setInitialState, onSetParamsInfo, onSetForm }  from '../../../actions/landing_actions';
 
-function togglePopover(identifier, content) {
+function handleErrorAlert(identifier, content) {
   $(identifier)
     .addClass('error');
 
@@ -48,7 +48,7 @@ class Landing extends React.Component {
       });
       // window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
     } else {
-      togglePopover('.Colonia', 'Ingrese una colonia válida');
+      handleErrorAlert('.Colonia', 'Ingrese una colonia válida');
     }
   }
 
@@ -84,12 +84,12 @@ class Landing extends React.Component {
                 }
               });
             } else {
-              togglePopover('.Vivienda', 'Ingrese una dirección válida');
+              handleErrorAlert('.Vivienda', 'Ingrese una dirección válida');
             }
           });
       });
     } else {
-      togglePopover('.Vivienda', 'Ingrese una dirección válida');
+      handleErrorAlert('.Vivienda', 'Ingrese una dirección válida');
     }
   }
 

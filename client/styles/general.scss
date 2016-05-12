@@ -160,11 +160,9 @@ body {
   flex-wrap: wrap;
   .selector {
     cursor: pointer;
-    width: 30px;
     height: 30px;
     background-color: #ddd;
     padding-top: 6px;
-    border-radius: 2px;
     margin-top: 5px;
     margin-bottom: 5px;
     @include transition(all, 0.3s, ease);
@@ -179,6 +177,14 @@ body {
   .active {
     background-color: #35c0be;
     color: #fff;
+  }
+  .selector:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  .selector:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
   }
 }
 
