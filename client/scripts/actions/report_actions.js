@@ -26,11 +26,14 @@ export const SET_COLONIA_INFO               = 'SET_COLONIA_INFO';
 export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
 
+export function addOptimisticActionCreator(type, payload) {
+  return {type, payload}
+}
 
 export function setInitialState() {
-  return {
-    type: SET_INITIAL_STATE
-  }
+  return function(dispatch) {
+    dispatch(addOptimisticActionCreator(SET_INITIAL_STATE, {}));
+  };
 }
 
 export function fetchColoniaInfo(idCol) {

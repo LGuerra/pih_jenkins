@@ -1,5 +1,7 @@
 import { expect } from 'chai';
 
+import sinon from 'sinon';
+
 import {
   // Action type
   SET_INITIAL_STATE,
@@ -56,6 +58,17 @@ describe('landing actions', () => {
       area_construida: 100,
       address: 'Reforma Norte, Guerrero, Ciudad de México, México',
       tipo_operacion: 0
+    });
+  });
+  it('should fake request', () => {
+    var server = sinon.fakeServer.create();
+    server.respondWith("GET", "/some/article/comments.json",
+        [200, { "Content-Type": "application/json" },
+         '[{ "id": 12, "comment": "Hey there" }]']);
+
+    var callback = sinon.spy();
+    server.respond(function(response) {
+      console.log(response)
     });
   });
 });

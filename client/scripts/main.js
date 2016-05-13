@@ -7,6 +7,7 @@ import { Router, browserHistory } from 'react-router'
 import promise from 'redux-promise';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
@@ -23,7 +24,7 @@ import ConditionsRoutes from './routes/conditions';
 
 import { serverAuthResponse, checkPermissions, removeAlerts } from 'helpers-banca';
 
-const createStoreWithMiddleware = compose(applyMiddleware( promise ))(createStore);
+const createStoreWithMiddleware = compose(applyMiddleware( thunk, promise ))(createStore);
 
 const routes = {
   component: RootApp,

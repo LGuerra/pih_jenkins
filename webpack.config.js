@@ -33,6 +33,9 @@ module.exports = {
     sourceMapFilename: 'debugging/[file].map',
     pathinfo: true
   },
+  node: {
+    console: 'empty'
+  },
   watch: 'true',
   module: {
     preLoaders: [
