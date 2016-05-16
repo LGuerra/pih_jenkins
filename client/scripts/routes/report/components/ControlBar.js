@@ -204,13 +204,15 @@ class ControlBar extends React.Component{
           </div>
           <div id={'ViviendaForm'} className={'collapse ViviendaForm'}>
             <div className={'max-width-container'}>
-              <SuggestionsInputField
-                ref={'vivienda_field'}
-                searchType={'Vivienda'}
-                onSelectItem={this._onSelectVivienda.bind(this)}
-                placeholder={'Ingrese la dirección de la vivienda'}
-                specificGroupClass={'landing-search-form'}
-                specificInputClass={'form-control Vivienda'}/>
+              <div style={{marginTop: '20px'}}>
+                <SuggestionsInputField
+                  ref={'vivienda_field'}
+                  searchType={'Vivienda'}
+                  onSelectItem={this._onSelectVivienda.bind(this)}
+                  placeholder={'Ingrese la dirección de la vivienda'}
+                  specificGroupClass={'landing-search-form'}
+                  specificInputClass={'form-control Vivienda'}/>
+              </div>
               <ViviendaParamsFields
                 infoParams={this.props.urlParams}
                 onUpdateData={this._onUpdateDataParams.bind(this)} />

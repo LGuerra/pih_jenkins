@@ -36,13 +36,14 @@ describe('ValuePicker Component', () => {
   });
 
   it('should select the defaultActive value', () => {
-    const expectedClass = 'selector active';
+    const expectedClass = 'selector active specificClass';
 
     const component = renderIntoDocument(
       <ValuePicker
         lowerLimit={lowerLimit}
         upperLimit={upperLimit}
         steps={steps}
+        specificClass={'specificClass'}
         defaultActive={defaultActive}
       />
     );
@@ -54,7 +55,7 @@ describe('ValuePicker Component', () => {
 
   it('should change active value when is clicked', () => {
     const unit              = 'unit';
-    const expectedClass     = 'selector active';
+    const expectedClass     = 'selector active specificClass';
     const expectedUnitValue = { unit: 3 };
     let selectedValue;
 
@@ -68,6 +69,7 @@ describe('ValuePicker Component', () => {
         lowerLimit={lowerLimit}
         upperLimit={upperLimit}
         steps={steps}
+        specificClass={'specificClass'}
         defaultActive={defaultActive}
         onUpdateValue={onUpdateValue}
       />
