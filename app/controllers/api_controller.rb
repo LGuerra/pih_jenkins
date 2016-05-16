@@ -1,6 +1,7 @@
 require 'open-uri'
 
 class ApiController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_action :authenticate_user!
 
   def tunnel_request
