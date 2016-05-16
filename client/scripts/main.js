@@ -24,7 +24,7 @@ import ConditionsRoutes from './routes/conditions';
 
 import { serverAuthResponse, checkPermissions, removeAlerts } from 'helpers-banca';
 
-const createStoreWithMiddleware = compose(applyMiddleware( thunk, promise ))(createStore);
+const createStoreWithMiddleware = compose(applyMiddleware( thunk ))(createStore);
 
 const routes = {
   component: RootApp,
