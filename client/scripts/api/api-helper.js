@@ -29,7 +29,10 @@ const userAPI = (() => {
   }
 
   let signIn = (user) => {
-    return axios.post('/users/sign_in.json', { user: user });
+    return axios.post('/users/sign_in.json', { 
+      authenticity_token: $('meta[name="csrf-token"]').attr('content'),
+      user: user 
+    });
   }
   return { getInfo, signIn };
 })();
@@ -37,10 +40,12 @@ const userAPI = (() => {
 const viviendaAPI = (() => {
 
   let similars = (params) => {
+    params.authenticity_token = $('meta[name="csrf-token"]').attr('content');
     return axios.post(`${apiEndpoint}/similars`, params);
   };
 
   let valuation = (params) => {
+    params.authenticity_token = $('meta[name="csrf-token"]').attr('content');
     return axios.post(`${apiEndpoint}/model/valuation`, params);
   };
 
