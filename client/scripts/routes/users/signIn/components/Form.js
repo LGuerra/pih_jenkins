@@ -39,7 +39,7 @@ class Form extends React.Component {
           <div className='pull-left'>
             <input name='user[remember_me]' type='hidden' value='0'/>
             <input type='checkbox' value='1' name='user[remember_me]' id='user_remember_me'/>
-            <label className='remember-me' htmlFor='user_Recordarme'>Recordarme</label>
+            <label className='remember-me' style={{color: '#FFFFFF'}} htmlFor='user_Recordarme'>Recordarme</label>
           </div>
         </div>
       </form>
