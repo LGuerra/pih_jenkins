@@ -31,7 +31,6 @@ class Home extends React.Component {
 
       })
       .catch(data => {
-        console.log(data);
         document.getElementById('alert-banca-text').textContent = `Error: ${data.data.error}`;
         $('#alert-banca').addClass('alert-danger').show();
       })
@@ -43,7 +42,6 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log('LogoImage')
     var down_arrow = require('file!images-banca/down_arrow.svg');
     var logoImage = require('file!images-banca/logo_im.svg');
     return (

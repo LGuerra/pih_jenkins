@@ -26,14 +26,23 @@ export const SET_COLONIA_INFO               = 'SET_COLONIA_INFO';
 export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
 
-function addOptimisticActionCreator(type, payload) {
+function addOptimisticActionCreator(type, response) {
+  const payload = response.data;
   return {type, payload}
 }
 
+function addOptimisticArrayActionCreator(type, response) {
+  const payload = response.map((element) => {
+    return element.data;
+  });
+
+  return { type, payload };
+}
+
 export function setInitialState() {
-  return function(dispatch) {
-    dispatch(addOptimisticActionCreator(SET_INITIAL_STATE, {}));
-  };
+  return {
+    type: SET_INITIAL_STATE
+  }
 }
 
 export function fetchColoniaInfo(idCol) {
@@ -44,11 +53,11 @@ export function fetchColoniaInfo(idCol) {
     suburbAPI.appreciation(idCol)
   ]);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
-        dispatch(addOptimisticActionCreator(FETCH_COLONIA_INFO, response));
-      });
+  return (dispatch) => {
+    return request
+    .then(response => {
+      dispatch(addOptimisticArrayActionCreator(FETCH_COLONIA_INFO, response));
+    });
   }
 }
 
@@ -59,10 +68,10 @@ export function fetchOfertaDisponible(idCol) {
     suburbAPI.averageTime(idCol, 6)
   ]);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
-        dispatch(addOptimisticActionCreator(FETCH_OFERTA_DISPONIBLE, response));
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticArrayActionCreator(FETCH_OFERTA_DISPONIBLE, response));
       });
   }
 }
@@ -70,9 +79,9 @@ export function fetchOfertaDisponible(idCol) {
 export function fetchDistribucionTipologia(idCol) {
   const request = suburbAPI.typology(idCol);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_DISTRIBUCION_TIPOLOGIA, response));
       });
   }
@@ -81,9 +90,9 @@ export function fetchDistribucionTipologia(idCol) {
 export function fetchPrecioHistorico(idCol) {
   const request = suburbAPI.historicPrice(idCol);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_PRECIO_HISTORICO, response));
       });
   }
@@ -92,9 +101,9 @@ export function fetchPrecioHistorico(idCol) {
 export function fetchDistribucionPrecio(idCol) {
   const request = suburbAPI.priceDistribution(idCol);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_DISTRIBUCION_PRECIO, response));
       });
   }
@@ -108,7 +117,7 @@ export function fetchColoniasComparables(idCol) {
     });
 
   return function(dispatch) {
-    request
+    return request
       .then((response) => {
         dispatch(addOptimisticActionCreator(FETCH_COLONIAS_COMPARABLES, response));
       });
@@ -118,9 +127,9 @@ export function fetchColoniasComparables(idCol) {
 export function fetchViviendaInfo(params) {
   const request = viviendaAPI.valuation(params);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_VIVIENDA_INFO, response));
       });
   }
@@ -129,9 +138,9 @@ export function fetchViviendaInfo(params) {
 export function fetchViviendasComparables(params) {
   const request = viviendaAPI.similars(params);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_VIVIENDAS_COMPARABLES, response));
       });
   }
@@ -144,9 +153,9 @@ export function fetchColoniasMap(idCol) {
       return suburbsAPI.geojsons(data)
     });
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_COLONIAS_MAP, response));
       });
   }
@@ -155,9 +164,9 @@ export function fetchColoniasMap(idCol) {
 export function fetchActualColoniaMap(idCol) {
   const request = suburbAPI.geojson(idCol);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FECTH_ACTUAL_COLONIA_MAP, response));
       });
   }
@@ -166,9 +175,9 @@ export function fetchActualColoniaMap(idCol) {
 export function fetchCentroid(idCol) {
   const request = suburbAPI.centroid(idCol);
 
-  return function(dispatch) {
-    request
-      .then((response) => {
+  return dispatch => {
+    return request
+      .then(response => {
         dispatch(addOptimisticActionCreator(FETCH_CENTROID, response));
       });
   }

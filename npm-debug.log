@@ -13,11 +13,11 @@
 9 verbose lifecycle pih_banca@0.0.1~test: PATH: /home/imuser/.nvm/versions/node/v5.0.0/lib/node_modules/npm/bin/node-gyp-bin:/home/imuser/Documents/intelimetrica/UIBanca/pih_banca/node_modules/.bin:/usr/local/heroku/bin:/home/imuser/.nvm/versions/node/v5.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 10 verbose lifecycle pih_banca@0.0.1~test: CWD: /home/imuser/Documents/intelimetrica/UIBanca/pih_banca
 11 silly lifecycle pih_banca@0.0.1~test: Args: [ '-c',
-11 silly lifecycle   ' NODE_ENV=test mocha --compilers js:babel-core/register --recursive' ]
-12 silly lifecycle pih_banca@0.0.1~test: Returned: code: 12  signal: null
+11 silly lifecycle   ' NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000' ]
+12 silly lifecycle pih_banca@0.0.1~test: Returned: code: 6  signal: null
 13 info lifecycle pih_banca@0.0.1~test: Failed to exec test script
-14 verbose stack Error: pih_banca@0.0.1 test: ` NODE_ENV=test mocha --compilers js:babel-core/register --recursive`
-14 verbose stack Exit status 12
+14 verbose stack Error: pih_banca@0.0.1 test: ` NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000`
+14 verbose stack Exit status 6
 14 verbose stack     at EventEmitter.<anonymous> (/home/imuser/.nvm/versions/node/v5.0.0/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
 14 verbose stack     at emitTwo (events.js:87:13)
 14 verbose stack     at EventEmitter.emit (events.js:172:7)
@@ -33,13 +33,13 @@
 19 error node v5.0.0
 20 error npm  v3.3.6
 21 error code ELIFECYCLE
-22 error pih_banca@0.0.1 test: ` NODE_ENV=test mocha --compilers js:babel-core/register --recursive`
-22 error Exit status 12
-23 error Failed at the pih_banca@0.0.1 test script ' NODE_ENV=test mocha --compilers js:babel-core/register --recursive'.
+22 error pih_banca@0.0.1 test: ` NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000`
+22 error Exit status 6
+23 error Failed at the pih_banca@0.0.1 test script ' NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000'.
 23 error This is most likely a problem with the pih_banca package,
 23 error not with npm itself.
 23 error Tell the author that this fails on your system:
-23 error      NODE_ENV=test mocha --compilers js:babel-core/register --recursive
+23 error      NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000
 23 error You can get their info via:
 23 error     npm owner ls pih_banca
 23 error There is likely additional logging output above.

@@ -4,40 +4,36 @@ export const SET_VIVIENDA       = 'SET_VIVIENDA';
 export const SET_PARAMS_INFO    = 'SET_PARAMS_INFO';
 export const SET_FORM           = 'SET_FORM';
 
-export function addOptimisticActionCreator(type, payload) {
-  return {type, payload}
-}
-
 export function setInitialState() {
-  return function(dispatch) {
-    dispatch(addOptimisticActionCreator(SET_INITIAL_STATE, {}));
-
-    return null;
+  return {
+    type: SET_INITIAL_STATE
   }
 }
 
 export function onSetForm(idForm) {
-  return function(dispatch) {
-    dispatch(addOptimisticActionCreator(SET_FORM, idForm));
-
-    return null;
+  return {
+    type: SET_FORM,
+    payload: idForm
   }
 }
 
 export function onSetColonia(coloniaInfo) {
-  return function(dispatch) {
-    dispatch(addOptimisticActionCreator(SET_COLONIA, coloniaInfo));
+  return {
+    type: SET_COLONIA,
+    payload: coloniaInfo
   }
 }
 
 export function onSetVivienda(viviendaInfo) {
-  return function(dispatch) {
-    dispatch(addOptimisticActionCreator(SET_VIVIENDA, viviendaInfo));
+  return {
+    type: SET_VIVIENDA,
+    payload: viviendaInfo
   }
 }
 
 export function onSetParamsInfo(info) {
-  return function(dispatch) {
-    dispatch(addOptimisticActionCreator(SET_PARAMS_INFO, info));
+  return {
+    type: SET_PARAMS_INFO,
+    payload: info
   }
 }

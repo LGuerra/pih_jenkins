@@ -21,7 +21,6 @@ export const removeAlerts = (nextState, replace, next) => {
 };
 
 export const checkPermissions = function(nextState, replace, next) {
-  console.log(nextState, replace, next);
   var routeGroup = this.group || '';
   serverAuthResponse()
   .then((args) => {

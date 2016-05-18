@@ -86,9 +86,7 @@ describe('report reducers', () => {
   });
 
   it('should handle fetching vivienda info', () => {
-    const newState = {
-      data: {/*TODO get example*/}
-    };
+    const newState = {/*TODO get example*/};
 
     expectedState.viviendaInfo = {/*TODO get example*/};
 
@@ -112,9 +110,7 @@ describe('report reducers', () => {
   });
 
   it('should handle fetching distribucion tipologia', () => {
-    const newState = {
-      data: {/*TODO get example*/}
-    };
+    const newState = {};
 
     expectedState.distribucionTipologia = {/*TODO get example*/};
 
@@ -122,9 +118,7 @@ describe('report reducers', () => {
   });
 
   it('should handle fetching precio historico', () => {
-    const newState = {
-      data: {/*TODO get example*/}
-    };
+    const newState = {};
 
     expectedState.distribucionTipologia = {/*TODO get example*/};
 
@@ -132,18 +126,14 @@ describe('report reducers', () => {
   });
 
   it('should handle fetching distribucion precio', () => {
-    const newState = {
-      data: {}
-    };
+    const newState = {};
 
     expectedState.distribucionPrecio = {};
     testReducers(newState, expectedState, FETCH_DISTRIBUCION_PRECIO);
   });
 
   it('should handle fetching colonias comparables', () => {
-    const newState = {
-      data: []
-    };
+    const newState = [];
 
     expectedState.coloniasComparables = [];
     testReducers(newState, expectedState, FETCH_COLONIAS_COMPARABLES);
@@ -151,9 +141,7 @@ describe('report reducers', () => {
 
   it('should handle fetching viviendas comparables', () => {
     const newState = {
-      data: {
-        similar_houses: []
-      }
+      similar_houses: []
     };
 
     expectedState.viviendasComparables = [];
@@ -161,27 +149,21 @@ describe('report reducers', () => {
   });
 
   it('should handle fetching colonias map', () => {
-    const newState = {
-      data: []
-    };
+    const newState = [];
 
     expectedState.coloniasMap = [];
     testReducers(newState, expectedState, FETCH_COLONIAS_MAP);
   });
 
   it('should handle fetching actual colonia on map', () => {
-    const newState = {
-      data: {}
-    };
+    const newState = {};
 
     expectedState.actualColoniaMap = {};
     testReducers(newState, expectedState, FECTH_ACTUAL_COLONIA_MAP);
   });
 
   it('should handle fetching centroid on the map', () => {
-    const newState = {
-      data: {}
-    };
+    const newState = {};
 
     expectedState.centroid = {};
     testReducers(newState, expectedState, FETCH_CENTROID);

@@ -33,9 +33,6 @@ module.exports = {
     sourceMapFilename: 'debugging/[file].map',
     pathinfo: true
   },
-  node: {
-    console: 'empty'
-  },
   watch: 'true',
   module: {
     preLoaders: [
@@ -66,9 +63,6 @@ module.exports = {
       {
         test: /\.(png|jpg)$/,
         node_modules: /node_modules/,
-        // query: {
-        //   prefix: ''
-        // },
         loader: 'url-loader?limit=1000'
       }
     ]
