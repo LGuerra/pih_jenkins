@@ -280,6 +280,7 @@
   .control-container {
     z-index: 80;
     .menu-item {
+      cursor: pointer;
       margin-right: 20px;
       padding: 8px 15px;
       display: inline-block;
@@ -357,7 +358,6 @@
   background-color: #fbfbfb;
   border: 1px solid #dddddd;
   border-bottom: 1px solid transparent;
-  padding-top: 20px;
   .landing-search-form{
     margin-top: 0px;
     padding: 0px 13px;
