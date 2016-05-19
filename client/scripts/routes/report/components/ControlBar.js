@@ -47,6 +47,8 @@ class ControlBar extends React.Component{
   _onSelectColonia(item) {
     this.setState({
       colonia: item.id
+    }, () => {
+      this._generateColoniaReport();
     });
   }
 
@@ -81,7 +83,6 @@ class ControlBar extends React.Component{
     });
   }
 
-
   _onUpdateDataParams(params) {
     let toFormat = {};
     for (let key in this.urlParams) {
@@ -94,7 +95,7 @@ class ControlBar extends React.Component{
   }
 
   _generateColoniaReport() {
-    if (this.state.colonia) {
+    if (this.state.colonia && this.state.colonia !== -1) {
       let toFormat = _.pick(this.state, ['colonia']);
       toFormat.tipo = 'Colonia';
       this.context.router.push({
@@ -236,4 +237,10 @@ ControlBar.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);
+function mapStateToProps(state) {
+  return {
+    colonia: state
+  }
+}
+
+export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);

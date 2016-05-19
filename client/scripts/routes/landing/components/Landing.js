@@ -34,8 +34,7 @@ class Landing extends React.Component {
   }
 
   _generateColoniaReport() {
-    // debugger;
-    if (this.props.colonia.id) {
+    if (this.props.colonia.id && this.props.colonia.id !== -1) {
       this.context.router.push({
         pathname: '/reporte',
         query: {
@@ -46,7 +45,6 @@ class Landing extends React.Component {
           sample: 'dude'
         }
       });
-      // window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
     } else {
       handleErrorAlert('.Colonia', 'Ingrese una colonia válida');
     }
@@ -84,12 +82,12 @@ class Landing extends React.Component {
                 }
               });
             } else {
-              handleErrorAlert('.Vivienda', 'Ingrese una dirección válida');
+              handleErrorAlert('.Vivienda', 'Por el momento no tenemos información en la zona');
             }
           });
       });
     } else {
-      handleErrorAlert('.Vivienda', 'Ingrese una dirección válida');
+      handleErrorAlert('.Vivienda', 'Ingrese una dirección');
     }
   }
 
@@ -118,6 +116,7 @@ class Landing extends React.Component {
           <div className={'row colonia-search'}>
             <div className={'col-md-12'} style={{padding: '0'}}>
               <LandingSearchForm
+                triggerOnChange={this._generateColoniaReport.bind(this)}
                 searchType={'Colonia'}
                 placeholder={'Ingrese el nombre de la colonia'}/>
             </div>
