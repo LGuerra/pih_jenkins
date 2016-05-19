@@ -15,19 +15,23 @@ import { helpersAPI }     from '../../../api/api-helper.js';
 import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
 
 function handleErrorAlert(identifier, content) {
-  $(identifier).addClass('error');
+  var $element = $(identifier);
+  $element.addClass('error');
 
-  $(identifier).popover({
+  $element.popover({
     content: content,
     placement: 'top'
   });
 
-  $(identifier).popover('show');
+  $element.popover('show');
+  $element.val('');
+  $element.focus();
 
   setTimeout(() => {
-    $(identifier).removeClass('error');
-    $(identifier).popover('destroy');
-  }, 2000);
+    $element.removeClass('error');
+    $element.popover('destroy');
+  }, 3000);
+
 
   $('html, body').animate({
     scrollTop: $('body').offset().top
@@ -76,7 +80,7 @@ class ControlBar extends React.Component{
                 vivienda: params
               });
             } else {
-              handleErrorAlert('.Vivienda', 'Elige una vivienda válida');
+              handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
             }
           });
       });
@@ -105,7 +109,7 @@ class ControlBar extends React.Component{
       });
       this._toggleCollapse('.ColoniaForm')
     } else {
-      handleErrorAlert('.Colonia', 'Elige una colonia válida');
+      handleErrorAlert('.Colonia', 'Ingrese una colonia válida');
     }
   }
 
@@ -127,7 +131,7 @@ class ControlBar extends React.Component{
         state: {}
       });
     } else {
-      handleErrorAlert('.Vivienda', 'Debes elegir una vivienda');
+      handleErrorAlert('.Vivienda', 'Ingrese una dirección');
     }
   }
 

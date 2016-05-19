@@ -10,18 +10,22 @@ import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
 import { setInitialState, onSetParamsInfo, onSetForm }  from '../../../actions/landing_actions';
 
 function handleErrorAlert(identifier, content) {
-  $(identifier)
-    .addClass('error');
+  var $element = $(identifier);
 
-  $(identifier).popover({content: content,
-    placement: 'top'});
-  $(identifier).popover('show');
+  $element.addClass('error');
+  $element.popover({
+    content: content,
+    placement: 'top'
+  });
+
+  $element.popover('show');
+  $element.val('');
+  $element.focus();
 
   setTimeout(() => {
-    $(identifier)
-      .removeClass('error');
+    $element.removeClass('error');
     $(identifier).popover('destroy');
-  }, 2000);
+  }, 3000);
 
   $('html, body').animate({
     scrollTop: $('body').offset().top
@@ -82,7 +86,8 @@ class Landing extends React.Component {
                 }
               });
             } else {
-              handleErrorAlert('.Vivienda', 'Por el momento no tenemos información en la zona');
+              handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
+              $('.Vivienda').val('');
             }
           });
       });
