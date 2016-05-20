@@ -109,7 +109,7 @@ class ControlBar extends React.Component{
       });
       this._toggleCollapse('.ColoniaForm')
     } else {
-      handleErrorAlert('.Colonia', 'Ingrese una colonia válida');
+      handleErrorAlert('.Colonia', 'Seleccione una de las sugerencias');
     }
   }
 

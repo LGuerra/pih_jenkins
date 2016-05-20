@@ -50,7 +50,7 @@ class Landing extends React.Component {
         }
       });
     } else {
-      handleErrorAlert('.Colonia', 'Ingrese una colonia válida');
+      handleErrorAlert('.Colonia', 'Seleccione una de las sugerencias');
     }
   }
 
