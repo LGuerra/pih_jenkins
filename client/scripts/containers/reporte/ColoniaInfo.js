@@ -6,7 +6,7 @@ import { isEqual }  from 'lodash';
 import Spinner from './../../components/Spinner';
 
 // Helpers
-import { formatAsPrice } from '../../helpers';
+import { formatAsPrice, toPercentage } from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchColoniaInfo } from  '../../actions/report_actions';
 
@@ -49,7 +49,7 @@ class ColoniaInfo extends React.Component {
       if (data.apreciacion > 0.20 || !data.apreciacion) {
         apreciacion = 'No disponible'
       } else {
-        apreciacion = (data.apreciacion * 100).toFixed(1) + '%';
+        apreciacion = toPercentage(data.apreciacion);
         apreciacion = data.apreciacion > 0
           ? '+' + apreciacion
           : apreciacion;

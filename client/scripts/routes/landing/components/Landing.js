@@ -56,41 +56,45 @@ class Landing extends React.Component {
 
   _generateViviendaReport() {
     if (this.props.vivienda.id) {
-      getHouseInfor(this.props.vivienda.id, (place) => {
-        let latitude    = place.geometry.location.lat();
-        let longitude   = place.geometry.location.lng();
-        let infoParams  = this.props.infoParams;
+      let latitude;
+      let longitude;
+      let infoParams;
 
-        helpersAPI.suburbIsTrusted(latitude, longitude)
-          .then((response) => {
-            if (response.data.trusted) {
-              let colonia = response.data.id;
-              this.context.router.push({
-                pathname: '/reporte',
-                query: {
-                  colonia: colonia,
-                  tipo: 'Vivienda',
-                  longitud: longitude,
-                  latitud: latitude,
-                  recamaras: infoParams.recamaras,
-                  banos: infoParams.banos,
-                  estacionamientos: infoParams.estacionamientos,
-                  id_tipo_propiedad: infoParams.id_tipo_propiedad,
-                  edad: infoParams.edad,
-                  area_construida: infoParams.area_construida,
-                  tipo_operacion: 0,
-                  address: this.props.vivienda.content
-                },
-                state: {
-                  sample: 'dude'
-                }
-              });
-            } else {
-              handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
-              $('.Vivienda').val('');
-            }
-          });
-      });
+      getHouseInfor(this.props.vivienda.id)
+        .then(place => {
+          latitude    = place.geometry.location.lat();
+          longitude   = place.geometry.location.lng();
+
+          return helpersAPI.suburbIsTrusted(latitude, longitude)
+        })
+        .then(response => {
+          if (response.data.trusted) {
+            let colonia = response.data.id;
+            this.context.router.push({
+              pathname: '/reporte',
+              query: {
+                colonia: colonia,
+                tipo: 'Vivienda',
+                longitud: longitude,
+                latitud: latitude,
+                recamaras: this.props.infoParams.recamaras,
+                banos: this.props.infoParams.banos,
+                estacionamientos: this.props.infoParams.estacionamientos,
+                id_tipo_propiedad: this.props.infoParams.id_tipo_propiedad,
+                edad: this.props.infoParams.edad,
+                area_construida: this.props.infoParams.area_construida,
+                tipo_operacion: 0,
+                address: this.props.vivienda.content
+              },
+              state: {
+                sample: 'dude'
+              }
+            });
+          } else {
+            handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
+            $('.Vivienda').val('');
+          }
+        });
     } else {
       handleErrorAlert('.Vivienda', 'Ingrese una dirección');
     }
