@@ -16,6 +16,8 @@
     "bootstrap": "^3.3.6",
     "bootstrap-sass": "^3.3.6",
     "bootstrap-webpack": "0.0.5",
+    "chai": "^3.5.0",
+    "chai-immutable": "^1.5.4",
     "css-loader": "^0.23.1",
     "d3": "^3.5.12",
     "eslint": "^1.10.3",
@@ -25,6 +27,8 @@
     "extract-text-webpack-plugin": "^1.0.0",
     "file-loader": "^0.8.5",
     "imports-loader": "^0.6.5",
+    "jquery": "^2.2.3",
+    "jsdom": "^8.5.0",
     "jshint": "^2.8.0",
     "jshint-loader": "^0.8.3",
     "less": "^2.5.3",
@@ -32,22 +36,35 @@
     "lodash": "^3.10.1",
     "lodash.compose": "^2.4.1",
     "lodash.identity": "^3.0.0",
+    "mocha": "^2.4.5",
+    "mocha-jsdom": "^1.1.0",
+    "mocha-loader": "^0.7.1",
     "moment": "^2.11.0",
+    "nock": "^8.0.0",
     "node-libs-browser": "^0.5.3",
     "node-sass": "^3.4.2",
     "react": "^0.14.5",
+    "react-addons-test-utils": "^15.0.2",
     "react-bootstrap": "^0.28.1",
     "react-dom": "^0.14.5",
     "react-spinkit": "^1.1.4",
+    "redux-mock-store": "^1.0.2",
     "sass-loader": "^3.1.2",
+    "sinon": "^1.17.4",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.13.0",
+    "svg-url-loader": "^1.0.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
     "webpack-sources": "^0.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000",
+    "dev-server": "webpack-dev-server --progress --colors --port 8090 --inline",
+    "build-staging-assets": "webpack --config webpack.config.staging.js",
+    "build-prod-assets": "webpack --config webpack.config.production.js",
+    "test:watch": "npm run test -- --watch",
+    "tests": "webpack-dev-server --config webpack.config.test.js --hot --inline --output-filename test.js --port 4000"
   },
   "repository": {
     "type": "git",
@@ -64,7 +81,14 @@
   },
   "homepage": "https://github.com/Intelimetrica/pih_banca#readme",
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "bootstrap": "^3.3.6",
-    "jquery": "^2.1.4"
+    "immutable": "^3.8.1",
+    "jquery": "^2.1.4",
+    "react-redux": "^4.4.4",
+    "react-router": "^2.1.1",
+    "redux": "^3.4.0",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.1.0"
   }
 }

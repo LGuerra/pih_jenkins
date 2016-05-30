@@ -1,216 +1,157 @@
-.LandingPage {
-  padding-bottom: 20px;
-  height: calc(100vh - 108px);
-  background: url('./../images/dante.jpg') no-repeat center center fixed;
-  padding-top: 10%;
+.Landing {
+  background: url('./../images/dante.jpg');
+  background-repeat: no-repeat;
   background-size: cover;
-}
-
-.search-button {
-  background-color: #35c0be;
-  height: 40px;
-  width: 75px;
-  text-align: center;
-  border: 1px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  &:focus {
-    outline: 0;
-  }
-}
-.search-dropdown-button {
-  background-color: white;
-  height: 40px;
-  border: 1px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-right-color: #35c0be;
-  border-right-style: solid;
-  font-weight: normal;
-  padding-right: 9px;
-  &:focus {
-    outline: 0;
-  }
-}
-
-.search-dropdown{
-  width: 100%;
-  right: 0;
-  border-radius: 5px;
-  top: -1px;
-  box-shadow: 0px 0px 11px 2px rgba(0,0,0,0.05);
-  .im-menu-item{
-    padding-left: 15px;
-    padding-top: 12px;
-    min-height: 40px;
-  }
-}
-
-.modal-box {
-  background-color: white;
-  margin-top: 15px;
-  padding-bottom: 25px;
-  border-radius: 8px;
-}
-
-.modal-dropdown-button {
-  display: inline-block;
-  background-color: rgba(1,1,1,0);
-  border: 1px;
-  color: black;
-  font-weight: 500;
-  border-bottom-style: solid;
-  border-bottom-color: #C3C3C3;
-  margin: 0px 15px;
-  &:focus {
-    outline: 0;
-  }
-}
-
-.disabled-modal-dropdown-button{
-  .modal-dropdown-button{
-    cursor:no-drop;
-    color: #b5b5b5;
-  }
-  .im-dropdown{
-    display: none;
-  }
-}
-
-.modal-row {
-  padding-top: 20px;
-  font-size: 13px;
-}
-
-.modal-icons-row{
-  display: flex;
-  justify-content: space-around;
-}
-
-.modal-button-container {
-  width: 60%;
-  top: -4px;
-  .im-dropdown{
-    top: -1px;
-    border: 1px solid #E8E8E8;
-    box-shadow: 0px 0px 11px 2px rgba(0,0,0,0.05);
-  }
-}
-
-
-.search-div {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 700px;
-  .search-container {
-    width: 100%;
-    display: flex;
-    .sarch-dropdown {
-      width: 95px;
+  .Index {  
+    height: calc(100% - 102px);
+    .headers {
+      margin-top: 4vh;
+      text-align: center;
+      color: #FFFFFF;
     }
-    .sarch-input {
-      width: calc(100% - 150px);
-      .im-input-dropdown {
-        .input-error {
-          &::-webkit-input-placeholder { color: #FE696B}
-          &:-moz-placeholder           { color: #FE696B}
-          &::-moz-placeholder          { color: #FE696B}
-          &:-ms-input-placeholder      { color: #FE696B}
-          &:placeholder-shown          { color: #FE696B}
+
+    .buttons-redirect {
+      display: flex;
+      justify-content: center;
+      color: #fff;
+      button.btn {
+        background-color: rgba(250,250,250,0.3);
+        border: 1px solid transparent;
+        color: #fff;
+        padding: 10px;
+        font-size: 13px;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        &:hover{
+          background-color: #35c0be;
+          border: 1px solid #35c0be;
+          opacity: 0.8  ;
         }
-        input[type="text"] {
-          @include transition(color, 1.4s, linear);
+        &:focus{
+          box-shadow: none;
+          outline: none;
         }
       }
-      position: relative !important;
+      .btn-left {
+        border-left: 1px solid #fff;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .btn-right {
+        border-right: 1px solid #FFF;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+      .active {
+        background-color: #2a9998 !important;
+        color: #fff;
+        box-shadow: none;
+        border: 1px solid #2a9998 !important;
+        &:hover{
+          background-color: #2a9998 !important;
+          border: 1px solid #2a9998;
+        }
+      }
     }
-    .sarch-button {
-      width: 75px;
+  }
+
+  .LandingForm {
+    padding-bottom: 50px;
+    .valuation-container {
+      .row {
+        width: 100%;
+      }
+    }
+    .subtitle {
+      padding-top: 5px;
+      margin-bottom: 0;
+      font-size: 18px;
+      font-weight: 300;
+      text-align: center;
+      color: #FFF;
+    }
+    .Breakpoint {
+      background-color: #35c0be;
+      padding: 10px;
+      h2 {
+        text-align: center;
+        color: #fff;
+        font-weight: lighter;
+      }
+    }
+    .inner-form {
+      padding: 12px;
+      max-width: 1500px;
+      width: 95%;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.35);
+      border-radius: 10px;
+      @media screen and (max-width: 768px) {
+        width: 97%;
+        padding: 8px 3px;
+      }
+      .colonia-search{
+        .btn {
+          display: block;
+          margin-right: auto;
+          margin-left: auto;
+        }
+        .btn-disponible {
+          @media screen and (max-width: 990px) {
+            margin-top: 0px !important;
+          }
+        }
+        .landing-search-form{
+          margin-top: 10px;
+        }
+      }
+    }
+    .scrolled {
+      background-color: rgba(242, 245, 245, 0.55);
+    }
+    .buttons-redirect {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
     }
   }
 }
-
-.im-input-dropdown{
-  position: absolute;
-  width: 100%;
-  .im-dropdown{
-    right: 0px;
-    left: 0px;
+.landing-content{
+  display: flex;
+  align-items: center;
+  .inner-content{
+    padding: 0px 15px;
+  }
+}
+.landing-arrow{
+  margin-top: 50px;
+  img{
+    display: block;
     margin: 0 auto;
   }
 }
-
-.modal-div {
-  width: 700px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-}
-
-.modal-div-triangle{
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 0 12px 10px;
-  border-color: #FFFFFF transparent;
-  display: block;
-  width: 0;
-  z-index: 1;
-  top: -9px;
-  left: 5%;
-}
-
-.popover-alert{
-  position: absolute !important;
-  box-shadow: none;
-  color: #FE696B;
-  margin-top: -15px !important;
-}
-
-.input-modal-container {
-  width: 80%;
+.landing-secondary-content{
+  background: url('./../images/iphone_bco.jpg');
+  background-repeat: no-repeat;
+  background-position-x: 30vw;
+  background-color: #ffffff;
+  height: 30vh;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  font-size: 16px;
 }
 
-.metric {
-  margin-left: 5px;
-}
-
-.input-modal-outer-container {
-  display: inline-block;
-  width: 80%;
-  border: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #C3C3C3;
-  margin-right: 15px;
-}
-.input-modal {
-  //display: inline-block;
-  //background-color: rgba(1, 1, 1, 0);
-  //border: 1px;
-  //border-bottom-style: solid;
-  //border-bottom-color: #C3C3C3;
-  //color: #000;
-  //font-weight: 300;
-  //margin: 0 15px;
-  //padding: 0 0 0 30%;
-  //width: 80%;
-  //&:focus //{
-  //outline: 0;
-  //border-bottom-color: #35c0be;
-  //}
-  border: 1px;
-  width: 50%;
-  text-align: right;
-  color: #000;
-  &:focus {
-    outline: 0;
+@media screen and (max-width: 990px) {
+  .valuation-input {
+    border: none !important;
   }
-}
+  .Landing {
+    .Index {
+      height: auto !important;
+    }
+  }
 
-#edad::-webkit-input-placeholder, #area-construida::-webkit-input-placeholder{
-  color: #000000;
+  .buttons-redirect {
+    margin-top: 30px !important;
+  }
 }

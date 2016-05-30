@@ -50,6 +50,9 @@
     }
   }
 }
+.navbar-default{
+  background-color: #E8E8E8;
+}
 
 .HiddenButtons {
   display: none;
@@ -100,9 +103,9 @@
 .MainSection {
   @include transition(all, 0.75s, ease);
   background-color: $white;
-  &:hover{
+  /* &:hover{
     background-color: rgba(242, 245, 245, 0.55);
-  }
+  } */
 }
 
 .TooltipContainer {
@@ -269,3 +272,108 @@
   display: flex;
   justify-content: space-around;
 }
+
+.ControlBar {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  .control-container {
+    z-index: 80;
+    .menu-item {
+      cursor: pointer;
+      margin-right: 20px;
+      padding: 8px 15px;
+      display: inline-block;
+      text-transform: uppercase;
+      text-align: center;
+      border: 1px solid transparent;
+      border-top: none;
+      img{
+        @include transition(all, 0.3s, ease-in-out);
+        margin-left: 9px;
+      }
+      img.active {
+        -ms-transform: rotate(-180deg); /* IE 9 */
+        -webkit-transform: rotate(-180deg); /* Chrome, Safari, Opera */
+        transform: rotate(-180deg);
+      }
+      &:hover {
+        background-color: #FBFBFB;
+        border-top: none;
+        border: 1px solid #dddddd;
+        border-top: none;
+        border-bottom: 3px solid #71d2d1;
+      }
+      a {
+        font-size: 13px;
+        color: #5D5D5D;
+        font-weight: 400;
+        text-decoration: none;
+      }
+    }
+    .menu-item-selected {
+      border-bottom: 3px solid #35c0be;
+    }
+    .menu-item-active {
+      background-color: #FBFBFB;
+      border: 1px solid #dddddd;
+      border-top: none;
+      border-bottom: 3px solid #35C0BE;
+    }
+    .menu-item-disabled {
+      cursor: not-allowed;
+      &:hover {
+        border-bottom: 0px solid #1394bc;
+      }
+      a {
+        cursor: not-allowed;
+        font-size: 14px;
+        color: $gray-3;
+        font-weight: 400;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.ColoniaForm {
+  padding: 0px;
+  background-color: #fbfbfb;
+  border: 1px solid #dddddd;
+  border-bottom: 1px solid transparent;
+  .landing-search-form{
+    margin-top: 0px;
+    padding: 0;
+  }
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+    button{
+      margin: 10px 15px;
+    }
+  }
+}
+
+.ViviendaForm {
+  background-color: #fbfbfb;
+  border: 1px solid #dddddd;
+  border-bottom: 1px solid transparent;
+  .landing-search-form{
+    margin-top: 0px;
+    padding: 0px 13px;
+  }
+  .valuation-container {
+    .row {
+      width: 100%;
+    }
+  }
+  .buttons-container {
+    display: flex;
+    justify-content: center;
+    button{
+      margin: 10px 15px;
+    }
+  }
+}
+
+

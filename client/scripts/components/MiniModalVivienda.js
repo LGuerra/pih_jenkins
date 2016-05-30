@@ -15,13 +15,17 @@ class MiniModalVivienda extends React.Component {
     this.refs.modal.show();
   }
 
+  hide () {
+    this.refs.modal.hide();
+  }
+
   _sendRequest () {
     this.props.requestVivienda();
   }
 
   render() {
     let btn_bar;
-
+    var lupa = require('file!images-banca/lupa.svg');
     if (this.state.myVariable !== "Ingresa la dirección de una vivienda") {
       btn_bar = ( <div style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '5px'}}>
                     <div>
@@ -31,7 +35,7 @@ class MiniModalVivienda extends React.Component {
                     </div>
                     <div>
                       <button className="search-button-modal" onClick={this._sendRequest}>
-                        <img width="20px" height="20px" src={IMAGES.lupa}></img>
+                        <img width="20px" height="20px" src={lupa}></img>
                       </button>
                     </div>
                   </div>

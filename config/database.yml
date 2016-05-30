@@ -10,14 +10,19 @@ development: &default
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: pih_banca_test
-    
+test: &default
+  adapter: postgresql
+  encoding: unicode
+  database: postgres
+  pool: 5
+  username: postgres
+  password:
+  host: dbtest
+
 staging:
   <<: *default
   database: <%= ENV['RDS_DATABASE'] || 'postgres' %>
-  pool: 10
+  pool: 2
   username: <%= ENV['RDS_USERNAME'] || 'postgres' %>
   password: <%= ENV['RDS_PASSWORD'] || '' %>
   port: <%= ENV['RDS_PORT'] || 5432 %>

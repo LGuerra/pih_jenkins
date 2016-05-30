@@ -16,7 +16,7 @@ module.exports = {
     vendor: ['jquery', 'bootstrap']
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'vendor', /* filename= */'vendor.js', Infinity),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
@@ -24,14 +24,16 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"dev"'
     }),
-    new extractTextPlugin('../../stylesheets/build/main.css')
+    new extractTextPlugin('main.css')
   ],
   output: {
-    path: path.resolve('./app/assets/javascripts/build/'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'application'),
+    publicPath: 'http://localhost:8090/application/',
+    filename: '[name].js',
+    sourceMapFilename: 'debugging/[file].map',
+    pathinfo: true
   },
   watch: 'true',
-  // modulesDirectories: modulePaths,
   module: {
     preLoaders: [
       {
@@ -62,21 +64,32 @@ module.exports = {
         test: /\.(png|jpg)$/,
         node_modules: /node_modules/,
         loader: 'url-loader?limit=1000'
-      },
-      {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
+      }
     ]
   },
   stats: {
     colors: true
   },
-  resolve: {
-    extensions: ['', '.js', '.es6']
+  target: 'web',
+  debug: true,
+  devtool: 'eval-source-map',
+  devServer: {
+    contentBase: __dirname,
+    quiet: false,
+    noInfo: false,
+    publicPath: "/application/"
   },
-  externals: {
-    apigClient: "apigClient",
-    apigClientFactory: "apigClientFactory" 
+  resolve: {
+    root: path.resolve(__dirname),
+    extensions: ['', '.js', '.es6'],
+    alias: {
+      'api-banca': 'client/scripts/api/api-helper',
+      'images-banca': 'client/images',
+      'helpers-banca': 'client/scripts/helpers/index',
+      'im-main-navigation': 'client/scripts/components/navigation/main/index',
+      'im-secondary-navigation': 'client/scripts/components/navigation/secondary/index',
+      'im-components': 'client/scripts/components',
+      'im-common': 'client/scripts/components/common'
+    }
   }
 };

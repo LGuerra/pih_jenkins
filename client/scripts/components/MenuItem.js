@@ -12,7 +12,7 @@ class IMMenuItem extends React.Component {
   }
 
   parseContent(text){
-    return <span dangerouslySetInnerHTML={{__html: text.replace(/em>/g,'b>')}} />;
+    return ;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,11 +24,12 @@ class IMMenuItem extends React.Component {
 
   render() {
     return (
-        <div className={"im-menu-item " + this.props.className}
-             style={{width: '100%'}}
-             onClick={this.handleClick}>
-          {this.parseContent(this.state.content)}
-        </div>
+      <div
+        className={"im-menu-item " + this.props.className}
+        style={{width: '100%'}}
+        onClick={this.handleClick}>
+        <span dangerouslySetInnerHTML={{__html: ''.replace(/em>/g,'b>')}} />
+      </div>
     );
   }
 }

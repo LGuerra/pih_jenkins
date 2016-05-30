@@ -2,7 +2,8 @@
   "extends": "eslint:recommended",
   "rules": {
     "no-unused-vars": 0,
-    "no-console": 0
+    "no-console": 0,
+    "no-debugger": 0
   },
   "env": {
     "es6": true,
@@ -10,15 +11,16 @@
     "node": true
   },
   "globals": {
-    "__API_STAGE__": true,
     "$": true,
-    "IMAGES": true,
     "google": true,
     "canvg": true,
-    "apigClient": true,
-    "apigClientFactory": true,
-    "apiGateway": true,
-    "uritemplate": true
+    "debugger": true,
+    "uritemplate": true,
+    "describe": true,
+    "it": true,
+    "before": true,
+    "beforeEach": true,
+    "ga": true
   },
   "ecmaFeatures": {
     "modules": true,

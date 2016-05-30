@@ -85,7 +85,7 @@ class MiniSearchForm extends React.Component {
        templateUrl += '&recamaras=' + this.state.habitaciones;
        templateUrl += '&banos=' + this.state.banos;
        templateUrl += '&estacionamientos=' + this.state.cajones;
-       templateUrl += '&id_tipo_vivienda=' + tipoVivienda;
+       templateUrl += '&id_tipo_propiedad=' + tipoVivienda;
        templateUrl += '&edad=' + this.state.edad;
        templateUrl += '&area_construida=' + this.state.areaConstruida;
        templateUrl += '&address=' + searchInput;
@@ -108,7 +108,19 @@ class MiniSearchForm extends React.Component {
             templateUrl = templateUrl.replace(':longitud:', longitude)
             .replace(':latitud:',  latitude)
             .replace(':colonia:', suburbFromCoordsR.data.id);
-            window.open(templateUrl, '_self');
+            this.props.onUpdateSearchInfo({
+              longitud: longitude,
+              latitud: latitude,
+              colonia: suburbFromCoordsR.data.id,
+              recamaras: this.state.habitaciones,
+              banos: this.state.banos,
+              estacionamientos: this.state.cajones,
+              id_tipo_propiedad: tipoVivienda,
+              edad: this.state.edad,
+              area_construida: this.state.areaConstruida,
+              address: searchInput,
+              tipo_operacion: 0
+            });
           } else {
             let coloniaArr = searchInput.split(",");
             let colonia = (coloniaArr.length > 3) ? coloniaArr[1] : coloniaArr[0];
@@ -170,7 +182,10 @@ class MiniSearchForm extends React.Component {
               .replace(':colonia:', this.refs.searchInput.state.selectedID)
               .replace(':reportType:', this.state.searchType);
 
-            window.open(templateUrl, '_self');
+            this.props.onUpdateSearchInfo({
+              colonia: this.refs.searchInput.state.selectedID,
+              reportType: this.state.searchType
+            });
           }
         }
       }
@@ -354,6 +369,7 @@ class MiniSearchForm extends React.Component {
     let ddmodalShown = this.state.ddmodalShown;
     const placement = (window.matchMedia("(max-width: 768px)").matches) ? 'top' : 'left';
 
+    var lupa = require('file!images-banca/lupa.svg');
     return (
           <div className={'mini-search-div'}>
             <div id="id-search-container" onClick={this._stopPropagation} className={'mini-search-container'}>
@@ -385,7 +401,7 @@ class MiniSearchForm extends React.Component {
               </div>
               <div className={'mini-sarch-button'}>
                 <button className="mini-search-button" onClick={this._sendRequest}>
-                  <img width={20} height={20} src={IMAGES.lupa}></img>
+                  <img width={20} height={20} src={lupa}></img>
                 </button>
               </div>
             </div>

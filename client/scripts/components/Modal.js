@@ -9,6 +9,9 @@ class Modal extends React.Component{
   show() {
     $(ReactDOM.findDOMNode(this)).modal('show');
   }
+  hide() {
+    $(ReactDOM.findDOMNode(this)).modal('hide');
+  }
   componentDidMount() {
     $(ReactDOM.findDOMNode(this)).modal('show');
   }

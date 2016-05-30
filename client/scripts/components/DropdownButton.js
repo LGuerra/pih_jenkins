@@ -65,7 +65,7 @@ class IMDropdownButton extends React.Component {
     if (this.state.showDropdown) {
       imDropdown = (<IMDropdown items={this.props.items} className={this.props.dropdownClassName} selectMItem={this._selectMenuItem}/>);
     }
-
+    var downArrow = require('file!images-banca/down_arrow.svg');
     return (
       <div className={this.props.outerButtonClassName}
            style={{display: 'inline-block', padding: 0, width: '100%', textAlign: 'right', position: 'relative'}} >
@@ -77,7 +77,7 @@ class IMDropdownButton extends React.Component {
           <span className="im-dropdown-button-text">
           {this.state.selectedItem}
           </span>
-          <span className={'pull-right'}> <img src={IMAGES.downArrow} width="10"></img> </span>
+          <span className={'pull-right'}> <img src={downArrow} width="10"></img> </span>
         </button>
         {imDropdown}
       </div>

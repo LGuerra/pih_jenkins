@@ -32,3 +32,4 @@ app/assets/javascripts/build/
 app/assets/stylesheets/build/
 # Ignore npm modules
 node_modules/
+npm-debug.log

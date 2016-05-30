@@ -5,7 +5,7 @@ switch(process.env.NODE_ENV) {
   case 'staging':
     stage = 'staging';
     break;
-  case 'prod':
+  case 'production':
     stage = 'prod';
     break;
   case 'dev':
@@ -15,8 +15,26 @@ switch(process.env.NODE_ENV) {
     stage = 'dev';
 }
 let apiEndpoint = `/v1/${stage}`;
+if(process.env.NODE_ENV === 'test') {
+  apiEndpoint = `https://pih-api.intelimetrica.com/v1/${stage}`;
+} else {
+  var $ = require('jquery');
+  axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
+  axios.defaults.headers.post['X-Transaction'] = 'POST Example';
+}
 
-axios.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content');
+const userAPI = (() => {
+  let getInfo = () => {
+    return axios.get('/helpers/user_info');
+  }
+
+  let signIn = (user) => {
+    return axios.post('/users/sign_in.json', { 
+      user: user 
+    });
+  }
+  return { getInfo, signIn };
+})();
 
 const viviendaAPI = (() => {
 
@@ -41,9 +59,22 @@ const helpersAPI = (() => {
     return axios.get(`${apiEndpoint}/helpers/suburb-from-coordinates`, { params: {lat: lat, lng: lng} });
   };
 
+  let suburbsByName = (params) => {
+    var base = {
+      'return': 'name',
+      'q.parser': 'structured',
+      'highlight.name': '{}',
+      ...params
+    };
+    return axios.get(`${apiEndpoint}/helpers/suburbs-by-name`, {
+      params: base
+    });
+  };
+
   return {
     suburbIsTrusted,
-    suburbFromCoords
+    suburbFromCoords,
+    suburbsByName
   };
 
 })();
@@ -58,12 +89,12 @@ const suburbsAPI = (() => {
   let report = (ids, months) => {
     let idsParams = ids.join(',');
     return axios.get(
-      `${apiEndpoint}/suburbs/report`, 
+      `${apiEndpoint}/suburbs/report`,
       {
         params: {
           id_cols: idsParams,
           months: months || 6
-        } 
+        }
       }
     );
   };
@@ -118,7 +149,7 @@ const suburbAPI = (() => {
   let historicPrice = (id) => {
     return axios.get(`${apiEndpoint}/suburb/${id}/historic-price`);
   };
-  
+
   let listingCount = (id, months) => {
     let params = {};
     if(typeof months !== 'undefined') params.months = months;
@@ -137,13 +168,13 @@ const suburbAPI = (() => {
     return axios.get(`${apiEndpoint}/suburb/${id}/adjacent`);
   };
 
-  return { 
+  return {
     adjacent,
     information,
     appreciation,
     averageM2,
     averageOffer,
-    averageTime, 
+    averageTime,
     centroid,
     geojson,
     smooth,
@@ -162,4 +193,4 @@ const detailView = (id) => {
   return axios.all(requests);
 };
 
-export { suburbAPI, suburbsAPI, helpersAPI, viviendaAPI, detailView }
+export { userAPI, suburbAPI, suburbsAPI, helpersAPI, viviendaAPI, detailView }

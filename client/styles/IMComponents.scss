@@ -29,6 +29,7 @@
 }
 
 .im-dropdown {
+  margin-left: 45px;
   z-index: 3;
   position: absolute;
   border: 1px solid #ddd;
@@ -37,8 +38,6 @@
   border-top: 0px;
   box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
   font-size: 13px;
-  width: 80%;
-  right: 10%;
   .im-menu-item {
     background-color: transparent;
     min-height: 35px;

@@ -14,15 +14,15 @@ module.exports = {
   entry: {
     main: path.resolve(__dirname, './client/scripts/main.js'),
     vendor: ['jquery', 'bootstrap']
-    // api: path.resolve(__dirname, './app/assets/javascripts/api/apigClient.js')
   },
   plugins: [
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
     function()
     {
       this.plugin("done", function(stats) {
         if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1)
           {
-            // console.log('---ss-s-s-s-', stats.compilation.errors);
             stats.compilation.errors.map(function(error, index) {
               console.log(error.message);
             });
@@ -36,12 +36,13 @@ module.exports = {
       jQuery: "jquery"
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"prod"'
+      'process.env.NODE_ENV': '"production"'
     }),
     new extractTextPlugin('main.min.css')
   ],
   output: {
-    path: path.resolve('./client/dist/'),
+    path: path.resolve('./client/dist/production/'),
+    publicPath: 'https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/',
     filename: '[name].min.js'
   },
   module: {
@@ -73,22 +74,21 @@ module.exports = {
       {
         test: /\.(png|jpg)$/,
         node_modules: /node_modules/,
-        loader: 'url-loader?limit=1000'
-      },
-      {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
+        loader: 'url-loader'
+      }
     ]
   },
-  devtool: 'source-map',
-  externals: {
-    "apiGateway":"apiGateway"
-  },
-  stats: {
-    colors: true
-  },
   resolve: {
-    extensions: ['', '.js', '.es6']
+    root: path.resolve(__dirname),
+    extensions: ['', '.js', '.es6'],
+    alias: {
+      'api-banca': 'client/scripts/api/api-helper',
+      'images-banca': 'client/images',
+      'helpers-banca': 'client/scripts/helpers/index',
+      'im-main-navigation': 'client/scripts/components/navigation/main/index',
+      'im-secondary-navigation': 'client/scripts/components/navigation/secondary/index',
+      'im-components': 'client/scripts/components',
+      'im-common': 'client/scripts/components/common'
+    }
   }
 };
