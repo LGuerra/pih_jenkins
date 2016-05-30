@@ -15,19 +15,23 @@ import { helpersAPI }     from '../../../api/api-helper.js';
 import { onSetColoniaInfo, onSetViviendaInfo }  from '../../../actions/report_actions';
 
 function handleErrorAlert(identifier, content) {
-  $(identifier).addClass('error');
+  var $element = $(identifier);
+  $element.addClass('error');
 
-  $(identifier).popover({
+  $element.popover({
     content: content,
     placement: 'top'
   });
 
-  $(identifier).popover('show');
+  $element.popover('show');
+  $element.val('');
+  $element.focus();
 
   setTimeout(() => {
-    $(identifier).removeClass('error');
-    $(identifier).popover('destroy');
-  }, 2000);
+    $element.removeClass('error');
+    $element.popover('destroy');
+  }, 3000);
+
 
   $('html, body').animate({
     scrollTop: $('body').offset().top
@@ -47,6 +51,8 @@ class ControlBar extends React.Component{
   _onSelectColonia(item) {
     this.setState({
       colonia: item.id
+    }, () => {
+      this._generateColoniaReport();
     });
   }
 
@@ -54,33 +60,37 @@ class ControlBar extends React.Component{
     this.setState({
       vivienda: null
     }, () => {
-      getHouseInfor(item.id, (place) => {
-        let latitude    = place.geometry.location.lat();
-        let longitude   = place.geometry.location.lng();
-        let infoParams  = this.state.infoParams;
+      let latitude;
+      let longitude;
+      let place;
 
-        helpersAPI.suburbIsTrusted(latitude, longitude)
-          .then((response) => {
-            if (response.data.trusted) {
-              let params = {
-                colonia: response.data.id,
-                latitud: latitude,
-                longitud: longitude,
-                tipo_operacion: 0,
-                address: place.formatted_address
-              };
+      getHouseInfor(item.id)
+        .then(response => {
+          latitude    = response.geometry.location.lat();
+          longitude   = response.geometry.location.lng();
+          place       = response;
 
-              this.setState({
-                vivienda: params
-              });
-            } else {
-              handleErrorAlert('.Vivienda', 'Elige una vivienda válida');
-            }
-          });
-      });
+          return helpersAPI.suburbIsTrusted(latitude, longitude)
+        })
+        .then(response => {
+          if (response.data.trusted) {
+            let params = {
+              colonia: response.data.id,
+              latitud: latitude,
+              longitud: longitude,
+              tipo_operacion: 0,
+              address: place.formatted_address
+            };
+
+            this.setState({
+              vivienda: params
+            });
+          } else {
+            handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
+          }
+        });
     });
   }
-
 
   _onUpdateDataParams(params) {
     let toFormat = {};
@@ -94,7 +104,7 @@ class ControlBar extends React.Component{
   }
 
   _generateColoniaReport() {
-    if (this.state.colonia) {
+    if (this.state.colonia && this.state.colonia !== -1) {
       let toFormat = _.pick(this.state, ['colonia']);
       toFormat.tipo = 'Colonia';
       this.context.router.push({
@@ -104,7 +114,7 @@ class ControlBar extends React.Component{
       });
       this._toggleCollapse('.ColoniaForm')
     } else {
-      handleErrorAlert('.Colonia', 'Elige una colonia válida');
+      handleErrorAlert('.Colonia', 'Seleccione una de las sugerencias');
     }
   }
 
@@ -126,7 +136,7 @@ class ControlBar extends React.Component{
         state: {}
       });
     } else {
-      handleErrorAlert('.Vivienda', 'Debes elegir una vivienda');
+      handleErrorAlert('.Vivienda', 'Ingrese una dirección');
     }
   }
 
@@ -204,13 +214,15 @@ class ControlBar extends React.Component{
           </div>
           <div id={'ViviendaForm'} className={'collapse ViviendaForm'}>
             <div className={'max-width-container'}>
-              <SuggestionsInputField
-                ref={'vivienda_field'}
-                searchType={'Vivienda'}
-                onSelectItem={this._onSelectVivienda.bind(this)}
-                placeholder={'Ingrese la dirección de la vivienda'}
-                specificGroupClass={'landing-search-form'}
-                specificInputClass={'form-control Vivienda'}/>
+              <div style={{marginTop: '20px'}}>
+                <SuggestionsInputField
+                  ref={'vivienda_field'}
+                  searchType={'Vivienda'}
+                  onSelectItem={this._onSelectVivienda.bind(this)}
+                  placeholder={'Ingrese la dirección de la vivienda'}
+                  specificGroupClass={'landing-search-form'}
+                  specificInputClass={'form-control Vivienda'}/>
+              </div>
               <ViviendaParamsFields
                 infoParams={this.props.urlParams}
                 onUpdateData={this._onUpdateDataParams.bind(this)} />
@@ -234,4 +246,10 @@ ControlBar.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);
+function mapStateToProps(state) {
+  return {
+    colonia: state
+  }
+}
+
+export default connect(mapStateToProps, { onSetColoniaInfo, onSetViviendaInfo })(ControlBar);

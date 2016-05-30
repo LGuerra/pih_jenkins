@@ -1,6 +1,8 @@
 import d3 from 'd3';
 import React from 'react';
 
+import { toPercentage } from '../helpers';
+
 class BarChart extends React.Component {
   constructor(props) {
     super(props);
@@ -77,7 +79,7 @@ class BarChart extends React.Component {
     this.conf.yAxis = d3.svg.axis()
       .scale(this.conf.yScale)
       .tickFormat(function(d) {
-        return (d * 100).toFixed(0) + '%';
+        return toPercentage(d);
       })
       .ticks(7)
       .orient('left');

@@ -26,4 +26,10 @@ webpackConf.plugins = [
   new extractTextPlugin('main.min.css')
 ];
 
+webpackConf.output: {
+  path: path.resolve('./client/dist/'),
+  publicPath: 'https://s3-us-west-2.amazonaws.com/assets-pih-banca/staging/',
+  filename: '[name].min.js'
+}
+
 module.exports = webpackConf;

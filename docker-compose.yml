@@ -20,7 +20,7 @@ test:
   volumes:
     - .:/app
   ports:
-    - "4000:3000"
+    - "3000:3000"
   links:
     - dbtest
   env_file: .env

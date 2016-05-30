@@ -40,6 +40,7 @@
     "mocha-jsdom": "^1.1.0",
     "mocha-loader": "^0.7.1",
     "moment": "^2.11.0",
+    "nock": "^8.0.0",
     "node-libs-browser": "^0.5.3",
     "node-sass": "^3.4.2",
     "react": "^0.14.5",
@@ -47,7 +48,9 @@
     "react-bootstrap": "^0.28.1",
     "react-dom": "^0.14.5",
     "react-spinkit": "^1.1.4",
+    "redux-mock-store": "^1.0.2",
     "sass-loader": "^3.1.2",
+    "sinon": "^1.17.4",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.13.0",
     "svg-url-loader": "^1.0.2",
@@ -56,11 +59,11 @@
     "webpack-sources": "^0.1.0"
   },
   "scripts": {
-    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive",
+    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 10000",
     "dev-server": "webpack-dev-server --progress --colors --port 8090 --inline",
     "build-staging-assets": "webpack --config webpack.config.staging.js",
     "test:watch": "npm run test -- --watch",
-    "tests": "webpack-dev-server --config webpack.config.test.js --hot --inline --output-filename test.js"
+    "tests": "webpack-dev-server --config webpack.config.test.js --hot --inline --output-filename test.js --port 4000"
   },
   "repository": {
     "type": "git",
@@ -84,6 +87,7 @@
     "react-redux": "^4.4.4",
     "react-router": "^2.1.1",
     "redux": "^3.4.0",
-    "redux-promise": "^0.5.3"
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.1.0"
   }
 }

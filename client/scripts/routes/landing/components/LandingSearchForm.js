@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { isEqual } from 'lodash';
 import { connect } from 'react-redux';
 
 import SuggestionsInputField            from '../../../components/SuggestionsInputField';
@@ -10,6 +11,14 @@ class LandingSearchForm extends Component {
       this.props.onSetColonia(item);
     } else if (this.props.searchType === 'Vivienda') {
       this.props.onSetVivienda(item);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if(!isEqual(prevProps.colonia, this.props.colonia)) {
+      if (this.props.triggerOnChange) {
+        this.props.triggerOnChange();
+      }
     }
   }
 
@@ -25,4 +34,10 @@ class LandingSearchForm extends Component {
   }
 }
 
-export default connect(null, { onSetColonia, onSetVivienda })(LandingSearchForm);
+function mapStateToProps(state) {
+  return {
+    colonia: state.landing.colonia
+  }
+}
+
+export default connect(mapStateToProps, { onSetColonia, onSetVivienda })(LandingSearchForm);

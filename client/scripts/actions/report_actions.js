@@ -26,6 +26,18 @@ export const SET_COLONIA_INFO               = 'SET_COLONIA_INFO';
 export const SELECT_COMPARATIVO_COLONIAS    = 'SELECT_COMPARATIVO_COLONIAS';
 export const SELECT_POLYGON                 = 'SELECT_POLYGON';
 
+function addOptimisticActionCreator(type, response) {
+  const payload = response.data;
+  return {type, payload}
+}
+
+function addOptimisticArrayActionCreator(type, response) {
+  const payload = response.map((element) => {
+    return element.data;
+  });
+
+  return { type, payload };
+}
 
 export function setInitialState() {
   return {
@@ -41,10 +53,12 @@ export function fetchColoniaInfo(idCol) {
     suburbAPI.appreciation(idCol)
   ]);
 
-  return {
-    type: FETCH_COLONIA_INFO,
-    payload: request
-  };
+  return (dispatch) => {
+    return request
+    .then(response => {
+      dispatch(addOptimisticArrayActionCreator(FETCH_COLONIA_INFO, response));
+    });
+  }
 }
 
 export function fetchOfertaDisponible(idCol) {
@@ -54,36 +68,44 @@ export function fetchOfertaDisponible(idCol) {
     suburbAPI.averageTime(idCol, 6)
   ]);
 
-  return {
-    type: FETCH_OFERTA_DISPONIBLE,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticArrayActionCreator(FETCH_OFERTA_DISPONIBLE, response));
+      });
   }
 }
 
 export function fetchDistribucionTipologia(idCol) {
   const request = suburbAPI.typology(idCol);
 
-  return {
-    type: FETCH_DISTRIBUCION_TIPOLOGIA,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_DISTRIBUCION_TIPOLOGIA, response));
+      });
   }
 }
 
 export function fetchPrecioHistorico(idCol) {
   const request = suburbAPI.historicPrice(idCol);
 
-  return {
-    type: FETCH_PRECIO_HISTORICO,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_PRECIO_HISTORICO, response));
+      });
   }
 }
 
 export function fetchDistribucionPrecio(idCol) {
   const request = suburbAPI.priceDistribution(idCol);
 
-  return {
-    type: FETCH_DISTRIBUCION_PRECIO,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_DISTRIBUCION_PRECIO, response));
+      });
   }
 }
 
@@ -94,27 +116,33 @@ export function fetchColoniasComparables(idCol) {
       return suburbsAPI.report(data, 6);
     });
 
-  return {
-    type: FETCH_COLONIAS_COMPARABLES,
-    payload: request
+  return function(dispatch) {
+    return request
+      .then((response) => {
+        dispatch(addOptimisticActionCreator(FETCH_COLONIAS_COMPARABLES, response));
+      });
   }
 }
 
 export function fetchViviendaInfo(params) {
   const request = viviendaAPI.valuation(params);
 
-  return {
-    type: FETCH_VIVIENDA_INFO,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_VIVIENDA_INFO, response));
+      });
   }
 }
 
 export function fetchViviendasComparables(params) {
   const request = viviendaAPI.similars(params);
 
-  return {
-    type: FETCH_VIVIENDAS_COMPARABLES,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_VIVIENDAS_COMPARABLES, response));
+      });
   }
 }
 
@@ -125,27 +153,33 @@ export function fetchColoniasMap(idCol) {
       return suburbsAPI.geojsons(data)
     });
 
-  return {
-    type: FETCH_COLONIAS_MAP,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_COLONIAS_MAP, response));
+      });
   }
 }
 
 export function fetchActualColoniaMap(idCol) {
   const request = suburbAPI.geojson(idCol);
 
-  return {
-    type: FECTH_ACTUAL_COLONIA_MAP,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FECTH_ACTUAL_COLONIA_MAP, response));
+      });
   }
 }
 
 export function fetchCentroid(idCol) {
   const request = suburbAPI.centroid(idCol);
 
-  return {
-    type: FETCH_CENTROID,
-    payload: request
+  return dispatch => {
+    return request
+      .then(response => {
+        dispatch(addOptimisticActionCreator(FETCH_CENTROID, response));
+      });
   }
 }
 

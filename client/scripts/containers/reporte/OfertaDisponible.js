@@ -6,7 +6,7 @@ import { isEqual }  from 'lodash';
 import Spinner from './../../components/Spinner';
 
 // Helpers
-import { formatAsNumber } from '../../helpers';
+import { formatAsNumber, formatAsNumberS } from '../../helpers';
 import { connect } from 'react-redux';
 import { fetchOfertaDisponible } from '../../actions/report_actions';
 

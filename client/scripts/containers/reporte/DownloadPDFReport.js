@@ -167,7 +167,7 @@ class DownloadPDFReport extends Component {
   render() {
     var descarga = require('file!images-banca/descarga.svg');
     return (
-      <div style={{margin: '0px', cursor: 'pointer'}} onClick={this._downloadReport.bind(this)}>
+      <div style={{margin: '0px', cursor: 'pointer', textAlign: 'right', paddingRight: '15px'}} onClick={this._downloadReport.bind(this)}>
         <img height={'15px'} src={descarga} />
       </div>
     );

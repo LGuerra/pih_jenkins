@@ -81,6 +81,7 @@ class Report extends Component {
     let report;
     let loadingFrame  = this._getLoadingFrame(this.props.isLoadingFrame);
     let viewType      = this.props.location.query.tipo;
+
     let urlParams     = this._getUrlParams();
 
     if (viewType === 'Colonia') {

@@ -7,7 +7,7 @@ const NavBar = React.createClass({
     var id = this.props.id;
     return (
       <nav className="navbar navbar-default">
-        <div className="container">
+        <div className="max-width-container">
           <NavBarHeader image={this.props.logoImage} id={id}/>
           <NavBarContent id={id}>
             {this.props.children}

@@ -10,18 +10,22 @@ import ViviendaParamsFields from '../../../components/ViviendaParamsFields';
 import { setInitialState, onSetParamsInfo, onSetForm }  from '../../../actions/landing_actions';
 
 function handleErrorAlert(identifier, content) {
-  $(identifier)
-    .addClass('error');
+  var $element = $(identifier);
 
-  $(identifier).popover({content: content,
-    placement: 'top'});
-  $(identifier).popover('show');
+  $element.addClass('error');
+  $element.popover({
+    content: content,
+    placement: 'top'
+  });
+
+  $element.popover('show');
+  $element.val('');
+  $element.focus();
 
   setTimeout(() => {
-    $(identifier)
-      .removeClass('error');
+    $element.removeClass('error');
     $(identifier).popover('destroy');
-  }, 2000);
+  }, 3000);
 
   $('html, body').animate({
     scrollTop: $('body').offset().top
@@ -34,8 +38,7 @@ class Landing extends React.Component {
   }
 
   _generateColoniaReport() {
-    // debugger;
-    if (this.props.colonia.id) {
+    if (this.props.colonia.id && this.props.colonia.id !== -1) {
       this.context.router.push({
         pathname: '/reporte',
         query: {
@@ -46,50 +49,54 @@ class Landing extends React.Component {
           sample: 'dude'
         }
       });
-      // window.open(`/reporte?colonia=${this.props.colonia.id}&tipo=Colonia`, '_self')
     } else {
-      handleErrorAlert('.Colonia', 'Ingrese una colonia válida');
+      handleErrorAlert('.Colonia', 'Seleccione una de las sugerencias');
     }
   }
 
   _generateViviendaReport() {
     if (this.props.vivienda.id) {
-      getHouseInfor(this.props.vivienda.id, (place) => {
-        let latitude    = place.geometry.location.lat();
-        let longitude   = place.geometry.location.lng();
-        let infoParams  = this.props.infoParams;
+      let latitude;
+      let longitude;
+      let infoParams;
 
-        helpersAPI.suburbIsTrusted(latitude, longitude)
-          .then((response) => {
-            if (response.data.trusted) {
-              let colonia = response.data.id;
-              this.context.router.push({
-                pathname: '/reporte',
-                query: {
-                  colonia: colonia,
-                  tipo: 'Vivienda',
-                  longitud: longitude,
-                  latitud: latitude,
-                  recamaras: infoParams.recamaras,
-                  banos: infoParams.banos,
-                  estacionamientos: infoParams.estacionamientos,
-                  id_tipo_propiedad: infoParams.id_tipo_propiedad,
-                  edad: infoParams.edad,
-                  area_construida: infoParams.area_construida,
-                  tipo_operacion: 0,
-                  address: this.props.vivienda.content
-                },
-                state: {
-                  sample: 'dude'
-                }
-              });
-            } else {
-              handleErrorAlert('.Vivienda', 'Ingrese una dirección válida');
-            }
-          });
-      });
+      getHouseInfor(this.props.vivienda.id)
+        .then(place => {
+          latitude    = place.geometry.location.lat();
+          longitude   = place.geometry.location.lng();
+
+          return helpersAPI.suburbIsTrusted(latitude, longitude)
+        })
+        .then(response => {
+          if (response.data.trusted) {
+            let colonia = response.data.id;
+            this.context.router.push({
+              pathname: '/reporte',
+              query: {
+                colonia: colonia,
+                tipo: 'Vivienda',
+                longitud: longitude,
+                latitud: latitude,
+                recamaras: this.props.infoParams.recamaras,
+                banos: this.props.infoParams.banos,
+                estacionamientos: this.props.infoParams.estacionamientos,
+                id_tipo_propiedad: this.props.infoParams.id_tipo_propiedad,
+                edad: this.props.infoParams.edad,
+                area_construida: this.props.infoParams.area_construida,
+                tipo_operacion: 0,
+                address: this.props.vivienda.content
+              },
+              state: {
+                sample: 'dude'
+              }
+            });
+          } else {
+            handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
+            $('.Vivienda').val('');
+          }
+        });
     } else {
-      handleErrorAlert('.Vivienda', 'Ingrese una dirección válida');
+      handleErrorAlert('.Vivienda', 'Ingrese una dirección');
     }
   }
 
@@ -118,6 +125,7 @@ class Landing extends React.Component {
           <div className={'row colonia-search'}>
             <div className={'col-md-12'} style={{padding: '0'}}>
               <LandingSearchForm
+                triggerOnChange={this._generateColoniaReport.bind(this)}
                 searchType={'Colonia'}
                 placeholder={'Ingrese el nombre de la colonia'}/>
             </div>

@@ -21,7 +21,7 @@ export function onSetColonia(coloniaInfo) {
   return {
     type: SET_COLONIA,
     payload: coloniaInfo
-  };
+  }
 }
 
 export function onSetVivienda(viviendaInfo) {

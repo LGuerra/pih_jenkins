@@ -9,7 +9,7 @@ import NoChart from   '../../components/NoChart';
 import Spinner from   '../../components/Spinner';
 
 // Helpers
-import { formatAsPrice }            from '../../helpers';
+import { formatAsPrice, toPercentage }            from '../../helpers';
 import { fetchDistribucionPrecio }  from '../../actions/report_actions';
 import { formatDistribucionPrecio } from '../../data_formatters';
 
@@ -34,7 +34,7 @@ class FormatBarChart extends React.Component {
         <p class="Tooltip-title">${title}</p>
       </div>
       <div class="Tooltip-row">
-        <p class="Tooltip-value">${(d.value * 100).toFixed(1)}%</p>
+        <p class="Tooltip-value">${toPercentage(d.value)}</p>
         <p class="Tooltip-unit">&nbsp;${'Viviendas'}</p>
       </div>
     </div>`;
