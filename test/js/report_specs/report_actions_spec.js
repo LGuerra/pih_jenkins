@@ -233,6 +233,7 @@ describe('report actions', () => {
     request
       .then(response => {
         expectedAction.payload = response.data;
+
         return store.dispatch(fetchColoniasComparables(idCol));
       })
       .then(response => {
