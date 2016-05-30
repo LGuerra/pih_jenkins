@@ -60,30 +60,35 @@ class ControlBar extends React.Component{
     this.setState({
       vivienda: null
     }, () => {
-      getHouseInfor(item.id, (place) => {
-        let latitude    = place.geometry.location.lat();
-        let longitude   = place.geometry.location.lng();
-        let infoParams  = this.state.infoParams;
+      let latitude;
+      let longitude;
+      let place;
 
-        helpersAPI.suburbIsTrusted(latitude, longitude)
-          .then((response) => {
-            if (response.data.trusted) {
-              let params = {
-                colonia: response.data.id,
-                latitud: latitude,
-                longitud: longitude,
-                tipo_operacion: 0,
-                address: place.formatted_address
-              };
+      getHouseInfor(item.id)
+        .then(response => {
+          latitude    = response.geometry.location.lat();
+          longitude   = response.geometry.location.lng();
+          place       = response;
 
-              this.setState({
-                vivienda: params
-              });
-            } else {
-              handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
-            }
-          });
-      });
+          return helpersAPI.suburbIsTrusted(latitude, longitude)
+        })
+        .then(response => {
+          if (response.data.trusted) {
+            let params = {
+              colonia: response.data.id,
+              latitud: latitude,
+              longitud: longitude,
+              tipo_operacion: 0,
+              address: place.formatted_address
+            };
+
+            this.setState({
+              vivienda: params
+            });
+          } else {
+            handleErrorAlert('.Vivienda', 'Por el momento no contamos con información en la zona seleccionada');
+          }
+        });
     });
   }
 

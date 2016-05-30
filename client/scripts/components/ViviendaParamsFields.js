@@ -93,7 +93,7 @@ class ViviendaParamsFields extends Component {
               <InputFieldForm
                 onUpdateValue={this._onUpdateValue.bind(this)}
                 min={0}
-                max={20}
+                max={100}
                 unit={'edad'}
                 defaultValue={this.props.infoParams.edad}
                 label={'Años'}/>
