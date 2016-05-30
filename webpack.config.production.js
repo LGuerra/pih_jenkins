@@ -41,7 +41,7 @@ module.exports = {
     new extractTextPlugin('main.min.css')
   ],
   output: {
-    path: path.resolve('./client/dist/'),
+    path: path.resolve('./client/dist/production/'),
     publicPath: 'https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/',
     filename: '[name].min.js'
   },
