@@ -22,7 +22,7 @@ test: &default
 staging:
   <<: *default
   database: <%= ENV['RDS_DATABASE'] || 'postgres' %>
-  pool: 10
+  pool: 2
   username: <%= ENV['RDS_USERNAME'] || 'postgres' %>
   password: <%= ENV['RDS_PASSWORD'] || '' %>
   port: <%= ENV['RDS_PORT'] || 5432 %>
