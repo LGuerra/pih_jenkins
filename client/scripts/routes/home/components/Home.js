@@ -17,6 +17,7 @@ class Home extends React.Component {
         if(data.hasOwnProperty('data') && data.data.hasOwnProperty('id')) {
           const USER_ID = data.data.id;
           ga('set', 'userId', USER_ID);
+          ga('send', 'home');
           let nextPath = '/', query = {};
           alertText = 'Has iniciado sesión correctamente';
           if(this.props.location.state !== null) {
