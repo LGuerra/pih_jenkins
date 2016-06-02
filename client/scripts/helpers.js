@@ -1,5 +1,15 @@
 import _ from 'lodash';
 
+export function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+export function getURLParameter(name) {
+  /*eslint-disable*/
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+  /*eslint-enable*/
+}
+
 export function getHouseInfor(id) {
   return new Promise((resolve, reject) => {
     let request = { placeId: id };

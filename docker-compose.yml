@@ -8,6 +8,20 @@ web:
     - "3000:3000"
   links:
     - db
+    - phi
+  env_file: .env
+  environment:
+    - RAILS_ENV=development
+    - API_STAGE=dev
+
+phi:
+  build: .
+  command: npm run dev-server
+  dockerfile: ./Dockerfile_webpack
+  volumes:
+    - .:/app
+  ports:
+    - "8090:8090"
   env_file: .env
   environment:
     - RAILS_ENV=development

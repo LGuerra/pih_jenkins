@@ -16,8 +16,6 @@ module.exports = {
     vendor: ['jquery', 'bootstrap']
   },
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
     function()
     {
       this.plugin("done", function(stats) {
@@ -41,8 +39,8 @@ module.exports = {
     new extractTextPlugin('main.min.css')
   ],
   output: {
-    path: path.resolve('./client/dist/production/'),
-    publicPath: 'https://s3-us-west-2.amazonaws.com/assets-pih-banca/production/',
+    path: path.resolve('./client/dist/'),
+    publicPath: 'https://s3-us-west-2.amazonaws.com/assets-pih-banca/staging/',
     filename: '[name].min.js'
   },
   module: {
@@ -78,6 +76,7 @@ module.exports = {
       }
     ]
   },
+  devtool: 'eval-source-map',
   resolve: {
     root: path.resolve(__dirname),
     extensions: ['', '.js', '.es6'],

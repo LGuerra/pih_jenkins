@@ -59,10 +59,8 @@
     "webpack-sources": "^0.1.0"
   },
   "scripts": {
-    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 5000",
+    "test": " NODE_ENV=test mocha --compilers js:babel-core/register --recursive --timeout 10000",
     "dev-server": "webpack-dev-server --progress --colors --port 8090 --inline",
-    "build-staging-assets": "webpack --config webpack.config.staging.js",
-    "build-prod-assets": "webpack --config webpack.config.production.js",
     "test:watch": "npm run test -- --watch",
     "tests": "webpack-dev-server --config webpack.config.test.js --hot --inline --output-filename test.js --port 4000"
   },

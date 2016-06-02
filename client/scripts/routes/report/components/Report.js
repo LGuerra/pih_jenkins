@@ -1,19 +1,19 @@
 // Vendor
-import React, { Component } from 'react';
+import React, { Component }        from 'react';
 import { isEqual, isEmpty } from 'lodash';
 import { connect }          from 'react-redux';
 
 // Components
 import BackToTop          from '../../../components/BackToTop';
-import DownloadPDFReport  from '../../../containers/reporte/DownloadPDFReport';
-import MiniSearchForm     from '../../../components/MiniSearchForm';
 import Spinner            from '../../../components/Spinner';
+import MiniSearchForm     from '../../../components/MiniSearchForm';
 import URLHandler         from '../../../components/urlHandler';
+import DownloadPDFReport  from '../../../containers/reporte/DownloadPDFReport';
 
 // Views
-import ControlBar         from './ControlBar';
 import ReportColonia      from './ReportColonia';
 import ReportVivienda     from './ReportVivienda';
+import ControlBar         from './ControlBar';
 
 // Helpers
 import PDFReport  from '../../../PDFReport';
@@ -60,18 +60,18 @@ class Report extends Component {
 
   _getUrlParams() {
     let urlParams = {
-      address: this.props.location.query.address || '',
-      area_construida: this.props.location.query.area_construida || 100,
-      banos: this.props.location.query.banos || 1,
-      colonia: this.props.location.query.colonia || '',
-      edad: this.props.location.query.edad|| 1,
-      estacionamientos: this.props.location.query.estacionamientos || 0,
-      id_tipo_propiedad: this.props.location.query.id_tipo_propiedad || 2,
-      latitud: this.props.location.query.latitud || 0,
       longitud: this.props.location.query.longitud || 0,
+      latitud: this.props.location.query.latitud || 0,
       recamaras: this.props.location.query.recamaras || 1,
-      tipo: this.props.location.query.tipo || 'Colonia',
-      tipo_operacion: this.props.location.query.tipo_operacion || 0
+      banos: this.props.location.query.banos || 1,
+      estacionamientos: this.props.location.query.estacionamientos || 0,
+      edad: this.props.location.query.edad|| 1,
+      id_tipo_propiedad: this.props.location.query.id_tipo_propiedad || 2,
+      area_construida: this.props.location.query.area_construida || 100,
+      address: this.props.location.query.address || '',
+      tipo_operacion: this.props.location.query.tipo_operacion || 0,
+      colonia: this.props.location.query.colonia || '',
+      tipo: this.props.location.query.tipo || 'Colonia'
     }
 
     return urlParams;

@@ -1,10 +1,8 @@
-// Vendor
 import React, { Component } from 'react';
 import _                    from 'lodash';
+import { connect }          from 'react-redux';
 
-// Redux
-import { connect }                      from 'react-redux';
-import { setLoadingFrame }              from '../../actions/report_actions'
+import { setLoadingFrame }  from '../../actions/report_actions'
 import { printInfo, downloadPDFReport } from '../../PDFReport';
 
 import {

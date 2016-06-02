@@ -24,20 +24,17 @@ let _askForPDF = (miliseconds, attempts, url) => {
 
   (function autoCallable(attempts) {
     setTimeout(() => {
-      fetch(url, {
-        method: 'GET'
-      })
-      .then(response => {
-        if (response.status !== 200) {
+      $.get(url)
+        .then(response => {
+          deferred.resolve();
+        })
+        .fail(() => {
           if (attempts > 0) {
             autoCallable(attempts-1);
           } else {
             deferred.reject();
           }
-        } else {
-          deferred.resolve();
-        }
-      });
+        })
     }, miliseconds)
   })(attempts);
 
@@ -50,33 +47,32 @@ export function printInfo(url) {
   anchor.click();
 }
 
-export function downloadPDFReport(url, dataTokens) {
-  return new Promise((resolve, reject) => {
-    let promises = dataTokens.map((token) => {
-      return _buildPromises(
-        url,
-        token.identifier,
-        token.dataType,
-        token.data
-      );
+export function downloadPDFReport(url, dataTokens)  {
+  let deferred = $.Deferred();
+  let promises = dataTokens.map((token) => {
+    return _buildPromises(
+      url,
+      token.identifier,
+      token.dataType,
+      token.data
+    );
+  });
+
+  $.when(...promises)
+    .then(() => {
+      return $.post(url)
+    })
+    .then(() => {
+      return (_askForPDF(1000, 10, url));
+    })
+    .then(() => {
+      printInfo(url);
+      deferred.resolve();
+    })
+    .fail((error, msg) => {
+      console.log('FAIL', error, msg);
     });
 
-    $.when(...promises)
-      .then(() => {
-        return fetch(url, {
-          method: 'POST'
-        });
-      })
-      .then(() => {
-        return (_askForPDF(1000, 10, url));
-      })
-      .then(() => {
-        printInfo(url);
-        resolve();
-      })
-      .fail((error, msg) => {
-        console.error('FAIL', error, msg);
-      });
-  });
+  return deferred.promise();
 }
 
