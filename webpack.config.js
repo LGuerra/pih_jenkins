@@ -74,6 +74,7 @@ module.exports = {
   debug: true,
   devtool: 'eval-source-map',
   devServer: {
+    headers: { "Access-Control-Allow-Origin": "*" },
     contentBase: __dirname,
     quiet: false,
     noInfo: false,

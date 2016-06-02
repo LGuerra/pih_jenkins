@@ -22,10 +22,6 @@ phi:
     - .:/app
   ports:
     - "8090:8090"
-  env_file: .env
-  environment:
-    - RAILS_ENV=development
-    - API_STAGE=dev
 
 test:
   build: .
