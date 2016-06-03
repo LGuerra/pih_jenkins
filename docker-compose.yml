@@ -8,6 +8,7 @@ web:
     - "3000:3000"
   links:
     - db
+    - phi
   env_file: .env
   environment:
     - RAILS_ENV=development
