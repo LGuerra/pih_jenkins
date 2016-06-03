@@ -28,7 +28,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, 'application'),
-    publicPath: 'http://localhost:8090/application/',
+    publicPath: '0.0.0.0:8090/application/',
     filename: '[name].js',
     sourceMapFilename: 'debugging/[file].map',
     pathinfo: true
@@ -74,6 +74,8 @@ module.exports = {
   debug: true,
   devtool: 'eval-source-map',
   devServer: {
+    host: "0.0.0.0",
+    port: "8090",
     headers: { "Access-Control-Allow-Origin": "*" },
     contentBase: __dirname,
     quiet: false,
