@@ -28,7 +28,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, 'application'),
-    publicPath: '0.0.0.0:8090/application/',
+    publicPath: 'http://0.0.0.0:8090/application/',
     filename: '[name].js',
     sourceMapFilename: 'debugging/[file].map',
     pathinfo: true
