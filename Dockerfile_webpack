@@ -4,8 +4,20 @@ WORKDIR /tmp
 COPY package.json /tmp/
 
 WORKDIR /usr/app
-COPY . /usr/app
-#COPY package.json /usr/app
+COPY client /usr/app/client
+COPY node_modules /usr/app/node_modules
+COPY test /usr/app/test
+COPY .babelrc /usr/app
+COPY Procfile /usr/app
+COPY package.json /usr/app
+COPY webpack.config.js /usr/app
+COPY webpack.config.production.js /usr/app
+COPY webpack.config.staging.js /usr/app
+COPY webpack.config.test.js /usr/app
+COPY .env /usr/app
+COPY .eslintrc.json /usr/app
+COPY nginx-development.conf /usr/app
+COPY nginx-production.conf /usr/app
 
 RUN npm install
 RUN npm install webpack -g && npm install webpack-dev-server -g
