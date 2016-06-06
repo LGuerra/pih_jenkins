@@ -1,13 +1,14 @@
-FROM node:0.12.7
-
-RUN npm install webpack -g && npm install webpack-dev-server -g
+FROM node:6.2.1
 
 WORKDIR /tmp
 COPY package.json /tmp/
 
 WORKDIR /usr/app
 COPY . /usr/app
+#COPY package.json /usr/app
 
+RUN npm install
+RUN npm install webpack -g && npm install webpack-dev-server -g
 RUN npm rebuild node-sass
 
 EXPOSE 8090
