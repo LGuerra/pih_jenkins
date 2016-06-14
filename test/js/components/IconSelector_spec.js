@@ -25,7 +25,7 @@ describe('IconSelector Component', () => {
     }];
 
 
-  it('should render icon selector depending on icons in props', () => {
+  xit('should render icon selector depending on icons in props', () => {
     const component = renderIntoDocument(
       <IconSelector
         unit={'id_tipo_propiedad'}
@@ -38,7 +38,7 @@ describe('IconSelector Component', () => {
     expect(iconSelectors.length).to.equal(2);
   });
 
-  it('should select the defaultIcon', () => {
+  xit('should select the defaultIcon', () => {
     const expectedClass = 'icon is_active';
     const defaultIcon = 4;
     const component = renderIntoDocument(
@@ -54,7 +54,7 @@ describe('IconSelector Component', () => {
     expect(iconSelectors[1].className).to.equal(expectedClass);
   });
 
-  it('should update icon selected when is clicked', () => {
+  xit('should update icon selected when is clicked', () => {
     let selectedValue;
     const unit          = 'unit';
     const expectedValue = { unit: 4 };
