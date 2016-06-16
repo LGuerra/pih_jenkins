@@ -25,7 +25,7 @@ describe('IconSelector Component', () => {
     }];
 
 
-  it('should render icon selector depending on icons in props', () => {
+  xit('should render icon selector depending on icons in props', () => {
     const component = renderIntoDocument(
       <IconSelector
         unit={'id_tipo_propiedad'}
